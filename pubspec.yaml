@@ -1,0 +1,46 @@
+name: client
+description: ChapChap Mechanical friend
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0-266.1.beta <3.0.0"
+
+# Dependencies
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  device_preview: ^1.0.0
+
+# Flutter Framework Settings
+flutter:
+
+  # The following line ensures that the Material Icons font is included
+  uses-material-design: true # TODO: Return to false for production
+
+  # App assets:
+  assets:
+    - assets/images/
+
+  #  Custom Fonts
+  fonts:
+    #    Icon Font
+    - family: ChapChap
+      fonts:
+        - asset: assets/fonts/ChapChap.ttf
+  #    Application Font
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+
