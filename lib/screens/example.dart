@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/index.dart';
+import '../styles/index.dart';
 
 class Example extends StatelessWidget {
   const Example({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class Example extends StatelessWidget {
               size: 100,
             ),
             SizedBox(height: 20),
-            Text("Hello")
+            Text("Hello"),
           ],
         ),
       ),
