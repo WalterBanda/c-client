@@ -2,9 +2,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/background" />
 
-    <item android:drawable="@drawable/ic_launcher_foreground" />
-
     <!-- You can insert your own image assets here -->
+    <item
+        android:drawable="@drawable/ic_launcher_foreground"
+        android:gravity="center" />
     <!--    <item>-->
     <!--        <bitmap-->
     <!--            android:gravity="center"-->
