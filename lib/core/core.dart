@@ -14,6 +14,7 @@ class App extends StatelessWidget {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       navigatorKey: GlobalNavigator.router,
+      initialRoute: GlobalNavigator.initialRoute(),
       onGenerateRoute: GlobalNavigator.generateRoute,
     );
   }

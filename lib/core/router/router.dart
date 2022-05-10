@@ -1,5 +1,6 @@
 // GlobalKey<NavigatorState> AuthRouter = GlobalKey();
 // GlobalKey<NavigatorState> PageRouter = GlobalKey();
+import 'package:client/core/router/routes.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:flutter/material.dart';
 
@@ -12,5 +13,8 @@ class GlobalNavigator {
     );
   }
 
-  static Map<dynamic, dynamic> routes = {};
+  static String initialRoute() {
+    // TODO: Implement Auto Login into Application
+    return GlobalRoutes.auth;
+  }
 }
