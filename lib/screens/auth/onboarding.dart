@@ -24,6 +24,8 @@ Widget _buildBranding() {
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
 
+  static const String id = "onboarding";
+
   _delay() {
     Timer(Duration(seconds: 5), () {
       // print("Debug: Functions runs ");
@@ -47,8 +49,10 @@ class Splash extends StatelessWidget {
   }
 }
 
-class Onboard extends StatelessWidget {
-  const Onboard({Key? key}) : super(key: key);
+class Onboarding extends StatelessWidget {
+  const Onboarding({Key? key}) : super(key: key);
+
+  static const String id = "onboarding";
 
   @override
   Widget build(BuildContext context) {

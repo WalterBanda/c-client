@@ -1,4 +1,4 @@
-import 'package:client/screens/auth/onboarding.dart';
+import 'package:client/core/router/router.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,8 @@ class App extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const Splash(),
+      navigatorKey: GlobalNavigator.router,
+      onGenerateRoute: GlobalNavigator.generateRoute,
     );
   }
 }
