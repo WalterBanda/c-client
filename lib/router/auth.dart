@@ -8,7 +8,6 @@ class Auth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Implement Navigator
     return Navigator(
       key: AuthRouter.router,
       initialRoute: AuthRouter.initialRoute,

@@ -46,10 +46,6 @@ class Splash extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildBranding(context),
-            // const SizedBox(height: 30),
-            // const CircularProgressIndicator(
-            //   color: Colors.black,
-            // )
           ],
         ),
       ),
@@ -100,9 +96,51 @@ class Onboarding extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
+            createAccountShortcut(),
           ],
         ),
       ),
     );
   }
+}
+
+Container createAccountShortcut() {
+  return Container(
+    decoration: const BoxDecoration(
+      border: Border(
+        top: BorderSide(color: Colors.black, width: 2),
+      ),
+    ),
+    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+    child: TextButton(
+      onPressed: () =>
+          AuthRouter.router.currentState!.pushNamed(AuthRoutes.register),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [
+          Text(
+            "Don’t have an Account ?  ",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 13,
+              fontFamily: "SF Pro Rounded",
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            "Create Account",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xff4285f4),
+              fontSize: 13,
+              fontFamily: "SF Pro Rounded",
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
