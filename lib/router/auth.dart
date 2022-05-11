@@ -1,3 +1,4 @@
+import 'package:client/core/route/router.dart';
 import 'package:flutter/material.dart';
 
 class Auth extends StatelessWidget {
@@ -8,6 +9,10 @@ class Auth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO: Implement Navigator
-    return Scaffold();
+    return Navigator(
+      key: AuthRouter.router,
+      initialRoute: AuthRouter.initialRoute,
+      onGenerateRoute: AuthRouter.generateRoute,
+    );
   }
 }
