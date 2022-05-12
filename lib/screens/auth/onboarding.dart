@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../core/route/router.dart';
 import '../../core/route/routes.dart';
 
-Widget _buildBranding(BuildContext context) {
+Widget buildBranding(BuildContext context) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: const [
@@ -46,7 +46,7 @@ class Splash extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildBranding(context),
+            buildBranding(context),
           ],
         ),
       ),
@@ -65,16 +65,18 @@ class Onboarding extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         primary: AppColors.primary,
         elevation: 0,
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
       child: icon,
     );
   }
 
+  // TODO: Implement Google & Github SignIn
+
   _googleSignIn() {}
 
-  _facebookSignIn() {}
+  _gitHubSignIn() {}
 
   _emailSignIn() => AuthRouter.router.currentState!.pushNamed(AuthRoutes.login);
 
@@ -85,7 +87,7 @@ class Onboarding extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildBranding(context),
+            buildBranding(context),
             const SizedBox(height: 40),
             const Text(
               "Login to your Account ",
@@ -102,13 +104,7 @@ class Onboarding extends StatelessWidget {
               children: [
                 Authlet(_googleSignIn, const Icon(ChapChap.google, size: 36)),
                 // const SizedBox(width: 15),
-                Authlet(
-                    _facebookSignIn,
-                    const Icon(
-                      ChapChap.facebook,
-                      size: 36,
-                      color: Colors.blue,
-                    )),
+                Authlet(_gitHubSignIn, const Icon(ChapChap.github, size: 36)),
                 // const SizedBox(width: 15),
                 Authlet(_emailSignIn, const Icon(ChapChap.email, size: 36)),
               ],

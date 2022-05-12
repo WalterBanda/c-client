@@ -1,4 +1,5 @@
 import 'package:client/router/auth.dart';
+import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
 
 class GlobalRoutes {
@@ -12,7 +13,7 @@ class GlobalRoutes {
 class AuthRoutes {
   static const String splash = Splash.id;
   static const String onboarding = Onboarding.id;
-  static const String login = "login";
+  static const String login = Login.id;
   static const String register = "register";
 }
 
