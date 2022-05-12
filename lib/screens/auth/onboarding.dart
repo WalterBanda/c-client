@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:client/styles/index.dart';
+import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -62,7 +63,7 @@ class Onboarding extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: Colors.black,
+        primary: AppColors.primary,
         elevation: 0,
         padding: EdgeInsets.all(16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -75,7 +76,7 @@ class Onboarding extends StatelessWidget {
 
   _facebookSignIn() {}
 
-  _emailSignIn() {}
+  _emailSignIn() => AuthRouter.router.currentState!.pushNamed(AuthRoutes.login);
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +126,7 @@ Container createAccountShortcut() {
   return Container(
     decoration: const BoxDecoration(
       border: Border(
-        top: BorderSide(color: Colors.black, width: 2),
+        top: BorderSide(color: AppColors.primary, width: 2),
       ),
     ),
     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -140,7 +141,7 @@ Container createAccountShortcut() {
             "Don’t have an Account ?  ",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.black,
+              color: AppColors.primary,
               fontSize: 13,
               fontFamily: "SF Pro Rounded",
               fontWeight: FontWeight.w700,
@@ -150,7 +151,8 @@ Container createAccountShortcut() {
             "Create Account",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color(0xff4285f4),
+              // color: Color(0xff4285f4),
+              color: AppColors.success,
               fontSize: 13,
               fontFamily: "SF Pro Rounded",
               fontWeight: FontWeight.w700,
