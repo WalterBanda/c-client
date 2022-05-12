@@ -59,7 +59,16 @@ class Onboarding extends StatelessWidget {
   static const String id = "onboarding";
 
   Widget Authlet(GestureTapCallback onPressed, Widget icon) {
-    return Container();
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        primary: Colors.black,
+        elevation: 0,
+        padding: EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      ),
+      child: icon,
+    );
   }
 
   _googleSignIn() {}
@@ -85,14 +94,22 @@ class Onboarding extends StatelessWidget {
                 fontSize: 18,
               ),
             ),
+            const SizedBox(height: 20),
             Row(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Authlet(_googleSignIn, const Icon(ChapChap.google)),
-                const SizedBox(width: 15),
-                Authlet(_facebookSignIn, const Icon(ChapChap.facebook)),
-                const SizedBox(width: 15),
-                Authlet(_emailSignIn, const Icon(ChapChap.email)),
+                Authlet(_googleSignIn, const Icon(ChapChap.google, size: 36)),
+                // const SizedBox(width: 15),
+                Authlet(
+                    _facebookSignIn,
+                    const Icon(
+                      ChapChap.facebook,
+                      size: 36,
+                      color: Colors.blue,
+                    )),
+                // const SizedBox(width: 15),
+                Authlet(_emailSignIn, const Icon(ChapChap.email, size: 36)),
               ],
             ),
             const SizedBox(height: 20),
