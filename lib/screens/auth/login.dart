@@ -1,6 +1,7 @@
 import 'package:client/core/route/router.dart';
 import 'package:client/core/route/routes.dart';
 import 'package:client/screens/auth/onboarding.dart';
+import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -12,6 +13,9 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        foregroundColor: AppColors.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () => AuthRouter.router.currentState!
@@ -24,15 +28,8 @@ class Login extends StatelessWidget {
           children: [
             buildBranding(context),
             const SizedBox(height: 40),
-            const Text(
-              "Login to your Account ",
-              style: TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
+            createAccountShortcut()
           ],
         ),
       ),
