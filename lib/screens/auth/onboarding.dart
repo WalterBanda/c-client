@@ -107,7 +107,6 @@ class Onboarding extends StatelessWidget {
             const SizedBox(height: 20),
             Row(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Authlet(_googleSignIn, const Icon(ChapChap.google, size: 36)),
                 const SizedBox(width: 15),
