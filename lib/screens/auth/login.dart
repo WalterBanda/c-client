@@ -9,6 +9,8 @@ class Login extends StatelessWidget {
 
   static const String id = "login";
 
+  _userAuth() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +34,29 @@ class Login extends StatelessWidget {
               authInput(
                 hint: "Enter your Email",
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 14),
               authInput(
                 hint: "Enter your Password",
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _userAuth,
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.primary,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 17, horizontal: 124),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: const Text(
+                  "Login",
+                  style: TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
               const SizedBox(height: 40),
               createAccountShortcut()
@@ -46,27 +68,40 @@ class Login extends StatelessWidget {
   }
 }
 
-Widget authInput({required String hint,TextEditingController? controller) {
+Widget authInput({
+  required String hint,
+  TextEditingController? controller,
+  String? errorMessage,
+}) {
   return SizedBox(
-    width: 290,
-    height: 52,
+    width: 300,
     child: TextField(
-
-      expands: true,
-      maxLines: null,
-      minLines: null,controller: controller,cursorColor: Colors.green,
+      controller: controller,
+      textAlignVertical: TextAlignVertical.center,
+      style: const TextStyle(
+        fontFamily: "SF Pro Rounded",
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.6,
+      ),
+      //TODO Implement Input Checking
       decoration: InputDecoration(
         filled: true,
         isCollapsed: true,
-        contentPadding: const EdgeInsets.fromLTRB(30, 17, 17, 0),
+        contentPadding: const EdgeInsets.fromLTRB(30, 17, 0, 17),
         fillColor: AppColors.input,
-        border: InputBorder.none,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
+        ),
         hintText: hint,
-        hintStyle: const TextStyle(
+        helperText: errorMessage,
+        helperStyle: const TextStyle(
           fontFamily: "SF Pro Rounded",
-          fontSize: 15,
+          fontSize: 10,
+          color: AppColors.error,
           fontWeight: FontWeight.w600,
-          letterSpacing: 0.6,
+          letterSpacing: 0.8,
         ),
       ),
     ),
