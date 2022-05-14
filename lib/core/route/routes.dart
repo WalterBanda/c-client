@@ -1,14 +1,16 @@
 import 'package:client/router/auth.dart';
+import 'package:client/router/roles.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
+import 'package:client/screens/roles/change_roles.dart';
 
 class GlobalRoutes {
   static const String auth = Auth.id;
 
   // TODO: Replace with Appropriate navigator/module id
   static const String pages = 'pages';
-  static const String roles = 'roles';
+  static const String roles = Roles.id;
 }
 
 class AuthRoutes {
@@ -18,6 +20,16 @@ class AuthRoutes {
   static const String register = Register.id;
 }
 
-class PageRoutes {}
+class PageRoutes {
+  static const String settings = "settings";
+  static const String profile = "profile";
+}
 
-class RoleRoutes {}
+class RoleRoutes {
+  //TODO Implement Roles Routes
+  static const String admin = "admin";
+  static const String user = "user";
+  static const String garage = "garage";
+  static const String changeRole = ChangeRoleScreen.id;
+  static const String requestRole = "request_role";
+}

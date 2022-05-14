@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class RoleScreen extends StatelessWidget {
-  const RoleScreen({Key? key}) : super(key: key);
+class ChangeRoleScreen extends StatelessWidget {
+  const ChangeRoleScreen({Key? key}) : super(key: key);
 
-  static const String id = "roles";
+  static const String id = "change_roles";
 
   @override
   Widget build(BuildContext context) {

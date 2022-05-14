@@ -74,9 +74,15 @@ class Onboarding extends StatelessWidget {
 
   // TODO: Implement Google & Github SignIn
 
-  _googleSignIn() {}
+  _googleSignIn() {
+    GlobalNavigator.router.currentState!
+        .pushReplacementNamed(GlobalRoutes.roles);
+  }
 
-  _gitHubSignIn() {}
+  _gitHubSignIn() {
+    GlobalNavigator.router.currentState!
+        .pushReplacementNamed(GlobalRoutes.roles);
+  }
 
   _emailSignIn() =>
       AuthRouter.router.currentState!.pushReplacementNamed(AuthRoutes.login);

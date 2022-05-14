@@ -1,7 +1,9 @@
 import 'package:client/router/auth.dart';
+import 'package:client/router/roles.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
+import 'package:client/screens/roles/change_roles.dart';
 import 'package:flutter/material.dart';
 
 import 'routes.dart';
@@ -17,7 +19,7 @@ class GlobalNavigator {
       case GlobalRoutes.pages:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
       case GlobalRoutes.roles:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Roles());
       default:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
     }
@@ -53,4 +55,35 @@ class AuthRouter {
 
 class PageRouter {
   static GlobalKey<NavigatorState> router = GlobalKey();
+}
+
+class RolesRouter {
+  static GlobalKey<NavigatorState> router = GlobalKey();
+
+  static const initialRoute = RoleRoutes.changeRole;
+
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    // TODO Implement Routes
+    switch (settings.name) {
+      case RoleRoutes.changeRole:
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
+      case RoleRoutes.requestRole:
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
+      case RoleRoutes.admin:
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
+      case RoleRoutes.garage:
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
+      case RoleRoutes.user:
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
+
+      default:
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
+    }
+  }
 }

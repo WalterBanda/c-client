@@ -12,7 +12,10 @@ class Login extends StatelessWidget {
 
   static const String id = "login";
 
-  _userAuth() {}
+  _userAuth() {
+    GlobalNavigator.router.currentState!
+        .pushReplacementNamed(GlobalRoutes.roles);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +75,7 @@ class Login extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
               createAccountShortcut()
             ],
           ),
