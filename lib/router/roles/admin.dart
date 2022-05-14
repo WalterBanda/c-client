@@ -9,9 +9,9 @@ class Roles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      key: RolesRouter.router,
-      initialRoute: RolesRouter.initialRoute,
-      onGenerateRoute: RolesRouter.generateRoute,
+      key: AdminRouter.router,
+      initialRoute: AdminRouter.initialRoute,
+      onGenerateRoute: AdminRouter.generateRoute,
     );
   }
 }

@@ -6,6 +6,9 @@ import 'package:client/screens/auth/register.dart';
 import 'package:client/screens/roles/change_roles.dart';
 import 'package:client/screens/roles/user/home.dart';
 
+import '../../screens/roles/admin/home.dart';
+import '../../screens/roles/garage/home.dart';
+
 class GlobalRoutes {
   static const String auth = Auth.id;
 
@@ -39,9 +42,9 @@ class UserRoutes {
 }
 
 class GarageRoutes {
-  static const String home = UserHome.id;
+  static const String home = GarageHome.id;
 }
 
 class AdminRoutes {
-  static const String home = UserHome.id;
+  static const String home = AdminHome.id;
 }
