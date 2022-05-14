@@ -22,17 +22,53 @@ class Login extends StatelessWidget {
               .popAndPushNamed(AuthRoutes.onboarding),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            buildBranding(context),
-            const SizedBox(height: 40),
-            const SizedBox(height: 40),
-            createAccountShortcut()
-          ],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              buildBranding(context),
+              const SizedBox(height: 40),
+              authInput(
+                hint: "Enter your Email",
+              ),
+              const SizedBox(height: 15),
+              authInput(
+                hint: "Enter your Password",
+              ),
+              const SizedBox(height: 40),
+              createAccountShortcut()
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+Widget authInput({required String hint,TextEditingController? controller) {
+  return SizedBox(
+    width: 290,
+    height: 52,
+    child: TextField(
+
+      expands: true,
+      maxLines: null,
+      minLines: null,controller: controller,cursorColor: Colors.green,
+      decoration: InputDecoration(
+        filled: true,
+        isCollapsed: true,
+        contentPadding: const EdgeInsets.fromLTRB(30, 17, 17, 0),
+        fillColor: AppColors.input,
+        border: InputBorder.none,
+        hintText: hint,
+        hintStyle: const TextStyle(
+          fontFamily: "SF Pro Rounded",
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.6,
+        ),
+      ),
+    ),
+  );
 }

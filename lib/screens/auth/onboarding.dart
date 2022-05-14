@@ -65,8 +65,8 @@ class Onboarding extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         primary: AppColors.primary,
         elevation: 0,
-        padding: const EdgeInsets.all(16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       child: icon,
     );
@@ -78,7 +78,8 @@ class Onboarding extends StatelessWidget {
 
   _gitHubSignIn() {}
 
-  _emailSignIn() => AuthRouter.router.currentState!.pushNamed(AuthRoutes.login);
+  _emailSignIn() =>
+      AuthRouter.router.currentState!.pushReplacementNamed(AuthRoutes.login);
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +104,9 @@ class Onboarding extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Authlet(_googleSignIn, const Icon(ChapChap.google, size: 36)),
-                // const SizedBox(width: 15),
+                const SizedBox(width: 15),
                 Authlet(_gitHubSignIn, const Icon(ChapChap.github, size: 36)),
-                // const SizedBox(width: 15),
+                const SizedBox(width: 15),
                 Authlet(_emailSignIn, const Icon(ChapChap.email, size: 36)),
               ],
             ),
