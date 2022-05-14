@@ -10,16 +10,16 @@ class ChangeRoleScreen extends StatelessWidget {
 
   static const String id = "change_roles";
 
-  Widget role(GestureTapCallback onPressed, Widget icon) {
+  Widget role({required GestureTapCallback onPressed, IconData? icon}) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: AppColors.primary,
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        primary: AppColors.bgDark,
+        onSurface: AppColors.primary,
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 19),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
-      child: icon,
+      child: Icon(icon, size: 25, color: AppColors.primary),
     );
   }
 
@@ -48,11 +48,11 @@ class ChangeRoleScreen extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  role(_roleNavigation, const Icon(ChapChap.google, size: 36)),
+                  role(onPressed: _roleNavigation, icon: ChapChap.admin),
                   const SizedBox(width: 15),
-                  role(_roleNavigation, const Icon(ChapChap.github, size: 36)),
+                  role(onPressed: _roleNavigation, icon: ChapChap.user),
                   const SizedBox(width: 15),
-                  role(_roleNavigation, const Icon(ChapChap.email, size: 36)),
+                  role(onPressed: _roleNavigation, icon: ChapChap.garage),
                 ],
               ),
             ],
