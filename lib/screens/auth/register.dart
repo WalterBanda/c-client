@@ -1,3 +1,4 @@
+import 'package:client/styles/icons/chap_chap_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/route/router.dart';
@@ -31,14 +32,51 @@ class Register extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              buildBranding(context),
               const SizedBox(height: 40),
+              const Text(
+                "Create your Account",
+                style: TextStyle(
+                  fontFamily: "SF Pro Rounded",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(height: 20),
               authInput(
                 hint: "Enter your Email",
+                inputType: TextInputType.emailAddress,
+                prefix: const Icon(
+                  Icons.email_rounded,
+                  size: 15,
+                ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 15),
               authInput(
                 hint: "Enter your Password",
+                inputType: TextInputType.visiblePassword,
+                private: true,
+                prefix: const Icon(
+                  Icons.lock_rounded,
+                  size: 15,
+                ),
+              ),
+              const SizedBox(height: 15),
+              authInput(
+                hint: "Enter your Phone Number",
+                inputType: TextInputType.phone,
+                prefix: const Icon(
+                  Icons.phone_rounded,
+                  size: 15,
+                ),
+              ),
+              const SizedBox(height: 15),
+              authInput(
+                hint: "Enter your Address",
+                inputType: TextInputType.streetAddress,
+                prefix: const Icon(
+                  ChapChap.location,
+                  size: 15,
+                ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -52,7 +90,7 @@ class Register extends StatelessWidget {
                   ),
                 ),
                 child: const Text(
-                  "Login",
+                  "Register",
                   style: TextStyle(
                     fontFamily: "SF Pro Rounded",
                     fontSize: 18,
@@ -60,8 +98,6 @@ class Register extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
-              createAccountShortcut()
             ],
           ),
         ),

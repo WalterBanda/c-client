@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:client/core/route/router.dart';
 import 'package:client/core/route/routes.dart';
 import 'package:client/screens/auth/onboarding.dart';
+import 'package:client/styles/icons/chap_chap_icons.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -33,10 +36,21 @@ class Login extends StatelessWidget {
               const SizedBox(height: 40),
               authInput(
                 hint: "Enter your Email",
+                inputType: TextInputType.emailAddress,
+                prefix: const Icon(
+                  Icons.email_rounded,
+                  size: 15,
+                ),
               ),
               const SizedBox(height: 14),
               authInput(
                 hint: "Enter your Password",
+                inputType: TextInputType.visiblePassword,
+                private: true,
+                prefix: const Icon(
+                  Icons.lock_rounded,
+                  size: 15,
+                ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -72,12 +86,18 @@ Widget authInput({
   required String hint,
   TextEditingController? controller,
   String? errorMessage,
+  TextInputType? inputType,
+  bool private = false,
+  Widget? prefix,
+  Widget? suffix,
 }) {
   return SizedBox(
     width: 300,
     child: TextField(
       controller: controller,
       textAlignVertical: TextAlignVertical.center,
+      obscureText: private,
+      keyboardType: inputType,
       style: const TextStyle(
         fontFamily: "SF Pro Rounded",
         fontSize: 15,
@@ -88,6 +108,8 @@ Widget authInput({
       decoration: InputDecoration(
         filled: true,
         isCollapsed: true,
+        prefixIcon: prefix,
+        suffixIcon: suffix,
         contentPadding: const EdgeInsets.fromLTRB(30, 17, 0, 17),
         fillColor: AppColors.input,
         border: OutlineInputBorder(
