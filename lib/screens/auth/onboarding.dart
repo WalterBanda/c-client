@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:client/styles/index.dart';
-import 'package:client/styles/ui/colors.dart';
+import '../../styles/index.dart';
+import '../../styles/ui/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/route/router.dart';
-import '../../core/route/routes.dart';
+import '../../core/routes/router.dart';
+import '../../core/routes/routes.dart';
 
 Widget buildBranding(BuildContext context) {
   return Column(

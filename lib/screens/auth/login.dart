@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
-import 'package:client/core/route/router.dart';
-import 'package:client/core/route/routes.dart';
+import 'package:client/core/routes/router.dart';
+import 'package:client/core/routes/routes.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/styles/icons/chap_chap_icons.dart';
 import 'package:client/styles/ui/colors.dart';

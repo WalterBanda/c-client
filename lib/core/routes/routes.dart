@@ -1,5 +1,5 @@
 import 'package:client/router/auth.dart';
-import 'package:client/router/roles.dart';
+import 'package:client/router/roles/roles.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
@@ -9,7 +9,6 @@ class GlobalRoutes {
   static const String auth = Auth.id;
 
   // TODO: Replace with Appropriate navigator/module id
-  static const String pages = 'pages';
   static const String roles = Roles.id;
 }
 
@@ -20,7 +19,7 @@ class AuthRoutes {
   static const String register = Register.id;
 }
 
-class PageRoutes {
+class SharedRoutes {
   static const String settings = "settings";
   static const String profile = "profile";
 }

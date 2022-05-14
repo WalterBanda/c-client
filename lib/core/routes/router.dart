@@ -1,5 +1,5 @@
 import 'package:client/router/auth.dart';
-import 'package:client/router/roles.dart';
+import 'package:client/router/roles/roles.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
@@ -15,9 +15,7 @@ class GlobalNavigator {
     switch (settings.name) {
       case GlobalRoutes.auth:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
-      // TODO: Write other Routes
-      case GlobalRoutes.pages:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
+      // TODO: Implement Auto Login for Roles
       case GlobalRoutes.roles:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Roles());
       default:
@@ -51,10 +49,6 @@ class AuthRouter {
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Splash());
     }
   }
-}
-
-class PageRouter {
-  static GlobalKey<NavigatorState> router = GlobalKey();
 }
 
 class RolesRouter {

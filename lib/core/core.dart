@@ -1,7 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
-import 'route/router.dart';
+import 'routes/router.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
