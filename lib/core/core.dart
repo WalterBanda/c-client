@@ -13,7 +13,8 @@ class App extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+      // TODO: Implement Theming 🎨
+      darkTheme: ThemeData.light(),
       navigatorKey: GlobalNavigator.router,
       initialRoute: GlobalNavigator.initialRoute(),
       onGenerateRoute: GlobalNavigator.generateRoute,

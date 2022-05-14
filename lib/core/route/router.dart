@@ -1,6 +1,7 @@
 import 'package:client/router/auth.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
+import 'package:client/screens/auth/register.dart';
 import 'package:flutter/material.dart';
 
 import 'routes.dart';
@@ -40,11 +41,10 @@ class AuthRouter {
       case AuthRoutes.onboarding:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const Onboarding());
-      // TODO: Write other Routes
       case AuthRoutes.login:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Login());
       case AuthRoutes.register:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Splash());
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Register());
       default:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Splash());
     }
