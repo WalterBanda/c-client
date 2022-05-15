@@ -14,41 +14,13 @@ class PageNavigator extends StatelessWidget {
   final String routeToNavigate;
 
   static const String id = "roles_manager";
+  static GlobalKey<ScaffoldState> scaffold = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: const <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Drawer Header',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.message),
-              title: Text('Messages'),
-            ),
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Profile'),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-            ),
-          ],
-        ),
-      ),
+      key: PageNavigator.scaffold,
+      drawer: customDrawer(),
       body: Stack(
         children: <Widget>[
           Navigator(
@@ -58,31 +30,45 @@ class PageNavigator extends StatelessWidget {
           ),
           SafeArea(
             child: Container(
-              // width: 358,
-              // height: 66,
-              padding: EdgeInsets.all(20),
-              color: AppColors.bg,
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+              margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                // color: AppColors.bg,
+              ),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(onPressed: () {}, icon: Icon(ChapChap.menu)),
-                  Text(
+                  IconButton(
+                      onPressed: () {
+                        scaffold.currentState!.openDrawer();
+                      },
+                      icon: const Icon(ChapChap.menu)),
+                  const Text(
                     "Home",
+                    // PageRouter.router.currentContext.
                     style: TextStyle(
                       fontFamily: "SF Pro Rounded",
                       fontSize: 24,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  IconButton(onPressed: () {}, icon: Icon(ChapChap.light))
+                  IconButton(onPressed: () {}, icon: const Icon(ChapChap.light))
                 ],
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Drawer customDrawer() {
+    return Drawer(
+      width: 270,
+      child: Center(),
     );
   }
 }
