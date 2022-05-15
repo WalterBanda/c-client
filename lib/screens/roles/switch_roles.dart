@@ -41,30 +41,30 @@ void navToRole(String role) {
   String route;
 
   switch (role) {
-    case PageRoutes.admin:
-      route = PageRoutes.admin;
+    case PagesRoutes.admin:
+      route = PagesRoutes.admin;
       break;
-    case PageRoutes.user:
-      route = PageRoutes.user;
+    case PagesRoutes.user:
+      route = PagesRoutes.user;
       break;
-    case PageRoutes.garage:
-      route = PageRoutes.garage;
+    case PagesRoutes.garage:
+      route = PagesRoutes.garage;
       break;
     default:
-      route = PageRoutes.user;
+      route = PagesRoutes.user;
   }
 
-  // PageRouter.router.currentState!.pushReplacementNamed(route);
-  print({"Navigated to :": route});
+  GlobalNavigator.router.currentState!
+      .pushReplacementNamed(PageNavigator.id, arguments: route);
 }
 
 IconData getRoleIcon(String role) {
   switch (role) {
-    case PageRoutes.admin:
+    case PagesRoutes.admin:
       return ChapChap.admin;
-    case PageRoutes.user:
+    case PagesRoutes.user:
       return ChapChap.user;
-    case PageRoutes.garage:
+    case PagesRoutes.garage:
       return ChapChap.garage;
     default:
       return ChapChap.info;

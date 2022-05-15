@@ -29,7 +29,7 @@ class SharedRoutes {
   static const String profile = "profile";
 }
 
-class PageRoutes {
+class PagesRoutes {
   static const String admin = AdminHome.id;
   static const String user = UserHome.id;
   static const String garage = GarageHome.id;

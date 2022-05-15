@@ -21,7 +21,10 @@ class GlobalNavigator {
       // TODO: Implement Auto Login for Roles
       case GlobalRoutes.pages:
         return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const PageNavigator());
+          pageBuilder: (_, __, ___) => PageNavigator(
+            routeToNavigate: settings.arguments as String,
+          ),
+        );
       case GlobalRoutes.switchRoles:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const SwitchRoles());
@@ -61,19 +64,19 @@ class AuthRouter {
 class PageRouter {
   static GlobalKey<NavigatorState> router = GlobalKey();
 
-  static const initialRoute = PageRoutes.user;
+  static const initialRoute = PagesRoutes.user;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // TODO Implement Routes
     switch (settings.name) {
-      case PageRoutes.requestRole:
+      case PagesRoutes.requestRole:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
-      case PageRoutes.admin:
+      case PagesRoutes.admin:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const AdminHome());
-      case PageRoutes.garage:
+      case PagesRoutes.garage:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const GarageHome());
-      case PageRoutes.user:
+      case PagesRoutes.user:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
 
       default:
