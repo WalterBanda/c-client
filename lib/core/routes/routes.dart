@@ -13,7 +13,7 @@ class GlobalRoutes {
   static const String auth = Auth.id;
 
   // TODO: Replace with Appropriate navigator/module id
-  static const String roles = Roles.id;
+  static const String roles = RoleNavigator.id;
 }
 
 class AuthRoutes {

@@ -20,7 +20,8 @@ class GlobalNavigator {
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
       // TODO: Implement Auto Login for Roles
       case GlobalRoutes.roles:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Roles());
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const RoleNavigator());
       default:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
     }

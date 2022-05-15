@@ -1,4 +1,3 @@
-import 'package:client/core/models/roles/constants.dart';
 import 'package:client/core/routes/router.dart';
 import 'package:client/core/routes/routes.dart';
 import 'package:client/router/roles/roles.dart';
@@ -38,18 +37,18 @@ class ChangeRoleScreen extends StatelessWidget {
   }
 }
 
-Row generateRoles() {
-  void _roleNavigation(RoleTypes role) {
+Widget generateRoles() {
+  void _roleNavigation(String role) {
     String route;
 
     switch (role) {
-      case RoleTypes.admin:
+      case RoleRoutes.admin:
         route = RoleRoutes.admin;
         break;
-      case RoleTypes.user:
+      case RoleRoutes.user:
         route = RoleRoutes.user;
         break;
-      case RoleTypes.garage:
+      case RoleRoutes.garage:
         route = RoleRoutes.garage;
         break;
       default:
