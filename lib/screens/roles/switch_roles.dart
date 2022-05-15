@@ -65,7 +65,7 @@ IconData getRoleIcon(String role) {
     case PagesRoutes.user:
       return ChapChap.user;
     case PagesRoutes.garage:
-      return ChapChap.garage;
+      return ChapChap.car;
     default:
       return ChapChap.info;
   }
