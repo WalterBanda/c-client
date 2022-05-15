@@ -1,8 +1,8 @@
 import 'package:client/core/routes/router.dart';
 import 'package:flutter/material.dart';
 
-class Roles extends StatelessWidget {
-  const Roles({Key? key}) : super(key: key);
+class GarageNavigator extends StatelessWidget {
+  const GarageNavigator({Key? key}) : super(key: key);
 
   static const String id = "roles_manager";
 

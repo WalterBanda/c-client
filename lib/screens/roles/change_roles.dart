@@ -38,7 +38,7 @@ class ChangeRoleScreen extends StatelessWidget {
 }
 
 Widget generateRoles() {
-  void _roleNavigation(String role) {
+  void _navToRole(String role) {
     String route;
 
     switch (role) {
@@ -55,18 +55,49 @@ Widget generateRoles() {
         route = RoleRoutes.user;
     }
 
-    RolesRouter.router.currentState!.pushReplacementNamed(RoleRoutes.user);
+    RolesRouter.router.currentState!.pushReplacementNamed(route);
   }
 
-  return Row(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      role(onPressed: () => _roleNavigation, icon: ChapChap.admin),
-      const SizedBox(width: 15),
-      role(onPressed: () => _roleNavigation, icon: ChapChap.user),
-      const SizedBox(width: 15),
-      role(onPressed: () => _roleNavigation, icon: ChapChap.garage),
-    ],
+  IconData _getIcon(String role) {
+    switch (role) {
+      case RoleRoutes.admin:
+        return ChapChap.admin;
+      case RoleRoutes.user:
+        return ChapChap.user;
+      case RoleRoutes.garage:
+        return ChapChap.garage;
+      default:
+        return ChapChap.user;
+    }
+  }
+
+  // TODO Add get roles from user profile
+  final Future<List<String>> _dataFetch = Future<List<String>>.delayed(
+    const Duration(milliseconds: 100),
+    (() => ["admin", "user", "garage"]),
+  );
+
+  return FutureBuilder(
+    future: _dataFetch,
+    builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+      List<Widget> children = [];
+
+      if (snapshot.hasData) {
+        children.add(const SizedBox(width: 15));
+        for (var i = 0; i < snapshot.data!.length; ++i) {
+          children.add(role(
+              onPressed: () => _navToRole(snapshot!.data![i].toString()),
+              icon: _getIcon(snapshot!.data![i].toString())));
+          children.add(const SizedBox(width: 15));
+        }
+      } else if (snapshot.hasError) {
+        children.add(const Text("Unable to fetch your Roles"));
+      } else {
+        children.add(const Text("Fetching Roles"));
+      }
+
+      return Row(mainAxisSize: MainAxisSize.min, children: children);
+    },
   );
 }
 

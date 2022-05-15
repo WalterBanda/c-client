@@ -11,7 +11,7 @@ import '../../core/routes/routes.dart';
 Widget buildBranding(BuildContext context) {
   return Column(
     mainAxisSize: MainAxisSize.min,
-    children: const [
+    children: const <Widget>[
       Icon(ChapChap.logo, size: 100),
       SizedBox(height: 18),
       Text(
@@ -133,8 +133,8 @@ Container createAccountShortcut() {
     ),
     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
     child: TextButton(
-      onPressed: () =>
-          AuthRouter.router.currentState!.pushNamed(AuthRoutes.register),
+      onPressed: () => AuthRouter.router.currentState!
+          .pushReplacementNamed(AuthRoutes.register),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

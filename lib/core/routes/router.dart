@@ -1,5 +1,8 @@
 import 'package:client/router/auth.dart';
+import 'package:client/router/roles/admin.dart';
+import 'package:client/router/roles/garage.dart';
 import 'package:client/router/roles/roles.dart';
+import 'package:client/router/roles/user.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
@@ -71,13 +74,13 @@ class RolesRouter {
             pageBuilder: (_, __, ___) => const ChangeRoleScreen());
       case RoleRoutes.admin:
         return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
+            pageBuilder: (_, __, ___) => const AdminNavigator());
       case RoleRoutes.garage:
         return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
+            pageBuilder: (_, __, ___) => const GarageNavigator());
       case RoleRoutes.user:
         return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
+            pageBuilder: (_, __, ___) => const UserNavigator());
 
       default:
         return PageRouteBuilder(
@@ -108,7 +111,7 @@ class UserRouter {
 class GarageRouter {
   static GlobalKey<NavigatorState> router = GlobalKey();
 
-  static const initialRoute = UserRoutes.home;
+  static const initialRoute = GarageRoutes.home;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -131,7 +134,7 @@ class GarageRouter {
 class AdminRouter {
   static GlobalKey<NavigatorState> router = GlobalKey();
 
-  static const initialRoute = UserRoutes.home;
+  static const initialRoute = AdminRoutes.home;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
