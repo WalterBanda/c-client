@@ -4,7 +4,7 @@ import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
 import 'package:client/screens/roles/admin/home.dart';
-import 'package:client/screens/roles/change_roles.dart';
+import 'package:client/screens/roles/switch_roles.dart';
 import 'package:client/screens/roles/garage/home.dart';
 import 'package:client/screens/roles/user/home.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +22,9 @@ class GlobalNavigator {
       case GlobalRoutes.pages:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const PageNavigator());
+      case GlobalRoutes.switchRoles:
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const SwitchRoles());
       default:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
     }

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import '../../styles/index.dart';
 import '../../styles/ui/colors.dart';
 
-class ChangeRoleScreen extends StatelessWidget {
-  const ChangeRoleScreen({Key? key}) : super(key: key);
+class SwitchRoles extends StatelessWidget {
+  const SwitchRoles({Key? key}) : super(key: key);
 
-  static const String id = "change_roles";
+  static const String id = "switch_roles";
 
   @override
   Widget build(BuildContext context) {
@@ -37,57 +37,61 @@ class ChangeRoleScreen extends StatelessWidget {
   }
 }
 
+void navToRole(String role) {
+  String route;
+
+  switch (role) {
+    case PageRoutes.admin:
+      route = PageRoutes.admin;
+      break;
+    case PageRoutes.user:
+      route = PageRoutes.user;
+      break;
+    case PageRoutes.garage:
+      route = PageRoutes.garage;
+      break;
+    default:
+      route = PageRoutes.user;
+  }
+
+  // PageRouter.router.currentState!.pushReplacementNamed(route);
+  print({"Navigated to :": route});
+}
+
+IconData getRoleIcon(String role) {
+  switch (role) {
+    case PageRoutes.admin:
+      return ChapChap.admin;
+    case PageRoutes.user:
+      return ChapChap.user;
+    case PageRoutes.garage:
+      return ChapChap.garage;
+    default:
+      return ChapChap.info;
+  }
+}
+
 Widget generateRoles() {
-  void _navToRole(String role) {
-    String route;
-
-    switch (role) {
-      case PageRoutes.admin:
-        route = PageRoutes.admin;
-        break;
-      case PageRoutes.user:
-        route = PageRoutes.user;
-        break;
-      case PageRoutes.garage:
-        route = PageRoutes.garage;
-        break;
-      default:
-        route = PageRoutes.user;
-    }
-
-    PageRouter.router.currentState!.pushReplacementNamed(route);
-  }
-
-  IconData _getIcon(String role) {
-    switch (role) {
-      case PageRoutes.admin:
-        return ChapChap.admin;
-      case PageRoutes.user:
-        return ChapChap.user;
-      case PageRoutes.garage:
-        return ChapChap.garage;
-      default:
-        return ChapChap.user;
-    }
-  }
-
   // TODO Add get roles from user profile
-  final Future<List<String>> _dataFetch = Future<List<String>>.delayed(
+  final Future<List<String>> _getRoles = Future<List<String>>.delayed(
     const Duration(milliseconds: 100),
     (() => ["admin", "user", "garage"]),
   );
 
   return FutureBuilder(
-    future: _dataFetch,
+    future: _getRoles,
     builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
       List<Widget> children = [];
 
       if (snapshot.hasData) {
         children.add(const SizedBox(width: 15));
         for (var i = 0; i < snapshot.data!.length; ++i) {
-          children.add(role(
-              onPressed: () => _navToRole(snapshot.data![i].toString()),
-              icon: _getIcon(snapshot.data![i].toString())));
+          children.add(
+            roleTab(
+              onPressed: () => navToRole(snapshot.data![i].toString()),
+              icon: getRoleIcon(snapshot.data![i].toString()),
+            ),
+          );
           children.add(const SizedBox(width: 15));
         }
       } else if (snapshot.hasError) {
@@ -101,7 +105,7 @@ Widget generateRoles() {
   );
 }
 
-Widget role({required GestureTapCallback onPressed, IconData? icon}) {
+Widget roleTab({required GestureTapCallback onPressed, IconData? icon}) {
   return ElevatedButton(
     onPressed: onPressed,
     style: ElevatedButton.styleFrom(

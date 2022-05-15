@@ -3,7 +3,7 @@ import 'package:client/router/roles.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
-import 'package:client/screens/roles/change_roles.dart';
+import 'package:client/screens/roles/switch_roles.dart';
 import 'package:client/screens/roles/user/home.dart';
 
 import '../../screens/roles/admin/home.dart';
@@ -14,7 +14,7 @@ class GlobalRoutes {
 
   // TODO: Replace with Appropriate navigator/module id
   static const String pages = PageNavigator.id;
-  static const String switchRoles = ChangeRoleScreen.id;
+  static const String switchRoles = SwitchRoles.id;
 }
 
 class AuthRoutes {

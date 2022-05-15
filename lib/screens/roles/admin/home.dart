@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 class AdminHome extends StatelessWidget {
   const AdminHome({Key? key}) : super(key: key);
 
-  static const String id = "admin_home";
+  static const String id = "admin";
 
   @override
   Widget build(BuildContext context) {
