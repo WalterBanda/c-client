@@ -1,5 +1,7 @@
+import 'package:client/core/models/roles/constants.dart';
 import 'package:client/core/routes/router.dart';
 import 'package:client/core/routes/routes.dart';
+import 'package:client/router/roles/roles.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/index.dart';
@@ -37,8 +39,23 @@ class ChangeRoleScreen extends StatelessWidget {
 }
 
 Row generateRoles() {
-  void _roleNavigation(String role) {
-    // TODO Implement Role based Login
+  void _roleNavigation(RoleTypes role) {
+    String route;
+
+    switch (role) {
+      case RoleTypes.admin:
+        route = RoleRoutes.admin;
+        break;
+      case RoleTypes.user:
+        route = RoleRoutes.user;
+        break;
+      case RoleTypes.garage:
+        route = RoleRoutes.garage;
+        break;
+      default:
+        route = RoleRoutes.user;
+    }
+
     RolesRouter.router.currentState!.pushReplacementNamed(RoleRoutes.user);
   }
 
