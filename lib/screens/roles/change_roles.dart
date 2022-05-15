@@ -10,24 +10,6 @@ class ChangeRoleScreen extends StatelessWidget {
 
   static const String id = "change_roles";
 
-  Widget role({required GestureTapCallback onPressed, IconData? icon}) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        primary: AppColors.bgDark,
-        onSurface: AppColors.primary,
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 19),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      ),
-      child: Icon(icon, size: 25, color: AppColors.primary),
-    );
-  }
-
-  _roleNavigation() {
-    // TODO Implement Role based Login
-    RolesRouter.router.currentState!.pushReplacementNamed(RoleRoutes.user);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,20 +27,42 @@ class ChangeRoleScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  role(onPressed: _roleNavigation, icon: ChapChap.admin),
-                  const SizedBox(width: 15),
-                  role(onPressed: _roleNavigation, icon: ChapChap.user),
-                  const SizedBox(width: 15),
-                  role(onPressed: _roleNavigation, icon: ChapChap.garage),
-                ],
-              ),
+              generateRoles(),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+Row generateRoles() {
+  void _roleNavigation(String role) {
+    // TODO Implement Role based Login
+    RolesRouter.router.currentState!.pushReplacementNamed(RoleRoutes.user);
+  }
+
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      role(onPressed: () => _roleNavigation, icon: ChapChap.admin),
+      const SizedBox(width: 15),
+      role(onPressed: () => _roleNavigation, icon: ChapChap.user),
+      const SizedBox(width: 15),
+      role(onPressed: () => _roleNavigation, icon: ChapChap.garage),
+    ],
+  );
+}
+
+Widget role({required GestureTapCallback onPressed, IconData? icon}) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    style: ElevatedButton.styleFrom(
+      primary: AppColors.bgDark,
+      onSurface: AppColors.primary,
+      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 19),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+    ),
+    child: Icon(icon, size: 25, color: AppColors.primary),
+  );
 }

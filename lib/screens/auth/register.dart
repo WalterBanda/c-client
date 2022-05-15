@@ -12,7 +12,7 @@ class Register extends StatelessWidget {
 
   static const id = "register";
 
-  _userRegister() {
+  void _userRegister() {
     GlobalNavigator.router.currentState!
         .pushReplacementNamed(GlobalRoutes.roles);
   }

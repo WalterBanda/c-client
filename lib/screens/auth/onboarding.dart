@@ -31,7 +31,7 @@ class Splash extends StatelessWidget {
 
   static const String id = "splash";
 
-  _delay() {
+  void _delay() {
     Timer(const Duration(seconds: 3), () {
       AuthRouter.router.currentState!
           .pushReplacementNamed(AuthRoutes.onboarding);
@@ -74,17 +74,17 @@ class Onboarding extends StatelessWidget {
 
   // TODO: Implement Google & Github SignIn
 
-  _googleSignIn() {
+  void _googleSignIn() {
     GlobalNavigator.router.currentState!
         .pushReplacementNamed(GlobalRoutes.roles);
   }
 
-  _gitHubSignIn() {
+  void _gitHubSignIn() {
     GlobalNavigator.router.currentState!
         .pushReplacementNamed(GlobalRoutes.roles);
   }
 
-  _emailSignIn() =>
+  void _emailSignIn() =>
       AuthRouter.router.currentState!.pushReplacementNamed(AuthRoutes.login);
 
   @override

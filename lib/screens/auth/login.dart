@@ -12,7 +12,7 @@ class Login extends StatelessWidget {
 
   static const String id = "login";
 
-  _userAuth() {
+  void _userAuth() {
     GlobalNavigator.router.currentState!
         .pushReplacementNamed(GlobalRoutes.roles);
   }
