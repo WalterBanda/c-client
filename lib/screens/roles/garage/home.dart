@@ -1,3 +1,4 @@
+import 'package:client/router/roles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -9,9 +10,28 @@ class GarageHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Center(
-        child: Text("Garage Home 🏠"),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "Garage Home 🏠",
+              style: TextStyle(
+                fontFamily: "SF Pro Rounded",
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                PageNavigator.scaffold.currentState!.openDrawer();
+              },
+              child: const Text("Open Drawer"),
+            )
+          ],
+        ),
       ),
     );
   }

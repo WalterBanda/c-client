@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../../../router/roles.dart';
+
 class UserHome extends StatelessWidget {
   const UserHome({Key? key}) : super(key: key);
 
@@ -9,9 +11,28 @@ class UserHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Center(
-        child: Text("User Home 🏠"),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "User Home 🏠",
+              style: TextStyle(
+                fontFamily: "SF Pro Rounded",
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                PageNavigator.scaffold.currentState!.openDrawer();
+              },
+              child: const Text("Open Drawer"),
+            )
+          ],
+        ),
       ),
     );
   }
