@@ -1,8 +1,5 @@
 import 'package:client/router/auth.dart';
-import 'package:client/router/roles/admin.dart';
-import 'package:client/router/roles/garage.dart';
-import 'package:client/router/roles/roles.dart';
-import 'package:client/router/roles/user.dart';
+import 'package:client/router/roles.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
@@ -73,79 +70,16 @@ class RolesRouter {
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const ChangeRoleScreen());
       case RoleRoutes.admin:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const AdminNavigator());
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const AdminHome());
       case RoleRoutes.garage:
         return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const GarageNavigator());
+            pageBuilder: (_, __, ___) => const GarageHome());
       case RoleRoutes.user:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const UserNavigator());
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
 
       default:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const ChangeRoleScreen());
-    }
-  }
-}
-
-class UserRouter {
-  static GlobalKey<NavigatorState> router = GlobalKey();
-
-  static const initialRoute = UserRoutes.home;
-
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case UserRoutes.home:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
-      case SharedRoutes.profile:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
-      case SharedRoutes.settings:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
-      default:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
-    }
-  }
-}
-
-class GarageRouter {
-  static GlobalKey<NavigatorState> router = GlobalKey();
-
-  static const initialRoute = GarageRoutes.home;
-
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case GarageRoutes.home:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const GarageHome());
-      case SharedRoutes.profile:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const GarageHome());
-      case SharedRoutes.settings:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const GarageHome());
-      default:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const GarageHome());
-    }
-  }
-}
-
-class AdminRouter {
-  static GlobalKey<NavigatorState> router = GlobalKey();
-
-  static const initialRoute = AdminRoutes.home;
-
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case AdminRoutes.home:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const AdminHome());
-      case SharedRoutes.profile:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const AdminHome());
-      case SharedRoutes.settings:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const AdminHome());
-      default:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const AdminHome());
     }
   }
 }

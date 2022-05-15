@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 class GarageHome extends StatelessWidget {
   const GarageHome({Key? key}) : super(key: key);
 
-  static const String id = "home";
+  static const String id = "garage_home";
 
   @override
   Widget build(BuildContext context) {

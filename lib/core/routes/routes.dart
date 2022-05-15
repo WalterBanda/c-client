@@ -1,5 +1,5 @@
 import 'package:client/router/auth.dart';
-import 'package:client/router/roles/roles.dart';
+import 'package:client/router/roles.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
@@ -29,22 +29,10 @@ class SharedRoutes {
 }
 
 class RoleRoutes {
-  //TODO Implement Roles Routes
-  static const String admin = "admin";
-  static const String user = "user";
-  static const String garage = "garage";
+  static const String admin = AdminHome.id;
+  static const String user = UserHome.id;
+  static const String garage = GarageHome.id;
   static const String changeRole = ChangeRoleScreen.id;
   static const String requestRole = "request_role";
-}
-
-class UserRoutes {
-  static const String home = UserHome.id;
-}
-
-class GarageRoutes {
-  static const String home = GarageHome.id;
-}
-
-class AdminRoutes {
-  static const String home = AdminHome.id;
+  static const String page = "page";
 }

@@ -1,6 +1,6 @@
 import 'package:client/core/routes/router.dart';
 import 'package:client/core/routes/routes.dart';
-import 'package:client/router/roles/roles.dart';
+import 'package:client/router/roles.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/index.dart';
@@ -86,8 +86,8 @@ Widget generateRoles() {
         children.add(const SizedBox(width: 15));
         for (var i = 0; i < snapshot.data!.length; ++i) {
           children.add(role(
-              onPressed: () => _navToRole(snapshot!.data![i].toString()),
-              icon: _getIcon(snapshot!.data![i].toString())));
+              onPressed: () => _navToRole(snapshot.data![i].toString()),
+              icon: _getIcon(snapshot.data![i].toString())));
           children.add(const SizedBox(width: 15));
         }
       } else if (snapshot.hasError) {
