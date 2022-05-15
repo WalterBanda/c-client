@@ -14,7 +14,7 @@ class Login extends StatelessWidget {
 
   void _userAuth() {
     GlobalNavigator.router.currentState!
-        .pushReplacementNamed(GlobalRoutes.roles);
+        .pushReplacementNamed(GlobalRoutes.switchRoles);
   }
 
   @override

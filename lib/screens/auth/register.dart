@@ -14,7 +14,7 @@ class Register extends StatelessWidget {
 
   void _userRegister() {
     GlobalNavigator.router.currentState!
-        .pushReplacementNamed(GlobalRoutes.roles);
+        .pushReplacementNamed(GlobalRoutes.switchRoles);
   }
 
   @override

@@ -76,12 +76,12 @@ class Onboarding extends StatelessWidget {
 
   void _googleSignIn() {
     GlobalNavigator.router.currentState!
-        .pushReplacementNamed(GlobalRoutes.roles);
+        .pushReplacementNamed(GlobalRoutes.switchRoles);
   }
 
   void _gitHubSignIn() {
     GlobalNavigator.router.currentState!
-        .pushReplacementNamed(GlobalRoutes.roles);
+        .pushReplacementNamed(GlobalRoutes.switchRoles);
   }
 
   void _emailSignIn() =>

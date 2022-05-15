@@ -42,29 +42,29 @@ Widget generateRoles() {
     String route;
 
     switch (role) {
-      case RoleRoutes.admin:
-        route = RoleRoutes.admin;
+      case PageRoutes.admin:
+        route = PageRoutes.admin;
         break;
-      case RoleRoutes.user:
-        route = RoleRoutes.user;
+      case PageRoutes.user:
+        route = PageRoutes.user;
         break;
-      case RoleRoutes.garage:
-        route = RoleRoutes.garage;
+      case PageRoutes.garage:
+        route = PageRoutes.garage;
         break;
       default:
-        route = RoleRoutes.user;
+        route = PageRoutes.user;
     }
 
-    RolesRouter.router.currentState!.pushReplacementNamed(route);
+    PageRouter.router.currentState!.pushReplacementNamed(route);
   }
 
   IconData _getIcon(String role) {
     switch (role) {
-      case RoleRoutes.admin:
+      case PageRoutes.admin:
         return ChapChap.admin;
-      case RoleRoutes.user:
+      case PageRoutes.user:
         return ChapChap.user;
-      case RoleRoutes.garage:
+      case PageRoutes.garage:
         return ChapChap.garage;
       default:
         return ChapChap.user;

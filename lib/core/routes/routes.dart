@@ -13,7 +13,8 @@ class GlobalRoutes {
   static const String auth = Auth.id;
 
   // TODO: Replace with Appropriate navigator/module id
-  static const String roles = RoleNavigator.id;
+  static const String pages = PageNavigator.id;
+  static const String switchRoles = ChangeRoleScreen.id;
 }
 
 class AuthRoutes {
@@ -28,11 +29,9 @@ class SharedRoutes {
   static const String profile = "profile";
 }
 
-class RoleRoutes {
+class PageRoutes {
   static const String admin = AdminHome.id;
   static const String user = UserHome.id;
   static const String garage = GarageHome.id;
-  static const String changeRole = ChangeRoleScreen.id;
   static const String requestRole = "request_role";
-  static const String page = "page";
 }

@@ -19,9 +19,9 @@ class GlobalNavigator {
       case GlobalRoutes.auth:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
       // TODO: Implement Auto Login for Roles
-      case GlobalRoutes.roles:
+      case GlobalRoutes.pages:
         return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const RoleNavigator());
+            pageBuilder: (_, __, ___) => const PageNavigator());
       default:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
     }
@@ -55,31 +55,26 @@ class AuthRouter {
   }
 }
 
-class RolesRouter {
+class PageRouter {
   static GlobalKey<NavigatorState> router = GlobalKey();
 
-  static const initialRoute = RoleRoutes.changeRole;
+  static const initialRoute = PageRoutes.user;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // TODO Implement Routes
     switch (settings.name) {
-      case RoleRoutes.changeRole:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
-      case RoleRoutes.requestRole:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
-      case RoleRoutes.admin:
+      case PageRoutes.requestRole:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
+      case PageRoutes.admin:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const AdminHome());
-      case RoleRoutes.garage:
+      case PageRoutes.garage:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const GarageHome());
-      case RoleRoutes.user:
+      case PageRoutes.user:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
 
       default:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const ChangeRoleScreen());
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
     }
   }
 }
