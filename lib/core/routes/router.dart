@@ -78,6 +78,10 @@ class PageRouter {
             pageBuilder: (_, __, ___) => const GarageHome());
       case PagesRoutes.user:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
+      case SharedRoutes.profile:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
+      case SharedRoutes.settings:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
 
       default:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());

@@ -9,11 +9,9 @@ class UserHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Text("User Home 🏠"),
-        ),
+    return const SafeArea(
+      child: Center(
+        child: Text("User Home 🏠"),
       ),
     );
   }
