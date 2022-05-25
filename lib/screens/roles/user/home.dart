@@ -5,9 +5,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../../../router/roles.dart';
 
 class UserHome extends StatelessWidget {
-  const UserHome({Key? key}) : super(key: key);
+  UserHome({this.name, Key? key}) : super(key: key);
 
   static const String id = "user";
+  String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +17,9 @@ class UserHome extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              "User Home 🏠",
-              style: TextStyle(
+            Text(
+              "$name Home 🏠",
+              style: const TextStyle(
                 fontFamily: "SF Pro Rounded",
                 fontWeight: FontWeight.w700,
                 fontSize: 20,

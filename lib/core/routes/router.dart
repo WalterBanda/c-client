@@ -67,24 +67,44 @@ class PageRouter {
   static const initialRoute = PagesRoutes.user;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // TODO Implement Routes
+    Widget page = UserHome();
+
     switch (settings.name) {
       case PagesRoutes.requestRole:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
+        page = UserHome();
+        break;
       case PagesRoutes.admin:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const AdminHome());
+        page = const AdminHome();
+        break;
       case PagesRoutes.garage:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const GarageHome());
+        page = const GarageHome();
+        break;
       case PagesRoutes.user:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
+        page = UserHome(
+          name: "User",
+        );
+        break;
       case SharedRoutes.profile:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
+        page = UserHome(
+          name: "Profile",
+        );
+        break;
       case SharedRoutes.settings:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
+        page = UserHome(
+          name: "Settings",
+        );
+        break;
 
       default:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserHome());
+        page = UserHome(
+          name: "No Route",
+        );
+        break;
     }
+
+    return PageRouteBuilder(
+      pageBuilder: (_, __, ___) => page,
+      transitionDuration: const Duration(milliseconds: 0),
+    );
   }
 }

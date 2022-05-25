@@ -64,20 +64,24 @@ class PageNavigator extends StatelessWidget {
     }
 
     Widget _profile() {
+      Widget _defaultProfile() {
+        return Container(
+          padding: const EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.bg.withOpacity(0.2),
+          ),
+          child: const Icon(ChapChap.user, size: 50),
+        );
+      }
+
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            padding: const EdgeInsets.all(30),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.bg.withOpacity(0.2),
-            ),
-            child: const Icon(ChapChap.user, size: 50),
-          ),
+          _defaultProfile(),
           const SizedBox(height: 20),
           const Text(
-            "Wade Warren",
+            "Username",
             style: TextStyle(
               color: Colors.black,
               fontSize: 24,
@@ -97,11 +101,46 @@ class PageNavigator extends StatelessWidget {
           children: [
             _profile(),
             const SizedBox(height: 40),
-            navLink(icon: ChapChap.home, label: "Home", onPressed: () {}),
-            navLink(icon: ChapChap.admin, label: "Admin", onPressed: () {}),
-            navLink(icon: ChapChap.car, label: "Garage", onPressed: () {}),
-            navLink(icon: ChapChap.user, label: "Profile", onPressed: () {}),
-            navLink(icon: Icons.settings, label: "Settings", onPressed: () {}),
+            Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  navLink(
+                      icon: ChapChap.home,
+                      label: "Home",
+                      onPressed: () {
+                        PageRouter.router.currentState!
+                            .pushReplacementNamed(PagesRoutes.user);
+                      }),
+                  navLink(
+                      icon: ChapChap.admin,
+                      label: "Admin",
+                      onPressed: () {
+                        PageRouter.router.currentState!
+                            .pushReplacementNamed(PagesRoutes.admin);
+                      }),
+                  navLink(
+                      icon: ChapChap.car,
+                      label: "Garage",
+                      onPressed: () {
+                        PageRouter.router.currentState!
+                            .pushReplacementNamed(PagesRoutes.garage);
+                      }),
+                  navLink(
+                      icon: ChapChap.user,
+                      label: "Profile",
+                      onPressed: () {
+                        PageRouter.router.currentState!
+                            .pushReplacementNamed(SharedRoutes.profile);
+                      }),
+                  navLink(
+                      icon: Icons.settings,
+                      label: "Settings",
+                      onPressed: () {
+                        PageRouter.router.currentState!
+                            .pushReplacementNamed(SharedRoutes.settings);
+                      }),
+                ]),
             const SizedBox(height: 40),
             _logoutButton(_userLogout),
           ],
@@ -115,24 +154,19 @@ class PageNavigator extends StatelessWidget {
     String label = "Link",
     required VoidCallback onPressed,
   }) {
-    return TextButton(
+    return TextButton.icon(
       onPressed: onPressed,
-      child: ListTile(
-        hoverColor: AppColors.success,
-        textColor: AppColors.primary,
-        iconColor: AppColors.primary,
-        contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 60),
-        minLeadingWidth: 0,
-        leading: Icon(icon, size: 20),
-        title: Text(
-          label,
-          style: const TextStyle(
-            fontFamily: "SF Pro Rounded",
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-          ),
+      icon: Icon(icon),
+      style: TextButton.styleFrom(
+        primary: AppColors.primary,
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+        textStyle: const TextStyle(
+          fontFamily: "SF Pro Rounded",
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
         ),
       ),
+      label: Text(label),
     );
   }
 }
