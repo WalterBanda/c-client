@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-import '../../../router/roles.dart';
+import '../../router/roles.dart';
 
-class UserHome extends StatelessWidget {
-  const UserHome({Key? key}) : super(key: key);
-
-  static const String id = "user";
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +13,7 @@ class UserHome extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              "User Home 🏠",
+              "Settings ☕",
               style: TextStyle(
                 fontFamily: "SF Pro Rounded",
                 fontWeight: FontWeight.w700,

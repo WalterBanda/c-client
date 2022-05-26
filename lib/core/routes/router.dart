@@ -7,6 +7,8 @@ import 'package:client/screens/roles/admin/home.dart';
 import 'package:client/screens/roles/switch_roles.dart';
 import 'package:client/screens/roles/garage/home.dart';
 import 'package:client/screens/roles/user/home.dart';
+import 'package:client/screens/shared/profile.dart';
+import 'package:client/screens/shared/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'routes.dart';
@@ -80,25 +82,17 @@ class PageRouter {
         page = const GarageHome();
         break;
       case PagesRoutes.user:
-        page = UserHome(
-          name: "User",
-        );
+        page = UserHome();
         break;
       case SharedRoutes.profile:
-        page = UserHome(
-          name: "Profile",
-        );
+        page = const ProfilePage();
         break;
       case SharedRoutes.settings:
-        page = UserHome(
-          name: "Settings",
-        );
+        page = const SettingsPage();
         break;
 
       default:
-        page = UserHome(
-          name: "No Route",
-        );
+        page = UserHome();
         break;
     }
 
