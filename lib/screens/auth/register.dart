@@ -5,7 +5,6 @@ import '../../core/routes/router.dart';
 import '../../core/routes/routes.dart';
 import '../../styles/ui/colors.dart';
 import 'login.dart';
-import 'onboarding.dart';
 
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);

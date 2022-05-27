@@ -69,11 +69,11 @@ class PageRouter {
   static const initialRoute = PagesRoutes.user;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    Widget page = UserHome();
+    Widget page = const UserHome();
 
     switch (settings.name) {
       case PagesRoutes.requestRole:
-        page = UserHome();
+        page = const UserHome();
         break;
       case PagesRoutes.admin:
         page = const AdminHome();
@@ -82,7 +82,7 @@ class PageRouter {
         page = const GarageHome();
         break;
       case PagesRoutes.user:
-        page = UserHome();
+        page = const UserHome();
         break;
       case SharedRoutes.profile:
         page = const ProfilePage();
@@ -92,7 +92,7 @@ class PageRouter {
         break;
 
       default:
-        page = UserHome();
+        page = const UserHome();
         break;
     }
 

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import '../../styles/index.dart';
 import '../../styles/ui/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/routes/router.dart';

@@ -42,9 +42,9 @@ class PageNavigator extends StatelessWidget {
           .pushReplacementNamed(GlobalRoutes.auth);
     }
 
-    ElevatedButton _logoutButton(void _logout()) {
+    ElevatedButton _logoutButton(VoidCallback logout) {
       return ElevatedButton(
-        onPressed: _logout,
+        onPressed: logout,
         style: ElevatedButton.styleFrom(
           primary: AppColors.primary,
           padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 80),
@@ -93,6 +93,89 @@ class PageNavigator extends StatelessWidget {
       );
     }
 
+    _buildRoles() {
+      final Future<List<String>> getRoles = Future<List<String>>.delayed(
+        const Duration(milliseconds: 100),
+        (() => [""]), // ["user", "admin", "garage"]
+      );
+
+      void _navToRole(String role) {
+        String route;
+
+        switch (role) {
+          case PagesRoutes.admin:
+            route = PagesRoutes.admin;
+            break;
+          case PagesRoutes.user:
+            route = PagesRoutes.user;
+            break;
+          case PagesRoutes.garage:
+            route = PagesRoutes.garage;
+            break;
+          default:
+            route = PagesRoutes.user;
+        }
+
+        PageRouter.router.currentState!.pushReplacementNamed(route);
+      }
+
+      IconData _getRoleIcon(String role) {
+        switch (role) {
+          case PagesRoutes.admin:
+            return ChapChap.admin;
+          case PagesRoutes.user:
+            return ChapChap.home;
+          case PagesRoutes.garage:
+            return ChapChap.car;
+          default:
+            return ChapChap.info;
+        }
+      }
+
+      String _getLabel(String role) {
+        switch (role) {
+          case PagesRoutes.admin:
+            return "Admin";
+          case PagesRoutes.user:
+            return "Home";
+          case PagesRoutes.garage:
+            return "Garage";
+          default:
+            return "User ⚠";
+        }
+      }
+
+      return FutureBuilder(
+        future: getRoles,
+        builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+          List<Widget> children = [];
+
+          if ((snapshot.hasData && snapshot.data!.isEmpty) ||
+              snapshot.hasError) {
+            return navLink(
+                icon: ChapChap.home,
+                label: "Home ⚠",
+                onPressed: () {
+                  PageRouter.router.currentState!
+                      .pushReplacementNamed(PagesRoutes.user);
+                });
+          }
+
+          for (var i = 0; i < snapshot.data!.length; ++i) {
+            children.add(
+              navLink(
+                onPressed: () => _navToRole(snapshot.data![i].toString()),
+                icon: _getRoleIcon(snapshot.data![i].toString()),
+                label: _getLabel(snapshot.data![i].toString()),
+              ),
+            );
+          }
+
+          return Column(mainAxisSize: MainAxisSize.min, children: children);
+        },
+      );
+    }
+
     return Drawer(
       width: 270,
       child: Center(
@@ -105,27 +188,7 @@ class PageNavigator extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  navLink(
-                      icon: ChapChap.home,
-                      label: "Home",
-                      onPressed: () {
-                        PageRouter.router.currentState!
-                            .pushReplacementNamed(PagesRoutes.user);
-                      }),
-                  navLink(
-                      icon: ChapChap.admin,
-                      label: "Admin",
-                      onPressed: () {
-                        PageRouter.router.currentState!
-                            .pushReplacementNamed(PagesRoutes.admin);
-                      }),
-                  navLink(
-                      icon: ChapChap.car,
-                      label: "Garage",
-                      onPressed: () {
-                        PageRouter.router.currentState!
-                            .pushReplacementNamed(PagesRoutes.garage);
-                      }),
+                  _buildRoles(),
                   navLink(
                       icon: ChapChap.user,
                       label: "Profile",
@@ -159,7 +222,7 @@ class PageNavigator extends StatelessWidget {
       icon: Icon(icon),
       style: TextButton.styleFrom(
         primary: AppColors.primary,
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 60),
         textStyle: const TextStyle(
           fontFamily: "SF Pro Rounded",
           fontSize: 18,
