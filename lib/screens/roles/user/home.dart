@@ -9,28 +9,29 @@ class UserHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "User Home 🏠",
-              style: TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w700,
-                fontSize: 20,
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                PageNavigator.scaffold.currentState!.openDrawer();
-              },
-              child: const Text("Open Drawer"),
-            )
-          ],
-        ),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        MapLayer(),
+      ],
+    );
+  }
+}
+
+class MapLayer extends StatefulWidget {
+  const MapLayer({Key? key}) : super(key: key);
+
+  @override
+  State<MapLayer> createState() => _MapLayerState();
+}
+
+class _MapLayerState extends State<MapLayer> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: const Color.fromRGBO(196, 196, 196, 1),
+      child: const Center(
+        child: Text("Unable to load a map, \n Please refresh"),
       ),
     );
   }

@@ -96,7 +96,7 @@ class PageNavigator extends StatelessWidget {
     _buildRoles() {
       final Future<List<String>> getRoles = Future<List<String>>.delayed(
         const Duration(milliseconds: 100),
-        (() => [""]), // ["user", "admin", "garage"]
+        (() => ["user", "admin", "garage"]),
       );
 
       void _navToRole(String role) {
@@ -150,8 +150,9 @@ class PageNavigator extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
           List<Widget> children = [];
 
-          if ((snapshot.hasData && snapshot.data!.isEmpty) ||
-              snapshot.hasError) {
+          if (snapshot.hasError ||
+              snapshot.hasData == false ||
+              (snapshot.hasData && snapshot.data!.isEmpty)) {
             return navLink(
                 icon: ChapChap.home,
                 label: "Home ⚠",
@@ -246,8 +247,7 @@ class PageAppBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-        ),
+            borderRadius: BorderRadius.circular(20), color: AppColors.bgDark),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
