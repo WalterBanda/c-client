@@ -25,11 +25,9 @@ class UserHome extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 22),
             width: 300,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.bgDark,
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              ),
+              borderRadius: BorderRadius.circular(20),
             ),
             child: TextField(
               onTap: () {
@@ -85,6 +83,46 @@ class SearchOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog();
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      backgroundColor: AppColors.bgDark,
+      insetPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              onTap: () {},
+              style: const TextStyle(
+                fontFamily: "SF Pro Rounded",
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
+              decoration: InputDecoration(
+                filled: true,
+                prefixIcon: const Icon(ChapChap.search_filled),
+                fillColor: AppColors.input,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: const BorderSide(
+                    color: AppColors.success,
+                    width: 2,
+                  ),
+                ),
+                hintText: "Looking for a Garage",
+              ),
+            ),
+            SizedBox(height: 20),
+            // TODO Fetch Garages
+            Text("Search for nearby Garages")
+          ],
+        ),
+      ),
+    );
   }
 }
