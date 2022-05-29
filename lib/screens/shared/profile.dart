@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../router/roles.dart';
+import '../../styles/ui/colors.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -12,20 +13,24 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              "Profile ☕",
-              style: TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w700,
-                fontSize: 20,
-              ),
-            ),
-            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                PageNavigator.scaffold.currentState!.openDrawer();
-              },
-              child: const Text("Open Drawer"),
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                primary: AppColors.primary,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 17, horizontal: 124),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              child: const Text(
+                "Logout",
+                style: TextStyle(
+                  fontFamily: "SF Pro Rounded",
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             )
           ],
         ),
