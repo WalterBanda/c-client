@@ -62,6 +62,8 @@ class UserHome extends StatelessWidget {
 class MapLayer extends StatefulWidget {
   const MapLayer({Key? key}) : super(key: key);
 
+  // TODO Map implementation 🚧
+
   @override
   State<MapLayer> createState() => _MapLayerState();
 }
@@ -118,7 +120,7 @@ class SearchOverlay extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            // TODO Fetch Garages
+            // TODO Fetch Garages Implementation
             Text("Search for nearby Garages")
           ],
         ),

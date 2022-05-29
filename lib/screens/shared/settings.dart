@@ -13,7 +13,7 @@ class SettingsPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              "Settings ☕",
+              "Settings Under Development 🏗🚧",
               style: TextStyle(
                 fontFamily: "SF Pro Rounded",
                 fontWeight: FontWeight.w700,
