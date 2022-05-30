@@ -1,8 +1,8 @@
-import 'package:client/core/routes/router.dart';
-import 'package:client/core/routes/routes.dart';
-import 'package:client/router/roles.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/routes/router.dart';
+import '../../core/routes/routes.dart';
+import '../../router/roles.dart';
 import '../../styles/index.dart';
 import '../../styles/ui/colors.dart';
 

@@ -1,16 +1,16 @@
-import 'package:client/router/auth.dart';
-import 'package:client/router/roles.dart';
-import 'package:client/screens/auth/login.dart';
-import 'package:client/screens/auth/onboarding.dart';
-import 'package:client/screens/auth/register.dart';
-import 'package:client/screens/roles/admin/home.dart';
-import 'package:client/screens/roles/switch_roles.dart';
-import 'package:client/screens/roles/garage/home.dart';
-import 'package:client/screens/roles/user/home.dart';
-import 'package:client/screens/shared/profile.dart';
-import 'package:client/screens/shared/settings.dart';
 import 'package:flutter/material.dart';
 
+import '../../router/auth.dart';
+import '../../router/roles.dart';
+import '../../screens/auth/login.dart';
+import '../../screens/auth/onboarding.dart';
+import '../../screens/auth/register.dart';
+import '../../screens/roles/admin/home.dart';
+import '../../screens/roles/garage/home.dart';
+import '../../screens/roles/switch_roles.dart';
+import '../../screens/roles/user/home.dart';
+import '../../screens/shared/profile.dart';
+import '../../screens/shared/settings.dart';
 import 'routes.dart';
 
 class GlobalNavigator {

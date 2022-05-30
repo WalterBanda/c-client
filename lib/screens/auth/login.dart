@@ -1,8 +1,9 @@
-import 'package:client/core/routes/router.dart';
-import 'package:client/core/routes/routes.dart';
-import 'package:client/screens/auth/onboarding.dart';
-import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/routes/router.dart';
+import '../../core/routes/routes.dart';
+import '../../styles/ui/colors.dart';
+import 'onboarding.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);

@@ -1,11 +1,7 @@
-import 'package:client/core/routes/routes.dart';
-import 'package:client/styles/icons/chap_chap_icons.dart';
-import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/routes/router.dart';
-import '../../../router/roles.dart';
-import '../../auth/login.dart';
+import '../../../styles/icons/chap_chap_icons.dart';
+import '../../../styles/ui/colors.dart';
 
 class UserHome extends StatelessWidget {
   const UserHome({Key? key}) : super(key: key);
@@ -23,7 +19,7 @@ class UserHome extends StatelessWidget {
           left: 10,
           right: 10,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 22),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
             width: 300,
             decoration: BoxDecoration(
               color: AppColors.bgDark,
@@ -34,7 +30,7 @@ class UserHome extends StatelessWidget {
                 showDialog(
                     useRootNavigator: false,
                     context: context,
-                    builder: (context) => SearchOverlay());
+                    builder: (context) => const SearchOverlay());
               },
               style: const TextStyle(
                 fontFamily: "SF Pro Rounded",
@@ -88,7 +84,7 @@ class SearchOverlay extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       backgroundColor: AppColors.bgDark,
-      insetPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: Column(
@@ -119,9 +115,9 @@ class SearchOverlay extends StatelessWidget {
                 hintText: "Looking for a Garage",
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // TODO Fetch Garages Implementation
-            Text("Search for nearby Garages")
+            const Text("Search for nearby Garages")
           ],
         ),
       ),

@@ -1,8 +1,8 @@
-import 'package:client/styles/icons/chap_chap_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/routes/router.dart';
 import '../../core/routes/routes.dart';
+import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
 import 'login.dart';
 

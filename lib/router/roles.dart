@@ -1,9 +1,10 @@
-import 'package:client/core/routes/router.dart';
-import 'package:client/core/routes/routes.dart';
-import 'package:client/styles/icons/chap_chap_icons.dart';
-import 'package:client/styles/index.dart';
-import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../core/routes/router.dart';
+import '../core/routes/routes.dart';
+import '../styles/icons/chap_chap_icons.dart';
+import '../styles/index.dart';
+import '../styles/ui/colors.dart';
 
 class PageNavigator extends StatelessWidget {
   const PageNavigator({
