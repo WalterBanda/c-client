@@ -118,7 +118,15 @@ class SearchOverlay extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             // TODO Fetch Garages Implementation
-            const Text("Search for nearby Garages")
+            const Text(
+              "Search for nearby Garages",
+              style: TextStyle(
+                fontFamily: "SF Pro Rounded",
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary,
+                fontSize: 16,
+              ),
+            ),
           ],
         ),
       ),
