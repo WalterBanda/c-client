@@ -10,27 +10,27 @@ class AdminHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "Admin Home 🏠",
-              style: TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w700,
-                fontSize: 20,
-              ),
+      minimum: const EdgeInsets.symmetric(vertical: 130, horizontal: 30),
+      maintainBottomViewPadding: true,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          const Text(
+            "Admin Home 🏠 dskfjksdfgksjfksdkfjksdfjskjdfksjdkfjksjdfkjskdjfkjskdjfksjdkfjskdjfksdj",
+            style: TextStyle(
+              fontFamily: "SF Pro Rounded",
+              fontWeight: FontWeight.w700,
+              fontSize: 20,
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                PageNavigator.scaffold.currentState!.openDrawer();
-              },
-              child: const Text("Open Drawer"),
-            )
-          ],
-        ),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              PageNavigator.scaffold.currentState!.openDrawer();
+            },
+            child: const Text("Open Drawer"),
+          )
+        ],
       ),
     );
   }
