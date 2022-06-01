@@ -82,8 +82,9 @@ class SearchOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       backgroundColor: AppColors.bgDark,
+      alignment: const Alignment(0.0, -0.6),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
