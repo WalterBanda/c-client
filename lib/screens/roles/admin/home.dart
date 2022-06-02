@@ -1,4 +1,5 @@
 import 'package:client/screens/roles/user/home.dart';
+import 'package:client/styles/ui/colors.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
@@ -61,8 +62,8 @@ class AdminHome extends StatelessWidget {
             flex: 6,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   "User Verification Requests",
                   style: TextStyle(
                     fontFamily: "SF Pro Rounded",
@@ -70,13 +71,13 @@ class AdminHome extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                SizedBox(height: 27),
+                const SizedBox(height: 27),
                 Expanded(
                   child: TabbedLayout(
                     tabLabel: ["Garage Requests", "Admin Requests"],
                     tabs: [
-                      Center(child: Text("Tab 🎌")),
-                      Center(child: Text("Tab ☕")),
+                      const Center(child: Text("Tab 🎌")),
+                      const Center(child: Text("Tab ☕")),
                     ],
                   ),
                 )
@@ -90,7 +91,7 @@ class AdminHome extends StatelessWidget {
 }
 
 class TabbedLayout extends StatelessWidget {
-  const TabbedLayout({
+  TabbedLayout({
     Key? key,
     required this.tabLabel,
     required this.tabs,
@@ -101,8 +102,40 @@ class TabbedLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Color.fromRGBO(0, 0, 0, 0.037),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _tab(label: tabLabel[0], onPressed: () {}),
+              _tab(label: tabLabel[1], onPressed: () {}),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _tab(
+      {bool selected = false, required String label, required onPressed}) {
+    return TextButton(
+      onPressed: onPressed,
+      child: Text(
+        label,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: selected ? AppColors.success : Color(0x42000000),
+          fontSize: 15,
+          fontFamily: "SF Pro Rounded",
+          fontWeight: FontWeight.w700,
+        ),
+      ),
     );
   }
 }
