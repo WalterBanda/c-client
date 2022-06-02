@@ -1,3 +1,5 @@
+import 'package:client/screens/roles/user/home.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 class AdminHome extends StatelessWidget {
@@ -8,7 +10,7 @@ class AdminHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: const EdgeInsets.only(top: 130, left: 27, right: 27),
+      minimum: const EdgeInsets.only(top: 130, left: 36, right: 36),
       maintainBottomViewPadding: false,
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -29,46 +31,80 @@ class AdminHome extends StatelessWidget {
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.10),
-                        border: Border.all(color: Colors.black, width: 1, ),
+                    buildAddItem(
+                      context: context,
+                      label: "+ Add Garage",
+                      onPressed: () => showDialog(
+                        context: context,
+                        useRootNavigator: false,
+                        builder: (context) => SearchOverlay(),
                       ),
-                      padding: const EdgeInsets.all(30),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children:[
-                          Text(
-                            "+ Add Garage",
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontFamily: "SF Pro Rounded",
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
+                    ),
+                    buildAddItem(
+                      context: context,
+                      label: "+ Add Admin",
+                      onPressed: () => showDialog(
+                        context: context,
+                        useRootNavigator: false,
+                        builder: (context) => SearchOverlay(),
                       ),
-                    )
+                    ),
                   ],
                 )
               ],
             ),
           ),
+          SizedBox(height: 40),
           Expanded(
-            flex: 5,
-            child: Container(
-              color: Colors.blue,
-              child: const Text("skdkjsfjskdjf"),
+            flex: 6,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "User Verification Requests",
+                  style: TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(height: 27),
+                Expanded(
+                  child: Container(
+                    color: Colors.blue,
+                  ),
+                )
+              ],
             ),
           ),
         ],
       ),
     );
   }
+}
+
+GestureDetector buildAddItem(
+    {required BuildContext context,
+    required String label,
+    required GestureTapCallback onPressed}) {
+  return GestureDetector(
+    onTap: onPressed,
+    child: DottedBorder(
+      padding: EdgeInsets.all(30),
+      borderType: BorderType.RRect,
+      radius: Radius.circular(10),
+      child: Text(
+        label,
+        textAlign: TextAlign.right,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 15,
+          fontFamily: "SF Pro Rounded",
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ),
+  );
 }
