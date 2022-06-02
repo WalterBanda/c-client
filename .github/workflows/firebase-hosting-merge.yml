@@ -2,6 +2,8 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on merge
+env:
+  FLUTTER_VERSION: "3.0.1"
 'on':
   push:
     branches:
@@ -11,10 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: jeanluc243/Flutter-Deployment@0.1
-      # uses: jeanluc243/Flutter-Deployment@1fd33eb513293af0c6cde57363d66a6a848ef6e5
-      - run: flutter pub get
-      - run: flutter build web
+      - name: Install Flutter
+        uses: britannio/action-install-flutter@v1
+        with:
+          version: $FLUTTER_VERSION
+      - name: Get Packages
+        run: flutter pub get
+      - name: Build App
+        run: flutter build web
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
