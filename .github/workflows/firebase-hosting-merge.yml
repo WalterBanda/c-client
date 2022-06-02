@@ -3,7 +3,7 @@
 
 name: Deploy to Firebase Hosting on merge
 env:
-  FLUTTER_VERSION: "3.0.1"
+  FLUTTER_VERSION: "2.2.3"
 'on':
   push:
     branches:
