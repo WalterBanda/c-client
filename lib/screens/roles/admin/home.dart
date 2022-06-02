@@ -85,11 +85,11 @@ class AdminHome extends StatelessWidget {
   }
 }
 
-GestureDetector buildAddItem(
+Widget buildAddItem(
     {required BuildContext context,
     required String label,
     required GestureTapCallback onPressed}) {
-  return GestureDetector(
+  return InkWell(
     onTap: onPressed,
     child: DottedBorder(
       padding: EdgeInsets.all(30),
