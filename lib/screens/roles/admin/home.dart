@@ -39,7 +39,7 @@ class AdminHome extends StatelessWidget {
                       onPressed: () => showDialog(
                         context: context,
                         useRootNavigator: false,
-                        builder: (context) => SearchOverlay(),
+                        builder: (context) => const SearchOverlay(),
                       ),
                     ),
                     buildAddItem(
@@ -48,7 +48,7 @@ class AdminHome extends StatelessWidget {
                       onPressed: () => showDialog(
                         context: context,
                         useRootNavigator: false,
-                        builder: (context) => SearchOverlay(),
+                        builder: (context) => const SearchOverlay(),
                       ),
                     ),
                   ],
@@ -56,13 +56,13 @@ class AdminHome extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           Expanded(
             flex: 6,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
+              children: const [
+                Text(
                   "User Verification Requests",
                   style: TextStyle(
                     fontFamily: "SF Pro Rounded",
@@ -72,8 +72,12 @@ class AdminHome extends StatelessWidget {
                 ),
                 SizedBox(height: 27),
                 Expanded(
-                  child: Container(
-                    color: Colors.blue,
+                  child: TabbedLayout(
+                    tabLabel: ["Garage Requests", "Admin Requests"],
+                    tabs: [
+                      Center(child: Text("Tab 🎌")),
+                      Center(child: Text("Tab ☕")),
+                    ],
                   ),
                 )
               ],
@@ -85,6 +89,24 @@ class AdminHome extends StatelessWidget {
   }
 }
 
+class TabbedLayout extends StatelessWidget {
+  const TabbedLayout({
+    Key? key,
+    required this.tabLabel,
+    required this.tabs,
+  }) : super(key: key);
+
+  final List<String> tabLabel;
+  final List<Widget> tabs;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.blue,
+    );
+  }
+}
+
 Widget buildAddItem(
     {required BuildContext context,
     required String label,
@@ -92,13 +114,13 @@ Widget buildAddItem(
   return InkWell(
     onTap: onPressed,
     child: DottedBorder(
-      padding: EdgeInsets.all(30),
+      padding: const EdgeInsets.all(30),
       borderType: BorderType.RRect,
-      radius: Radius.circular(10),
+      radius: const Radius.circular(10),
       child: Text(
         label,
         textAlign: TextAlign.right,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 15,
           fontFamily: "SF Pro Rounded",
