@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../router/roles.dart';
-
 class AdminHome extends StatelessWidget {
   const AdminHome({Key? key}) : super(key: key);
 
@@ -10,26 +8,40 @@ class AdminHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: const EdgeInsets.symmetric(vertical: 130, horizontal: 30),
-      maintainBottomViewPadding: true,
+      minimum: const EdgeInsets.only(top: 130, left: 27, right: 27),
+      maintainBottomViewPadding: false,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          const Text(
-            "Admin Home 🏠 dskfjksdfgksjfksdkfjksdfjskjdfksjdkfjksjdfkjskdjfkjskdjfksjdkfjskdjfksdj",
-            style: TextStyle(
-              fontFamily: "SF Pro Rounded",
-              fontWeight: FontWeight.w700,
-              fontSize: 20,
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Admin Tasks",
+                  style: TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [],
+                )
+              ],
             ),
           ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              PageNavigator.scaffold.currentState!.openDrawer();
-            },
-            child: const Text("Open Drawer"),
-          )
+          Expanded(
+            flex: 5,
+            child: Container(
+              color: Colors.blue,
+              child: const Text("skdkjsfjskdjf"),
+            ),
+          ),
         ],
       ),
     );
