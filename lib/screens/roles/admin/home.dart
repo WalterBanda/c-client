@@ -1,3 +1,4 @@
+import 'package:client/core/routes/router.dart';
 import 'package:client/screens/roles/user/home.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -100,6 +101,25 @@ class TabbedLayout extends StatelessWidget {
   final List<String> tabLabel;
   final List<Widget> tabs;
 
+  static GlobalKey<NavigatorState> tabNav = GlobalKey();
+  static Key firstTab = Key("1");
+  static Key secondTab = Key("2");
+
+  Widget _getTab({index}) {
+    return tabs.elementAt(index);
+  }
+
+  bool _getSelectedTab(String index) {
+    if (tabNav.currentWidget?.key != null &&
+        tabNav.currentWidget!.key == firstTab) {
+      return true;
+    } else if (tabNav.currentWidget?.key != null &&
+        tabNav.currentWidget!.key == firstTab) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -113,38 +133,85 @@ class TabbedLayout extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _tab(label: tabLabel[0], selected: true, onPressed: () {}),
-              _tab(label: tabLabel[1], onPressed: () {}),
+              _tab(
+                label: tabLabel[0],
+                selected: _getSelectedTab("1"),
+                onPressed: () {
+                  tabNav.currentState!.pushReplacementNamed("1");
+                },
+                index: firstTab,
+              ),
+              _tab(
+                label: tabLabel[1],
+                selected: _getSelectedTab("2"),
+                onPressed: () {
+                  tabNav.currentState!.pushReplacementNamed("2");
+                },
+                index: secondTab,
+              ),
             ],
           ),
         ),
+        SizedBox(height: 10),
+        Expanded(
+          child: Navigator(
+            key: tabNav,
+            initialRoute: "1",
+            onGenerateRoute: (settings) {
+              switch (settings.name) {
+                case "1":
+                  return PageRouteBuilder(
+                    pageBuilder: (_, __, ___) =>
+                        _getTab(index: tabs.length - 2),
+                    transitionDuration: const Duration(milliseconds: 0),
+                  );
+                case "2":
+                  return PageRouteBuilder(
+                    pageBuilder: (_, __, ___) =>
+                        _getTab(index: tabs.length - 1),
+                    transitionDuration: const Duration(milliseconds: 0),
+                  );
+                default:
+                  return PageRouteBuilder(
+                    pageBuilder: (_, __, ___) =>
+                        const Center(child: Text("Tab 🎌")),
+                    transitionDuration: const Duration(milliseconds: 0),
+                  );
+              }
+            },
+          ),
+        )
       ],
     );
   }
 
-  Widget _tab(
-      {bool selected = false, required String label, required onPressed}) {
-    return TextButton(
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
-        primary: selected ? AppColors.success : Color(0x42000000),
-        backgroundColor: selected ? AppColors.bgDark : Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+  Widget _tab({
+    bool selected = false,
+    required String label,
+    required onPressed,
+    required index,
+  }) =>
+      TextButton(
+        key: index,
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+          primary: selected ? AppColors.success : Color(0x42000000),
+          backgroundColor: selected ? AppColors.bgDark : Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
-      ),
-      child: Text(
-        label,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 15,
-          fontFamily: "SF Pro Rounded",
-          fontWeight: FontWeight.w700,
+        child: Text(
+          label,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 15,
+            fontFamily: "SF Pro Rounded",
+            fontWeight: FontWeight.w700,
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 Widget buildAddItem(
