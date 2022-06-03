@@ -102,56 +102,16 @@ class TabbedLayout extends StatelessWidget {
   final List<Widget> tabs;
 
   static GlobalKey<NavigatorState> tabNav = GlobalKey();
-  static Key firstTab = Key("1");
-  static Key secondTab = Key("2");
 
   Widget _getTab({index}) {
     return tabs.elementAt(index);
-  }
-
-  bool _getSelectedTab(String index) {
-    if (tabNav.currentWidget?.key != null &&
-        tabNav.currentWidget!.key == firstTab) {
-      return true;
-    } else if (tabNav.currentWidget?.key != null &&
-        tabNav.currentWidget!.key == firstTab) {
-      return true;
-    }
-    return false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Color.fromRGBO(0, 0, 0, 0.037),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _tab(
-                label: tabLabel[0],
-                selected: _getSelectedTab("1"),
-                onPressed: () {
-                  tabNav.currentState!.pushReplacementNamed("1");
-                },
-                index: firstTab,
-              ),
-              _tab(
-                label: tabLabel[1],
-                selected: _getSelectedTab("2"),
-                onPressed: () {
-                  tabNav.currentState!.pushReplacementNamed("2");
-                },
-                index: secondTab,
-              ),
-            ],
-          ),
-        ),
+        TabView(tabLabel: tabLabel),
         SizedBox(height: 10),
         Expanded(
           child: Navigator(
@@ -184,7 +144,31 @@ class TabbedLayout extends StatelessWidget {
       ],
     );
   }
+}
 
+class TabView extends StatefulWidget {
+  const TabView({required this.tabLabel, super.key});
+
+  static Key firstTab = Key("1");
+  static Key secondTab = Key("2");
+  final List<String> tabLabel;
+
+  bool _getSelectedTab(String index) {
+    if (TabbedLayout.tabNav.currentWidget?.key != null &&
+        TabbedLayout.tabNav.currentWidget!.key == firstTab) {
+      return true;
+    } else if (TabbedLayout.tabNav.currentWidget?.key != null &&
+        TabbedLayout.tabNav.currentWidget!.key == firstTab) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  State<TabView> createState() => _TabViewState();
+}
+
+class _TabViewState extends State<TabView> {
   Widget _tab({
     bool selected = false,
     required String label,
@@ -212,6 +196,38 @@ class TabbedLayout extends StatelessWidget {
           ),
         ),
       );
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Color.fromRGBO(0, 0, 0, 0.037),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _tab(
+            label: widget.tabLabel[0],
+            selected: widget._getSelectedTab("1"),
+            onPressed: () {
+              TabbedLayout.tabNav.currentState!.pushReplacementNamed("1");
+            },
+            index: TabView.firstTab,
+          ),
+          _tab(
+            label: widget.tabLabel[1],
+            selected: widget._getSelectedTab("2"),
+            onPressed: () {
+              TabbedLayout.tabNav.currentState!.pushReplacementNamed("2");
+            },
+            index: TabView.secondTab,
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 Widget buildAddItem(
