@@ -19,14 +19,18 @@ class GarageHome extends StatelessWidget {
     required double cummulative,
   }) {
     return Expanded(
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          // elevation: 1,
-          primary: AppColors.bgDark,
-          padding: EdgeInsets.all(20),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: AppColors.bgDark,
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.157),
+              blurRadius: 4,
+              offset: Offset(0, 1),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,16 +45,41 @@ class GarageHome extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               children: [
-                SvgPicture.asset(
-                  cummulative.isNegative
-                      ? "assets/images/res/graph_down.svg"
-                      : "assets/images/res/graph_up.svg",
-                  height: 15.2,
-                  width: 39.82,
+                SizedBox(
+                  height: 16,
+                  width: 40,
+                  child: SvgPicture.asset(
+                    cummulative.isNegative
+                        ? "/assets/images/res/graph_down.svg"
+                        : "/assets/images/res/graph_up.svg",
+                    height: 16,
+                    width: 60,
+                    fit: BoxFit.fitHeight,
+                  ),
                 ),
+                SizedBox(
+                  height: 6,
+                  child: SvgPicture.asset(
+                    cummulative.isNegative
+                        ? "/assets/images/res/loss.svg"
+                        : "/assets/images/res/gain.svg",
+                    height: 6,
+                    width: 6,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                Text(
+                  "${cummulative.isNegative ? '-' : '+'}$cummulative%",
+                  style: TextStyle(
+                    color: cummulative.isNegative
+                        ? Color.fromRGBO(226, 80, 122, 1)
+                        : Color.fromRGBO(80, 226, 193, 1),
+                    fontSize: 11,
+                  ),
+                )
               ],
             )
           ],
@@ -84,6 +113,7 @@ class GarageHome extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +127,7 @@ class GarageHome extends StatelessWidget {
                             builder: (context) => const SearchOverlay(),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         _buildStats(
                           context: context,
                           label: "Weekly",
@@ -112,7 +142,7 @@ class GarageHome extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
               Expanded(
                 flex: 6,
                 child: Column(
