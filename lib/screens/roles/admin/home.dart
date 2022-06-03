@@ -201,7 +201,7 @@ class _TabViewState extends State<TabView> {
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Color.fromRGBO(0, 0, 0, 0.037),
+        color: Color.fromRGBO(0, 0, 0, 0.1),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
