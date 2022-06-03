@@ -105,15 +105,15 @@ class TabbedLayout extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Color.fromRGBO(0, 0, 0, 0.037),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _tab(label: tabLabel[0], onPressed: () {}),
+              _tab(label: tabLabel[0], selected: true, onPressed: () {}),
               _tab(label: tabLabel[1], onPressed: () {}),
             ],
           ),
@@ -126,11 +126,18 @@ class TabbedLayout extends StatelessWidget {
       {bool selected = false, required String label, required onPressed}) {
     return TextButton(
       onPressed: onPressed,
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+        primary: selected ? AppColors.success : Color(0x42000000),
+        backgroundColor: selected ? AppColors.bgDark : Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
       child: Text(
         label,
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: selected ? AppColors.success : Color(0x42000000),
           fontSize: 15,
           fontFamily: "SF Pro Rounded",
           fontWeight: FontWeight.w700,
