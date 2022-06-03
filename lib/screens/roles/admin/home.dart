@@ -77,8 +77,8 @@ class AdminHome extends StatelessWidget {
                   child: TabbedLayout(
                     tabLabel: ["Garage Requests", "Admin Requests"],
                     tabs: [
-                      const Center(child: Text("Tab 🎌")),
-                      const Center(child: Text("Tab ☕")),
+                      const Center(child: Text("Tab 1 🎌")),
+                      const Center(child: Text("Tab 2 ☕")),
                     ],
                   ),
                 )
