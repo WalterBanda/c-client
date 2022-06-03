@@ -260,6 +260,7 @@ class PageAppBar extends StatelessWidget {
                 },
                 icon: const Icon(ChapChap.menu)),
             const Text(
+              // TODO Implement automatic headings
               "Home",
               // PageRouter.router.currentContext.
               style: TextStyle(
