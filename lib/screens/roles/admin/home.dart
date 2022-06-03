@@ -9,6 +9,30 @@ class AdminHome extends StatelessWidget {
 
   static const String id = "admin";
 
+  Widget _buildAddItem(
+      {required BuildContext context,
+      required String label,
+      required GestureTapCallback onPressed}) {
+    return InkWell(
+      onTap: onPressed,
+      child: DottedBorder(
+        padding: const EdgeInsets.all(30),
+        borderType: BorderType.RRect,
+        radius: const Radius.circular(10),
+        child: Text(
+          label,
+          textAlign: TextAlign.right,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontFamily: "SF Pro Rounded",
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -35,7 +59,7 @@ class AdminHome extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    buildAddItem(
+                    _buildAddItem(
                       context: context,
                       label: "+ Add Garage",
                       onPressed: () => showDialog(
@@ -43,7 +67,7 @@ class AdminHome extends StatelessWidget {
                         builder: (context) => const SearchOverlay(),
                       ),
                     ),
-                    buildAddItem(
+                    _buildAddItem(
                       context: context,
                       label: "+ Add Admin",
                       onPressed: () => showDialog(
@@ -61,8 +85,8 @@ class AdminHome extends StatelessWidget {
             flex: 6,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
+              children: const [
+                Text(
                   "User Verification Requests",
                   style: TextStyle(
                     fontFamily: "SF Pro Rounded",
@@ -70,13 +94,13 @@ class AdminHome extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                const SizedBox(height: 27),
+                SizedBox(height: 27),
                 Expanded(
                   child: TabbedLayout(
                     tabLabel: ["Garage Requests", "Admin Requests"],
                     tabs: [
-                      const Center(child: Text("Tab 1 🎌")),
-                      const Center(child: Text("Tab 2 ☕")),
+                      Center(child: Text("Tab 1 🎌")),
+                      Center(child: Text("Tab 2 ☕")),
                     ],
                   ),
                 )
@@ -90,7 +114,7 @@ class AdminHome extends StatelessWidget {
 }
 
 class TabbedLayout extends StatelessWidget {
-  TabbedLayout({
+  const TabbedLayout({
     Key? key,
     required this.tabLabel,
     required this.tabs,
@@ -99,155 +123,48 @@ class TabbedLayout extends StatelessWidget {
   final List<String> tabLabel;
   final List<Widget> tabs;
 
-  static GlobalKey<NavigatorState> tabNav = GlobalKey();
-
-  Widget _getTab({index}) {
-    return tabs.elementAt(index);
-  }
+  List<Widget> _buildTabsLabel() => tabLabel
+      .map(
+        (e) => Padding(
+          padding: const EdgeInsets.only(top: 6, bottom: 6),
+          child: Text(
+            e,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 15,
+              fontFamily: "SF Pro Rounded",
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      )
+      .toList();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TabView(tabLabel: tabLabel),
-        SizedBox(height: 10),
-        Expanded(
-          child: Navigator(
-            key: tabNav,
-            initialRoute: "1",
-            onGenerateRoute: (settings) {
-              switch (settings.name) {
-                case "1":
-                  return PageRouteBuilder(
-                    pageBuilder: (_, __, ___) =>
-                        _getTab(index: tabs.length - 2),
-                    transitionDuration: const Duration(milliseconds: 0),
-                  );
-                case "2":
-                  return PageRouteBuilder(
-                    pageBuilder: (_, __, ___) =>
-                        _getTab(index: tabs.length - 1),
-                    transitionDuration: const Duration(milliseconds: 0),
-                  );
-                default:
-                  return PageRouteBuilder(
-                    pageBuilder: (_, __, ___) =>
-                        const Center(child: Text("Tab 🎌")),
-                    transitionDuration: const Duration(milliseconds: 0),
-                  );
-              }
-            },
-          ),
-        )
-      ],
-    );
+    return DefaultTabController(
+        length: tabs.length,
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: const Color.fromRGBO(0, 0, 0, 0.1),
+              ),
+              child: TabBar(
+                indicator: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                labelColor: AppColors.success,
+                unselectedLabelColor: const Color(0x42000000),
+                tabs: _buildTabsLabel(),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Expanded(child: TabBarView(children: tabs)),
+          ],
+        ));
   }
-}
-
-class TabView extends StatefulWidget {
-  const TabView({required this.tabLabel, super.key});
-
-  static Key firstTab = Key("1");
-  static Key secondTab = Key("2");
-  final List<String> tabLabel;
-
-  bool _getSelectedTab(String index) {
-    if (TabbedLayout.tabNav.currentWidget?.key != null &&
-        TabbedLayout.tabNav.currentWidget!.key == firstTab) {
-      return true;
-    } else if (TabbedLayout.tabNav.currentWidget?.key != null &&
-        TabbedLayout.tabNav.currentWidget!.key == firstTab) {
-      return true;
-    }
-    return false;
-  }
-
-  @override
-  State<TabView> createState() => _TabViewState();
-}
-
-class _TabViewState extends State<TabView> {
-  Widget _tab({
-    bool selected = false,
-    required String label,
-    required onPressed,
-    required index,
-  }) =>
-      TextButton(
-        key: index,
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
-          primary: selected ? AppColors.success : Color(0x42000000),
-          backgroundColor: selected ? AppColors.bgDark : Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 15,
-            fontFamily: "SF Pro Rounded",
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Color.fromRGBO(0, 0, 0, 0.1),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _tab(
-            label: widget.tabLabel[0],
-            selected: widget._getSelectedTab("1"),
-            onPressed: () {
-              TabbedLayout.tabNav.currentState!.pushReplacementNamed("1");
-            },
-            index: TabView.firstTab,
-          ),
-          _tab(
-            label: widget.tabLabel[1],
-            selected: widget._getSelectedTab("2"),
-            onPressed: () {
-              TabbedLayout.tabNav.currentState!.pushReplacementNamed("2");
-            },
-            index: TabView.secondTab,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-Widget buildAddItem(
-    {required BuildContext context,
-    required String label,
-    required GestureTapCallback onPressed}) {
-  return InkWell(
-    onTap: onPressed,
-    child: DottedBorder(
-      padding: const EdgeInsets.all(30),
-      borderType: BorderType.RRect,
-      radius: const Radius.circular(10),
-      child: Text(
-        label,
-        textAlign: TextAlign.right,
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 15,
-          fontFamily: "SF Pro Rounded",
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-    ),
-  );
 }
