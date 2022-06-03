@@ -1,5 +1,6 @@
 import 'package:client/router/roles.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../styles/icons/chap_chap_icons.dart';
 import '../../../styles/ui/colors.dart';
@@ -71,9 +72,24 @@ class MapLayer extends StatefulWidget {
 }
 
 class _MapLayerState extends State<MapLayer> {
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _unableLoadMap();
+    return GoogleMap(
+      onMapCreated: _onMapCreated,
+      initialCameraPosition: CameraPosition(
+        target: _center,
+        zoom: 11.0,
+      ),
+    );
+    // return _unableLoadMap();
   }
 
   Container _unableLoadMap() {
