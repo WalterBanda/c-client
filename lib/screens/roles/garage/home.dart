@@ -1,5 +1,7 @@
+import 'package:client/styles/ui/colors.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../router/roles.dart';
 import '../admin/home.dart';
@@ -10,20 +12,48 @@ class GarageHome extends StatelessWidget {
 
   static const String id = "garage";
 
-  Widget _buildStats(
-      {required BuildContext context,
-      required String label,
-      required GestureTapCallback onPressed}) {
-    return InkWell(
-      onTap: onPressed,
-      child: Text(
-        label,
-        textAlign: TextAlign.right,
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 15,
-          fontFamily: "SF Pro Rounded",
-          fontWeight: FontWeight.w700,
+  Widget _buildStats({
+    required BuildContext context,
+    required String label,
+    required VoidCallback onPressed,
+    required double cummulative,
+  }) {
+    return Expanded(
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          // elevation: 1,
+          primary: AppColors.bgDark,
+          padding: EdgeInsets.all(20),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+                fontFamily: "SF Pro Rounded",
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(height: 15),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  cummulative.isNegative
+                      ? "assets/images/res/graph_down.svg"
+                      : "assets/images/res/graph_up.svg",
+                  height: 15.2,
+                  width: 39.82,
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );
@@ -47,7 +77,7 @@ class GarageHome extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Daily Stats",
+                      "Earnings Stats",
                       style: TextStyle(
                         fontFamily: "SF Pro Rounded",
                         fontWeight: FontWeight.w700,
@@ -60,15 +90,18 @@ class GarageHome extends StatelessWidget {
                       children: [
                         _buildStats(
                           context: context,
-                          label: "Daily Earnings",
+                          label: "Daily",
+                          cummulative: -5.23,
                           onPressed: () => showDialog(
                             context: context,
                             builder: (context) => const SearchOverlay(),
                           ),
                         ),
+                        SizedBox(width: 10),
                         _buildStats(
                           context: context,
-                          label: "Weekly Earnings",
+                          label: "Weekly",
+                          cummulative: 39.69,
                           onPressed: () => showDialog(
                             context: context,
                             builder: (context) => const SearchOverlay(),

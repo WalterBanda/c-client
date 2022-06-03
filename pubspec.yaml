@@ -43,6 +43,7 @@ flutter:
   # App assets:
   assets:
     - assets/images/
+    - assets/images/res/
 
   #  Custom Fonts
   fonts:

@@ -20,6 +20,7 @@ class AdminHome extends StatelessWidget {
         child: DottedBorder(
           padding: const EdgeInsets.only(top: 30, bottom: 30),
           borderType: BorderType.RRect,
+          dashPattern: const [4, 4],
           radius: const Radius.circular(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
