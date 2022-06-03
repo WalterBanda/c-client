@@ -22,6 +22,7 @@ class PageNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: PageNavigator.scaffold,
+      backgroundColor: AppColors.bgDark,
       drawer: customDrawer(),
       body: Stack(
         children: <Widget>[

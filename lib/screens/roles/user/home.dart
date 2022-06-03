@@ -18,33 +18,39 @@ class UserHome extends StatelessWidget {
           bottom: 30,
           left: 10,
           right: 10,
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
-            width: 300,
-            decoration: BoxDecoration(
-              color: AppColors.bgDark,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: TextField(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => const SearchOverlay());
-              },
-              style: const TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-              ),
-              decoration: InputDecoration(
-                filled: true,
-                prefixIcon: const Icon(ChapChap.search_filled),
-                fillColor: AppColors.input,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: 320, maxWidth: 680),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
+                width: 300,
+                decoration: BoxDecoration(
+                  color: AppColors.bgDark,
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                hintText: "Looking for a Garage",
+                child: TextField(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => const SearchOverlay());
+                  },
+                  style: const TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  decoration: InputDecoration(
+                    filled: true,
+                    prefixIcon: const Icon(ChapChap.search_filled),
+                    fillColor: AppColors.input,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    hintText: "Looking for a Garage",
+                  ),
+                ),
               ),
             ),
           ),
@@ -80,53 +86,60 @@ class SearchOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: AppColors.bgDark,
-      alignment: const Alignment(0.0, -0.6),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              onTap: () {},
-              style: const TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-              ),
-              decoration: InputDecoration(
-                filled: true,
-                prefixIcon: const Icon(ChapChap.search_filled),
-                fillColor: AppColors.input,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(
-                    color: AppColors.success,
-                    width: 2,
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minWidth: 320, maxWidth: 680),
+        child: Dialog(
+          backgroundColor: AppColors.bgDark,
+          alignment: const Alignment(0.0, -0.6),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          insetPadding:
+              const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  onTap: () {},
+                  style: const TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  decoration: InputDecoration(
+                    filled: true,
+                    prefixIcon: const Icon(ChapChap.search_filled),
+                    fillColor: AppColors.input,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(
+                        color: AppColors.success,
+                        width: 2,
+                      ),
+                    ),
+                    hintText: "Looking for a Garage",
                   ),
                 ),
-                hintText: "Looking for a Garage",
-              ),
+                const SizedBox(height: 20),
+                // TODO Fetch Garages Implementation
+                const Text(
+                  "Search for nearby Garages",
+                  style: TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.textPrimary,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            // TODO Fetch Garages Implementation
-            const Text(
-              "Search for nearby Garages",
-              style: TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
-                fontSize: 16,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

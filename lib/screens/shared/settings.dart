@@ -9,25 +9,28 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "Settings Under Development 🏗🚧",
-              style: TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w700,
-                fontSize: 20,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minWidth: 320, maxWidth: 680),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Settings Under Development 🏗🚧",
+                style: TextStyle(
+                  fontFamily: "SF Pro Rounded",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                PageNavigator.scaffold.currentState!.openDrawer();
-              },
-              child: const Text("Open Drawer"),
-            )
-          ],
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  PageNavigator.scaffold.currentState!.openDrawer();
+                },
+                child: const Text("Open Drawer"),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -38,76 +38,81 @@ class AdminHome extends StatelessWidget {
     return SafeArea(
       minimum: const EdgeInsets.only(top: 130, left: 36, right: 36),
       maintainBottomViewPadding: false,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Admin Tasks",
-                  style: TextStyle(
-                    fontFamily: "SF Pro Rounded",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minWidth: 320, maxWidth: 680),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildAddItem(
-                      context: context,
-                      label: "+ Add Garage",
-                      onPressed: () => showDialog(
-                        context: context,
-                        builder: (context) => const SearchOverlay(),
+                    const Text(
+                      "Admin Tasks",
+                      style: TextStyle(
+                        fontFamily: "SF Pro Rounded",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
                       ),
                     ),
-                    _buildAddItem(
-                      context: context,
-                      label: "+ Add Admin",
-                      onPressed: () => showDialog(
-                        context: context,
-                        builder: (context) => const SearchOverlay(),
-                      ),
-                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildAddItem(
+                          context: context,
+                          label: "+ Add Garage",
+                          onPressed: () => showDialog(
+                            context: context,
+                            builder: (context) => const SearchOverlay(),
+                          ),
+                        ),
+                        _buildAddItem(
+                          context: context,
+                          label: "+ Add Admin",
+                          onPressed: () => showDialog(
+                            context: context,
+                            builder: (context) => const SearchOverlay(),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
-          ),
-          const SizedBox(height: 40),
-          Expanded(
-            flex: 6,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  "User Verification Requests",
-                  style: TextStyle(
-                    fontFamily: "SF Pro Rounded",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                  ),
                 ),
-                SizedBox(height: 27),
-                Expanded(
-                  child: TabbedLayout(
-                    tabLabel: ["Garage Requests", "Admin Requests"],
-                    tabs: [
-                      Center(child: Text("Tab 1 🎌")),
-                      Center(child: Text("Tab 2 ☕")),
-                    ],
-                  ),
-                )
-              ],
-            ),
+              ),
+              const SizedBox(height: 40),
+              Expanded(
+                flex: 6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      "User Verification Requests",
+                      style: TextStyle(
+                        fontFamily: "SF Pro Rounded",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 27),
+                    Expanded(
+                      child: TabbedLayout(
+                        tabLabel: ["Garage Requests", "Admin Requests"],
+                        tabs: [
+                          Center(child: Text("Tab 1 🎌")),
+                          Center(child: Text("Tab 2 ☕")),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
