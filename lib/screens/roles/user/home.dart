@@ -73,6 +73,10 @@ class MapLayer extends StatefulWidget {
 class _MapLayerState extends State<MapLayer> {
   @override
   Widget build(BuildContext context) {
+    return _unableLoadMap();
+  }
+
+  Container _unableLoadMap() {
     return Container(
       color: const Color.fromRGBO(196, 196, 196, 1),
       child: const Center(
