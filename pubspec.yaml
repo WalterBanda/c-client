@@ -27,14 +27,15 @@ dependencies:
   vector_map_tiles: ^2.0.1
   geolocator: ^8.2.1
   provider: ^6.0.3
+  google_maps_flutter: ^2.1.7
+  google_maps_flutter_web: ^0.3.3
 
   # Utilities
   dotted_border: ^2.0.0+2
   flutter_svg: ^1.1.0
   shared_preferences: ^2.0.15
   http: ^0.13.4
-  google_maps_flutter: ^2.1.7
-  google_maps_flutter_web: ^0.3.3
+  latlong2: ^0.8.1
 
 dev_dependencies:
   flutter_test:
@@ -63,12 +64,12 @@ flutter:
   #    Application Font
     - family: SF Pro Rounded
       fonts:
-        - asset: fonts/SF-Pro-Rounded/Bold.otf
+        - asset: assets/fonts/SF-Pro-Rounded/Bold.otf
           weight: 700
-        - asset: fonts/SF-Pro-Rounded/Semibold.otf
+        - asset: assets/fonts/SF-Pro-Rounded/Semibold.otf
           weight: 600
-        - asset: fonts/SF-Pro-Rounded/Medium.otf
+        - asset: assets/fonts/SF-Pro-Rounded/Medium.otf
           weight: 500
-        - asset: fonts/SF-Pro-Rounded/Regular.otf
+        - asset: assets/fonts/SF-Pro-Rounded/Regular.otf
           weight: 400
 
