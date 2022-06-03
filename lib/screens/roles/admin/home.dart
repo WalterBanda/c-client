@@ -40,7 +40,6 @@ class AdminHome extends StatelessWidget {
                       label: "+ Add Garage",
                       onPressed: () => showDialog(
                         context: context,
-                        useRootNavigator: false,
                         builder: (context) => const SearchOverlay(),
                       ),
                     ),
@@ -49,7 +48,6 @@ class AdminHome extends StatelessWidget {
                       label: "+ Add Admin",
                       onPressed: () => showDialog(
                         context: context,
-                        useRootNavigator: false,
                         builder: (context) => const SearchOverlay(),
                       ),
                     ),

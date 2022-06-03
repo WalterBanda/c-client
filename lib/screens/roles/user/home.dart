@@ -28,7 +28,6 @@ class UserHome extends StatelessWidget {
             child: TextField(
               onTap: () {
                 showDialog(
-                    useRootNavigator: false,
                     context: context,
                     builder: (context) => const SearchOverlay());
               },
