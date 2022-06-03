@@ -36,7 +36,7 @@ class GarageHome extends StatelessWidget {
       maintainBottomViewPadding: false,
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 320, maxWidth: 680),
+          constraints: pageConstraints,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [

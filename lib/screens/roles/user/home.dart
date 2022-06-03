@@ -1,3 +1,4 @@
+import 'package:client/router/roles.dart';
 import 'package:flutter/material.dart';
 
 import '../../../styles/icons/chap_chap_icons.dart';
@@ -20,7 +21,7 @@ class UserHome extends StatelessWidget {
           right: 10,
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(minWidth: 320, maxWidth: 680),
+              constraints: pageConstraints,
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
@@ -88,7 +89,7 @@ class SearchOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 320, maxWidth: 680),
+        constraints: pageConstraints,
         child: Dialog(
           backgroundColor: AppColors.bgDark,
           alignment: const Alignment(0.0, -0.6),

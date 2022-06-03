@@ -1,4 +1,5 @@
 import 'package:client/core/routes/router.dart';
+import 'package:client/router/roles.dart';
 import 'package:client/screens/roles/user/home.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -13,20 +14,27 @@ class AdminHome extends StatelessWidget {
       {required BuildContext context,
       required String label,
       required GestureTapCallback onPressed}) {
-    return InkWell(
-      onTap: onPressed,
-      child: DottedBorder(
-        padding: const EdgeInsets.all(30),
-        borderType: BorderType.RRect,
-        radius: const Radius.circular(10),
-        child: Text(
-          label,
-          textAlign: TextAlign.right,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 15,
-            fontFamily: "SF Pro Rounded",
-            fontWeight: FontWeight.w700,
+    return Expanded(
+      child: InkWell(
+        onTap: onPressed,
+        child: DottedBorder(
+          padding: const EdgeInsets.only(top: 30, bottom: 30),
+          borderType: BorderType.RRect,
+          radius: const Radius.circular(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontFamily: "SF Pro Rounded",
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -40,7 +48,7 @@ class AdminHome extends StatelessWidget {
       maintainBottomViewPadding: false,
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 320, maxWidth: 680),
+          constraints: pageConstraints,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -70,6 +78,7 @@ class AdminHome extends StatelessWidget {
                             builder: (context) => const SearchOverlay(),
                           ),
                         ),
+                        SizedBox(width: 10),
                         _buildAddItem(
                           context: context,
                           label: "+ Add Admin",

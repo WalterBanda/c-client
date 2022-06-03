@@ -1,3 +1,4 @@
+import 'package:client/router/roles.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/index.dart';
@@ -13,7 +14,7 @@ class ProfilePage extends StatelessWidget {
       maintainBottomViewPadding: false,
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 320, maxWidth: 680),
+          constraints: pageConstraints,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

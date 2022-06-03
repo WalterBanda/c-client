@@ -6,6 +6,9 @@ import '../styles/icons/chap_chap_icons.dart';
 import '../styles/index.dart';
 import '../styles/ui/colors.dart';
 
+BoxConstraints pageConstraints =
+    const BoxConstraints(minWidth: 320, maxWidth: 480);
+
 class PageNavigator extends StatelessWidget {
   const PageNavigator({
     ///* Auto Navigates to a given Page
