@@ -55,6 +55,32 @@ class Splash extends StatelessWidget {
   }
 }
 
+SnackBar alertSnackBar({
+  required String message,
+  String? errorLabel,
+  VoidCallback? errorCallback,
+}) {
+  return SnackBar(
+    behavior: SnackBarBehavior.floating,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    backgroundColor: AppColors.bgDark,
+    action: errorLabel != null
+        ? SnackBarAction(
+            label: errorLabel,
+            onPressed: errorCallback ?? () {},
+          )
+        : null,
+    content: Text(
+      message,
+      style: const TextStyle(
+        fontSize: 18,
+        color: AppColors.textPrimary,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  );
+}
+
 class Onboarding extends StatelessWidget {
   const Onboarding({Key? key}) : super(key: key);
 
@@ -77,50 +103,22 @@ class Onboarding extends StatelessWidget {
 
   void _googleSignIn(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: AppColors.bgDark,
-        action: SnackBarAction(
-          label: 'Go to Email Login',
-          onPressed: () {
-            AuthRouter.router.currentState!
-                .pushReplacementNamed(AuthRoutes.login);
-          },
-        ),
-        content: const Text(
-          "Google SignIn Under Development, Use Email Authentication",
-          style: TextStyle(
-            fontSize: 18,
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+      alertSnackBar(
+        message: "Google SignIn Under Development, Use Email Authentication",
+        errorLabel: 'Go to Email Login',
+        errorCallback: () => AuthRouter.router.currentState!
+            .pushReplacementNamed(AuthRoutes.login),
       ),
     );
   }
 
   void _gitHubSignIn(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: AppColors.bgDark,
-        action: SnackBarAction(
-          label: 'Go to Email Login',
-          onPressed: () {
-            AuthRouter.router.currentState!
-                .pushReplacementNamed(AuthRoutes.login);
-          },
-        ),
-        content: const Text(
-          "Github SignIn Under Development, Use Email Authentication",
-          style: TextStyle(
-            fontSize: 18,
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+      alertSnackBar(
+        message: "Github SignIn Under Development, Use Email Authentication",
+        errorLabel: 'Go to Email Login',
+        errorCallback: () => AuthRouter.router.currentState!
+            .pushReplacementNamed(AuthRoutes.login),
       ),
     );
   }

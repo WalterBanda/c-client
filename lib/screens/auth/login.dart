@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/routes/router.dart';
@@ -10,9 +11,45 @@ class Login extends StatelessWidget {
 
   static const String id = "login";
 
-  void _userAuth() {
-    GlobalNavigator.router.currentState!
-        .pushReplacementNamed(GlobalRoutes.switchRoles);
+  void _userAuth({
+    required BuildContext context,
+    required String email,
+    required String password,
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    try {
+      await auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((credential) => GlobalNavigator.router.currentState!
+              .pushReplacementNamed(GlobalRoutes.switchRoles));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          alertSnackBar(
+            message:
+                "You dont Currently have an Account, Create one or check your credentials",
+            errorLabel: 'Go to Email Login',
+            errorCallback: () {
+              AuthRouter.router.currentState!
+                  .pushReplacementNamed(AuthRoutes.login);
+            },
+          ),
+        );
+      } else if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          alertSnackBar(
+            message: "Your entered a wrong password, try again",
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          alertSnackBar(
+            message: e.code,
+          ),
+        );
+      }
+    }
   }
 
   @override
