@@ -19,7 +19,8 @@ class GlobalNavigator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case GlobalRoutes.auth:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const AuthNavigator());
       // TODO: Implement Auto Login for Roles
       case GlobalRoutes.pages:
         return PageRouteBuilder(
@@ -31,7 +32,8 @@ class GlobalNavigator {
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const SwitchRoles());
       default:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Auth());
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const AuthNavigator());
     }
   }
 

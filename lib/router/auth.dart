@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../core/routes/router.dart';
 
-class Auth extends StatelessWidget {
-  const Auth({Key? key}) : super(key: key);
+class AuthNavigator extends StatelessWidget {
+  const AuthNavigator({Key? key}) : super(key: key);
 
   static const String id = "auth";
 

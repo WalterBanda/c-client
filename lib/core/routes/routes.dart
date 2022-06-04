@@ -9,7 +9,7 @@ import '../../screens/roles/switch_roles.dart';
 import '../../screens/roles/user/home.dart';
 
 class GlobalRoutes {
-  static const String auth = Auth.id;
+  static const String auth = AuthNavigator.id;
 
   // TODO: Replace with Appropriate navigator/module id
   static const String pages = PageNavigator.id;
