@@ -85,7 +85,7 @@ class PageRouter {
         page = const UserHome();
         break;
       case SharedRoutes.profile:
-        page = const ProfilePage();
+        page = ProfilePage();
         break;
       case SharedRoutes.settings:
         page = const SettingsPage();

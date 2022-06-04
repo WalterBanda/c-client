@@ -1,5 +1,4 @@
 // Use Firebase emulators
-import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,7 +22,9 @@ connectToEmulator() async {
   const storagePort = 9199;
 
   // Just to make sure we're running locally
-  print("I am running on emulator");
+  if (kDebugMode) {
+    print("I am running on emulator");
+  }
 
   // Instruct all the relevant firebase products to use the firebase emulator
   // # 3

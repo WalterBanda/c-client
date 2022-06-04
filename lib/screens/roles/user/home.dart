@@ -94,9 +94,7 @@ class _MapLayerState extends State<MapLayer> {
               width: 80.0,
               height: 80.0,
               point: LatLng(51.5, -0.09),
-              builder: (ctx) => Container(
-                child: const Icon(ChapChap.pin),
-              ),
+              builder: (ctx) => const Icon(ChapChap.pin),
             ),
           ],
         ),

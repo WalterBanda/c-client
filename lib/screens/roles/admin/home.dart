@@ -1,4 +1,3 @@
-import 'package:client/core/routes/router.dart';
 import 'package:client/router/roles.dart';
 import 'package:client/screens/roles/user/home.dart';
 import 'package:client/styles/ui/colors.dart';
@@ -79,7 +78,7 @@ class AdminHome extends StatelessWidget {
                             builder: (context) => const SearchOverlay(),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         _buildAddItem(
                           context: context,
                           label: "+ Add Admin",

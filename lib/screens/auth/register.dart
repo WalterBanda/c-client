@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +17,16 @@ class Register extends StatelessWidget {
   static const id = "register";
 
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
-  FocusNode _emailFocusNode = FocusNode();
-  FocusNode _passwordFocusNode = FocusNode();
-  FocusNode _phoneFocusNode = FocusNode();
-  FocusNode _addressFocusNode = FocusNode();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final FocusNode _nameFocusNode = FocusNode();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _phoneFocusNode = FocusNode();
+  final FocusNode _addressFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +59,18 @@ class Register extends StatelessWidget {
               Form(
                 key: _formKey,
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  authInput(
+                    hint: "Your Username",
+                    controller: _nameController,
+                    focusNode: _nameFocusNode,
+                    inputType: TextInputType.name,
+                    validator: (value) => Validator.validateName(name: value),
+                    prefix: const Icon(
+                      Icons.email_rounded,
+                      size: 15,
+                    ),
+                  ),
+                  const SizedBox(height: 15),
                   authInput(
                     hint: "Enter your Email",
                     controller: _emailController,
@@ -111,6 +127,7 @@ class Register extends StatelessWidget {
                       if (_formKey.currentState!.validate()) {
                         _userRegister(
                           context: context,
+                          username: _nameController.text,
                           email: _emailController.text,
                           password: _passwordController.text,
                           phone: _phoneController.text,
@@ -145,6 +162,7 @@ class Register extends StatelessWidget {
   }
 
   Future<void> _userRegister({
+    required String username,
     required BuildContext context,
     required String email,
     required String password,
@@ -158,19 +176,27 @@ class Register extends StatelessWidget {
     try {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((credential) => {
-                dbRef.doc(credential.user!.uid).set({
-                  "name": credential.user?.displayName ?? "Your Username",
-                  "email": _emailController.text,
-                  "password": _passwordController.text,
-                  "phone": _phoneController.text,
-                  "address": _addressController.text,
-                }),
-              })
           .then(
-            (status) => GlobalNavigator.router.currentState!
-                .pushReplacementNamed(GlobalRoutes.switchRoles),
-          );
+        (credential) {
+          credential.user!.updateDisplayName(username);
+          credential.user!.updatePhotoURL(
+              "https://ui-avatars.com/api/?name=$username&background=${Colors.primaries[Random().nextInt(Colors.primaries.length)].toString().substring(20, 24)}&color=fff");
+          dbRef.doc(credential.user!.uid).set({
+            "name": credential.user?.displayName,
+            "profilePhotoURL":
+                "https://ui-avatars.com/api/?name=$username&background=${Colors.primaries[Random().nextInt(Colors.primaries.length)].toString().substring(20, 24)}&color=fff",
+            "email": _emailController.text,
+            "password": _passwordController.text,
+            "phone": _phoneController.text,
+            "address": _addressController.text,
+            "myDescription":
+                "Currently you have no description about you, add your description about you so that other people can know about you",
+          });
+        },
+      ).then(
+        (status) => GlobalNavigator.router.currentState!
+            .pushReplacementNamed(GlobalRoutes.switchRoles),
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../core/routes/router.dart';
@@ -10,7 +12,7 @@ BoxConstraints pageConstraints =
     const BoxConstraints(minWidth: 320, maxWidth: 480);
 
 class PageNavigator extends StatelessWidget {
-  const PageNavigator({
+  PageNavigator({
     ///* Auto Navigates to a given Page
     this.routeToNavigate = PageRouter.initialRoute,
     Key? key,
@@ -20,6 +22,8 @@ class PageNavigator extends StatelessWidget {
 
   static const String id = "roles_manager";
   static GlobalKey<ScaffoldState> scaffold = GlobalKey<ScaffoldState>();
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +45,11 @@ class PageNavigator extends StatelessWidget {
   }
 
   Drawer customDrawer() {
-    void _userLogout() {
-      // TODO Implement Logout
-      GlobalNavigator.router.currentState!
-          .pushReplacementNamed(GlobalRoutes.auth);
+    Future<void> _userLogout() async {
+      await firebaseAuth.signOut().then(
+            (value) => GlobalNavigator.router.currentState!
+                .pushReplacementNamed(GlobalRoutes.auth),
+          );
     }
 
     ElevatedButton _logoutButton(VoidCallback logout) {
@@ -85,9 +90,9 @@ class PageNavigator extends StatelessWidget {
         children: [
           _defaultProfile(),
           const SizedBox(height: 20),
-          const Text(
-            "Username",
-            style: TextStyle(
+          Text(
+            firebaseAuth.currentUser!.displayName.toString(),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24,
               fontFamily: "SF Pro Rounded",

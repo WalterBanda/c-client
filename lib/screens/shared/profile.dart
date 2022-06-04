@@ -1,11 +1,16 @@
 import 'package:client/router/roles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/routes/router.dart';
+import '../../core/routes/routes.dart';
 import '../../styles/index.dart';
 import '../../styles/ui/colors.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  ProfilePage({Key? key}) : super(key: key);
+
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +68,8 @@ class ProfilePage extends StatelessWidget {
               Expanded(
                 flex: 4,
                 child: Column(
-                  children: [
-                    const Text(
+                  children: const [
+                    Text(
                       "Your Activity",
                       style: TextStyle(
                         fontFamily: "SF Pro Rounded",
@@ -72,8 +77,8 @@ class ProfilePage extends StatelessWidget {
                         fontSize: 18,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    const Text(
+                    SizedBox(height: 20),
+                    Text(
                       "No Activity Currently, Book a garage and your activity will be shown here",
                       softWrap: true,
                       textAlign: TextAlign.center,
@@ -89,7 +94,12 @@ class ProfilePage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await firebaseAuth.signOut().then(
+                        (value) => GlobalNavigator.router.currentState!
+                            .pushReplacementNamed(GlobalRoutes.auth),
+                      );
+                },
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.primary,
                   padding:

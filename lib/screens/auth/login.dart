@@ -11,10 +11,10 @@ class Login extends StatelessWidget {
 
   static const String id = "login";
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  FocusNode _emailFocusNode = FocusNode();
-  FocusNode _passwordFocusNode = FocusNode();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +138,13 @@ class Login extends StatelessWidget {
             message: "Your entered a wrong password, try again",
           ),
         );
+      } else if (e.code == 'user-disabled') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          alertSnackBar(
+            message:
+                "Your Account has been disabled, Check your email for instructions on account recovery",
+          ),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           alertSnackBar(
@@ -203,9 +210,6 @@ Widget authInput({
 
 class Validator {
   static String? validateName({required String name}) {
-    if (name == null) {
-      return null;
-    }
     if (name.isEmpty) {
       return 'Name can\'t be empty';
     }
@@ -214,9 +218,6 @@ class Validator {
   }
 
   static String? validateEmail({required String email}) {
-    if (email == null) {
-      return null;
-    }
     RegExp emailRegExp = RegExp(
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
@@ -230,9 +231,6 @@ class Validator {
   }
 
   static String? validatePassword({required String password}) {
-    if (password == null) {
-      return null;
-    }
     if (password.isEmpty) {
       return 'Password can\'t be empty';
     } else if (password.length < 6) {
@@ -243,14 +241,16 @@ class Validator {
   }
 
   static String? validatePhone({required String phone}) {
-    if (phone == null || phone.isEmpty) {
+    if (phone.isEmpty) {
       return 'Please add your phone number easier communications';
     }
+    return null;
   }
 
   static String? validateAddress({required String phone}) {
-    if (phone == null || phone.isEmpty) {
+    if (phone.isEmpty) {
       return 'Please add your address for garage booking';
     }
+    return null;
   }
 }

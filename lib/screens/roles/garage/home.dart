@@ -1,5 +1,4 @@
 import 'package:client/styles/ui/colors.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -75,8 +74,8 @@ class GarageHome extends StatelessWidget {
                   "${cummulative.isNegative ? '' : '+'}$cummulative%",
                   style: TextStyle(
                     color: cummulative.isNegative
-                        ? Color.fromRGBO(226, 80, 122, 1)
-                        : Color.fromRGBO(80, 226, 193, 1),
+                        ? const Color.fromRGBO(226, 80, 122, 1)
+                        : const Color.fromRGBO(80, 226, 193, 1),
                     fontSize: 11,
                   ),
                 )
