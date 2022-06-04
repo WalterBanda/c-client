@@ -44,42 +44,42 @@ class Register extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              authInput(
-                hint: "Enter your Email",
-                inputType: TextInputType.emailAddress,
-                prefix: const Icon(
-                  Icons.email_rounded,
-                  size: 15,
-                ),
-              ),
-              const SizedBox(height: 15),
-              authInput(
-                hint: "Enter your Password",
-                inputType: TextInputType.visiblePassword,
-                private: true,
-                prefix: const Icon(
-                  Icons.lock_rounded,
-                  size: 15,
-                ),
-              ),
-              const SizedBox(height: 15),
-              authInput(
-                hint: "Enter your Phone Number",
-                inputType: TextInputType.phone,
-                prefix: const Icon(
-                  Icons.phone_rounded,
-                  size: 15,
-                ),
-              ),
-              const SizedBox(height: 15),
-              authInput(
-                hint: "Enter your Address",
-                inputType: TextInputType.streetAddress,
-                prefix: const Icon(
-                  ChapChap.location,
-                  size: 15,
-                ),
-              ),
+              // authInput(
+              //   hint: "Enter your Email",
+              //   inputType: TextInputType.emailAddress,
+              //   prefix: const Icon(
+              //     Icons.email_rounded,
+              //     size: 15,
+              //   ),
+              // ),
+              // const SizedBox(height: 15),
+              // authInput(
+              //   hint: "Enter your Password",
+              //   inputType: TextInputType.visiblePassword,
+              //   private: true,
+              //   prefix: const Icon(
+              //     Icons.lock_rounded,
+              //     size: 15,
+              //   ),
+              // ),
+              // const SizedBox(height: 15),
+              // authInput(
+              //   hint: "Enter your Phone Number",
+              //   inputType: TextInputType.phone,
+              //   prefix: const Icon(
+              //     Icons.phone_rounded,
+              //     size: 15,
+              //   ),
+              // ),
+              // const SizedBox(height: 15),
+              // authInput(
+              //   hint: "Enter your Address",
+              //   inputType: TextInputType.streetAddress,
+              //   prefix: const Icon(
+              //     ChapChap.location,
+              //     size: 15,
+              //   ),
+              // ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _userRegister,

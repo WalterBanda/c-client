@@ -56,7 +56,7 @@ class Splash extends StatelessWidget {
 }
 
 SnackBar alertSnackBar({
-  required String message,
+  String? message,
   String? errorLabel,
   VoidCallback? errorCallback,
 }) {
@@ -71,7 +71,7 @@ SnackBar alertSnackBar({
           )
         : null,
     content: Text(
-      message,
+      message ?? "Enter Your Message",
       style: const TextStyle(
         fontSize: 18,
         color: AppColors.textPrimary,
