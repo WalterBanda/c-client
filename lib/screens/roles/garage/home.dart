@@ -53,8 +53,8 @@ class GarageHome extends StatelessWidget {
                   width: 40,
                   child: SvgPicture.asset(
                     cummulative.isNegative
-                        ? "/assets/images/res/graph_down.svg"
-                        : "/assets/images/res/graph_up.svg",
+                        ? "assets/images/res/graph_down.svg"
+                        : "assets/images/res/graph_up.svg",
                     height: 16,
                     width: 60,
                     fit: BoxFit.fitHeight,
@@ -64,15 +64,15 @@ class GarageHome extends StatelessWidget {
                   height: 6,
                   child: SvgPicture.asset(
                     cummulative.isNegative
-                        ? "/assets/images/res/loss.svg"
-                        : "/assets/images/res/gain.svg",
+                        ? "assets/images/res/loss.svg"
+                        : "assets/images/res/gain.svg",
                     height: 6,
                     width: 6,
                     fit: BoxFit.fitHeight,
                   ),
                 ),
                 Text(
-                  "${cummulative.isNegative ? '-' : '+'}$cummulative%",
+                  "${cummulative.isNegative ? '' : '+'}$cummulative%",
                   style: TextStyle(
                     color: cummulative.isNegative
                         ? Color.fromRGBO(226, 80, 122, 1)

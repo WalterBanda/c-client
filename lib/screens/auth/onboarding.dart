@@ -75,12 +75,54 @@ class Onboarding extends StatelessWidget {
 
   // TODO: Implement Google & Github SignIn
 
-  void _googleSignIn() {
-    // GlobalNavigator.router.currentState!.pushReplacementNamed(GlobalRoutes.switchRoles);
+  void _googleSignIn(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        backgroundColor: AppColors.bgDark,
+        action: SnackBarAction(
+          label: 'Go to Email Login',
+          onPressed: () {
+            AuthRouter.router.currentState!
+                .pushReplacementNamed(AuthRoutes.login);
+          },
+        ),
+        content: const Text(
+          "Google SignIn Under Development, Use Email Authentication",
+          style: TextStyle(
+            fontSize: 18,
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
   }
 
-  void _gitHubSignIn() {
-    // GlobalNavigator.router.currentState!.pushReplacementNamed(GlobalRoutes.switchRoles);
+  void _gitHubSignIn(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        backgroundColor: AppColors.bgDark,
+        action: SnackBarAction(
+          label: 'Go to Email Login',
+          onPressed: () {
+            AuthRouter.router.currentState!
+                .pushReplacementNamed(AuthRoutes.login);
+          },
+        ),
+        content: const Text(
+          "Github SignIn Under Development, Use Email Authentication",
+          style: TextStyle(
+            fontSize: 18,
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
   }
 
   void _emailSignIn() =>
@@ -107,9 +149,11 @@ class Onboarding extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Authlet(_googleSignIn, const Icon(ChapChap.google, size: 36)),
+                Authlet(() => _googleSignIn(context),
+                    const Icon(ChapChap.google, size: 36)),
                 const SizedBox(width: 15),
-                Authlet(_gitHubSignIn, const Icon(ChapChap.github, size: 36)),
+                Authlet(() => _gitHubSignIn(context),
+                    const Icon(ChapChap.github, size: 36)),
                 const SizedBox(width: 15),
                 Authlet(_emailSignIn, const Icon(ChapChap.email, size: 36)),
               ],

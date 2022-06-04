@@ -8,11 +8,13 @@ import 'package:flutter/foundation.dart';
 
 // Use Emulator on Debug build
 const bool useEmulator = kDebugMode;
+// const bool useEmulator = false;
 
 // Settings for firebase emulator connection
-Future connectToEmulator() async {
+connectToEmulator() async {
   // Provide url to the emulator, localhost might not work on android emulator.
-  final host = Platform.isAndroid ? '10.0.2.2' : 'localhost'; //#1
+  // final host = Platform.isAndroid ? '10.0.2.2' : 'localhost'; //#1
+  const host = 'localhost'; //#1
   // Provide port for all the local emulator prodcuts
   // #2
   const authPort = 9099;

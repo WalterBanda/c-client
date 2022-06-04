@@ -13,7 +13,10 @@ class App extends StatelessWidget {
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      theme: ThemeData(scaffoldBackgroundColor: AppColors.bgDark),
+      theme: ThemeData(
+        scaffoldBackgroundColor: AppColors.bgDark,
+        fontFamily: "SF Pro Rounded",
+      ),
       // TODO: Implement Theming 🎨
       darkTheme: ThemeData.light(),
       navigatorKey: GlobalNavigator.router,
