@@ -101,25 +101,41 @@ class Onboarding extends StatelessWidget {
 
   // TODO: Implement Google & Github SignIn
 
-  void _googleSignIn(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      alertSnackBar(
-        message: "Google SignIn Under Development, Use Email Authentication",
-        errorLabel: 'Go to Email Login',
-        errorCallback: () => AuthRouter.router.currentState!
-            .pushReplacementNamed(AuthRoutes.login),
-      ),
+  void _googleSignIn(BuildContext context) async {
+    await FirebaseAuth.instance
+        .signInWithRedirect(GoogleAuthProvider())
+        .then((result) => GlobalNavigator.router.currentState!
+            .pushReplacementNamed(GlobalRoutes.switchRoles))
+        .onError(
+      (error, stackTrace) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          alertSnackBar(
+            message: "Google SignIn Failed, Use Email Authentication\n\n$error",
+            errorLabel: 'Go to Email Login',
+            errorCallback: () => AuthRouter.router.currentState!
+                .pushReplacementNamed(AuthRoutes.login),
+          ),
+        );
+      },
     );
   }
 
-  void _gitHubSignIn(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      alertSnackBar(
-        message: "Github SignIn Under Development, Use Email Authentication",
-        errorLabel: 'Go to Email Login',
-        errorCallback: () => AuthRouter.router.currentState!
-            .pushReplacementNamed(AuthRoutes.login),
-      ),
+  Future<void> _gitHubSignIn(BuildContext context) async {
+    await FirebaseAuth.instance
+        .signInWithRedirect(GithubAuthProvider())
+        .then((result) => GlobalNavigator.router.currentState!
+            .pushReplacementNamed(GlobalRoutes.switchRoles))
+        .onError(
+      (error, stackTrace) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          alertSnackBar(
+            message: "Github SignIn Failed, Use Email Authentication\n\n$error",
+            errorLabel: 'Go to Email Login',
+            errorCallback: () => AuthRouter.router.currentState!
+                .pushReplacementNamed(AuthRoutes.login),
+          ),
+        );
+      },
     );
   }
 
