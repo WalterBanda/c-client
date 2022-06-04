@@ -174,17 +174,21 @@ class Register extends StatelessWidget {
         FirebaseFirestore.instance.collection("users");
 
     try {
+      String profileColor = Colors
+          .primaries[Random().nextInt(Colors.primaries.length)]
+          .toString()
+          .substring(39, 45);
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then(
         (credential) {
           credential.user!.updateDisplayName(username);
           credential.user!.updatePhotoURL(
-              "https://ui-avatars.com/api/?name=$username&background=${Colors.primaries[Random().nextInt(Colors.primaries.length)].toString().substring(20, 24)}&color=fff");
+              "https://ui-avatars.com/api/?name=\"$username\"&background=$profileColor&color=fff");
           dbRef.doc(credential.user!.uid).set({
             "name": credential.user?.displayName,
             "profilePhotoURL":
-                "https://ui-avatars.com/api/?name=$username&background=${Colors.primaries[Random().nextInt(Colors.primaries.length)].toString().substring(20, 24)}&color=fff",
+                "https://ui-avatars.com/api/?name=\"$username\"&background=$profileColor&color=fff",
             "email": _emailController.text,
             "password": _passwordController.text,
             "phone": _phoneController.text,
