@@ -182,7 +182,6 @@ Widget authInput({
         fontWeight: FontWeight.w600,
         letterSpacing: 0.6,
       ),
-      //TODO Implement Input Checking
       decoration: InputDecoration(
         filled: true,
         isCollapsed: true,

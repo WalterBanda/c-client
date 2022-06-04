@@ -21,7 +21,6 @@ class GlobalNavigator {
       case GlobalRoutes.auth:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const AuthNavigator());
-      // TODO: Implement Auto Login for Roles
       case GlobalRoutes.pages:
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => PageNavigator(
@@ -38,7 +37,6 @@ class GlobalNavigator {
   }
 
   static String initialRoute() {
-    // TODO: Implement Auto Login into Application
     return GlobalRoutes.auth;
   }
 }

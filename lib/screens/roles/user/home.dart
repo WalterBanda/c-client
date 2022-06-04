@@ -17,43 +17,57 @@ class UserHome extends StatelessWidget {
       children: [
         const MapLayer(),
         Positioned(
-          height: 100,
           bottom: 30,
           left: 10,
           right: 10,
           child: Center(
             child: ConstrainedBox(
               constraints: pageConstraints,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
-                width: 300,
-                decoration: BoxDecoration(
-                  color: AppColors.bgDark,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: TextField(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => const SearchOverlay());
-                  },
-                  style: const TextStyle(
-                    fontFamily: "SF Pro Rounded",
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  decoration: InputDecoration(
-                    filled: true,
-                    prefixIcon: const Icon(ChapChap.search_filled),
-                    fillColor: AppColors.input,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.primary,
+                      elevation: 0,
+                      // minimumSize: Size(20, 20),
+                      // maximumSize: Size(48, 48),
+                      fixedSize: Size(18, 48),
                     ),
-                    hintText: "Looking for a Garage",
+                    child: const Icon(Icons.my_location_rounded, size: 18),
                   ),
-                ),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 22),
+                    decoration: BoxDecoration(
+                      color: AppColors.bgDark,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: TextField(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => const SearchOverlay());
+                      },
+                      style: const TextStyle(
+                        fontFamily: "SF Pro Rounded",
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      decoration: InputDecoration(
+                        filled: true,
+                        prefixIcon: const Icon(ChapChap.search_filled),
+                        fillColor: AppColors.input,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: BorderSide.none,
+                        ),
+                        hintText: "Looking for a Garage",
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -99,23 +113,6 @@ class _MapLayerState extends State<MapLayer> {
           ],
         ),
       ],
-    );
-    // return GoogleMap(
-    //   onMapCreated: _onMapCreated,
-    //   initialCameraPosition: CameraPosition(
-    //     target: _center,
-    //     zoom: 11.0,
-    //   ),
-    // );
-    // return _unableLoadMap();
-  }
-
-  Container _unableLoadMap() {
-    return Container(
-      color: const Color.fromRGBO(196, 196, 196, 1),
-      child: const Center(
-        child: Text("Unable to load a map, \n Please refresh"),
-      ),
     );
   }
 }

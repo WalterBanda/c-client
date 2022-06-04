@@ -11,7 +11,6 @@ import '../../screens/roles/user/home.dart';
 class GlobalRoutes {
   static const String auth = AuthNavigator.id;
 
-  // TODO: Replace with Appropriate navigator/module id
   static const String pages = PageNavigator.id;
   static const String switchRoles = SwitchRoles.id;
 }

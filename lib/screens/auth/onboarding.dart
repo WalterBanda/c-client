@@ -99,7 +99,7 @@ class Onboarding extends StatelessWidget {
     );
   }
 
-  // TODO: Implement Google & Github SignIn
+  // FIXME: 🚧 Google & Github SignIn Testing
 
   void _googleSignIn(BuildContext context) async {
     await FirebaseAuth.instance

@@ -1,11 +1,9 @@
 import 'package:client/router/roles.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/routes/router.dart';
 import '../../core/routes/routes.dart';
-import '../../styles/index.dart';
 import '../../styles/ui/colors.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -49,14 +47,14 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Text(
+                    const Text(
                       // FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get(["description"]).toString(),
                       "Description",
                       softWrap: true,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 5,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "SF Pro Rounded",
                         fontWeight: FontWeight.w400,
                         fontSize: 16,

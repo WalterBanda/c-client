@@ -18,7 +18,7 @@ connectToEmulator() async {
   // #2
   const authPort = 9099;
   const firestorePort = 8080;
-  const functionsPort = 5001;
+  // const functionsPort = 5001;
   const storagePort = 9199;
 
   // Just to make sure we're running locally

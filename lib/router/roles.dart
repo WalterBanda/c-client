@@ -75,7 +75,6 @@ class PageNavigator extends StatelessWidget {
 
     Widget _profile() {
       Widget _defaultProfile() {
-        //TODO User Profile
         return CircleAvatar(
           minRadius: 30,
           maxRadius: 60,
