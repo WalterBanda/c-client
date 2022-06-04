@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../styles/index.dart';
+import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 
