@@ -76,13 +76,12 @@ class PageNavigator extends StatelessWidget {
     Widget _profile() {
       Widget _defaultProfile() {
         //TODO User Profile
-        return Container(
-          padding: const EdgeInsets.all(30),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.bg.withOpacity(0.2),
-          ),
-          child: const Icon(ChapChap.user, size: 50),
+        return CircleAvatar(
+          minRadius: 30,
+          maxRadius: 60,
+          backgroundImage: NetworkImage(
+              FirebaseAuth.instance.currentUser!.photoURL ??
+                  "https://ui-avatars.com/api/?name=username"),
         );
       }
 

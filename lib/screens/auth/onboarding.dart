@@ -103,14 +103,14 @@ class Onboarding extends StatelessWidget {
 
   void _googleSignIn(BuildContext context) async {
     await FirebaseAuth.instance
-        .signInWithRedirect(GoogleAuthProvider())
+        .signInWithPopup(GoogleAuthProvider())
         .then((result) => GlobalNavigator.router.currentState!
             .pushReplacementNamed(GlobalRoutes.switchRoles))
         .onError(
       (error, stackTrace) {
         ScaffoldMessenger.of(context).showSnackBar(
           alertSnackBar(
-            message: "Google SignIn Failed, Use Email Authentication\n\n$error",
+            message: "Google SignIn Failed, Use Email Authentication",
             errorLabel: 'Go to Email Login',
             errorCallback: () => AuthRouter.router.currentState!
                 .pushReplacementNamed(AuthRoutes.login),
@@ -122,7 +122,7 @@ class Onboarding extends StatelessWidget {
 
   Future<void> _gitHubSignIn(BuildContext context) async {
     await FirebaseAuth.instance
-        .signInWithRedirect(GithubAuthProvider())
+        .signInWithPopup(GithubAuthProvider())
         .then((result) => GlobalNavigator.router.currentState!
             .pushReplacementNamed(GlobalRoutes.switchRoles))
         .onError(
