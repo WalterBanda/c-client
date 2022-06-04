@@ -85,21 +85,25 @@ class PageNavigator extends StatelessWidget {
         );
       }
 
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _defaultProfile(),
-          const SizedBox(height: 20),
-          Text(
-            firebaseAuth.currentUser!.displayName.toString(),
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 24,
-              fontFamily: "SF Pro Rounded",
-              fontWeight: FontWeight.w600,
-            ),
-          )
-        ],
+      return GestureDetector(
+        onTap: () => PageRouter.router.currentState!
+            .pushReplacementNamed(SharedRoutes.profile),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _defaultProfile(),
+            const SizedBox(height: 20),
+            Text(
+              firebaseAuth.currentUser!.displayName.toString(),
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontFamily: "SF Pro Rounded",
+                fontWeight: FontWeight.w600,
+              ),
+            )
+          ],
+        ),
       );
     }
 
