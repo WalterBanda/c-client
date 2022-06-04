@@ -56,7 +56,7 @@ class AuthRouter {
       case AuthRoutes.login:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => Login());
       case AuthRoutes.register:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Register());
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => Register());
       default:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Splash());
     }

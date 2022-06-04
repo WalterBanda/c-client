@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/routes/router.dart';
@@ -5,16 +7,22 @@ import '../../core/routes/routes.dart';
 import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
 import 'login.dart';
+import 'onboarding.dart';
 
 class Register extends StatelessWidget {
-  const Register({Key? key}) : super(key: key);
+  Register({Key? key}) : super(key: key);
 
   static const id = "register";
 
-  void _userRegister() {
-    GlobalNavigator.router.currentState!
-        .pushReplacementNamed(GlobalRoutes.switchRoles);
-  }
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  FocusNode _emailFocusNode = FocusNode();
+  FocusNode _passwordFocusNode = FocusNode();
+  FocusNode _phoneFocusNode = FocusNode();
+  FocusNode _addressFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -44,66 +52,151 @@ class Register extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              // authInput(
-              //   hint: "Enter your Email",
-              //   inputType: TextInputType.emailAddress,
-              //   prefix: const Icon(
-              //     Icons.email_rounded,
-              //     size: 15,
-              //   ),
-              // ),
-              // const SizedBox(height: 15),
-              // authInput(
-              //   hint: "Enter your Password",
-              //   inputType: TextInputType.visiblePassword,
-              //   private: true,
-              //   prefix: const Icon(
-              //     Icons.lock_rounded,
-              //     size: 15,
-              //   ),
-              // ),
-              // const SizedBox(height: 15),
-              // authInput(
-              //   hint: "Enter your Phone Number",
-              //   inputType: TextInputType.phone,
-              //   prefix: const Icon(
-              //     Icons.phone_rounded,
-              //     size: 15,
-              //   ),
-              // ),
-              // const SizedBox(height: 15),
-              // authInput(
-              //   hint: "Enter your Address",
-              //   inputType: TextInputType.streetAddress,
-              //   prefix: const Icon(
-              //     ChapChap.location,
-              //     size: 15,
-              //   ),
-              // ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _userRegister,
-                style: ElevatedButton.styleFrom(
-                  primary: AppColors.primary,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 17, horizontal: 124),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+              Form(
+                key: _formKey,
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  authInput(
+                    hint: "Enter your Email",
+                    controller: _emailController,
+                    focusNode: _emailFocusNode,
+                    inputType: TextInputType.emailAddress,
+                    validator: (value) => Validator.validateEmail(email: value),
+                    prefix: const Icon(
+                      Icons.email_rounded,
+                      size: 15,
+                    ),
                   ),
-                ),
-                child: const Text(
-                  "Register",
-                  style: TextStyle(
-                    fontFamily: "SF Pro Rounded",
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
+                  const SizedBox(height: 15),
+                  authInput(
+                    hint: "Enter your Password",
+                    controller: _passwordController,
+                    focusNode: _passwordFocusNode,
+                    validator: (value) =>
+                        Validator.validatePassword(password: value),
+                    inputType: TextInputType.visiblePassword,
+                    private: true,
+                    prefix: const Icon(
+                      Icons.lock_rounded,
+                      size: 15,
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 15),
+                  authInput(
+                    hint: "Enter your Phone Number",
+                    controller: _phoneController,
+                    focusNode: _phoneFocusNode,
+                    inputType: TextInputType.phone,
+                    validator: (value) => Validator.validatePhone(phone: value),
+                    prefix: const Icon(
+                      Icons.phone_rounded,
+                      size: 15,
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  authInput(
+                    hint: "Enter your Address",
+                    controller: _addressController,
+                    focusNode: _addressFocusNode,
+                    inputType: TextInputType.streetAddress,
+                    validator: (value) =>
+                        Validator.validateAddress(phone: value),
+                    prefix: const Icon(
+                      ChapChap.location,
+                      size: 15,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _userRegister(
+                          context: context,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                          phone: _phoneController.text,
+                          address: _addressController.text,
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.primary,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 17, horizontal: 124),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: const Text(
+                      "Register",
+                      style: TextStyle(
+                        fontFamily: "SF Pro Rounded",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ]),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _userRegister({
+    required BuildContext context,
+    required String email,
+    required String password,
+    required String phone,
+    required String address,
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    final CollectionReference dbRef =
+        FirebaseFirestore.instance.collection("users");
+
+    try {
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((credential) => {
+                dbRef.doc(credential.user!.uid).set({
+                  "name": credential.user?.displayName ?? "Your Username",
+                  "email": _emailController.text,
+                  "password": _passwordController.text,
+                  "phone": _phoneController.text,
+                  "address": _addressController.text,
+                }),
+              })
+          .then(
+            (status) => GlobalNavigator.router.currentState!
+                .pushReplacementNamed(GlobalRoutes.switchRoles),
+          );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          alertSnackBar(
+            message:
+                "An account already exists for that email, you can try login in",
+            errorLabel: 'Login',
+            errorCallback: () {
+              AuthRouter.router.currentState!
+                  .pushReplacementNamed(AuthRoutes.login);
+            },
+          ),
+        );
+      } else if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          alertSnackBar(
+            message: "The password provided is too weak.",
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          alertSnackBar(
+            message: e.code,
+          ),
+        );
+      }
+    }
   }
 }

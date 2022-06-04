@@ -128,7 +128,7 @@ class Login extends StatelessWidget {
             errorLabel: 'Go to Email Login',
             errorCallback: () {
               AuthRouter.router.currentState!
-                  .pushReplacementNamed(AuthRoutes.login);
+                  .pushReplacementNamed(AuthRoutes.register);
             },
           ),
         );
@@ -141,7 +141,7 @@ class Login extends StatelessWidget {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           alertSnackBar(
-            message: e.message,
+            message: e.code,
           ),
         );
       }
@@ -240,5 +240,17 @@ class Validator {
     }
 
     return null;
+  }
+
+  static String? validatePhone({required String phone}) {
+    if (phone == null || phone.isEmpty) {
+      return 'Please add your phone number easier communications';
+    }
+  }
+
+  static String? validateAddress({required String phone}) {
+    if (phone == null || phone.isEmpty) {
+      return 'Please add your address for garage booking';
+    }
   }
 }
