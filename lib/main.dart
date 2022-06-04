@@ -1,10 +1,29 @@
 import 'package:client/core/core.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(
-      DevicePreview(
-        enabled: true,
-        builder: (context) => const App(), // Wrap your app
-      ),
-    );
+import 'core/config/firebase.dart';
+import 'core/config/firebase_options.dart';
+
+void main() async {
+  //  concrete binding for applications based on the Widgets framework
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Set app to run on firebase emulator
+  if (useEmulator) {
+    await connectToEmulator();
+  }
+
+  runApp(
+    DevicePreview(
+      enabled: true,
+      builder: (context) => const App(), // Wrap your app
+    ),
+  );
+}

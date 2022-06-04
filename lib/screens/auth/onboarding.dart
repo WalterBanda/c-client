@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../styles/index.dart';
 import '../../styles/ui/colors.dart';
 import 'package:flutter/material.dart';
@@ -74,13 +76,11 @@ class Onboarding extends StatelessWidget {
   // TODO: Implement Google & Github SignIn
 
   void _googleSignIn() {
-    GlobalNavigator.router.currentState!
-        .pushReplacementNamed(GlobalRoutes.switchRoles);
+    // GlobalNavigator.router.currentState!.pushReplacementNamed(GlobalRoutes.switchRoles);
   }
 
   void _gitHubSignIn() {
-    GlobalNavigator.router.currentState!
-        .pushReplacementNamed(GlobalRoutes.switchRoles);
+    // GlobalNavigator.router.currentState!.pushReplacementNamed(GlobalRoutes.switchRoles);
   }
 
   void _emailSignIn() =>
