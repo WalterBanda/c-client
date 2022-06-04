@@ -1,4 +1,5 @@
 import 'package:client/router/roles.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -37,25 +38,26 @@ class ProfilePage extends StatelessWidget {
                       child: const Icon(ChapChap.user, size: 50),
                     ),
                     const SizedBox(height: 40),
-                    const Text(
-                      "Username",
+                    Text(
+                      firebaseAuth.currentUser!.displayName.toString(),
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "SF Pro Rounded",
                         fontWeight: FontWeight.w500,
                         fontSize: 24,
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      "Currently you have no description about you, add your description about you so that other people can know about you",
+                    Text(
+                      // FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get(["description"]).toString(),
+                      "Description",
                       softWrap: true,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 5,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "SF Pro Rounded",
                         fontWeight: FontWeight.w400,
                         fontSize: 16,

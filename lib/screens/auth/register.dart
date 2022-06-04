@@ -193,7 +193,7 @@ class Register extends StatelessWidget {
             "password": _passwordController.text,
             "phone": _phoneController.text,
             "address": _addressController.text,
-            "myDescription":
+            "description":
                 "Currently you have no description about you, add your description about you so that other people can know about you",
           });
         },
