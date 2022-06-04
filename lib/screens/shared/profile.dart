@@ -29,13 +29,20 @@ class ProfilePage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(30),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.bg.withOpacity(0.2),
-                      ),
-                      child: const Icon(ChapChap.user, size: 50),
+                    // Container(
+                    //   padding: const EdgeInsets.all(30),
+                    //   decoration: BoxDecoration(
+                    //     shape: BoxShape.circle,
+                    //     color: AppColors.bg.withOpacity(0.2),
+                    //   ),
+                    //   child: const Icon(ChapChap.user, size: 50),
+                    // ),
+                    CircleAvatar(
+                      minRadius: 60,
+                      maxRadius: 100,
+                      backgroundImage: NetworkImage(
+                          FirebaseAuth.instance.currentUser!.photoURL ??
+                              "https://ui-avatars.com/api/?name=username"),
                     ),
                     const SizedBox(height: 40),
                     Text(

@@ -241,8 +241,11 @@ class Validator {
   }
 
   static String? validatePhone({required String phone}) {
+    RegExp phoneRegExp = RegExp(r"^\+(?:[0-9] ?){6,14}[0-9]$");
     if (phone.isEmpty) {
       return 'Please add your phone number easier communications';
+    } else if (!phoneRegExp.hasMatch(phone)) {
+      return 'Phone number has to be in International Format ie +254';
     }
     return null;
   }
