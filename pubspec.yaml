@@ -38,6 +38,7 @@ dependencies:
   latlong2: ^0.8.1
   firebase_auth_desktop: ^1.0.0
   firebase_core_desktop: ^1.0.0
+  flutter_map_marker_cluster: ^0.4.4
 
 dev_dependencies:
   flutter_test:

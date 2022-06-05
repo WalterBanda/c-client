@@ -24,17 +24,19 @@ class UserHome extends StatelessWidget {
             child: ConstrainedBox(
               constraints: pageConstraints,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       primary: AppColors.primary,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
                       elevation: 0,
-                      // minimumSize: Size(20, 20),
-                      // maximumSize: Size(48, 48),
-                      fixedSize: Size(18, 48),
                     ),
-                    child: const Icon(Icons.my_location_rounded, size: 18),
+                    child: const Icon(Icons.my_location_rounded),
                   ),
                   const SizedBox(height: 10),
                   Container(
@@ -87,12 +89,16 @@ class MapLayer extends StatefulWidget {
 }
 
 class _MapLayerState extends State<MapLayer> {
+  MapController _mapController = MapController();
+  LatLng _currentPosition = LatLng(51.5, -0.09);
+
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
+      mapController: _mapController,
       options: MapOptions(
-        center: LatLng(51.5, -0.09),
-        zoom: 13.0,
+        center: _currentPosition,
+        zoom: 17,
       ),
       layers: [
         TileLayerOptions(
