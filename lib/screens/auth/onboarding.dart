@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../styles/icons/chap_chap_icons.dart';
@@ -104,39 +106,100 @@ class Onboarding extends StatelessWidget {
   void _googleSignIn(BuildContext context) async {
     await FirebaseAuth.instance
         .signInWithPopup(GoogleAuthProvider())
-        .then((result) => GlobalNavigator.router.currentState!
+        .then((credentials) {
+          final CollectionReference dbRef =
+              FirebaseFirestore.instance.collection("users");
+          dbRef.doc(credentials.user!.uid).get().then((doc) {
+            if (doc.exists == false) {
+              String profileColor = Colors
+                  .primaries[Random().nextInt(Colors.primaries.length)]
+                  .toString()
+                  .substring(39, 45);
+              credentials.user!
+                  .updateDisplayName(credentials.user!.displayName);
+              credentials.user!.updatePhotoURL(
+                  "https://ui-avatars.com/api/?name=\"${credentials.user!.displayName}\"&background=$profileColor&color=fff");
+              dbRef.doc(credentials.user!.uid).set(
+                {
+                  "name": credentials.user?.displayName,
+                  "profilePhotoURL":
+                      "https://ui-avatars.com/api/?name=\"${credentials.user!.displayName}\"&background=$profileColor&color=fff",
+                  "email": credentials.user!.email,
+                  "password": credentials.credential!.token,
+                  "phone": credentials.user?.phoneNumber,
+                  "address": null,
+                  "description":
+                      "Currently you have no description about you, add your description about you so that other people can know about you",
+                },
+              );
+            }
+          });
+        })
+        .then((val) => GlobalNavigator.router.currentState!
             .pushReplacementNamed(GlobalRoutes.switchRoles))
         .onError(
-      (error, stackTrace) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          alertSnackBar(
-            message: "Google SignIn Failed, Use Email Authentication",
-            errorLabel: 'Go to Email Login',
-            errorCallback: () => AuthRouter.router.currentState!
-                .pushReplacementNamed(AuthRoutes.login),
-          ),
+          (error, stackTrace) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              alertSnackBar(
+                message: "Google SignIn Failed, Use Email Authentication",
+                errorLabel: 'Go to Email Login',
+                errorCallback: () => AuthRouter.router.currentState!
+                    .pushReplacementNamed(AuthRoutes.login),
+              ),
+            );
+            return null;
+          },
         );
-      },
-    );
   }
 
   Future<void> _gitHubSignIn(BuildContext context) async {
     await FirebaseAuth.instance
         .signInWithPopup(GithubAuthProvider())
+        .then((credentials) {
+          final CollectionReference dbRef =
+              FirebaseFirestore.instance.collection("users");
+          dbRef.doc(credentials.user!.uid).get().then((doc) {
+            if (doc.exists == false) {
+              String profileColor = Colors
+                  .primaries[Random().nextInt(Colors.primaries.length)]
+                  .toString()
+                  .substring(39, 45);
+              credentials.user!
+                  .updateDisplayName(credentials.user!.displayName);
+              credentials.user!.updatePhotoURL(
+                  "https://ui-avatars.com/api/?name=\"${credentials.user!.displayName}\"&background=$profileColor&color=fff");
+              dbRef.doc(credentials.user!.uid).set(
+                {
+                  "name": credentials.user?.displayName,
+                  "profilePhotoURL":
+                      "https://ui-avatars.com/api/?name=\"${credentials.user!.displayName}\"&background=$profileColor&color=fff",
+                  "email": credentials.user!.email,
+                  "password": credentials.credential!.token,
+                  "phone": credentials.user?.phoneNumber,
+                  "address": null,
+                  "description":
+                      "Currently you have no description about you, add your description about you so that other people can know about you",
+                },
+              );
+            }
+          });
+        })
         .then((result) => GlobalNavigator.router.currentState!
             .pushReplacementNamed(GlobalRoutes.switchRoles))
         .onError(
-      (error, stackTrace) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          alertSnackBar(
-            message: "Github SignIn Failed, Use Email Authentication\n\n$error",
-            errorLabel: 'Go to Email Login',
-            errorCallback: () => AuthRouter.router.currentState!
-                .pushReplacementNamed(AuthRoutes.login),
-          ),
+          (error, stackTrace) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              alertSnackBar(
+                message:
+                    "Github SignIn Failed, Use Email Authentication\n\n$error",
+                errorLabel: 'Go to Email Login',
+                errorCallback: () => AuthRouter.router.currentState!
+                    .pushReplacementNamed(AuthRoutes.login),
+              ),
+            );
+            return null;
+          },
         );
-      },
-    );
   }
 
   void _emailSignIn() =>
