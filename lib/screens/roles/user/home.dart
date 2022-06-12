@@ -109,7 +109,6 @@ class _UserHomeState extends State<UserHome> {
               ElevatedButton(
                 onPressed: () {
                   _updateMapLocation();
-                  print({"Returned Location": _currentLocation});
                 },
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.primary,
