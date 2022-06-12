@@ -19,32 +19,50 @@ class UserHome extends StatefulWidget {
 
 class _UserHomeState extends State<UserHome> {
   final MapController _mapController = MapController();
-  LatLng _currentPosition = LatLng(51.5, -0.09);
+  late LatLng _currentLocation;
 
   Location location = Location();
 
   void _getUserLocation({LatLng? loc}) {
+    // Check for Location Permissions
+
     setState(() {
-      _currentPosition = loc ?? LatLng(-1.286389, 36.817223);
+      _currentLocation = loc ?? LatLng(-1.286389, 36.817223);
     });
-    _mapController.move(_currentPosition, 18);
+  }
+
+  void _updateMapLocation() {
+    _getUserLocation(loc: LatLng(-0.303099, 36.080025));
+    _mapController.move(_currentLocation, 18);
   }
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _currentPosition = LatLng(-1.286389, 36.817223);
-    });
+
+    // Get User Location
+    _getUserLocation();
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        buildMap(),
+        if (_currentLocation == null) _loadingState() else buildMap(),
         buildUtils(context),
       ],
+    );
+  }
+
+  Widget _loadingState() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Text("Loading Map, Please wait"),
+          CircularProgressIndicator(),
+        ],
+      ),
     );
   }
 
@@ -52,7 +70,7 @@ class _UserHomeState extends State<UserHome> {
     return FlutterMap(
       mapController: _mapController,
       options: MapOptions(
-        center: _currentPosition,
+        center: _currentLocation,
         zoom: 17,
       ),
       layers: [
@@ -68,7 +86,7 @@ class _UserHomeState extends State<UserHome> {
             Marker(
               width: 40.0,
               height: 40.0,
-              point: _currentPosition,
+              point: _currentLocation,
               builder: (ctx) => const Icon(ChapChap.pin),
             ),
           ],
@@ -90,8 +108,8 @@ class _UserHomeState extends State<UserHome> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  _getUserLocation(loc: LatLng(-0.303099, 36.080025));
-                  print({"Returned Location": _currentPosition});
+                  _updateMapLocation();
+                  print({"Returned Location": _currentLocation});
                 },
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.primary,

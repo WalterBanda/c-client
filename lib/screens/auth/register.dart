@@ -66,7 +66,7 @@ class Register extends StatelessWidget {
                     inputType: TextInputType.name,
                     validator: (value) => Validator.validateName(name: value),
                     prefix: const Icon(
-                      Icons.email_rounded,
+                      ChapChap.user,
                       size: 15,
                     ),
                   ),
@@ -186,7 +186,7 @@ class Register extends StatelessWidget {
           credential.user!.updatePhotoURL(
               "https://ui-avatars.com/api/?name=\"$username\"&background=$profileColor&color=fff");
           dbRef.doc(credential.user!.uid).set({
-            "name": credential.user?.displayName,
+            "name": username,
             "profilePhotoURL":
                 "https://ui-avatars.com/api/?name=\"$username\"&background=$profileColor&color=fff",
             "email": _emailController.text,
