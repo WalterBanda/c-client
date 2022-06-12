@@ -2,98 +2,53 @@ import 'package:client/router/roles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:location/location.dart';
 
 import '../../../styles/icons/chap_chap_icons.dart';
 import '../../../styles/ui/colors.dart';
+import '../../auth/onboarding.dart';
 
-class UserHome extends StatelessWidget {
+class UserHome extends StatefulWidget {
   const UserHome({Key? key}) : super(key: key);
 
   static const String id = "user";
 
   @override
+  State<UserHome> createState() => _UserHomeState();
+}
+
+class _UserHomeState extends State<UserHome> {
+  final MapController _mapController = MapController();
+  LatLng _currentPosition = LatLng(51.5, -0.09);
+
+  Location location = Location();
+
+  void _getUserLocation({LatLng? loc}) {
+    setState(() {
+      _currentPosition = loc ?? LatLng(-1.286389, 36.817223);
+    });
+    _mapController.move(_currentPosition, 18);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _currentPosition = LatLng(-1.286389, 36.817223);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const MapLayer(),
-        Positioned(
-          bottom: 30,
-          left: 10,
-          right: 10,
-          child: Center(
-            child: ConstrainedBox(
-              constraints: pageConstraints,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 0),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      elevation: 0,
-                    ),
-                    child: const Icon(Icons.my_location_rounded),
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 22),
-                    decoration: BoxDecoration(
-                      color: AppColors.bgDark,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: TextField(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => const SearchOverlay());
-                      },
-                      style: const TextStyle(
-                        fontFamily: "SF Pro Rounded",
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      decoration: InputDecoration(
-                        filled: true,
-                        prefixIcon: const Icon(ChapChap.search_filled),
-                        fillColor: AppColors.input,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide.none,
-                        ),
-                        hintText: "Looking for a Garage",
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        buildMap(),
+        buildUtils(context),
       ],
     );
   }
-}
 
-class MapLayer extends StatefulWidget {
-  const MapLayer({Key? key}) : super(key: key);
-
-  // TODO Map implementation 🚧
-
-  @override
-  State<MapLayer> createState() => _MapLayerState();
-}
-
-class _MapLayerState extends State<MapLayer> {
-  MapController _mapController = MapController();
-  LatLng _currentPosition = LatLng(51.5, -0.09);
-
-  @override
-  Widget build(BuildContext context) {
+  FlutterMap buildMap() {
     return FlutterMap(
       mapController: _mapController,
       options: MapOptions(
@@ -111,14 +66,78 @@ class _MapLayerState extends State<MapLayer> {
         MarkerLayerOptions(
           markers: [
             Marker(
-              width: 80.0,
-              height: 80.0,
-              point: LatLng(51.5, -0.09),
+              width: 40.0,
+              height: 40.0,
+              point: _currentPosition,
               builder: (ctx) => const Icon(ChapChap.pin),
             ),
           ],
         ),
       ],
+    );
+  }
+
+  Positioned buildUtils(BuildContext context) {
+    return Positioned(
+      bottom: 30,
+      left: 10,
+      right: 10,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: pageConstraints,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  _getUserLocation(loc: LatLng(-0.303099, 36.080025));
+                  print({"Returned Location": _currentPosition});
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.primary,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  elevation: 0,
+                ),
+                child: const Icon(Icons.my_location_rounded),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
+                decoration: BoxDecoration(
+                  color: AppColors.bgDark,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextField(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => const SearchOverlay());
+                  },
+                  style: const TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  decoration: InputDecoration(
+                    filled: true,
+                    prefixIcon: const Icon(ChapChap.search_filled),
+                    fillColor: AppColors.input,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    hintText: "Looking for a Garage",
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
