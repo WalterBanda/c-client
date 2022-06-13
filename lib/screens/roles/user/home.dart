@@ -1,7 +1,5 @@
-import 'package:client/screens/roles/user/google_map.dart';
 import 'package:client/screens/roles/user/osm.dart';
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/providers/location.dart';
