@@ -1,160 +1,33 @@
-import 'package:client/router/roles.dart';
+import 'package:client/screens/roles/user/google_map.dart';
+import 'package:client/screens/roles/user/osm.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
+import '../../../core/providers/location.dart';
+import '../../../router/roles.dart';
 import '../../../styles/icons/chap_chap_icons.dart';
 import '../../../styles/ui/colors.dart';
-import '../../auth/onboarding.dart';
 
-class UserHome extends StatefulWidget {
-  const UserHome({Key? key}) : super(key: key);
+class UserHome extends StatelessWidget {
+  const UserHome({super.key});
 
   static const String id = "user";
 
-  @override
-  State<UserHome> createState() => _UserHomeState();
-}
-
-class _UserHomeState extends State<UserHome> {
-  final MapController _mapController = MapController();
-  late LatLng _currentLocation;
-
-  Location location = Location();
-
-  void _getUserLocation({LatLng? loc}) {
-    // Check for Location Permissions
-
-    setState(() {
-      _currentLocation = loc ?? LatLng(-1.286389, 36.817223);
-    });
-  }
-
-  void _updateMapLocation() {
-    _getUserLocation(loc: LatLng(-0.303099, 36.080025));
-    _mapController.move(_currentLocation, 18);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Get User Location
-    _getUserLocation();
+  void _getLocation(BuildContext context) {
+    Provider.of<AppData>(context, listen: false).getUserLocation();
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        if (_currentLocation == null) _loadingState() else buildMap(),
-        buildUtils(context),
-      ],
-    );
-  }
-
-  Widget _loadingState() {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: const [
-          Text("Loading Map, Please wait"),
-          CircularProgressIndicator(),
-        ],
-      ),
-    );
-  }
-
-  FlutterMap buildMap() {
-    return FlutterMap(
-      mapController: _mapController,
-      options: MapOptions(
-        center: _currentLocation,
-        zoom: 17,
-      ),
-      layers: [
-        TileLayerOptions(
-          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-          subdomains: ['a', 'b', 'c'],
-          attributionBuilder: (_) {
-            return const Text("© OpenStreetMap contributors");
-          },
-        ),
-        MarkerLayerOptions(
-          markers: [
-            Marker(
-              width: 40.0,
-              height: 40.0,
-              point: _currentLocation,
-              builder: (ctx) => const Icon(ChapChap.pin),
-            ),
-          ],
+        OSM(),
+        mapUtils(
+          context: context,
+          callback: () => _getLocation(context),
         ),
       ],
-    );
-  }
-
-  Positioned buildUtils(BuildContext context) {
-    return Positioned(
-      bottom: 30,
-      left: 10,
-      right: 10,
-      child: Center(
-        child: ConstrainedBox(
-          constraints: pageConstraints,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  _updateMapLocation();
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: AppColors.primary,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  elevation: 0,
-                ),
-                child: const Icon(Icons.my_location_rounded),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
-                decoration: BoxDecoration(
-                  color: AppColors.bgDark,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: TextField(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => const SearchOverlay());
-                  },
-                  style: const TextStyle(
-                    fontFamily: "SF Pro Rounded",
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  decoration: InputDecoration(
-                    filled: true,
-                    prefixIcon: const Icon(ChapChap.search_filled),
-                    fillColor: AppColors.input,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                    hintText: "Looking for a Garage",
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
@@ -222,4 +95,65 @@ class SearchOverlay extends StatelessWidget {
       ),
     );
   }
+}
+
+Positioned mapUtils(
+    {required BuildContext context, required VoidCallback callback}) {
+  return Positioned(
+    bottom: 30,
+    left: 10,
+    right: 10,
+    child: Center(
+      child: ConstrainedBox(
+        constraints: pageConstraints,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            ElevatedButton(
+              onPressed: callback,
+              style: ElevatedButton.styleFrom(
+                primary: AppColors.primary,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                elevation: 0,
+              ),
+              child: const Icon(Icons.my_location_rounded),
+            ),
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
+              decoration: BoxDecoration(
+                color: AppColors.bgDark,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: TextField(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => const SearchOverlay());
+                },
+                style: const TextStyle(
+                  fontFamily: "SF Pro Rounded",
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+                decoration: InputDecoration(
+                  filled: true,
+                  prefixIcon: const Icon(ChapChap.search_filled),
+                  fillColor: AppColors.input,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                  hintText: "Looking for a Garage",
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
