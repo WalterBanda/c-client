@@ -6,6 +6,8 @@ import '../../../core/providers/location.dart';
 import '../../../styles/icons/chap_chap_icons.dart';
 
 class OSM extends StatelessWidget {
+  const OSM({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FlutterMap(

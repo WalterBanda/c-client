@@ -1,4 +1,3 @@
-import 'package:client/screens/roles/user/osm.dart';
 import 'package:client/styles/ui/colors.dart';
 // ignore: depend_on_referenced_packages
 import 'package:device_preview/device_preview.dart';
