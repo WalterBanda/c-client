@@ -198,7 +198,7 @@ class Register extends StatelessWidget {
           });
         },
       ).then(
-        (status) => GlobalNavigator.router.currentState!
+        (_) => GlobalNavigator.router.currentState!
             .pushReplacementNamed(GlobalRoutes.switchRoles),
       );
     } on FirebaseAuthException catch (e) {

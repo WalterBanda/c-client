@@ -1,13 +1,21 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 enum Roles { user, garage, admin }
 
+enum SignInMethods { google, github, email }
+
 class UserModel {
+  String name, email, phone, profilePhoto, address, description, password;
   List<Roles> roles;
-  String uid, name, email, phone, profilePhoto, address, description, password;
+  User? firebaseUser;
+  String? uid;
 
   UserModel({
-    required this.uid,
+    // required this.uid,
     required this.name,
     required this.email,
     required this.password,
@@ -16,7 +24,29 @@ class UserModel {
     required this.profilePhoto,
     required this.roles,
     required this.description,
-  });
+  })  : firebaseUser = FirebaseAuth.instance.currentUser,
+        uid = FirebaseAuth.instance.currentUser!.uid;
+
+  createProfilePic() {
+    String profileColor = Colors
+        .primaries[Random().nextInt(Colors.primaries.length)]
+        .toString()
+        .substring(39, 45);
+    profilePhoto =
+        "https://ui-avatars.com/api/?name=\"$name\"&background=$profileColor&color=fff";
+  }
+
+  factory UserModel.clear() {
+    return UserModel(
+        name: "name",
+        email: "email",
+        password: "password",
+        phone: "phone",
+        address: "address",
+        profilePhoto: "profilePhoto",
+        roles: [Roles.user],
+        description: "description");
+  }
 
   factory UserModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -24,7 +54,6 @@ class UserModel {
   ) {
     final data = snapshot.data();
     return UserModel(
-      uid: data?["uid"],
       name: data?["name"],
       email: data?["email"],
       password: data?["password"],
@@ -39,7 +68,6 @@ class UserModel {
 
   Map<String, dynamic> toFirestore() {
     return {
-      "uid": uid,
       "name": name,
       "email": email,
       "password": password,
