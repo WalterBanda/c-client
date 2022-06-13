@@ -33,34 +33,5 @@ class OSM extends StatelessWidget {
         ),
       ],
     );
-    // return Consumer<AppData>(
-    //   builder: (context, value, child) {
-    //     return FlutterMap(
-    //       options: MapOptions(
-    //         center: value.location,
-    //         zoom: 17,
-    //       ),
-    //       layers: [
-    //         TileLayerOptions(
-    //           urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    //           subdomains: ['a', 'b', 'c'],
-    //           attributionBuilder: (_) {
-    //             return const Text("© OpenStreetMap contributors");
-    //           },
-    //         ),
-    //         MarkerLayerOptions(
-    //           markers: [
-    //             Marker(
-    //               width: 40.0,
-    //               height: 40.0,
-    //               point: value.location,
-    //               builder: (ctx) => const Icon(ChapChap.pin),
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
   }
 }

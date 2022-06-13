@@ -38,6 +38,8 @@ class AppData extends ChangeNotifier {
     if (!serviceenabled) {
       serviceenabled = await _location.requestService();
 
+      // TODO Location checking
+
       if (!serviceenabled) return;
     }
     permissionGranted = await _location.hasPermission();
