@@ -6,6 +6,19 @@ import 'package:flutter/material.dart';
 
 enum Roles { user, garage, admin }
 
+// TODO Implement Extension Function for Roles Transformation
+extension RolesListTransform on List {
+  List<String> toRolesString() {
+    // return toString().split('.').last;
+    return ["user"];
+  }
+
+  List<Roles> toRoles() {
+    // return firstWhere((type) => type.toString().split('.').last == value,orElse: () => Roles.admin);
+    return [Roles.user];
+  }
+}
+
 enum SignInMethods { google, github, email }
 
 class UserModel {
@@ -65,8 +78,9 @@ class UserModel {
       phone: data?["phone"],
       address: data?["address"],
       profileShot: data?["profilePhoto"],
-      roles:
-          data?["roles"] is Iterable ? List.from(data?["roles"]) : [Roles.user],
+      roles: data?["roles"] is Iterable
+          ? List<Roles>.from(data?["roles"]).toRoles()
+          : [Roles.user],
       userInfo: data?["description"],
     );
   }
@@ -79,7 +93,7 @@ class UserModel {
       "phone": phone,
       "address": address,
       "profilePhoto": profilePhoto,
-      "roles": roles,
+      "roles": roles.toRolesString(),
       "description": description,
     };
   }
