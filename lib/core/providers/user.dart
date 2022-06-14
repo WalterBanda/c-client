@@ -10,15 +10,17 @@ import '../routes/routes.dart';
 
 class UserProvider extends ChangeNotifier {
   late UserModel _user;
-  static final FirebaseAuth _authInstance = FirebaseAuth.instance;
   static final _db = FirebaseFirestore.instance
       .collection("users")
-      .doc(_authInstance.currentUser!.uid)
+      .doc(FirebaseAuth.instance.currentUser!.uid)
       .withConverter(
           fromFirestore: UserModel.fromFirestore,
           toFirestore: (userModel, _) => userModel.toFirestore());
 
-  UserModel get user => _user;
+  UserModel get user {
+    // TODO Implement data fetching to firestore
+    return _user;
+  }
 
   void updateUser(UserModel user) {
     _db.update(_user.toFirestore());
@@ -31,12 +33,13 @@ class UserProvider extends ChangeNotifier {
   }) {
     if (signInMethods == SignInMethods.email) {
       try {
-        _authInstance
+        FirebaseAuth.instance
             .createUserWithEmailAndPassword(
                 email: payload.email, password: payload.password)
             .then((_) {
-          _authInstance.currentUser!.updateDisplayName(payload.name);
-          _authInstance.currentUser!.updatePhotoURL(payload.profilePhoto);
+          FirebaseAuth.instance.currentUser!.updateDisplayName(payload.name);
+          FirebaseAuth.instance.currentUser!
+              .updatePhotoURL(payload.profilePhoto);
           _db.set(payload);
         }).then((_) => GlobalNavigator.router.currentState!
                 .pushReplacementNamed(GlobalRoutes.switchRoles));
@@ -80,19 +83,138 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  void authUser(
-      {required BuildContext context, required SignInMethods signInMethods}) {
+  void authUser({
+    required BuildContext context,
+    required SignInMethods signInMethods,
+    UserModel? payload,
+  }) {
     switch (signInMethods) {
       case SignInMethods.email:
+        try {
+          FirebaseAuth.instance
+              .signInWithEmailAndPassword(
+                  email: payload!.email, password: payload.password)
+              .then(
+                (_) => GlobalNavigator.router.currentState!
+                    .pushReplacementNamed(GlobalRoutes.switchRoles),
+              );
+        } on FirebaseAuthException catch (e) {
+          String message;
+          String? resolveLabel;
+          VoidCallback? resolveCallback;
+
+          switch (e.code) {
+            case 'user-not-found':
+              message = "Your probably dont have an Account create one";
+              resolveLabel = "SignUp";
+              resolveCallback = () => AuthRouter.router.currentState!
+                  .pushReplacementNamed(AuthRoutes.register);
+              break;
+            case 'invalid-email':
+              message = "The email format is invalid, check your email";
+              break;
+            case 'user-disabled':
+              message =
+                  "User user account is disabled, contact support for how to recover your account";
+              break;
+            case 'wrong-password':
+              message = "Your Password incorrect, check your password again";
+              break;
+            default:
+              message = "Unable to connect, check your internet";
+          }
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            alertSnackBar(
+              message: message,
+              errorLabel: resolveLabel,
+              errorCallback: resolveCallback,
+            ),
+          );
+        }
         break;
+      case SignInMethods.google:
+        FirebaseAuth.instance
+            .signInWithPopup(GoogleAuthProvider())
+            .then((credentials) {
+          _db.get().then((doc) {
+            if (doc.exists == false) {
+              createUser(
+                context: context,
+                payload: UserModel(
+                  name: credentials.user!.displayName!,
+                  email: credentials.user!.email!,
+                  password: credentials.user!.refreshToken ?? "No Auth Token",
+                  phone: "No Phone Number",
+                  address: "No address",
+                  profileShot: credentials.user!.photoURL!,
+                  roles: [Roles.user],
+                  description:
+                      "Currently you have no description about you, add your description about you so that other people can know about you",
+                ),
+                signInMethods: SignInMethods.google,
+              );
+            } else {
+              GlobalNavigator.router.currentState!
+                  .pushReplacementNamed(GlobalRoutes.switchRoles);
+            }
+          });
+        }).onError((error, stackTrace) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            alertSnackBar(
+              message: "Google SignIn Failed",
+            ),
+          );
+          return Future.error("Google SignIn Failed");
+        });
+        break;
+      case SignInMethods.github:
+        FirebaseAuth.instance
+            .signInWithPopup(GithubAuthProvider())
+            .then((credentials) {
+          _db.get().then((doc) {
+            if (doc.exists == false) {
+              createUser(
+                context: context,
+                payload: UserModel(
+                  name: credentials.user!.displayName!,
+                  email: credentials.user!.email!,
+                  password: credentials.user!.refreshToken ?? "No Auth Token",
+                  phone: "No Phone Number",
+                  address: "No address",
+                  profileShot: credentials.user!.photoURL!,
+                  roles: [Roles.user],
+                  description:
+                      "Currently you have no description about you, add your description about you so that other people can know about you",
+                ),
+                signInMethods: SignInMethods.github,
+              );
+            } else {
+              GlobalNavigator.router.currentState!
+                  .pushReplacementNamed(GlobalRoutes.switchRoles);
+            }
+          });
+        }).onError((error, stackTrace) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            alertSnackBar(
+              message: "Github SignIn Failed",
+            ),
+          );
+          return Future.error("Github SignIn Failed");
+        });
+        break;
+
       default:
+        ScaffoldMessenger.of(context).showSnackBar(
+          alertSnackBar(message: "Unable to Sign In try again"),
+        );
     }
   }
 
   // User SignOut
   void signOut({required BuildContext context}) {
-    _authInstance.signOut().then((_) => _user = UserModel.clear()).then((_) =>
-        GlobalNavigator.router.currentState!
+    FirebaseAuth.instance.signOut().then((_) => _user = UserModel.clear()).then(
+        (_) => GlobalNavigator.router.currentState!
             .pushReplacementNamed(GlobalRoutes.auth));
   }
 }
