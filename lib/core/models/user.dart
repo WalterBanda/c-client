@@ -23,9 +23,11 @@ class UserModel {
     required this.address,
     String? profileShot,
     required this.roles,
-    required this.description,
+    String? userInfo,
   })  : firebaseUser = FirebaseAuth.instance.currentUser,
         uid = FirebaseAuth.instance.currentUser!.uid,
+        description = userInfo ??
+            "Currently you have no description about you, add your description about you so that other people can know about you",
         profilePhoto = profileShot ??
             "https://ui-avatars.com/api/?name=\"$name\"&background=${Colors.primaries[Random().nextInt(Colors.primaries.length)].toString().substring(39, 45)}&color=fff";
 
@@ -40,14 +42,15 @@ class UserModel {
 
   factory UserModel.clear() {
     return UserModel(
-        name: "name",
-        email: "email",
-        password: "password",
-        phone: "phone",
-        address: "address",
-        profileShot: "profilePhoto",
-        roles: [Roles.user],
-        description: "description");
+      name: "name",
+      email: "email",
+      password: "password",
+      phone: "phone",
+      address: "address",
+      profileShot: "profilePhoto",
+      roles: [Roles.user],
+      userInfo: "description",
+    );
   }
 
   factory UserModel.fromFirestore(
@@ -64,7 +67,7 @@ class UserModel {
       profileShot: data?["profilePhoto"],
       roles:
           data?["roles"] is Iterable ? List.from(data?["roles"]) : [Roles.user],
-      description: data?["description"],
+      userInfo: data?["description"],
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:client/core/providers/user.dart';
 import 'package:client/styles/ui/colors.dart';
 // ignore: depend_on_referenced_packages
 import 'package:device_preview/device_preview.dart';
@@ -15,6 +16,8 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: AppData()),
+        // FIXME 🚧
+        ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: MaterialApp(
         title: "ChapChap",
