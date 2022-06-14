@@ -10,7 +10,7 @@ import '../routes/routes.dart';
 
 class UserProvider extends ChangeNotifier {
   late UserModel _user;
-  static final _db = FirebaseFirestore.instance
+  static DocumentReference<UserModel> db = FirebaseFirestore.instance
       .collection("users")
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .withConverter(
@@ -19,14 +19,14 @@ class UserProvider extends ChangeNotifier {
 
   UserModel get user {
     // TODO Implement data fetching to firestore
-    _db.get().then((data) {
+    db.get().then((data) {
       _user = data.data()!;
     });
     return _user;
   }
 
   void updateUser(UserModel user) {
-    _db.update(_user.toFirestore());
+    db.update(_user.toFirestore());
   }
 
   void createUser({
@@ -43,7 +43,7 @@ class UserProvider extends ChangeNotifier {
           FirebaseAuth.instance.currentUser!.updateDisplayName(payload.name);
           FirebaseAuth.instance.currentUser!
               .updatePhotoURL(payload.profilePhoto);
-          _db.set(payload);
+          db.set(payload);
         }).then((_) => GlobalNavigator.router.currentState!
                 .pushReplacementNamed(GlobalRoutes.switchRoles));
       } on FirebaseAuthException catch (e) {
@@ -81,7 +81,7 @@ class UserProvider extends ChangeNotifier {
         );
       }
     } else {
-      _db.set(payload).then((_) => GlobalNavigator.router.currentState!
+      db.set(payload).then((_) => GlobalNavigator.router.currentState!
           .pushReplacementNamed(GlobalRoutes.switchRoles));
     }
   }
@@ -89,14 +89,15 @@ class UserProvider extends ChangeNotifier {
   void authUser({
     required BuildContext context,
     required SignInMethods signInMethods,
-    UserModel? payload,
-  }) {
+    String? email,
+    String? password,
+  }) async {
+    var error;
     switch (signInMethods) {
       case SignInMethods.email:
         try {
           FirebaseAuth.instance
-              .signInWithEmailAndPassword(
-                  email: payload!.email, password: payload.password)
+              .signInWithEmailAndPassword(email: email!, password: password!)
               .then(
                 (_) => GlobalNavigator.router.currentState!
                     .pushReplacementNamed(GlobalRoutes.switchRoles),
@@ -137,10 +138,10 @@ class UserProvider extends ChangeNotifier {
         }
         break;
       case SignInMethods.google:
-        FirebaseAuth.instance
+        await FirebaseAuth.instance
             .signInWithPopup(GoogleAuthProvider())
             .then((credentials) {
-          _db.get().then((doc) {
+          db.get().then((doc) {
             if (doc.exists == false) {
               createUser(
                 context: context,
@@ -152,8 +153,6 @@ class UserProvider extends ChangeNotifier {
                   address: "No address",
                   profileShot: credentials.user!.photoURL,
                   roles: [Roles.user],
-                  description:
-                      "Currently you have no description about you, add your description about you so that other people can know about you",
                 ),
                 signInMethods: SignInMethods.google,
               );
@@ -165,17 +164,18 @@ class UserProvider extends ChangeNotifier {
         }).onError((error, stackTrace) {
           ScaffoldMessenger.of(context).showSnackBar(
             alertSnackBar(
-              message: "Google SignIn Failed",
+              message: "Github SignIn Failed",
             ),
           );
-          return Future.error("Google SignIn Failed");
+          return null;
         });
+
         break;
       case SignInMethods.github:
         FirebaseAuth.instance
             .signInWithPopup(GithubAuthProvider())
             .then((credentials) {
-          _db.get().then((doc) {
+          db.get().then((doc) {
             if (doc.exists == false) {
               createUser(
                 context: context,
@@ -187,8 +187,6 @@ class UserProvider extends ChangeNotifier {
                   address: "No address",
                   profileShot: credentials.user!.photoURL,
                   roles: [Roles.user],
-                  description:
-                      "Currently you have no description about you, add your description about you so that other people can know about you",
                 ),
                 signInMethods: SignInMethods.github,
               );
@@ -203,7 +201,7 @@ class UserProvider extends ChangeNotifier {
               message: "Github SignIn Failed",
             ),
           );
-          return Future.error("Github SignIn Failed");
+          return null;
         });
         break;
 
