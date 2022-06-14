@@ -19,6 +19,9 @@ class UserProvider extends ChangeNotifier {
 
   UserModel get user {
     // TODO Implement data fetching to firestore
+    _db.get().then((data) {
+      _user = data.data()!;
+    });
     return _user;
   }
 
