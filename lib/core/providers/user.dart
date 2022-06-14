@@ -147,7 +147,7 @@ class UserProvider extends ChangeNotifier {
                   password: credentials.user!.refreshToken ?? "No Auth Token",
                   phone: "No Phone Number",
                   address: "No address",
-                  profileShot: credentials.user!.photoURL!,
+                  profileShot: credentials.user!.photoURL,
                   roles: [Roles.user],
                   description:
                       "Currently you have no description about you, add your description about you so that other people can know about you",
@@ -182,7 +182,7 @@ class UserProvider extends ChangeNotifier {
                   password: credentials.user!.refreshToken ?? "No Auth Token",
                   phone: "No Phone Number",
                   address: "No address",
-                  profileShot: credentials.user!.photoURL!,
+                  profileShot: credentials.user!.photoURL,
                   roles: [Roles.user],
                   description:
                       "Currently you have no description about you, add your description about you so that other people can know about you",
