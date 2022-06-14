@@ -21,11 +21,13 @@ class UserModel {
     required this.password,
     required this.phone,
     required this.address,
-    required this.profilePhoto,
+    String? profileShot,
     required this.roles,
     required this.description,
   })  : firebaseUser = FirebaseAuth.instance.currentUser,
-        uid = FirebaseAuth.instance.currentUser!.uid;
+        uid = FirebaseAuth.instance.currentUser!.uid,
+        profilePhoto = profileShot ??
+            "https://ui-avatars.com/api/?name=\"$name\"&background=${Colors.primaries[Random().nextInt(Colors.primaries.length)].toString().substring(39, 45)}&color=fff";
 
   createProfilePic() {
     String profileColor = Colors
@@ -43,7 +45,7 @@ class UserModel {
         password: "password",
         phone: "phone",
         address: "address",
-        profilePhoto: "profilePhoto",
+        profileShot: "profilePhoto",
         roles: [Roles.user],
         description: "description");
   }
@@ -59,7 +61,7 @@ class UserModel {
       password: data?["password"],
       phone: data?["phone"],
       address: data?["address"],
-      profilePhoto: data?["profilePhoto"],
+      profileShot: data?["profilePhoto"],
       roles:
           data?["roles"] is Iterable ? List.from(data?["roles"]) : [Roles.user],
       description: data?["description"],
