@@ -1,5 +1,8 @@
+import 'package:client/core/providers/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/models/user.dart';
 import '../../core/routes/router.dart';
 import '../../core/routes/routes.dart';
 import '../../router/roles.dart';
@@ -11,17 +14,17 @@ class SwitchRoles extends StatelessWidget {
 
   static const String id = "switch_roles";
 
-  void _navToRole(String role) {
+  void _navToRole(Roles role) {
     String route;
 
     switch (role) {
-      case PagesRoutes.admin:
+      case Roles.admin:
         route = PagesRoutes.admin;
         break;
-      case PagesRoutes.user:
+      case Roles.user:
         route = PagesRoutes.user;
         break;
-      case PagesRoutes.garage:
+      case Roles.garage:
         route = PagesRoutes.garage;
         break;
       default:
@@ -32,49 +35,61 @@ class SwitchRoles extends StatelessWidget {
         .pushReplacementNamed(PageNavigator.id, arguments: route);
   }
 
-  IconData _getRoleIcon(String role) {
+  IconData _getRoleIcon(Roles role) {
     switch (role) {
-      case PagesRoutes.admin:
+      case Roles.admin:
         return ChapChap.admin;
-      case PagesRoutes.user:
+      case Roles.user:
         return ChapChap.user;
-      case PagesRoutes.garage:
+      case Roles.garage:
         return ChapChap.car;
       default:
         return ChapChap.info;
     }
   }
 
-  Widget _generateRoles() {
+  Widget _generateRoles(BuildContext context) {
     // TODO Add get roles from user profile
-    final Future<List<String>> getRoles = Future<List<String>>.delayed(
-      const Duration(milliseconds: 100),
-      (() => ["admin", "user", "garage"]),
-    );
+    // final Future<List<String>> getRoles = Future<List<String>>.delayed(
+    //   const Duration(milliseconds: 100),
+    //   (() => ["admin", "user", "garage"]),
+    // );
 
-    return FutureBuilder(
-      future: getRoles,
-      builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-        List<Widget> children = [];
+    // return FutureBuilder(
+    //   future: getRoles,
+    //   builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+    //     List<Widget> children = [];
 
-        if (snapshot.hasData) {
-          children.add(const SizedBox(width: 15));
-          for (var i = 0; i < snapshot.data!.length; ++i) {
-            children.add(
-              _roleTab(
-                onPressed: () => _navToRole(snapshot.data![i].toString()),
-                icon: _getRoleIcon(snapshot.data![i].toString()),
-              ),
-            );
-            children.add(const SizedBox(width: 15));
-          }
-        } else if (snapshot.hasError) {
-          children.add(const Text("Unable to fetch your Roles"));
-        } else {
-          children.add(const Text("Fetching Roles"));
-        }
+    //     if (snapshot.hasData) {
+    //       children.add(const SizedBox(width: 15));
+    //       for (var i = 0; i < snapshot.data!.length; ++i) {
+    //         children.add(
+    //           _roleTab(
+    //             onPressed: () => _navToRole(snapshot.data![i].toString()),
+    //             icon: _getRoleIcon(snapshot.data![i].toString()),
+    //           ),
+    //         );
+    //         children.add(const SizedBox(width: 15));
+    //       }
+    //     } else if (snapshot.hasError) {
+    //       children.add(const Text("Unable to fetch your Roles"));
+    //     } else {
+    //       children.add(const Text("Fetching Roles"));
+    //     }
 
-        return Row(mainAxisSize: MainAxisSize.min, children: children);
+    //     return Row(mainAxisSize: MainAxisSize.min, children: children);
+    //   },
+    // );
+
+    return ListView.builder(
+      itemCount: Provider.of<UserProvider>(context).user.roles.length,
+      itemBuilder: (BuildContext context, int index) {
+        return _roleTab(
+          onPressed: () => _navToRole(
+              Provider.of<UserProvider>(context).user.roles.elementAt(index)),
+          icon: _getRoleIcon(
+              Provider.of<UserProvider>(context).user.roles.elementAt(index)),
+        );
       },
     );
   }
@@ -109,7 +124,7 @@ class SwitchRoles extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              _generateRoles(),
+              _generateRoles(context),
             ],
           ),
         ),
