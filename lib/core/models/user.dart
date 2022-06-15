@@ -10,7 +10,7 @@ enum Roles { user, garage, admin }
 extension RolesListTransform on List {
   List<String> toRolesString() {
     // return toString().split('.').last;
-    return ["user"];
+    return map((role) => role.toString().split('.').last).toList();
   }
 
   List<Roles> toRoles() {
