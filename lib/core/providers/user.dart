@@ -17,11 +17,14 @@ class UserProvider extends ChangeNotifier {
           fromFirestore: UserModel.fromFirestore,
           toFirestore: (userModel, _) => userModel.toFirestore());
 
+  fetch() async {
+    DocumentSnapshot<UserModel> snap = await db.get();
+    _user = snap.data() ?? UserModel.clear();
+  }
+
   UserModel get user {
     // TODO Implement data fetching to firestore
-    db.get().then((data) {
-      _user = data.data()!;
-    });
+    fetch();
     return _user;
   }
 
@@ -143,6 +146,11 @@ class UserProvider extends ChangeNotifier {
             .then((credentials) {
           db.get().then((doc) {
             if (doc.exists == false) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                alertSnackBar(
+                  message: "Creating User",
+                ),
+              );
               createUser(
                 context: context,
                 payload: UserModel(
@@ -164,7 +172,7 @@ class UserProvider extends ChangeNotifier {
         }).onError((error, stackTrace) {
           ScaffoldMessenger.of(context).showSnackBar(
             alertSnackBar(
-              message: "Github SignIn Failed",
+              message: "Google SignIn Failed",
             ),
           );
           return null;
@@ -177,6 +185,11 @@ class UserProvider extends ChangeNotifier {
             .then((credentials) {
           db.get().then((doc) {
             if (doc.exists == false) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                alertSnackBar(
+                  message: "Creating User",
+                ),
+              );
               createUser(
                 context: context,
                 payload: UserModel(
