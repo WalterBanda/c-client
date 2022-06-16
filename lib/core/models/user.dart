@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-enum Roles { user, garage, admin }
+enum Roles { user, garage, admin, error }
 
 // TODO Implement Extension Function for Roles Transformation
 extension RolesListTransform on List {
@@ -12,11 +12,15 @@ extension RolesListTransform on List {
     // return toString().split('.').last;
     return map((role) => role.toString().split('.').last).toList();
   }
+}
 
-  List<Roles> toRoles() {
-    // return firstWhere((type) => type.toString().split('.').last == value,orElse: () => Roles.admin);
-    return [Roles.user];
-  }
+List<Roles> toRoles(List<String> data) {
+  return data
+      .map((role) => Roles.values.firstWhere(
+            (element) => element.toString().split('.').last == role,
+            orElse: () => Roles.error,
+          ))
+      .toList();
 }
 
 enum SignInMethods { google, github, email }
@@ -61,7 +65,7 @@ class UserModel {
       phone: "phone",
       address: "address",
       profileShot: "profilePhoto",
-      roles: [Roles.user],
+      roles: [Roles.error],
       userInfo: "description",
     );
   }
@@ -72,16 +76,18 @@ class UserModel {
   ) {
     final data = snapshot.data();
     return UserModel(
-      name: data?["name"],
-      email: data?["email"],
-      password: data?["password"],
-      phone: data?["phone"],
-      address: data?["address"],
-      profileShot: data?["profilePhoto"],
-      roles: data?["roles"] is Iterable
-          ? List<Roles>.from(data?["roles"]).toRoles()
-          : [Roles.user],
-      userInfo: data?["description"],
+      name: data!["name"],
+      email: data["email"],
+      password: data["password"],
+      phone: data["phone"],
+      address: data["address"],
+      profileShot: data["profilePhoto"],
+      roles: toRoles(
+        List<String>.from(
+          data["roles"],
+        ),
+      ),
+      userInfo: data["description"],
     );
   }
 
