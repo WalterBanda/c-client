@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../core/models/user.dart';
+import '../core/providers/user.dart';
 import '../core/routes/router.dart';
 import '../core/routes/routes.dart';
 import '../styles/icons/chap_chap_icons.dart';
@@ -29,7 +32,7 @@ class PageNavigator extends StatelessWidget {
     return Scaffold(
       key: PageNavigator.scaffold,
       backgroundColor: AppColors.bgDark,
-      drawer: customDrawer(),
+      drawer: customDrawer(context),
       body: Stack(
         children: <Widget>[
           Navigator(
@@ -43,7 +46,7 @@ class PageNavigator extends StatelessWidget {
     );
   }
 
-  Drawer customDrawer() {
+  Drawer customDrawer(BuildContext context) {
     Future<void> _userLogout() async {
       await firebaseAuth.signOut().then(
             (value) => GlobalNavigator.router.currentState!
@@ -105,88 +108,80 @@ class PageNavigator extends StatelessWidget {
       );
     }
 
-    _buildRoles() {
-      final Future<List<String>> getRoles = Future<List<String>>.delayed(
-        const Duration(milliseconds: 100),
-        (() => ["user", "admin", "garage"]),
-      );
-
-      void _navToRole(String role) {
+    _buildRoles(BuildContext context) {
+      void _navToRole(Roles role) {
         String route;
 
         switch (role) {
-          case PagesRoutes.admin:
+          case Roles.admin:
             route = PagesRoutes.admin;
             break;
-          case PagesRoutes.user:
+          case Roles.user:
             route = PagesRoutes.user;
             break;
-          case PagesRoutes.garage:
+          case Roles.garage:
             route = PagesRoutes.garage;
             break;
           default:
-            route = PagesRoutes.user;
+            route = SharedRoutes.profile;
         }
 
         PageRouter.router.currentState!.pushReplacementNamed(route);
       }
 
-      IconData _getRoleIcon(String role) {
+      IconData _getRoleIcon(Roles role) {
         switch (role) {
-          case PagesRoutes.admin:
+          case Roles.admin:
             return ChapChap.admin;
-          case PagesRoutes.user:
+          case Roles.user:
             return ChapChap.home;
-          case PagesRoutes.garage:
+          case Roles.garage:
             return ChapChap.car;
           default:
             return ChapChap.info;
         }
       }
 
-      String _getLabel(String role) {
+      String _getLabel(Roles role) {
         switch (role) {
-          case PagesRoutes.admin:
+          case Roles.admin:
             return "Admin";
-          case PagesRoutes.user:
+          case Roles.user:
             return "Home";
-          case PagesRoutes.garage:
+          case Roles.garage:
             return "Garage";
           default:
             return "User ⚠";
         }
       }
 
-      return FutureBuilder(
-        future: getRoles,
-        builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-          List<Widget> children = [];
+      Widget _Link(Roles role) => navLink(
+            onPressed: () => _navToRole(role),
+            icon: _getRoleIcon(role),
+            label: _getLabel(role),
+          );
 
-          if (snapshot.hasError ||
-              snapshot.hasData == false ||
-              (snapshot.hasData && snapshot.data!.isEmpty)) {
-            return navLink(
-                icon: ChapChap.home,
-                label: "Home ⚠",
-                onPressed: () {
-                  PageRouter.router.currentState!
-                      .pushReplacementNamed(PagesRoutes.user);
-                });
+      UserModel snapshot = Provider.of<UserProvider>(context).user;
+
+      try {
+        List<Widget> children = [];
+        if (snapshot == UserModel.clear()) {
+          children.add(_Link(snapshot.roles.elementAt(0)));
+        } else {
+          for (var i = 0; i < snapshot.roles.length; ++i) {
+            children.add(_Link(snapshot.roles.elementAt(i)));
           }
-
-          for (var i = 0; i < snapshot.data!.length; ++i) {
-            children.add(
-              navLink(
-                onPressed: () => _navToRole(snapshot.data![i].toString()),
-                icon: _getRoleIcon(snapshot.data![i].toString()),
-                label: _getLabel(snapshot.data![i].toString()),
-              ),
-            );
-          }
-
-          return Column(mainAxisSize: MainAxisSize.min, children: children);
-        },
-      );
+        }
+        return Column(mainAxisSize: MainAxisSize.min, children: children);
+      } catch (e) {
+        return navLink(
+            icon: ChapChap.home,
+            label: "Home ⚠",
+            onPressed: () {
+              PageRouter.router.currentState!
+                  .pushReplacementNamed(SharedRoutes.profile);
+            });
+      }
     }
 
     return Drawer(
@@ -201,7 +196,7 @@ class PageNavigator extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildRoles(),
+                  _buildRoles(context),
                   navLink(
                       icon: ChapChap.user,
                       label: "Profile",
