@@ -1,7 +1,6 @@
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../screens/auth/onboarding.dart';
@@ -9,7 +8,7 @@ import '../routes/router.dart';
 import '../routes/routes.dart';
 
 class UserProvider extends ChangeNotifier {
-  late UserModel _user;
+  late UserModel _user = UserModel.clear();
   static DocumentReference<UserModel> db = FirebaseFirestore.instance
       .collection("users")
       .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -17,16 +16,19 @@ class UserProvider extends ChangeNotifier {
           fromFirestore: UserModel.fromFirestore,
           toFirestore: (userModel, _) => userModel.toFirestore());
 
-  fetch() async {
-    DocumentSnapshot<UserModel> snap = await db.get();
-    _user = snap.data() ?? UserModel.clear();
+  init() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      db.get().then((snap) {
+        _user = snap.data()!;
+        notifyListeners();
+      });
+    } else {
+      GlobalNavigator.router.currentState!
+          .pushReplacementNamed(GlobalRoutes.auth);
+    }
   }
 
-  UserModel get user {
-    // TODO Implement data fetching to firestore
-    fetch();
-    return _user;
-  }
+  UserModel get user => _user;
 
   void updateUser(UserModel user) {
     db.update(_user.toFirestore());
@@ -43,11 +45,14 @@ class UserProvider extends ChangeNotifier {
             .createUserWithEmailAndPassword(
                 email: payload.email, password: payload.password)
             .then((_) {
-          FirebaseAuth.instance.currentUser!.updateDisplayName(payload.name);
-          FirebaseAuth.instance.currentUser!
-              .updatePhotoURL(payload.profilePhoto);
-          db.set(payload);
-        }).then((_) => GlobalNavigator.router.currentState!
+              FirebaseAuth.instance.currentUser!
+                  .updateDisplayName(payload.name);
+              FirebaseAuth.instance.currentUser!
+                  .updatePhotoURL(payload.profilePhoto);
+              db.set(payload);
+            })
+            .then((_) => init())
+            .then((_) => GlobalNavigator.router.currentState!
                 .pushReplacementNamed(GlobalRoutes.switchRoles));
       } on FirebaseAuthException catch (e) {
         String message;
@@ -84,8 +89,7 @@ class UserProvider extends ChangeNotifier {
         );
       }
     } else {
-      db.set(payload).then((_) => GlobalNavigator.router.currentState!
-          .pushReplacementNamed(GlobalRoutes.switchRoles));
+      db.set(payload);
     }
   }
 
@@ -101,6 +105,7 @@ class UserProvider extends ChangeNotifier {
         try {
           FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email!, password: password!)
+              .then((_) => init())
               .then(
                 (_) => GlobalNavigator.router.currentState!
                     .pushReplacementNamed(GlobalRoutes.switchRoles),
@@ -144,31 +149,31 @@ class UserProvider extends ChangeNotifier {
         await FirebaseAuth.instance
             .signInWithPopup(GoogleAuthProvider())
             .then((credentials) {
-          db.get().then((doc) {
-            if (doc.exists == false) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                alertSnackBar(
-                  message: "Creating User",
-                ),
+          db
+              .get()
+              .then((doc) {
+                if (doc.exists == false) {
+                  createUser(
+                    context: context,
+                    payload: UserModel(
+                      name: credentials.user!.displayName!,
+                      email: credentials.user!.email!,
+                      password:
+                          credentials.user!.refreshToken ?? "No Auth Token",
+                      phone: "No Phone Number",
+                      address: "No address",
+                      profileShot: credentials.user!.photoURL,
+                      roles: [Roles.user],
+                    ),
+                    signInMethods: SignInMethods.google,
+                  );
+                }
+              })
+              .then((_) => init())
+              .then(
+                (_) => GlobalNavigator.router.currentState!
+                    .pushReplacementNamed(GlobalRoutes.switchRoles),
               );
-              createUser(
-                context: context,
-                payload: UserModel(
-                  name: credentials.user!.displayName!,
-                  email: credentials.user!.email!,
-                  password: credentials.user!.refreshToken ?? "No Auth Token",
-                  phone: "No Phone Number",
-                  address: "No address",
-                  profileShot: credentials.user!.photoURL,
-                  roles: [Roles.user],
-                ),
-                signInMethods: SignInMethods.google,
-              );
-            } else {
-              GlobalNavigator.router.currentState!
-                  .pushReplacementNamed(GlobalRoutes.switchRoles);
-            }
-          });
         }).onError((error, stackTrace) {
           ScaffoldMessenger.of(context).showSnackBar(
             alertSnackBar(
@@ -183,31 +188,31 @@ class UserProvider extends ChangeNotifier {
         FirebaseAuth.instance
             .signInWithPopup(GithubAuthProvider())
             .then((credentials) {
-          db.get().then((doc) {
-            if (doc.exists == false) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                alertSnackBar(
-                  message: "Creating User",
-                ),
+          db
+              .get()
+              .then((doc) {
+                if (doc.exists == false) {
+                  createUser(
+                    context: context,
+                    payload: UserModel(
+                      name: credentials.user!.displayName!,
+                      email: credentials.user!.email!,
+                      password:
+                          credentials.user!.refreshToken ?? "No Auth Token",
+                      phone: "No Phone Number",
+                      address: "No address",
+                      profileShot: credentials.user!.photoURL,
+                      roles: [Roles.user],
+                    ),
+                    signInMethods: SignInMethods.github,
+                  );
+                }
+              })
+              .then((_) => init())
+              .then(
+                (_) => GlobalNavigator.router.currentState!
+                    .pushReplacementNamed(GlobalRoutes.switchRoles),
               );
-              createUser(
-                context: context,
-                payload: UserModel(
-                  name: credentials.user!.displayName!,
-                  email: credentials.user!.email!,
-                  password: credentials.user!.refreshToken ?? "No Auth Token",
-                  phone: "No Phone Number",
-                  address: "No address",
-                  profileShot: credentials.user!.photoURL,
-                  roles: [Roles.user],
-                ),
-                signInMethods: SignInMethods.github,
-              );
-            } else {
-              GlobalNavigator.router.currentState!
-                  .pushReplacementNamed(GlobalRoutes.switchRoles);
-            }
-          });
         }).onError((error, stackTrace) {
           ScaffoldMessenger.of(context).showSnackBar(
             alertSnackBar(
@@ -227,8 +232,10 @@ class UserProvider extends ChangeNotifier {
 
   // User SignOut
   void signOut({required BuildContext context}) {
-    FirebaseAuth.instance.signOut().then((_) => _user = UserModel.clear()).then(
-        (_) => GlobalNavigator.router.currentState!
-            .pushReplacementNamed(GlobalRoutes.auth));
+    FirebaseAuth.instance.signOut().then((_) {
+      _user = UserModel.clear();
+      notifyListeners();
+    }).then((_) => GlobalNavigator.router.currentState!
+        .pushReplacementNamed(GlobalRoutes.auth));
   }
 }
