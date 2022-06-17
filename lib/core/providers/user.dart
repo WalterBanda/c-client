@@ -23,6 +23,11 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
       });
     } else {
+      _user = UserModel.clear();
+      notifyListeners();
+    }
+
+    if (_user == UserModel.clear()) {
       GlobalNavigator.router.currentState!
           .pushReplacementNamed(GlobalRoutes.auth);
     }
@@ -232,10 +237,6 @@ class UserProvider extends ChangeNotifier {
 
   // User SignOut
   void signOut({required BuildContext context}) {
-    FirebaseAuth.instance.signOut().then((_) {
-      _user = UserModel.clear();
-      notifyListeners();
-    }).then((_) => GlobalNavigator.router.currentState!
-        .pushReplacementNamed(GlobalRoutes.auth));
+    FirebaseAuth.instance.signOut().then((_) => init());
   }
 }

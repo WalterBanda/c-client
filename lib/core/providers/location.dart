@@ -49,13 +49,14 @@ class AppData extends ChangeNotifier {
       if (permissionGranted == PermissionStatus.granted ||
           permissionGranted == PermissionStatus.grantedLimited) return;
     }
-    LocationData currentLocation = await _location.getLocation();
-    _userLocation = LatLng(
-      currentLocation.latitude!.toDouble(),
-      currentLocation.longitude!.toDouble(),
-    );
-
-    updateMap();
-    notifyListeners();
+    await _location.getLocation().then((LocationData location) {
+      _userLocation = LatLng(
+        location.latitude!.toDouble(),
+        location.longitude!.toDouble(),
+      );
+      notifyListeners();
+    }).then((_) {
+      updateMap();
+    });
   }
 }
