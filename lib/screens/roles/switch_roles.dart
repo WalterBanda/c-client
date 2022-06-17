@@ -53,18 +53,18 @@ class SwitchRoles extends StatelessWidget {
           onPressed: () => _navToRole(role),
           icon: _getRoleIcon(role),
         );
-    UserModel snapshot = Provider.of<UserProvider>(context).user;
     try {
-      if (snapshot == UserModel.clear()) {
+      if (Provider.of<UserProvider>(context).user == UserModel.clear()) {
         return const Center(child: Text("Fetching Roles"));
       } else {
-        List<Widget> children = [];
-        children.add(const SizedBox(width: 15));
-        for (var i = 0; i < snapshot.roles.length; ++i) {
-          children.add(_role(snapshot.roles.elementAt(i)));
-          children.add(const SizedBox(width: 15));
-        }
-        return Row(mainAxisSize: MainAxisSize.min, children: children);
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: Provider.of<UserProvider>(context)
+              .user
+              .roles
+              .map((role) => _role(role))
+              .toList(),
+        );
       }
     } catch (e) {
       return const Center(child: Text("Unable to fetch Roles"));

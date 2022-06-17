@@ -236,7 +236,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   // User SignOut
-  void signOut({required BuildContext context}) {
+  void signOut() {
     FirebaseAuth.instance.signOut().then((_) => init());
   }
 }
