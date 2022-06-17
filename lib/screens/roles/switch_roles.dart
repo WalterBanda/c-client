@@ -28,7 +28,7 @@ class SwitchRoles extends StatelessWidget {
         route = PagesRoutes.garage;
         break;
       default:
-        route = PagesRoutes.user;
+        route = SharedRoutes.profile;
     }
 
     GlobalNavigator.router.currentState!
@@ -49,49 +49,26 @@ class SwitchRoles extends StatelessWidget {
   }
 
   Widget _generateRoles(BuildContext context) {
-    // TODO Add get roles from user profile
-    // final Future<List<String>> getRoles = Future<List<String>>.delayed(
-    //   const Duration(milliseconds: 100),
-    //   (() => ["admin", "user", "garage"]),
-    // );
-
-    // return FutureBuilder(
-    //   future: getRoles,
-    //   builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-    //     List<Widget> children = [];
-
-    //     if (snapshot.hasData) {
-    //       children.add(const SizedBox(width: 15));
-    //       for (var i = 0; i < snapshot.data!.length; ++i) {
-    //         children.add(
-    //           _roleTab(
-    //             onPressed: () => _navToRole(snapshot.data![i].toString()),
-    //             icon: _getRoleIcon(snapshot.data![i].toString()),
-    //           ),
-    //         );
-    //         children.add(const SizedBox(width: 15));
-    //       }
-    //     } else if (snapshot.hasError) {
-    //       children.add(const Text("Unable to fetch your Roles"));
-    //     } else {
-    //       children.add(const Text("Fetching Roles"));
-    //     }
-
-    //     return Row(mainAxisSize: MainAxisSize.min, children: children);
-    //   },
-    // );
-
-    return ListView.builder(
-      itemCount: Provider.of<UserProvider>(context).user.roles.length,
-      itemBuilder: (BuildContext context, int index) {
-        return _roleTab(
-          onPressed: () => _navToRole(
-              Provider.of<UserProvider>(context).user.roles.elementAt(index)),
-          icon: _getRoleIcon(
-              Provider.of<UserProvider>(context).user.roles.elementAt(index)),
+    Widget _role(Roles role) => _roleTab(
+          onPressed: () => _navToRole(role),
+          icon: _getRoleIcon(role),
         );
-      },
-    );
+    UserModel snapshot = Provider.of<UserProvider>(context).user;
+    try {
+      if (snapshot == UserModel.clear()) {
+        return const Center(child: Text("Fetching Roles"));
+      } else {
+        List<Widget> children = [];
+        children.add(const SizedBox(width: 15));
+        for (var i = 0; i < snapshot.roles.length; ++i) {
+          children.add(_role(snapshot.roles.elementAt(i)));
+          children.add(const SizedBox(width: 15));
+        }
+        return Row(mainAxisSize: MainAxisSize.min, children: children);
+      }
+    } catch (e) {
+      return const Center(child: Text("Unable to fetch Roles"));
+    }
   }
 
   Widget _roleTab({required GestureTapCallback onPressed, IconData? icon}) {
