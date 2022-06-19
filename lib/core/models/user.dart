@@ -57,9 +57,9 @@ class UserModel {
         "https://ui-avatars.com/api/?name=\"$name\"&background=$profileColor&color=fff";
   }
 
-  factory UserModel.clear() {
+  factory UserModel.clear({String? customName}) {
     return UserModel(
-      name: "name",
+      name: customName ?? "name",
       email: "email",
       password: "password",
       phone: "phone",

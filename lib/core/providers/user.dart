@@ -183,6 +183,12 @@ class UserProvider extends ChangeNotifier {
               .get()
               .then((doc) {
                 if (doc.exists == false) {
+                  if (credentials.user!.photoURL == null) {
+                    FirebaseAuth.instance.currentUser!.updatePhotoURL(
+                        UserModel.clear(
+                                customName: credentials.user!.displayName!)
+                            .profilePhoto);
+                  }
                   createUser(
                     context: context,
                     payload: UserModel(
@@ -228,6 +234,12 @@ class UserProvider extends ChangeNotifier {
               .get()
               .then((doc) {
                 if (doc.exists == false) {
+                  if (credentials.user!.photoURL == null) {
+                    FirebaseAuth.instance.currentUser!.updatePhotoURL(
+                        UserModel.clear(
+                                customName: credentials.user!.displayName!)
+                            .profilePhoto);
+                  }
                   createUser(
                     context: context,
                     payload: UserModel(
