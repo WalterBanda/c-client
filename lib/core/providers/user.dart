@@ -9,16 +9,17 @@ import '../routes/routes.dart';
 
 class UserProvider extends ChangeNotifier {
   late UserModel _user = UserModel.clear();
-  static DocumentReference<UserModel> db = FirebaseFirestore.instance
-      .collection("users")
-      .doc(FirebaseAuth.instance.currentUser!.uid)
-      .withConverter(
-          fromFirestore: UserModel.fromFirestore,
-          toFirestore: (userModel, _) => userModel.toFirestore());
 
   init() {
     if (FirebaseAuth.instance.currentUser != null) {
-      db.get().then((snap) {
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .withConverter(
+              fromFirestore: UserModel.fromFirestore,
+              toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+          .get()
+          .then((snap) {
         _user = snap.data()!;
         notifyListeners();
       });
@@ -36,7 +37,13 @@ class UserProvider extends ChangeNotifier {
   UserModel get user => _user;
 
   void updateUser(UserModel user) {
-    db.update(_user.toFirestore());
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .withConverter(
+            fromFirestore: UserModel.fromFirestore,
+            toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+        .update(_user.toFirestore());
   }
 
   void createUser({
@@ -54,7 +61,14 @@ class UserProvider extends ChangeNotifier {
                   .updateDisplayName(payload.name);
               FirebaseAuth.instance.currentUser!
                   .updatePhotoURL(payload.profilePhoto);
-              db.set(payload);
+              FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .withConverter(
+                      fromFirestore: UserModel.fromFirestore,
+                      toFirestore: (UserModel userModel, _) =>
+                          userModel.toFirestore())
+                  .set(payload);
             })
             .then((_) => init())
             .then((_) => GlobalNavigator.router.currentState!
@@ -94,7 +108,13 @@ class UserProvider extends ChangeNotifier {
         );
       }
     } else {
-      db.set(payload);
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .withConverter(
+              fromFirestore: UserModel.fromFirestore,
+              toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+          .set(payload);
     }
   }
 
@@ -104,7 +124,6 @@ class UserProvider extends ChangeNotifier {
     String? email,
     String? password,
   }) async {
-    var error;
     switch (signInMethods) {
       case SignInMethods.email:
         try {
@@ -154,7 +173,13 @@ class UserProvider extends ChangeNotifier {
         await FirebaseAuth.instance
             .signInWithPopup(GoogleAuthProvider())
             .then((credentials) {
-          db
+          FirebaseFirestore.instance
+              .collection("users")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .withConverter(
+                  fromFirestore: UserModel.fromFirestore,
+                  toFirestore: (UserModel userModel, _) =>
+                      userModel.toFirestore())
               .get()
               .then((doc) {
                 if (doc.exists == false) {
@@ -193,7 +218,13 @@ class UserProvider extends ChangeNotifier {
         FirebaseAuth.instance
             .signInWithPopup(GithubAuthProvider())
             .then((credentials) {
-          db
+          FirebaseFirestore.instance
+              .collection("users")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .withConverter(
+                  fromFirestore: UserModel.fromFirestore,
+                  toFirestore: (UserModel userModel, _) =>
+                      userModel.toFirestore())
               .get()
               .then((doc) {
                 if (doc.exists == false) {
@@ -236,7 +267,15 @@ class UserProvider extends ChangeNotifier {
   }
 
   // User SignOut
-  void signOut() {
-    FirebaseAuth.instance.signOut().then((_) => init());
+  void signOut(BuildContext context) {
+    try {
+      FirebaseAuth.instance.signOut();
+      _user = UserModel.clear();
+      notifyListeners();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        alertSnackBar(message: "Unable to SignOut"),
+      );
+    }
   }
 }
