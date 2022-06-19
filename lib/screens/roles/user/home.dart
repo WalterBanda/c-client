@@ -1,5 +1,5 @@
+import 'package:client/screens/roles/user/osm.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/providers/location.dart';
@@ -20,8 +20,7 @@ class UserHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        buildMap(context),
-        // locationData(context),
+        const OSM(),
         mapUtils(
           context: context,
           callback: () => _getLocation(context),
@@ -29,40 +28,6 @@ class UserHome extends StatelessWidget {
       ],
     );
   }
-
-  FlutterMap buildMap(BuildContext context) {
-    return FlutterMap(
-      mapController: Provider.of<AppData>(context).mapController,
-      options: MapOptions(
-        center: Provider.of<AppData>(context).location,
-        zoom: 17,
-        onMapCreated: (controller) =>
-            Provider.of<AppData>(context).initialization(),
-      ),
-      layers: [
-        TileLayerOptions(
-          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-          subdomains: ['a', 'b', 'c'],
-        ),
-        MarkerLayerOptions(
-          markers: [
-            Marker(
-              width: 40.0,
-              height: 40.0,
-              point: Provider.of<AppData>(context).location,
-              builder: (ctx) => const Icon(ChapChap.pin),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-Widget locationData(BuildContext context) {
-  return Center(
-    child: Text(Provider.of<AppData>(context).location.toString()),
-  );
 }
 
 class SearchOverlay extends StatelessWidget {
