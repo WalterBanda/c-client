@@ -47,16 +47,10 @@ class PageNavigator extends StatelessWidget {
   }
 
   Drawer customDrawer(BuildContext context) {
-    Future<void> _userLogout() async {
-      await firebaseAuth.signOut().then(
-            (value) => GlobalNavigator.router.currentState!
-                .pushReplacementNamed(GlobalRoutes.auth),
-          );
-    }
-
-    ElevatedButton _logoutButton(VoidCallback logout) {
+    ElevatedButton _logoutButton() {
       return ElevatedButton(
-        onPressed: logout,
+        onPressed: () =>
+            Provider.of<UserProvider>(context, listen: false).signOut(context),
         style: ElevatedButton.styleFrom(
           primary: AppColors.primary,
           padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 80),
@@ -213,7 +207,7 @@ class PageNavigator extends StatelessWidget {
                       }),
                 ]),
             const SizedBox(height: 40),
-            _logoutButton(_userLogout),
+            _logoutButton(),
           ],
         ),
       ),

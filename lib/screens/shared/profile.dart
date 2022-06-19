@@ -1,7 +1,9 @@
 import 'package:client/router/roles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/providers/user.dart';
 import '../../core/routes/router.dart';
 import '../../core/routes/routes.dart';
 import '../../styles/ui/colors.dart';
@@ -93,12 +95,9 @@ class ProfilePage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () async {
-                  await firebaseAuth.signOut().then(
-                        (value) => GlobalNavigator.router.currentState!
-                            .pushReplacementNamed(GlobalRoutes.auth),
-                      );
-                },
+                onPressed: () =>
+                    Provider.of<UserProvider>(context, listen: false)
+                        .signOut(context),
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.primary,
                   padding:
