@@ -79,9 +79,9 @@ class PageNavigator extends StatelessWidget {
             CircleAvatar(
               minRadius: 30,
               maxRadius: 60,
-              // backgroundImage: NetworkImage(
-              //   Provider.of<UserProvider>(context).user.profilePhoto,
-              // ),
+              backgroundImage: NetworkImage(
+                Provider.of<UserProvider>(context).user.profilePhoto,
+              ),
             ),
             const SizedBox(height: 20),
             Text(

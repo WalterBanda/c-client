@@ -64,9 +64,7 @@ class UserModel {
       password: "password",
       phone: "phone",
       address: "address",
-      profileShot: "profilePhoto",
       roles: [Roles.error],
-      userInfo: "description",
     );
   }
 
