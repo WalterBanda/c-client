@@ -49,39 +49,38 @@ class SwitchRoles extends StatelessWidget {
   }
 
   Widget _generateRoles(BuildContext context) {
-    Widget _role(Roles role) => _roleTab(
+    Widget _role(Roles role) => ElevatedButton(
           onPressed: () => _navToRole(role),
-          icon: _getRoleIcon(role),
+          style: ElevatedButton.styleFrom(
+            primary: AppColors.bgDark,
+            onSurface: AppColors.primary,
+            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 19),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          ),
+          child: Icon(_getRoleIcon(role), size: 25, color: AppColors.primary),
         );
+
     try {
       if (Provider.of<UserProvider>(context).user == UserModel.clear()) {
         return const Center(child: Text("Fetching Roles"));
       } else {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: Provider.of<UserProvider>(context)
-              .user
-              .roles
-              .map((role) => _role(role))
-              .toList(),
+        return ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 250),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: Provider.of<UserProvider>(context)
+                .user
+                .roles
+                .map((role) => _role(role))
+                .toList(),
+          ),
         );
       }
     } catch (e) {
       return const Center(child: Text("Unable to fetch Roles"));
     }
-  }
-
-  Widget _roleTab({required GestureTapCallback onPressed, IconData? icon}) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        primary: AppColors.bgDark,
-        onSurface: AppColors.primary,
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 19),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      ),
-      child: Icon(icon, size: 25, color: AppColors.primary),
-    );
   }
 
   @override
