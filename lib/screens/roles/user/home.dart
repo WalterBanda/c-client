@@ -1,19 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:provider/provider.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:location/location.dart';
 
-import '../../../core/providers/location.dart';
 import '../../../router/roles.dart';
 import '../../../styles/icons/chap_chap_icons.dart';
 import '../../../styles/ui/colors.dart';
 
-class UserHome extends StatelessWidget {
+class UserHome extends StatefulWidget {
   const UserHome({super.key});
 
   static const String id = "user";
 
-  void _getLocation(BuildContext context) {
-    Provider.of<AppData>(context, listen: false).getUserLocation();
+  @override
+  State<UserHome> createState() => _UserHomeState();
+}
+
+class _UserHomeState extends State<UserHome> {
+  MapController mapController = MapController();
+
+  LatLng userLocation = LatLng(-0.303099, 36.080025);
+
+  @override
+  void initState() {
+    super.initState();
+
+    Location location = Location();
+
+    getUserLocation();
+
+    location.changeSettings(accuracy: LocationAccuracy.high);
+
+    location.onLocationChanged.listen((location) {
+      userLocation = LatLng(
+        location.latitude!.toDouble(),
+        location.longitude!.toDouble(),
+      );
+      mapController.move(userLocation, 18);
+    });
+  }
+
+  getUserLocation() async {
+    bool serviceenabled;
+    PermissionStatus permissionGranted;
+    //  check if user is having permission or not
+    serviceenabled = await Location.instance.serviceEnabled();
+
+    if (!serviceenabled) {
+      serviceenabled = await Location.instance.requestService();
+
+      // TODO Location checking
+
+      if (!serviceenabled) return;
+    }
+    permissionGranted = await Location.instance.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await Location.instance.requestPermission();
+
+      if (permissionGranted == PermissionStatus.granted ||
+          permissionGranted == PermissionStatus.grantedLimited) return;
+    }
+    await Location.instance.getLocation().then((LocationData location) {
+      userLocation = LatLng(
+        location.latitude!.toDouble(),
+        location.longitude!.toDouble(),
+      );
+    });
   }
 
   @override
@@ -21,10 +73,9 @@ class UserHome extends StatelessWidget {
     return Stack(
       children: [
         buildMap(context),
-        // locationData(context),
         mapUtils(
           context: context,
-          callback: () => _getLocation(context),
+          callback: () => getUserLocation(),
         ),
       ],
     );
@@ -32,12 +83,15 @@ class UserHome extends StatelessWidget {
 
   FlutterMap buildMap(BuildContext context) {
     return FlutterMap(
-      mapController: Provider.of<AppData>(context).mapController,
+      mapController: mapController,
       options: MapOptions(
-        center: Provider.of<AppData>(context).location,
+        center: userLocation,
         zoom: 17,
-        onMapCreated: (controller) =>
-            Provider.of<AppData>(context).initialization(),
+        onMapCreated: (controller) {
+          getUserLocation();
+
+          controller.move(userLocation, 18);
+        },
       ),
       layers: [
         TileLayerOptions(
@@ -49,7 +103,7 @@ class UserHome extends StatelessWidget {
             Marker(
               width: 40.0,
               height: 40.0,
-              point: Provider.of<AppData>(context).location,
+              point: userLocation,
               builder: (ctx) => const Icon(ChapChap.pin),
             ),
           ],
@@ -57,12 +111,6 @@ class UserHome extends StatelessWidget {
       ],
     );
   }
-}
-
-Widget locationData(BuildContext context) {
-  return Center(
-    child: Text(Provider.of<AppData>(context).location.toString()),
-  );
 }
 
 class SearchOverlay extends StatelessWidget {
