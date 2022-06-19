@@ -272,6 +272,9 @@ class UserProvider extends ChangeNotifier {
       FirebaseAuth.instance.signOut();
       _user = UserModel.clear();
       notifyListeners();
+
+      GlobalNavigator.router.currentState!
+          .pushReplacementNamed(GlobalRoutes.auth);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         alertSnackBar(message: "Unable to SignOut"),
