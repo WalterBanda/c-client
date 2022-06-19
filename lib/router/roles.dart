@@ -79,13 +79,13 @@ class PageNavigator extends StatelessWidget {
             CircleAvatar(
               minRadius: 30,
               maxRadius: 60,
-              backgroundImage: NetworkImage(
-                Provider.of<UserProvider>(context).user.profilePhoto,
-              ),
+              // backgroundImage: NetworkImage(
+              //   Provider.of<UserProvider>(context).user.profilePhoto,
+              // ),
             ),
             const SizedBox(height: 20),
             Text(
-              firebaseAuth.currentUser!.displayName.toString(),
+              Provider.of<UserProvider>(context).user.name,
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 24,
@@ -145,24 +145,19 @@ class PageNavigator extends StatelessWidget {
         }
       }
 
-      Widget _Link(Roles role) => navLink(
-            onPressed: () => _navToRole(role),
-            icon: _getRoleIcon(role),
-            label: _getLabel(role),
-          );
-
-      UserModel snapshot = Provider.of<UserProvider>(context).user;
-
       try {
-        List<Widget> children = [];
-        if (snapshot == UserModel.clear()) {
-          children.add(_Link(snapshot.roles.elementAt(0)));
-        } else {
-          for (var i = 0; i < snapshot.roles.length; ++i) {
-            children.add(_Link(snapshot.roles.elementAt(i)));
-          }
-        }
-        return Column(mainAxisSize: MainAxisSize.min, children: children);
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: Provider.of<UserProvider>(context)
+              .user
+              .roles
+              .map((role) => navLink(
+                    onPressed: () => _navToRole(role),
+                    icon: _getRoleIcon(role),
+                    label: _getLabel(role),
+                  ))
+              .toList(),
+        );
       } catch (e) {
         return navLink(
             icon: ChapChap.home,
