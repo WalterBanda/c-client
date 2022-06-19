@@ -70,23 +70,19 @@ class PageNavigator extends StatelessWidget {
     }
 
     Widget _profile() {
-      Widget _defaultProfile() {
-        return CircleAvatar(
-          minRadius: 30,
-          maxRadius: 60,
-          backgroundImage: NetworkImage(
-              FirebaseAuth.instance.currentUser!.photoURL ??
-                  "https://ui-avatars.com/api/?name=username"),
-        );
-      }
-
       return GestureDetector(
         onTap: () => PageRouter.router.currentState!
             .pushReplacementNamed(SharedRoutes.profile),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _defaultProfile(),
+            CircleAvatar(
+              minRadius: 30,
+              maxRadius: 60,
+              backgroundImage: NetworkImage(
+                Provider.of<UserProvider>(context).user.profilePhoto,
+              ),
+            ),
             const SizedBox(height: 20),
             Text(
               firebaseAuth.currentUser!.displayName.toString(),
