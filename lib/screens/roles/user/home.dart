@@ -20,7 +20,7 @@ class UserHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const OSM(),
+        OSM(),
         mapUtils(
           context: context,
           callback: () => _getLocation(context),
