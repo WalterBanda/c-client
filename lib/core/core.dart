@@ -5,6 +5,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/location.dart';
 import 'routes/router.dart';
 
 class App extends StatelessWidget {
@@ -14,6 +15,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(value: AppData()),
+        // FIXME 🚧
         ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: MaterialApp(
