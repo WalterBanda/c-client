@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/providers/user.dart';
-import '../../core/routes/router.dart';
-import '../../core/routes/routes.dart';
 import '../../styles/ui/colors.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -33,12 +31,11 @@ class ProfilePage extends StatelessWidget {
                       minRadius: 30,
                       maxRadius: 80,
                       backgroundImage: NetworkImage(
-                          FirebaseAuth.instance.currentUser!.photoURL ??
-                              "https://ui-avatars.com/api/?name=username"),
+                          Provider.of<UserProvider>(context).user.profilePhoto),
                     ),
                     const SizedBox(height: 40),
                     Text(
-                      firebaseAuth.currentUser!.displayName.toString(),
+                      Provider.of<UserProvider>(context).user.name,
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
@@ -49,14 +46,13 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      // FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get(["description"]).toString(),
-                      "Description",
+                    Text(
+                      Provider.of<UserProvider>(context).user.description,
                       softWrap: true,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 5,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "SF Pro Rounded",
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
