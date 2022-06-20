@@ -49,7 +49,7 @@ class SwitchRoles extends StatelessWidget {
   }
 
   Widget _generateRoles(BuildContext context) {
-    Widget _role(Roles role) => ElevatedButton(
+    Widget roleItem(Roles role) => ElevatedButton(
           onPressed: () => _navToRole(role),
           style: ElevatedButton.styleFrom(
             primary: AppColors.bgDark,
@@ -73,7 +73,7 @@ class SwitchRoles extends StatelessWidget {
             children: Provider.of<UserProvider>(context)
                 .user
                 .roles
-                .map((role) => _role(role))
+                .map((role) => roleItem(role))
                 .toList(),
           ),
         );

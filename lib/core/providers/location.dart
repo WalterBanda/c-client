@@ -25,8 +25,6 @@ class AppData extends ChangeNotifier {
     if (!serviceenabled) {
       serviceenabled = await _location.requestService();
 
-      // TODO Location checking
-
       if (!serviceenabled) return Future.error("Location Service disabled ⚠");
     }
     permissionGranted = await _location.hasPermission();
@@ -37,7 +35,6 @@ class AppData extends ChangeNotifier {
           permissionGranted == PermissionStatus.grantedLimited) {
         return Future.error("Location Permissions denied ⚠");
       }
-      ;
     }
     await _location.getLocation().then((LocationData location) {
       _userLocation = LatLng(

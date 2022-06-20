@@ -88,7 +88,7 @@ class Onboarding extends StatelessWidget {
 
   static const String id = "onboarding";
 
-  Widget Authlet(GestureTapCallback onPressed, Widget icon) {
+  Widget authLet(GestureTapCallback onPressed, Widget icon) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
@@ -135,13 +135,13 @@ class Onboarding extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Authlet(() => _googleSignIn(context),
+                authLet(() => _googleSignIn(context),
                     const Icon(ChapChap.google, size: 36)),
                 const SizedBox(width: 15),
-                Authlet(() => _gitHubSignIn(context),
+                authLet(() => _gitHubSignIn(context),
                     const Icon(ChapChap.github, size: 36)),
                 const SizedBox(width: 15),
-                Authlet(_emailSignIn, const Icon(ChapChap.email, size: 36)),
+                authLet(_emailSignIn, const Icon(ChapChap.email, size: 36)),
               ],
             ),
             const SizedBox(height: 20),

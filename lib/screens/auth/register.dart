@@ -1,7 +1,3 @@
-import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +8,6 @@ import '../../core/routes/routes.dart';
 import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
 import 'login.dart';
-import 'onboarding.dart';
 
 class Register extends StatelessWidget {
   Register({Key? key}) : super(key: key);
@@ -164,14 +159,14 @@ class Register extends StatelessWidget {
     );
   }
 
-  Future<void> _userRegister({
+  void _userRegister({
     required String username,
     required BuildContext context,
     required String email,
     required String password,
     required String phone,
     required String address,
-  }) async {
+  }) {
     Provider.of<UserProvider>(context, listen: false).createUser(
         context: context,
         signInMethods: SignInMethods.email,
