@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/models/user.dart';
+import '../../core/providers/user.dart';
 import '../../core/routes/router.dart';
 import '../../core/routes/routes.dart';
 import '../../styles/ui/colors.dart';
@@ -111,48 +114,13 @@ class Login extends StatelessWidget {
     required BuildContext context,
     required String email,
     required String password,
-  }) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-
-    try {
-      await auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((credential) => GlobalNavigator.router.currentState!
-              .pushReplacementNamed(GlobalRoutes.switchRoles));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          alertSnackBar(
-            message:
-                "You dont Currently have an Account, Create one or check your credentials",
-            errorLabel: 'Go to Email Login',
-            errorCallback: () {
-              AuthRouter.router.currentState!
-                  .pushReplacementNamed(AuthRoutes.register);
-            },
-          ),
-        );
-      } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          alertSnackBar(
-            message: "Your entered a wrong password, try again",
-          ),
-        );
-      } else if (e.code == 'user-disabled') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          alertSnackBar(
-            message:
-                "Your Account has been disabled, Check your email for instructions on account recovery",
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          alertSnackBar(
-            message: e.code,
-          ),
-        );
-      }
-    }
+  }) {
+    Provider.of<UserProvider>(context, listen: false).authUser(
+      context: context,
+      signInMethods: SignInMethods.email,
+      email: email,
+      password: password,
+    );
   }
 }
 
