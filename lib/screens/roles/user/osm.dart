@@ -1,8 +1,6 @@
-import 'package:client/screens/auth/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/providers/location.dart';
@@ -21,9 +19,9 @@ class OSM extends StatelessWidget {
           mapController: controller,
           options: MapOptions(
             center: details.location,
-            zoom: 17,
+            minZoom: 18,
+            maxZoom: 12,
             onMapCreated: (_) {
-              // TODO 🐛 Bug incoming
               details.getUserLocation(context: context, controller: controller);
               details.locationInstance.onLocationChanged.listen((loc) {
                 details.updateLocation(
