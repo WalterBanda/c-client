@@ -46,67 +46,82 @@ class UserProvider extends ChangeNotifier {
         .update(_user.toFirestore());
   }
 
+  void _resolveAuthError(FirebaseAuthException error, BuildContext context) {
+    String message;
+    String? resolveLabel;
+    VoidCallback? resolveCallback;
+
+    switch (error.code) {
+      case 'user-not-found':
+        message = "Your probably dont have an Account create one";
+        resolveLabel = "SignUp";
+        resolveCallback = () => AuthRouter.router.currentState!
+            .pushReplacementNamed(AuthRoutes.register);
+        break;
+      case 'invalid-email':
+        message = "The email format is invalid, check your email";
+        break;
+      case 'user-disabled':
+        message = error.message ??
+            "User user account is disabled, contact support for how to recover your account";
+        break;
+      case 'wrong-password':
+        message = error.message ??
+            "Your Password incorrect, check your password again";
+        break;
+      case 'email-already-in-use':
+        message = error.message ??
+            "The email is already in use, choose another one or login";
+        resolveLabel = "Login";
+        resolveCallback = () => AuthRouter.router.currentState!
+            .pushReplacementNamed(AuthRoutes.login);
+        break;
+      case 'operation-not-allowed':
+        message = "An Error Occured, please Try Again";
+        break;
+      case 'weak-password':
+        message = "Your Password is weak, choose a stronger password";
+        break;
+      default:
+        message = "Unable to connect, check your internet";
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      alertSnackBar(
+        message: message,
+        errorLabel: resolveLabel,
+        errorCallback: resolveCallback,
+      ),
+    );
+  }
+
   void createUser({
     required BuildContext context,
     required UserModel payload,
     SignInMethods signInMethods = SignInMethods.email,
   }) {
     if (signInMethods == SignInMethods.email) {
-      try {
-        FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-                email: payload.email, password: payload.password)
-            .then((_) {
-              FirebaseAuth.instance.currentUser!
-                  .updateDisplayName(payload.name);
-              FirebaseAuth.instance.currentUser!
-                  .updatePhotoURL(payload.profilePhoto);
-              FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(FirebaseAuth.instance.currentUser!.uid)
-                  .withConverter(
-                      fromFirestore: UserModel.fromFirestore,
-                      toFirestore: (UserModel userModel, _) =>
-                          userModel.toFirestore())
-                  .set(payload);
-            })
-            .then((_) => init())
-            .then((_) => GlobalNavigator.router.currentState!
-                .pushReplacementNamed(GlobalRoutes.switchRoles));
-      } on FirebaseAuthException catch (e) {
-        String message;
-        String? resolveLabel;
-        VoidCallback? resolveCallback;
-
-        switch (e.code) {
-          case 'email-already-in-use':
-            message =
-                "The email is already in use, choose another one or login";
-            resolveLabel = "Login";
-            resolveCallback = () => AuthRouter.router.currentState!
-                .pushReplacementNamed(AuthRoutes.login);
-            break;
-          case 'invalid-email':
-            message = "The email format is invalid, check your email";
-            break;
-          case 'operation-not-allowed':
-            message = "An Error Occured, please Try Again";
-            break;
-          case 'weak-password':
-            message = "Your Password is weak, choose a stronger password";
-            break;
-          default:
-            message = "Unable to connect, check your internet";
-        }
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          alertSnackBar(
-            message: message,
-            errorLabel: resolveLabel,
-            errorCallback: resolveCallback,
-          ),
-        );
-      }
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: payload.email, password: payload.password)
+          .then((credentials) {
+            credentials.user!.updateDisplayName(payload.name);
+            credentials.user!.updatePhotoURL(payload.profilePhoto);
+            FirebaseFirestore.instance
+                .collection("users")
+                .doc(credentials.user!.uid)
+                .withConverter(
+                    fromFirestore: UserModel.fromFirestore,
+                    toFirestore: (UserModel userModel, _) =>
+                        userModel.toFirestore())
+                .set(payload);
+          })
+          .then((_) => init())
+          .then((_) => GlobalNavigator.router.currentState!
+              .pushReplacementNamed(GlobalRoutes.switchRoles))
+          .onError((FirebaseAuthException error, stackTrace) {
+            _resolveAuthError(error, context);
+          });
     } else {
       FirebaseFirestore.instance
           .collection("users")
@@ -126,48 +141,15 @@ class UserProvider extends ChangeNotifier {
   }) async {
     switch (signInMethods) {
       case SignInMethods.email:
-        try {
-          FirebaseAuth.instance
-              .signInWithEmailAndPassword(email: email!, password: password!)
-              .then((_) => init())
-              .then(
-                (_) => GlobalNavigator.router.currentState!
-                    .pushReplacementNamed(GlobalRoutes.switchRoles),
-              );
-        } on FirebaseAuthException catch (e) {
-          String message;
-          String? resolveLabel;
-          VoidCallback? resolveCallback;
-
-          switch (e.code) {
-            case 'user-not-found':
-              message = "Your probably dont have an Account create one";
-              resolveLabel = "SignUp";
-              resolveCallback = () => AuthRouter.router.currentState!
-                  .pushReplacementNamed(AuthRoutes.register);
-              break;
-            case 'invalid-email':
-              message = "The email format is invalid, check your email";
-              break;
-            case 'user-disabled':
-              message =
-                  "User user account is disabled, contact support for how to recover your account";
-              break;
-            case 'wrong-password':
-              message = "Your Password incorrect, check your password again";
-              break;
-            default:
-              message = "Unable to connect, check your internet";
-          }
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            alertSnackBar(
-              message: message,
-              errorLabel: resolveLabel,
-              errorCallback: resolveCallback,
-            ),
-          );
-        }
+        FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email!, password: password!)
+            .then((_) => init())
+            .then((_) => GlobalNavigator.router.currentState!
+                .pushReplacementNamed(GlobalRoutes.switchRoles))
+            .onError(
+              (FirebaseAuthException error, stackTrace) =>
+                  _resolveAuthError(error, context),
+            );
         break;
       case SignInMethods.google:
         await FirebaseAuth.instance
@@ -175,7 +157,7 @@ class UserProvider extends ChangeNotifier {
             .then((credentials) {
           FirebaseFirestore.instance
               .collection("users")
-              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .doc(credentials.user!.uid)
               .withConverter(
                   fromFirestore: UserModel.fromFirestore,
                   toFirestore: (UserModel userModel, _) =>
@@ -184,10 +166,9 @@ class UserProvider extends ChangeNotifier {
               .then((doc) {
                 if (doc.exists == false) {
                   if (credentials.user!.photoURL == null) {
-                    FirebaseAuth.instance.currentUser!.updatePhotoURL(
-                        UserModel.clear(
-                                customName: credentials.user!.displayName!)
-                            .profilePhoto);
+                    credentials.user!.updatePhotoURL(UserModel.clear(
+                            customName: credentials.user!.displayName!)
+                        .profilePhoto);
                   }
                   createUser(
                     context: context,
@@ -210,13 +191,12 @@ class UserProvider extends ChangeNotifier {
                 (_) => GlobalNavigator.router.currentState!
                     .pushReplacementNamed(GlobalRoutes.switchRoles),
               );
-        }).onError((error, stackTrace) {
+        }).onError((FirebaseAuthException error, stackTrace) {
           ScaffoldMessenger.of(context).showSnackBar(
             alertSnackBar(
-              message: "Google SignIn Failed",
+              message: "Google SignIn Failed 😢 \n \n ${error.message}",
             ),
           );
-          return null;
         });
 
         break;
@@ -226,7 +206,7 @@ class UserProvider extends ChangeNotifier {
             .then((credentials) {
           FirebaseFirestore.instance
               .collection("users")
-              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .doc(credentials.user!.uid)
               .withConverter(
                   fromFirestore: UserModel.fromFirestore,
                   toFirestore: (UserModel userModel, _) =>
@@ -235,10 +215,9 @@ class UserProvider extends ChangeNotifier {
               .then((doc) {
                 if (doc.exists == false) {
                   if (credentials.user!.photoURL == null) {
-                    FirebaseAuth.instance.currentUser!.updatePhotoURL(
-                        UserModel.clear(
-                                customName: credentials.user!.displayName!)
-                            .profilePhoto);
+                    credentials.user!.updatePhotoURL(UserModel.clear(
+                            customName: credentials.user!.displayName!)
+                        .profilePhoto);
                   }
                   createUser(
                     context: context,
@@ -261,13 +240,12 @@ class UserProvider extends ChangeNotifier {
                 (_) => GlobalNavigator.router.currentState!
                     .pushReplacementNamed(GlobalRoutes.switchRoles),
               );
-        }).onError((error, stackTrace) {
+        }).onError((FirebaseAuthException error, stackTrace) {
           ScaffoldMessenger.of(context).showSnackBar(
             alertSnackBar(
-              message: "Github SignIn Failed",
+              message: "Github SignIn Failed 😢 \n \n ${error.message}",
             ),
           );
-          return null;
         });
         break;
 
