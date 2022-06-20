@@ -47,7 +47,7 @@ class PageNavigator extends StatelessWidget {
   }
 
   Drawer customDrawer(BuildContext context) {
-    ElevatedButton _logoutButton() {
+    ElevatedButton logoutButton() {
       return ElevatedButton(
         onPressed: () =>
             Provider.of<UserProvider>(context, listen: false).signOut(context),
@@ -69,7 +69,7 @@ class PageNavigator extends StatelessWidget {
       );
     }
 
-    Widget _profile() {
+    Widget profile() {
       return GestureDetector(
         onTap: () => PageRouter.router.currentState!
             .pushReplacementNamed(SharedRoutes.profile),
@@ -98,8 +98,8 @@ class PageNavigator extends StatelessWidget {
       );
     }
 
-    _buildRoles(BuildContext context) {
-      void _navToRole(Roles role) {
+    buildRoles(BuildContext context) {
+      void navToRole(Roles role) {
         String route;
 
         switch (role) {
@@ -119,7 +119,7 @@ class PageNavigator extends StatelessWidget {
         PageRouter.router.currentState!.pushReplacementNamed(route);
       }
 
-      IconData _getRoleIcon(Roles role) {
+      IconData getRoleIcon(Roles role) {
         switch (role) {
           case Roles.admin:
             return ChapChap.admin;
@@ -132,7 +132,7 @@ class PageNavigator extends StatelessWidget {
         }
       }
 
-      String _getLabel(Roles role) {
+      String getLabel(Roles role) {
         switch (role) {
           case Roles.admin:
             return "Admin";
@@ -152,9 +152,9 @@ class PageNavigator extends StatelessWidget {
               .user
               .roles
               .map((role) => navLink(
-                    onPressed: () => _navToRole(role),
-                    icon: _getRoleIcon(role),
-                    label: _getLabel(role),
+                    onPressed: () => navToRole(role),
+                    icon: getRoleIcon(role),
+                    label: getLabel(role),
                   ))
               .toList(),
         );
@@ -175,13 +175,13 @@ class PageNavigator extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _profile(),
+            profile(),
             const SizedBox(height: 40),
             Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildRoles(context),
+                  buildRoles(context),
                   navLink(
                       icon: ChapChap.user,
                       label: "Profile",
@@ -198,7 +198,7 @@ class PageNavigator extends StatelessWidget {
                       }),
                 ]),
             const SizedBox(height: 40),
-            _logoutButton(),
+            logoutButton(),
           ],
         ),
       ),

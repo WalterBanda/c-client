@@ -16,7 +16,6 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: AppData()),
-        // FIXME 🚧
         ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: MaterialApp(

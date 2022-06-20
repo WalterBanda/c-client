@@ -6,10 +6,8 @@ import 'package:flutter/material.dart';
 
 enum Roles { user, garage, admin, error }
 
-// TODO Implement Extension Function for Roles Transformation
 extension RolesListTransform on List {
   List<String> toRolesString() {
-    // return toString().split('.').last;
     return map((role) => role.toString().split('.').last).toList();
   }
 }
@@ -32,7 +30,6 @@ class UserModel {
   String? uid;
 
   UserModel({
-    // required this.uid,
     required this.name,
     required this.email,
     required this.password,
