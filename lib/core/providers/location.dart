@@ -1,49 +1,72 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
+import '../../screens/auth/onboarding.dart';
+
 class AppData extends ChangeNotifier {
-  // MapController mapController = MapController();
-  final Location _location = Location();
+  Location locationInstance = Location();
 
   late LatLng _userLocation = LatLng(-0.303099, 36.080025);
 
   LatLng get location => _userLocation;
 
-  Future<LatLng> getUserLocation({LatLng? loc}) async {
+  Future<LatLng> checkPermissions({LatLng? loc}) async {
     // _userLocation = loc;
     // updateMap();
     // notifyListeners();
 
-    _location.changeSettings(accuracy: LocationAccuracy.high);
+    locationInstance.changeSettings(accuracy: LocationAccuracy.high);
 
     bool serviceenabled;
     PermissionStatus permissionGranted;
     //  check if user is having permission or not
-    serviceenabled = await _location.serviceEnabled();
+    serviceenabled = await locationInstance.serviceEnabled();
 
     if (!serviceenabled) {
-      serviceenabled = await _location.requestService();
+      serviceenabled = await locationInstance.requestService();
 
       if (!serviceenabled) return Future.error("Location Service disabled ⚠");
     }
-    permissionGranted = await _location.hasPermission();
+    permissionGranted = await locationInstance.hasPermission();
     if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await _location.requestPermission();
+      permissionGranted = await locationInstance.requestPermission();
 
       if (permissionGranted == PermissionStatus.granted ||
           permissionGranted == PermissionStatus.grantedLimited) {
         return Future.error("Location Permissions denied ⚠");
       }
     }
-    await _location.getLocation().then((LocationData location) {
-      _userLocation = LatLng(
-        location.latitude!.toDouble(),
-        location.longitude!.toDouble(),
-      );
-      notifyListeners();
-    });
 
-    return _userLocation;
+    try {
+      final loc = await locationInstance.getLocation();
+
+      return LatLng(loc.latitude!.toDouble(), loc.longitude!.toDouble());
+    } catch (e) {
+      return Future.error("Unable to get location ⚠");
+    }
+  }
+
+  updateLocation(LatLng loc) {
+    _userLocation = loc;
+    notifyListeners();
+  }
+
+  void getUserLocation(
+      {required BuildContext context,
+      MapController? controller,
+      LocationData? locStream}) {
+    checkPermissions().then((loc) {
+      _userLocation = loc;
+      notifyListeners();
+      if (controller != null) {
+        controller.move(_userLocation, 17);
+      }
+    }).onError((String error, stackTrace) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        alertSnackBar(message: error),
+      );
+    });
   }
 }

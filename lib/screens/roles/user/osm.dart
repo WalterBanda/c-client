@@ -12,7 +12,6 @@ class OSM extends StatelessWidget {
   OSM({super.key});
 
   MapController controller = MapController();
-  final Location _location = Location();
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +23,13 @@ class OSM extends StatelessWidget {
             center: details.location,
             zoom: 17,
             onMapCreated: (_) {
-              details.getUserLocation().then((lc) {
-                controller.move(lc, 17);
-                _location.onLocationChanged.listen((loc) {
-                  controller.move(
-                      LatLng(
-                          loc.latitude!.toDouble(), loc.latitude!.toDouble()),
-                      17);
-                });
-              }).onError((String error, stackTrace) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  alertSnackBar(message: error),
+              // TODO 🐛 Bug incoming
+              details.getUserLocation(context: context, controller: controller);
+              details.locationInstance.onLocationChanged.listen((loc) {
+                details.updateLocation(
+                  LatLng(loc.latitude!.toDouble(), loc.longitude!.toDouble()),
                 );
+                controller.move(details.location, 17);
               });
             },
           ),
