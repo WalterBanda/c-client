@@ -3,7 +3,10 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/models/user.dart';
+import '../../core/providers/user.dart';
 import '../../core/routes/router.dart';
 import '../../core/routes/routes.dart';
 import '../../styles/icons/chap_chap_icons.dart';
@@ -169,64 +172,16 @@ class Register extends StatelessWidget {
     required String phone,
     required String address,
   }) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    final CollectionReference dbRef =
-        FirebaseFirestore.instance.collection("users");
-
-    try {
-      String profileColor = Colors
-          .primaries[Random().nextInt(Colors.primaries.length)]
-          .toString()
-          .substring(39, 45);
-      await auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then(
-        (credential) {
-          credential.user!.updateDisplayName(username);
-          credential.user!.updatePhotoURL(
-              "https://ui-avatars.com/api/?name=\"$username\"&background=$profileColor&color=fff");
-          dbRef.doc(credential.user!.uid).set({
-            "name": username,
-            "profilePhotoURL":
-                "https://ui-avatars.com/api/?name=\"$username\"&background=$profileColor&color=fff",
-            "email": _emailController.text,
-            "password": _passwordController.text,
-            "phone": _phoneController.text,
-            "address": _addressController.text,
-            "description":
-                "Currently you have no description about you, add your description about you so that other people can know about you",
-          });
-        },
-      ).then(
-        (_) => GlobalNavigator.router.currentState!
-            .pushReplacementNamed(GlobalRoutes.switchRoles),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          alertSnackBar(
-            message:
-                "An account already exists for that email, you can try login in",
-            errorLabel: 'Login',
-            errorCallback: () {
-              AuthRouter.router.currentState!
-                  .pushReplacementNamed(AuthRoutes.login);
-            },
-          ),
-        );
-      } else if (e.code == 'weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          alertSnackBar(
-            message: "The password provided is too weak.",
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          alertSnackBar(
-            message: e.code,
-          ),
-        );
-      }
-    }
+    Provider.of<UserProvider>(context, listen: false).createUser(
+        context: context,
+        signInMethods: SignInMethods.email,
+        payload: UserModel(
+          name: username,
+          email: email,
+          password: password,
+          phone: phone,
+          address: address,
+          roles: [Roles.user],
+        ));
   }
 }
