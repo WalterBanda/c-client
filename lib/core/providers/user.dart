@@ -46,51 +46,14 @@ class UserProvider extends ChangeNotifier {
         .update(_user.toFirestore());
   }
 
-  void _resolveAuthError(FirebaseAuthException error, BuildContext context) {
-    String message;
-    String? resolveLabel;
-    VoidCallback? resolveCallback;
-
-    switch (error.code) {
-      case 'user-not-found':
-        message = "Your probably dont have an Account create one";
-        resolveLabel = "SignUp";
-        resolveCallback = () => AuthRouter.router.currentState!
-            .pushReplacementNamed(AuthRoutes.register);
-        break;
-      case 'invalid-email':
-        message = "The email format is invalid, check your email";
-        break;
-      case 'user-disabled':
-        message = error.message ??
-            "User user account is disabled, contact support for how to recover your account";
-        break;
-      case 'wrong-password':
-        message = error.message ??
-            "Your Password incorrect, check your password again";
-        break;
-      case 'email-already-in-use':
-        message = error.message ??
-            "The email is already in use, choose another one or login";
-        resolveLabel = "Login";
-        resolveCallback = () => AuthRouter.router.currentState!
-            .pushReplacementNamed(AuthRoutes.login);
-        break;
-      case 'operation-not-allowed':
-        message = "An Error Occured, please Try Again";
-        break;
-      case 'weak-password':
-        message = "Your Password is weak, choose a stronger password";
-        break;
-      default:
-        message = "Unable to connect, check your internet";
-    }
-
+  void _resolveAuthError(
+      {required FirebaseAuthException error,
+      required BuildContext context,
+      required SignInMethods signInMethods}) {
     ScaffoldMessenger.of(context).showSnackBar(
       alertSnackBar(
-        message: message,
-        errorLabel: resolveLabel,
-        errorCallback: resolveCallback,
+        message:
+            "${signInMethods.toName()} Authentication Failed 😢 \n \n ${error.message}",
       ),
     );
   }
@@ -120,7 +83,11 @@ class UserProvider extends ChangeNotifier {
           .then((_) => GlobalNavigator.router.currentState!
               .pushReplacementNamed(GlobalRoutes.switchRoles))
           .onError((FirebaseAuthException error, stackTrace) {
-            _resolveAuthError(error, context);
+            _resolveAuthError(
+              error: error,
+              context: context,
+              signInMethods: SignInMethods.email,
+            );
           });
     } else {
       FirebaseFirestore.instance
@@ -147,8 +114,11 @@ class UserProvider extends ChangeNotifier {
             .then((_) => GlobalNavigator.router.currentState!
                 .pushReplacementNamed(GlobalRoutes.switchRoles))
             .onError(
-              (FirebaseAuthException error, stackTrace) =>
-                  _resolveAuthError(error, context),
+              (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+                error: error,
+                context: context,
+                signInMethods: SignInMethods.email,
+              ),
             );
         break;
       case SignInMethods.google:
@@ -192,10 +162,10 @@ class UserProvider extends ChangeNotifier {
                     .pushReplacementNamed(GlobalRoutes.switchRoles),
               );
         }).onError((FirebaseAuthException error, stackTrace) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            alertSnackBar(
-              message: "Google SignIn Failed 😢 \n \n ${error.message}",
-            ),
+          _resolveAuthError(
+            error: error,
+            context: context,
+            signInMethods: SignInMethods.google,
           );
         });
 
@@ -241,10 +211,10 @@ class UserProvider extends ChangeNotifier {
                     .pushReplacementNamed(GlobalRoutes.switchRoles),
               );
         }).onError((FirebaseAuthException error, stackTrace) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            alertSnackBar(
-              message: "Github SignIn Failed 😢 \n \n ${error.message}",
-            ),
+          _resolveAuthError(
+            error: error,
+            context: context,
+            signInMethods: SignInMethods.github,
           );
         });
         break;

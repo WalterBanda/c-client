@@ -23,6 +23,21 @@ List<Roles> toRoles(List<String> data) {
 
 enum SignInMethods { google, github, email }
 
+extension AuthMethods on SignInMethods {
+  String toName() {
+    return toString().split('.').last.toTitleCase();
+  }
+}
+
+extension StringCasingExtension on String {
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.toCapitalized())
+      .join(' ');
+}
+
 class UserModel {
   String name, email, phone, profilePhoto, address, description, password;
   List<Roles> roles;
