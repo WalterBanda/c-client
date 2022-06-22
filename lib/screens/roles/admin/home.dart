@@ -1,8 +1,9 @@
 import 'package:client/router/roles.dart';
-import 'package:client/screens/roles/user/home.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+
+import 'items.dart';
 
 class AdminHome extends StatelessWidget {
   const AdminHome({Key? key}) : super(key: key);
@@ -75,7 +76,7 @@ class AdminHome extends StatelessWidget {
                           label: "+ Add Garage",
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => const SearchOverlay(),
+                            builder: (context) => const AddGarage(),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -84,7 +85,7 @@ class AdminHome extends StatelessWidget {
                           label: "+ Add Admin",
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => const SearchOverlay(),
+                            builder: (context) => const AddAdmin(),
                           ),
                         ),
                       ],

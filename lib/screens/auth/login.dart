@@ -124,7 +124,7 @@ class Login extends StatelessWidget {
 }
 
 Widget authInput({
-  required String hint,
+  String? hint,
   required TextEditingController? controller,
   required FocusNode focusNode,
   FormFieldValidator? validator,
@@ -133,6 +133,7 @@ Widget authInput({
   bool private = false,
   Widget? prefix,
   Widget? suffix,
+  int? maxLines,
 }) {
   return SizedBox(
     width: 300,
@@ -143,6 +144,7 @@ Widget authInput({
       textAlignVertical: TextAlignVertical.center,
       obscureText: private,
       keyboardType: inputType,
+      maxLines: maxLines,
       style: const TextStyle(
         fontFamily: "SF Pro Rounded",
         fontSize: 15,
@@ -216,8 +218,8 @@ class Validator {
     return null;
   }
 
-  static String? validateAddress({required String phone}) {
-    if (phone.isEmpty) {
+  static String? validateAddress({required String address}) {
+    if (address.isEmpty) {
       return 'Please add your address for garage booking';
     }
     return null;

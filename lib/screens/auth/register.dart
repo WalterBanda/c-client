@@ -113,7 +113,7 @@ class Register extends StatelessWidget {
                     focusNode: _addressFocusNode,
                     inputType: TextInputType.streetAddress,
                     validator: (value) =>
-                        Validator.validateAddress(phone: value),
+                        Validator.validateAddress(address: value),
                     prefix: const Icon(
                       ChapChap.location,
                       size: 15,
