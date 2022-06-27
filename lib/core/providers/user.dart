@@ -88,6 +88,7 @@ class UserProvider extends ChangeNotifier {
               context: context,
               signInMethods: SignInMethods.email,
             );
+            return;
           });
     } else {
       FirebaseFirestore.instance

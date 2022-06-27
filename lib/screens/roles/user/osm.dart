@@ -9,7 +9,7 @@ import '../../../styles/icons/chap_chap_icons.dart';
 class OSM extends StatelessWidget {
   OSM({super.key});
 
-  MapController controller = MapController();
+  final MapController controller = MapController();
 
   @override
   Widget build(BuildContext context) {
