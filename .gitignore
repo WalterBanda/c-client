@@ -52,3 +52,6 @@ sandbox/
 .vscode/
 
 *.cache
+firestore.indexes.json
+firestore.rules
+storage.rules
