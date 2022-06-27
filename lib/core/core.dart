@@ -1,20 +1,38 @@
+import 'package:client/core/providers/user.dart';
+import 'package:client/styles/ui/colors.dart';
+// ignore: depend_on_referenced_packages
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../screens/index.dart';
+import 'providers/location.dart';
+import 'routes/router.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      home: const Example(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: AppData()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+      ],
+      child: MaterialApp(
+        title: "ChapChap",
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.bgDark,
+          fontFamily: "SF Pro Rounded",
+        ),
+        // TODO: Implement Theming 🎨
+        darkTheme: ThemeData.light(),
+        navigatorKey: GlobalNavigator.router,
+        initialRoute: GlobalNavigator.initialRoute(),
+        onGenerateRoute: GlobalNavigator.generateRoute,
+      ),
     );
   }
 }

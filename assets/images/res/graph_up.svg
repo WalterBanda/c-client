@@ -1,0 +1,27 @@
+<svg width="56" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="prefix__b" x1="29.834" y1="31.244" x2="34.807" y2="23.838" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#62CBFF" stop-opacity=".01" />
+            <stop offset="1" stop-color="#339CFE" />
+        </linearGradient>
+        <linearGradient id="prefix__c" x1="20.764" y1="20.808" x2="13.969" y2="38.083" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#309AFF" />
+            <stop offset=".287" stop-color="#309AFF" />
+            <stop offset=".651" stop-color="#5364AE" />
+            <stop offset="1" stop-color="#70366B" stop-opacity=".01" />
+        </linearGradient>
+        <filter id="prefix__a" x="2.299" y=".385" width="53.385" height="47.241" filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+            <feGaussianBlur stdDeviation="9.438" result="effect1_foregroundBlur_976_92" />
+        </filter>
+    </defs>
+    <g filter="url(#prefix__a)">
+        <ellipse cx="28.991" cy="24.006" rx="7.912" ry="4.58" transform="rotate(-11 28.991 24.006)"
+            fill="url(#prefix__b)" />
+    </g>
+    <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M16.095 30.337c-.466.99-1.155 2.095-2.269 2.512-.793.298-1.498.44-2.173.4-.687-.04-1.257-.263-1.778-.56-.406-.233-.823-.535-1.238-.837l-.257-.186a18.291 18.291 0 00-1.866-1.203c-.534-.297-1.018-.302-1.492-.146-.512.168-1.034.535-1.527 1.016a9.54 9.54 0 00-1.182 1.432 10.346 10.346 0 00-.41.653l-.02.033-.003.006a1 1 0 01-1.76-.95l.88.475-.88-.474.002-.004.002-.005.009-.015a5.753 5.753 0 01.135-.234c.091-.153.223-.365.392-.612.335-.49.826-1.14 1.439-1.737.606-.59 1.383-1.183 2.298-1.484a3.76 3.76 0 013.089.297c.851.474 1.514.934 2.062 1.329l.297.214c.412.299.72.522 1.022.695.34.194.61.284.903.301.306.018.722-.04 1.354-.276.312-.117.715-.544 1.162-1.492.38-.81.699-1.781 1.025-2.78l.11-.336c.343-1.044.729-2.188 1.234-2.94.254-.378.638-.812 1.207-.992.636-.2 1.236-.008 1.72.338 1.204.86 3.222 2.095 5.523 2.502 2.24.396 4.774.018 7.188-2.396a1 1 0 011.414 1.415c-2.933 2.932-6.151 3.445-8.95 2.95-2.738-.483-5.046-1.92-6.336-2.842a1.414 1.414 0 00-.106.14c-.319.476-.624 1.324-.994 2.45l-.111.34c-.319.976-.677 2.073-1.115 3.003z"
+        fill="url(#prefix__c)" />
+</svg>
