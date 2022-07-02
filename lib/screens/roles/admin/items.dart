@@ -145,10 +145,43 @@ class AddItem extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        authInput(
-          controller: _descriptionController,
-          focusNode: _descriptionFocusNode,
-          maxLines: 6,
+        SizedBox(
+          width: 300,
+          child: TextFormField(
+            controller: _descriptionController,
+            focusNode: _descriptionFocusNode,
+            validator: null,
+            textAlignVertical: TextAlignVertical.center,
+            obscureText: false,
+            keyboardType: null,
+            style: const TextStyle(
+              fontFamily: "SF Pro Rounded",
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.6,
+            ),
+            decoration: InputDecoration(
+              filled: true,
+              isCollapsed: true,
+              prefixIcon: null,
+              suffixIcon: null,
+              contentPadding: const EdgeInsets.fromLTRB(30, 17, 0, 17),
+              fillColor: AppColors.input,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide.none,
+              ),
+              hintText: null,
+              helperText: null,
+              helperStyle: const TextStyle(
+                fontFamily: "SF Pro Rounded",
+                fontSize: 10,
+                color: AppColors.error,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.8,
+              ),
+            ),
+          ),
         )
       ],
     );

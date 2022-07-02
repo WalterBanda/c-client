@@ -9,7 +9,7 @@ import '../../../styles/icons/chap_chap_icons.dart';
 class OSM extends StatelessWidget {
   OSM({super.key});
 
-  MapController controller = MapController();
+  final MapController controller = MapController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,8 @@ class OSM extends StatelessWidget {
           mapController: controller,
           options: MapOptions(
             center: details.location,
-            minZoom: 18,
-            maxZoom: 12,
+            minZoom: 12,
+            zoom: 17,
             onMapCreated: (_) {
               details.getUserLocation(context: context, controller: controller);
               details.locationInstance.onLocationChanged.listen((loc) {

@@ -133,7 +133,6 @@ Widget authInput({
   bool private = false,
   Widget? prefix,
   Widget? suffix,
-  int? maxLines,
 }) {
   return SizedBox(
     width: 300,
@@ -144,7 +143,6 @@ Widget authInput({
       textAlignVertical: TextAlignVertical.center,
       obscureText: private,
       keyboardType: inputType,
-      maxLines: maxLines,
       style: const TextStyle(
         fontFamily: "SF Pro Rounded",
         fontSize: 15,
