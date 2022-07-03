@@ -23,7 +23,7 @@ class AppDialog extends StatelessWidget {
           elevation: 0,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
-            child: SingleChildScrollView(child: child),
+            child: child,
           ),
         ),
       ),
@@ -36,7 +36,99 @@ class AddAdmin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return AppDialog(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Add Administrator ",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontFamily: "SF Pro Rounded",
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 25),
+          TextField(
+            style: const TextStyle(
+              fontFamily: "SF Pro Rounded",
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: AppColors.input,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(
+                  color: AppColors.success,
+                  width: 2,
+                ),
+              ),
+              hintText: "Search for User",
+            ),
+          ),
+          const SizedBox(height: 25),
+          Expanded(flex: 4, child: getUsers()),
+        ],
+      ),
+    );
+  }
+
+  getUsers() {
+    return ListView.builder(
+      itemCount: 20,
+      itemBuilder: (_, i) {
+        return ListTile(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+          title: const Text(
+            "Cameron Williamson",
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 17,
+              fontFamily: "SF Pro Rounded",
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          leading: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.bgDark,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x26000000),
+                  blurRadius: 1,
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
+            child: getImage(),
+          ),
+          trailing: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              primary: AppColors.primary,
+              minimumSize: Size.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.all(6),
+            ),
+            child: const Icon(ChapChap.add),
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -191,15 +283,6 @@ class AddGarage extends StatelessWidget {
   }
 
   Row garageInfo() {
-    getImage() {
-      return Image.asset(
-        'assets/images/img/garage.png',
-        errorBuilder: (_, __, ___) {
-          return const FlutterLogo(size: 78);
-        },
-      );
-    }
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -259,4 +342,13 @@ class AddGarage extends StatelessWidget {
       ],
     );
   }
+}
+
+getImage() {
+  return Image.asset(
+    'assets/images/img/garage.png',
+    errorBuilder: (_, __, ___) {
+      return const FlutterLogo(size: 78);
+    },
+  );
 }
