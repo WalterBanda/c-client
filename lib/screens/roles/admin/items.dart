@@ -80,25 +80,53 @@ class AddAdmin extends StatelessWidget {
     );
   }
 
-  getUsers() {
-    return ListView.builder(
+  Widget getUsers() {
+    return ListView.separated(
+      padding: const EdgeInsets.all(5),
+      separatorBuilder: (_, __) => const SizedBox(height: 15),
       itemCount: 20,
       itemBuilder: (_, i) {
-        return ListTile(
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-          title: const Text(
-            "Cameron Williamson",
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 17,
-              fontFamily: "SF Pro Rounded",
-              fontWeight: FontWeight.w600,
-            ),
+        return RoundedTile(
+          label: "User ${i.toString()}",
+          avatar: getImage(),
+          icon: const Icon(ChapChap.add),
+        );
+      },
+    );
+  }
+}
+
+class RoundedTile extends StatelessWidget {
+  const RoundedTile({
+    Key? key,
+    required this.label,
+    required this.icon,
+    required this.avatar,
+  }) : super(key: key);
+
+  final String label;
+  final Widget icon;
+  final Widget avatar;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      decoration: BoxDecoration(
+        color: AppColors.bgDark,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x26000000),
+            blurRadius: 10,
+            offset: Offset(0, 0),
           ),
-          leading: Container(
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
             width: 40,
             height: 40,
             decoration: BoxDecoration(
@@ -107,14 +135,27 @@ class AddAdmin extends StatelessWidget {
               boxShadow: const [
                 BoxShadow(
                   color: Color(0x26000000),
-                  blurRadius: 1,
+                  blurRadius: 5,
                   offset: Offset(0, 0),
                 ),
               ],
             ),
-            child: getImage(),
+            child: avatar,
           ),
-          trailing: ElevatedButton(
+          Expanded(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 17,
+                fontFamily: "SF Pro Rounded",
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
               primary: AppColors.primary,
@@ -124,10 +165,10 @@ class AddAdmin extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(6),
             ),
-            child: const Icon(ChapChap.add),
+            child: icon,
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
