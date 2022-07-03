@@ -4,212 +4,29 @@ import 'package:client/styles/icons/chap_chap_icons.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 
-class AddItem extends StatelessWidget {
-  AddItem({
-    required this.itemName,
-    super.key,
-  });
+class AppDialog extends StatelessWidget {
+  const AppDialog({required this.child, super.key});
 
-  final String itemName;
-
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final FocusNode _nameFocusNode = FocusNode();
-  final TextEditingController _descriptionController = TextEditingController();
-  final FocusNode _descriptionFocusNode = FocusNode();
-  final TextEditingController _addressController = TextEditingController();
-  final FocusNode _addressFocusNode = FocusNode();
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: pageConstraints,
-      child: Dialog(
-        insetPadding: const EdgeInsets.symmetric(vertical: 56, horizontal: 30),
-        backgroundColor: AppColors.bgDark,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          children: [
-            Text(
-              "Add $itemName",
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 30,
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  buildHeader(),
-                  itemDescription(),
-                ],
-              ),
-            ),
-          ],
+    return Center(
+      child: ConstrainedBox(
+        constraints: pageConstraints,
+        child: Dialog(
+          backgroundColor: AppColors.bgDark,
+          insetPadding:
+              const EdgeInsets.only(top: 24, bottom: 24, right: 10, left: 10),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          elevation: 0,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
+            child: SingleChildScrollView(child: child),
+          ),
         ),
       ),
-    );
-  }
-
-  void createItem({
-    required BuildContext context,
-    required String itemName,
-    required String itemAddress,
-    String? itemDescription,
-  }) {}
-
-  ElevatedButton buildButton(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          createItem(
-            context: context,
-            itemName: _nameController.text,
-            itemAddress: _addressController.text,
-            itemDescription: _descriptionController.text,
-          );
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        primary: AppColors.primary,
-        padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 124),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-      ),
-      child: const Text(
-        "Register",
-        style: TextStyle(
-          fontFamily: "SF Pro Rounded",
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-    );
-  }
-
-  Row buildHeader() {
-    void getGarageImage() {}
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: getGarageImage,
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.zero,
-                elevation: 1,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const FlutterLogo(size: 78),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              "$itemName Image",
-              style: const TextStyle(
-                color: Color(0xff6a6a6a),
-                fontSize: 15,
-              ),
-            ),
-          ],
-        ),
-        authInput(
-          hint: "$itemName Name",
-          controller: _nameController,
-          focusNode: _nameFocusNode,
-          validator: (value) => Validator.validateName(name: value),
-        )
-      ],
-    );
-  }
-
-  Column itemDescription() {
-    return Column(
-      children: [
-        Text(
-          "$itemName Description",
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontFamily: "SF Pro Rounded",
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        SizedBox(
-          width: 300,
-          child: TextFormField(
-            controller: _descriptionController,
-            focusNode: _descriptionFocusNode,
-            validator: null,
-            textAlignVertical: TextAlignVertical.center,
-            obscureText: false,
-            keyboardType: null,
-            style: const TextStyle(
-              fontFamily: "SF Pro Rounded",
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.6,
-            ),
-            decoration: InputDecoration(
-              filled: true,
-              isCollapsed: true,
-              prefixIcon: null,
-              suffixIcon: null,
-              contentPadding: const EdgeInsets.fromLTRB(30, 17, 0, 17),
-              fillColor: AppColors.input,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide.none,
-              ),
-              hintText: null,
-              helperText: null,
-              helperStyle: const TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontSize: 10,
-                color: AppColors.error,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.8,
-              ),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Column itemAddress() {
-    return Column(
-      children: [
-        Text(
-          "$itemName Address",
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontFamily: "SF Pro Rounded",
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        authInput(
-          hint: "Add your Location",
-          controller: _addressController,
-          focusNode: _addressFocusNode,
-          suffix: const Icon(
-            ChapChap.pin,
-            size: 20,
-          ),
-          validator: (value) => Validator.validateAddress(address: value),
-        )
-      ],
     );
   }
 }
@@ -219,7 +36,7 @@ class AddAdmin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AddItem(itemName: "Admin");
+    return Container();
   }
 }
 
@@ -228,6 +45,218 @@ class AddGarage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AddItem(itemName: "Garage");
+    return AppDialog(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Add Garage",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 30,
+              fontFamily: "SF Pro Rounded",
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 25),
+          garageInfo(),
+          const SizedBox(height: 25),
+          garageDescription(),
+          const SizedBox(height: 25),
+          garageAddress(),
+          const SizedBox(height: 25),
+          garageAdminUser(),
+        ],
+      ),
+    );
+  }
+
+  garageAdminUser() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Garage Admin User",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontFamily: "SF Pro Rounded",
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          style: const TextStyle(
+            fontFamily: "SF Pro Rounded",
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.6,
+          ),
+          decoration: InputDecoration(
+            hintText: "User responsible for the garage",
+            filled: true,
+            isCollapsed: true,
+            prefixIcon: const Icon(ChapChap.user, size: 20),
+            contentPadding:
+                const EdgeInsets.only(top: 24, bottom: 24, left: 15, right: 10),
+            fillColor: AppColors.input,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  garageAddress() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Garage Address",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontFamily: "SF Pro Rounded",
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          style: const TextStyle(
+            fontFamily: "SF Pro Rounded",
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.6,
+          ),
+          decoration: InputDecoration(
+            hintText: "Add your Address",
+            filled: true,
+            isCollapsed: true,
+            suffixIcon: const Icon(ChapChap.location, size: 20),
+            contentPadding:
+                const EdgeInsets.only(top: 24, bottom: 24, left: 15),
+            fillColor: AppColors.input,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  garageDescription() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Garage Description",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontFamily: "SF Pro Rounded",
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          minLines: 4,
+          maxLines: 5,
+          style: const TextStyle(
+            fontFamily: "SF Pro Rounded",
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.6,
+          ),
+          decoration: InputDecoration(
+            filled: true,
+            isCollapsed: true,
+            contentPadding: const EdgeInsets.fromLTRB(15, 20, 5, 20),
+            fillColor: AppColors.input,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row garageInfo() {
+    getImage() {
+      return Image.asset(
+        'assets/images/img/garage.png',
+        errorBuilder: (_, __, ___) {
+          return const FlutterLogo(size: 78);
+        },
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 84,
+              height: 78,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.bgDark,
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.149),
+                    blurRadius: 2,
+                    offset: Offset(0, 0),
+                  ),
+                ],
+              ),
+              child: getImage(),
+            ),
+            const SizedBox(height: 5),
+            const Text(
+              "Garage Image",
+              style: TextStyle(
+                color: Color.fromRGBO(106, 106, 106, 1),
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(width: 20),
+        Expanded(
+          child: TextFormField(
+            style: const TextStyle(
+              fontFamily: "SF Pro Rounded",
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.6,
+            ),
+            decoration: InputDecoration(
+              filled: true,
+              hintText: "Garage Name",
+              isCollapsed: true,
+              contentPadding: const EdgeInsets.fromLTRB(20, 20, 10, 20),
+              fillColor: AppColors.input,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
