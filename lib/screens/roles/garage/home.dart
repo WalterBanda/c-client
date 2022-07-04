@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../router/roles.dart';
+import '../../../styles/icons/chap_chap_icons.dart';
 import '../admin/home.dart';
+import '../admin/items.dart';
 import '../user/home.dart';
 
 class GarageHome extends StatelessWidget {
@@ -159,10 +161,7 @@ class GarageHome extends StatelessWidget {
                     Expanded(
                       child: TabbedLayout(
                         tabLabel: ["New Requests", "Uncompleted"],
-                        tabs: [
-                          Center(child: Text("Tab 1 🎌")),
-                          Center(child: Text("Tab 2 ☕")),
-                        ],
+                        tabs: [NewRequests(), UncompletedRequests()],
                       ),
                     )
                   ],
@@ -172,6 +171,44 @@ class GarageHome extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class NewRequests extends StatelessWidget {
+  const NewRequests({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: const EdgeInsets.all(5),
+      separatorBuilder: (_, __) => const SizedBox(height: 15),
+      itemCount: 20,
+      itemBuilder: (_, i) => RoundedTile(
+        label: "New Requests ${i.toString()}",
+        avatar: getImage(),
+        icon: const Icon(ChapChap.add),
+      ),
+    );
+  }
+}
+
+class UncompletedRequests extends StatelessWidget {
+  const UncompletedRequests({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: const EdgeInsets.all(5),
+      separatorBuilder: (_, __) => const SizedBox(height: 15),
+      itemCount: 20,
+      itemBuilder: (_, i) {
+        return RoundedTile(
+          label: "Uncompleted Requests ${i.toString()}",
+          avatar: getImage(),
+          icon: const Icon(ChapChap.add),
+        );
+      },
     );
   }
 }
