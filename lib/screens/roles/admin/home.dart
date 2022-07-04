@@ -3,6 +3,7 @@ import 'package:client/styles/ui/colors.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
+import '../../../styles/icons/chap_chap_icons.dart';
 import 'items.dart';
 
 class AdminHome extends StatelessWidget {
@@ -10,10 +11,11 @@ class AdminHome extends StatelessWidget {
 
   static const String id = "admin";
 
-  Widget _buildAddItem(
-      {required BuildContext context,
-      required String label,
-      required GestureTapCallback onPressed}) {
+  Widget _buildAddItem({
+    required BuildContext context,
+    required String label,
+    required GestureTapCallback onPressed,
+  }) {
     return Expanded(
       child: InkWell(
         onTap: onPressed,
@@ -112,8 +114,8 @@ class AdminHome extends StatelessWidget {
                       child: TabbedLayout(
                         tabLabel: ["Garage Requests", "Admin Requests"],
                         tabs: [
-                          Center(child: Text("Tab 1 🎌")),
-                          Center(child: Text("Tab 2 ☕")),
+                          GarageRequests(),
+                          AdminRequests(),
                         ],
                       ),
                     )
@@ -158,28 +160,67 @@ class TabbedLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: tabs.length,
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: const Color.fromRGBO(0, 0, 0, 0.1),
-              ),
-              child: TabBar(
-                indicator: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                labelColor: AppColors.success,
-                unselectedLabelColor: const Color(0x42000000),
-                tabs: _buildTabsLabel(),
-              ),
+      length: tabs.length,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: const Color.fromRGBO(0, 0, 0, 0.1),
             ),
-            const SizedBox(height: 10),
-            Expanded(child: TabBarView(children: tabs)),
-          ],
-        ));
+            child: TabBar(
+              indicator: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              labelColor: AppColors.success,
+              unselectedLabelColor: const Color(0x42000000),
+              tabs: _buildTabsLabel(),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Expanded(child: TabBarView(children: tabs)),
+        ],
+      ),
+    );
+  }
+}
+
+class GarageRequests extends StatelessWidget {
+  const GarageRequests({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: const EdgeInsets.all(5),
+      separatorBuilder: (_, __) => const SizedBox(height: 15),
+      itemCount: 20,
+      itemBuilder: (_, i) => RoundedTile(
+        label: "Garage Requests ${i.toString()}",
+        avatar: getImage(),
+        icon: const Icon(ChapChap.add),
+      ),
+    );
+  }
+}
+
+class AdminRequests extends StatelessWidget {
+  const AdminRequests({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: const EdgeInsets.all(5),
+      separatorBuilder: (_, __) => const SizedBox(height: 15),
+      itemCount: 20,
+      itemBuilder: (_, i) {
+        return RoundedTile(
+          label: "Admin Requests ${i.toString()}",
+          avatar: getImage(),
+          icon: const Icon(ChapChap.add),
+        );
+      },
+    );
   }
 }
