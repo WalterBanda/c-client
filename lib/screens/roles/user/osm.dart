@@ -13,7 +13,7 @@ class OSM extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppData>(
+    return Consumer<LocationProvider>(
       builder: (context, details, child) {
         return FlutterMap(
           mapController: controller,

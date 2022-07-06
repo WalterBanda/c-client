@@ -7,7 +7,7 @@ import 'package:location/location.dart';
 
 import '../../screens/auth/onboarding.dart';
 
-class AppData extends ChangeNotifier {
+class LocationProvider extends ChangeNotifier {
   Location locationInstance = Location();
 
   late LatLng _userLocation = LatLng(-0.303099, 36.080025);
