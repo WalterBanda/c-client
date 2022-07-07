@@ -146,6 +146,7 @@ class UserProvider extends ChangeNotifier {
                     payload: UserModel(
                       name: credentials.user!.displayName!,
                       email: credentials.user!.email!,
+                      uid: credentials.user!.uid,
                       password:
                           credentials.user!.refreshToken ?? "No Auth Token",
                       phone: "No Phone Number",
@@ -195,6 +196,7 @@ class UserProvider extends ChangeNotifier {
                     payload: UserModel(
                       name: credentials.user!.displayName!,
                       email: credentials.user!.email!,
+                      uid: credentials.user!.uid,
                       password:
                           credentials.user!.refreshToken ?? "No Auth Token",
                       phone: "No Phone Number",

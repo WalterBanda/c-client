@@ -1,6 +1,9 @@
+import 'package:client/core/models/garage.dart';
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../router/roles.dart';
 import '../../../styles/icons/chap_chap_icons.dart';
@@ -160,8 +163,8 @@ class GarageHome extends StatelessWidget {
                     SizedBox(height: 27),
                     Expanded(
                       child: TabbedLayout(
-                        tabLabel: ["New Requests", "Uncompleted"],
-                        tabs: [NewRequests(), UncompletedRequests()],
+                        tabLabel: ["New Requests", "Completed"],
+                        tabs: [NewRequests(), CompletedRequests()],
                       ),
                     )
                   ],
@@ -175,6 +178,11 @@ class GarageHome extends StatelessWidget {
   }
 }
 
+List<ServiceRequest> filterReq(
+    {required List<ServiceRequest> requests, bool completed = false}) {
+  return requests.where((req) => req.completed == completed).toList();
+}
+
 class NewRequests extends StatelessWidget {
   const NewRequests({Key? key}) : super(key: key);
 
@@ -183,36 +191,74 @@ class NewRequests extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.all(5),
       separatorBuilder: (_, __) => const SizedBox(height: 15),
-      itemCount: 20,
+      itemCount:
+          filterReq(requests: Provider.of<AppData>(context).serviceRequest)
+              .length,
       itemBuilder: (_, i) => RoundedTile(
-        label: "New Requests ${i.toString()}",
-        avatar: getImage(),
+        label:
+            filterReq(requests: Provider.of<AppData>(context).serviceRequest)[i]
+                .user
+                .name,
+        avatar: Image.network(
+          filterReq(requests: Provider.of<AppData>(context).serviceRequest)[i]
+              .user
+              .profilePhoto,
+        ),
         icon: const Icon(ChapChap.add),
-        onPressed: () {},
+        onPressed: () {
+          Provider.of<AppData>(context).updateServiceRequest(
+            completed: true,
+            uid: filterReq(
+                    requests: Provider.of<AppData>(context).serviceRequest)[i]
+                .user
+                .uid!,
+          );
+        },
       ),
     );
   }
 }
 
-// TODO: jsdj
-
-class UncompletedRequests extends StatelessWidget {
-  const UncompletedRequests({Key? key}) : super(key: key);
+class CompletedRequests extends StatelessWidget {
+  const CompletedRequests({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: const EdgeInsets.all(5),
       separatorBuilder: (_, __) => const SizedBox(height: 15),
-      itemCount: 20,
-      itemBuilder: (_, i) {
-        return RoundedTile(
-          label: "Uncompleted Requests ${i.toString()}",
-          avatar: getImage(),
-          icon: const Icon(ChapChap.add),
-          onPressed: () {},
-        );
-      },
+      itemCount: filterReq(
+        requests: Provider.of<AppData>(context).serviceRequest,
+        completed: true,
+      ).length,
+      itemBuilder: (_, i) => RoundedTile(
+        label: filterReq(
+          requests: Provider.of<AppData>(context).serviceRequest,
+          completed: true,
+        )[i]
+            .user
+            .name,
+        avatar: Image.network(
+          filterReq(
+            requests: Provider.of<AppData>(context).serviceRequest,
+            completed: true,
+          )[i]
+              .user
+              .profilePhoto,
+        ),
+        icon: const Icon(ChapChap.add),
+        onPressed: () {
+          Provider.of<AppData>(context).updateServiceRequest(
+            completed: false,
+            uid: filterReq(
+              requests: Provider.of<AppData>(context).serviceRequest,
+              completed: true,
+            )[i]
+                .user
+                .uid!,
+          );
+        },
+      ),
     );
   }
 }

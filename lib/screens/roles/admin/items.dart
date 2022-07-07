@@ -9,7 +9,6 @@ import 'package:client/styles/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
 class AppDialog extends StatelessWidget {

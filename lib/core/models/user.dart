@@ -51,10 +51,11 @@ class UserModel {
     required this.phone,
     required this.address,
     String? profileShot,
+    String? uid,
     required this.roles,
     String? userInfo,
   })  : firebaseUser = FirebaseAuth.instance.currentUser,
-        uid = FirebaseAuth.instance.currentUser?.uid,
+        uid = uid ?? FirebaseAuth.instance.currentUser?.uid,
         description = userInfo ??
             "Currently you have no description about you, add your description about you so that other people can know about you",
         profilePhoto = profileShot ??
@@ -97,6 +98,7 @@ class UserModel {
           data["roles"],
         ),
       ),
+      uid: data['uid'],
       userInfo: data["description"],
     );
   }
@@ -111,6 +113,7 @@ class UserModel {
       "profilePhoto": profilePhoto,
       "roles": roles.toRolesString(),
       "description": description,
+      "uid": uid,
     };
   }
 }

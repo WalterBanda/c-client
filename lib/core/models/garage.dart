@@ -1,6 +1,6 @@
-import 'dart:html';
 import 'dart:math';
 
+import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -80,4 +80,44 @@ class Address {
     return Address(
         name: data['name'], position: LatLng(pos.latitude, pos.longitude));
   }
+}
+
+class ServiceRequest {
+  UserModel user;
+  bool completed;
+
+  ServiceRequest({required this.user, required this.completed});
+
+  factory ServiceRequest.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return ServiceRequest(
+      user: createUserModel(data!['user']),
+      completed: data['completed'],
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {'user': user.toFirestore(), 'status': completed};
+  }
+}
+
+UserModel createUserModel(Map<String, dynamic> data) {
+  return UserModel(
+    name: data["name"],
+    email: data["email"],
+    password: data["password"],
+    phone: data["phone"],
+    address: data["address"],
+    profileShot: data["profilePhoto"],
+    roles: toRoles(
+      List<String>.from(
+        data["roles"],
+      ),
+    ),
+    uid: data['uid'],
+    userInfo: data["description"],
+  );
 }
