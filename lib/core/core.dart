@@ -1,3 +1,4 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/styles/ui/colors.dart';
 // ignore: depend_on_referenced_packages
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: LocationProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => AppData()),
       ],
       child: MaterialApp(
         title: "ChapChap",

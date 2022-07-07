@@ -1,8 +1,13 @@
+import 'package:client/core/models/garage.dart';
+import 'package:client/core/models/user.dart';
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/router/roles.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/styles/icons/chap_chap_icons.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 class AppDialog extends StatelessWidget {
   const AppDialog({required this.child, super.key});
@@ -174,34 +179,84 @@ class RoundedTile extends StatelessWidget {
 }
 
 class AddGarage extends StatelessWidget {
-  const AddGarage({super.key});
+  AddGarage({super.key});
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final FocusNode _nameFocusNode = FocusNode();
+  final FocusNode _descriptionFocusNode = FocusNode();
+  final FocusNode _userFocusNode = FocusNode();
+  final FocusNode _addressFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return AppDialog(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Add Garage",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 30,
-              fontFamily: "SF Pro Rounded",
-              fontWeight: FontWeight.w700,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Add Garage",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontFamily: "SF Pro Rounded",
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-          const SizedBox(height: 25),
-          garageInfo(),
-          const SizedBox(height: 25),
-          garageDescription(),
-          const SizedBox(height: 25),
-          garageAddress(),
-          const SizedBox(height: 25),
-          garageAdminUser(),
-        ],
+            const SizedBox(height: 25),
+            garageInfo(),
+            const SizedBox(height: 25),
+            garageDescription(),
+            const SizedBox(height: 25),
+            garageAddress(),
+            const SizedBox(height: 25),
+            garageAdminUser(),
+            const SizedBox(height: 25),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  createGarage(
+                    context: context,
+                    garage: Garage.sample(name: _nameController.text),
+                  );
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                primary: AppColors.primary,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 17, horizontal: 24),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Request for Access",
+                    style: TextStyle(
+                      fontFamily: "SF Pro Rounded",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 25),
+          ],
+        ),
       ),
     );
+  }
+
+  createGarage({required BuildContext context, required Garage garage}) {
+    Provider.of<AppData>(context).createGarage(garage: garage);
   }
 
   garageAdminUser() {
@@ -220,6 +275,8 @@ class AddGarage extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         TextFormField(
+          controller: _userController,
+          focusNode: _userFocusNode,
           style: const TextStyle(
             fontFamily: "SF Pro Rounded",
             fontSize: 15,
@@ -260,6 +317,9 @@ class AddGarage extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         TextFormField(
+          controller: _addressController,
+          focusNode: _addressFocusNode,
+          onSaved: (val) {},
           style: const TextStyle(
             fontFamily: "SF Pro Rounded",
             fontSize: 15,
@@ -300,6 +360,9 @@ class AddGarage extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         TextFormField(
+          controller: _descriptionController,
+          focusNode: _descriptionFocusNode,
+          validator: (value) => Validator.validateName(name: value!),
           minLines: 4,
           maxLines: 5,
           style: const TextStyle(
@@ -361,6 +424,9 @@ class AddGarage extends StatelessWidget {
         const SizedBox(width: 20),
         Expanded(
           child: TextFormField(
+            controller: _nameController,
+            focusNode: _nameFocusNode,
+            validator: (value) => Validator.validateName(name: value!),
             style: const TextStyle(
               fontFamily: "SF Pro Rounded",
               fontSize: 15,
