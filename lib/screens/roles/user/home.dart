@@ -92,8 +92,8 @@ class SearchOverlay extends StatelessWidget {
                 }
 
                 List<Garage> data = snapshot.data!.docs
-                    .where(
-                        (gr) => gr.data().name.contains(searchController.text))
+                    .where((gr) =>
+                        gr.data().name.contains(searchController.value.text))
                     .map((QueryDocumentSnapshot<Garage> garageSnapshot) =>
                         garageSnapshot.data())
                     .toList();
