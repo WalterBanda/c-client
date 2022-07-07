@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,9 +13,9 @@ class Garage {
     required this.name,
     required this.address,
     required this.description,
-    required this.image,
+    String? image,
     required this.userUid,
-  });
+  }) : image = image ?? createProfilePic(name: name);
 
   factory Garage.sample({String? name, Address? address, String? description}) {
     return Garage(
@@ -22,8 +23,6 @@ class Garage {
       address: address ??
           Address(name: "address", position: LatLng(-0.303099, 36.080025)),
       description: "description",
-      image:
-          "https://ui-avatars.com/api/?name=GarageName&background=f2f2f2&color=fff",
       userUid: "userUid",
     );
   }
@@ -37,7 +36,7 @@ class Garage {
       name: data!["name"],
       description: data['description'],
       image: data['image'],
-      address: data['address'],
+      address: Address.fromFirestore(data['address']),
       userUid: data['userUid'],
     );
   }
@@ -73,5 +72,11 @@ class Address {
   Map<String, dynamic> toFirestore() {
     GeoPoint pos = GeoPoint(position.latitude, position.longitude);
     return {"name": name, "position": pos};
+  }
+
+  factory Address.fromFirestore(Map<String, dynamic> data) {
+    GeoPoint pos = data['position'];
+    return Address(
+        name: data['name'], position: LatLng(pos.latitude, pos.longitude));
   }
 }

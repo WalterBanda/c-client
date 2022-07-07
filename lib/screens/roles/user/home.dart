@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:client/core/models/garage.dart';
+import 'package:client/screens/roles/admin/items.dart';
 import 'package:client/screens/roles/user/osm.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,65 +37,111 @@ class UserHome extends StatelessWidget {
 }
 
 class SearchOverlay extends StatelessWidget {
-  const SearchOverlay({Key? key}) : super(key: key);
+  SearchOverlay({Key? key}) : super(key: key);
+
+  Stream<QuerySnapshot<Garage>> getGarages() {
+    return FirebaseFirestore.instance
+        .collection('garage')
+        .withConverter(
+          fromFirestore: Garage.fromFirestore,
+          toFirestore: (Garage userModel, _) => userModel.toFirestore(),
+        )
+        .snapshots();
+  }
+
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: pageConstraints,
-        child: Dialog(
-          backgroundColor: AppColors.bgDark,
-          alignment: const Alignment(0.0, -0.6),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          insetPadding:
-              const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  onTap: () {},
-                  style: const TextStyle(
-                    fontFamily: "SF Pro Rounded",
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  decoration: InputDecoration(
-                    filled: true,
-                    prefixIcon: const Icon(ChapChap.search_filled),
-                    fillColor: AppColors.input,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
+    return AppDialog(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          searchBuilder(),
+          const SizedBox(height: 20),
+          Expanded(
+            child: StreamBuilder(
+              stream: getGarages(),
+              builder:
+                  (context, AsyncSnapshot<QuerySnapshot<Garage>> snapshot) {
+                if (!snapshot.hasData) {
+                  return const Text(
+                    "Search for nearby Garages",
+                    style: TextStyle(
+                      fontFamily: "SF Pro Rounded",
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textPrimary,
+                      fontSize: 16,
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(
-                        color: AppColors.success,
-                        width: 2,
-                      ),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (snapshot.error == true) {
+                  const Text(
+                    "Unable to search for nearby Garages",
+                    style: TextStyle(
+                      fontFamily: "SF Pro Rounded",
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textPrimary,
+                      fontSize: 16,
                     ),
-                    hintText: "Looking for a Garage",
-                  ),
-                ),
-                const SizedBox(height: 20),
-                // TODO Fetch Garages Implementation
-                const Text(
-                  "Search for nearby Garages",
-                  style: TextStyle(
-                    fontFamily: "SF Pro Rounded",
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textPrimary,
-                    fontSize: 16,
-                  ),
-                ),
-              ],
+                  );
+                }
+
+                List<Garage> data = snapshot.data!.docs
+                    .where((gr) =>
+                        gr.data().name.contains(searchController.value.text))
+                    .map((QueryDocumentSnapshot<Garage> garageSnapshot) =>
+                        garageSnapshot.data())
+                    .toList();
+
+                return ListView.separated(
+                  padding: const EdgeInsets.all(5),
+                  separatorBuilder: (_, __) => const SizedBox(height: 15),
+                  itemCount: data.length,
+                  itemBuilder: (_, i) {
+                    return RoundedTile(
+                      label: data[i].name,
+                      avatar: Image.network(data[i].image),
+                      icon: const Icon(ChapChap.add),
+                    );
+                  },
+                );
+              },
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  TextField searchBuilder() {
+    return TextField(
+      controller: searchController,
+      style: const TextStyle(
+        fontFamily: "SF Pro Rounded",
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+      ),
+      decoration: InputDecoration(
+        filled: true,
+        prefixIcon: const Icon(ChapChap.search_filled),
+        fillColor: AppColors.input,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
         ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(
+            color: AppColors.success,
+            width: 2,
+          ),
+        ),
+        hintText: "Looking for a Garage",
       ),
     );
   }
@@ -130,8 +181,7 @@ Positioned mapUtils(
               child: TextField(
                 onTap: () {
                   showDialog(
-                      context: context,
-                      builder: (context) => const SearchOverlay());
+                      context: context, builder: (context) => SearchOverlay());
                 },
                 style: const TextStyle(
                   fontFamily: "SF Pro Rounded",
