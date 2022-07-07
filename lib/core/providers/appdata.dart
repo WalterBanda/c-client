@@ -98,7 +98,7 @@ class AppData extends ChangeNotifier {
 
   Future<void> createAdminRequest({required AdminRequests payload}) async {
     return await FirebaseFirestore.instance
-        .collection("garageRequests")
+        .collection("adminRequests")
         .withConverter(
           fromFirestore: AdminRequests.fromFirestore,
           toFirestore: (AdminRequests req, _) => req.toFirestore(),
@@ -134,7 +134,7 @@ class AppData extends ChangeNotifier {
 
   void getAdminRequest() {
     FirebaseFirestore.instance
-        .collection("garageRequests")
+        .collection("adminRequests")
         .withConverter(
             fromFirestore: AdminRequests.fromFirestore,
             toFirestore: (AdminRequests userModel, _) =>
