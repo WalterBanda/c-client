@@ -37,7 +37,7 @@ class UserHome extends StatelessWidget {
 }
 
 class SearchOverlay extends StatefulWidget {
-  SearchOverlay({Key? key}) : super(key: key);
+  const SearchOverlay({Key? key}) : super(key: key);
 
   @override
   State<SearchOverlay> createState() => _SearchOverlayState();
@@ -214,7 +214,8 @@ Positioned mapUtils(
               child: TextField(
                 onTap: () {
                   showDialog(
-                      context: context, builder: (context) => SearchOverlay());
+                      context: context,
+                      builder: (context) => const SearchOverlay());
                 },
                 style: const TextStyle(
                   fontFamily: "SF Pro Rounded",

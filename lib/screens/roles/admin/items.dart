@@ -39,7 +39,7 @@ class AppDialog extends StatelessWidget {
 }
 
 class AddAdmin extends StatefulWidget {
-  AddAdmin({super.key});
+  const AddAdmin({super.key});
 
   @override
   State<AddAdmin> createState() => _AddAdminState();
@@ -97,7 +97,6 @@ class _AddAdminState extends State<AddAdmin> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     FirebaseFirestore.instance

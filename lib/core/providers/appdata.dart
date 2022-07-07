@@ -8,15 +8,14 @@ class AppData extends ChangeNotifier {
   AppData() {
     getGarageRequest();
     getAdminRequest();
-    getGaragesList();
     getServiceRequest();
   }
 
   List<Garage> garages = [];
 
-  late List<GarageRequests> _garageRequest;
-  late List<AdminRequests> _adminRequest;
-  late List<ServiceRequest> _serviceRequest;
+  late List<GarageRequests> _garageRequest = [];
+  late List<AdminRequests> _adminRequest = [];
+  late List<ServiceRequest> _serviceRequest = [];
 
   List<GarageRequests> get garageRequest => _garageRequest;
   List<AdminRequests> get adminRequest => _adminRequest;
@@ -103,7 +102,7 @@ class AppData extends ChangeNotifier {
           fromFirestore: AdminRequests.fromFirestore,
           toFirestore: (AdminRequests req, _) => req.toFirestore(),
         )
-        .doc()
+        .doc(payload.userId)
         .set(payload);
   }
 
@@ -114,7 +113,7 @@ class AppData extends ChangeNotifier {
           fromFirestore: GarageRequests.fromFirestore,
           toFirestore: (GarageRequests req, _) => req.toFirestore(),
         )
-        .doc()
+        .doc(payload.userId)
         .set(payload);
   }
 
@@ -166,7 +165,8 @@ class AdminRequests {
         .then((value) {
       user = value.data();
     }).onError((error, stackTrace) {
-      user = UserModel.clear();
+      user = UserModel.clear(customName: 'Unable to Parse data');
+      print(error);
     });
   }
 

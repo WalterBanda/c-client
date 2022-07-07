@@ -128,7 +128,7 @@ class GarageHome extends StatelessWidget {
                           cummulative: -5.23,
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => SearchOverlay(),
+                            builder: (context) => const SearchOverlay(),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -138,7 +138,7 @@ class GarageHome extends StatelessWidget {
                           cummulative: 39.69,
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => SearchOverlay(),
+                            builder: (context) => const SearchOverlay(),
                           ),
                         ),
                       ],
