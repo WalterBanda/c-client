@@ -1,8 +1,13 @@
+import 'dart:math';
+
+import 'package:client/core/providers/appdata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/models/garage.dart';
 import '../../../core/providers/location.dart';
 import '../../../styles/icons/chap_chap_icons.dart';
 
@@ -10,6 +15,15 @@ class OSM extends StatelessWidget {
   OSM({super.key});
 
   final MapController controller = MapController();
+
+  List<Garage> getGarages(BuildContext context) {
+    List<Garage> res = Provider.of<AppData>(context)
+        .getGaragesList()
+        .then((List<Garage> value) => value)
+        .onError((error, stackTrace) => []) as List<Garage>;
+
+    return res;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +50,21 @@ class OSM extends StatelessWidget {
               urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
               subdomains: ['a', 'b', 'c'],
             ),
+            LocationMarkerLayerOptions(),
             MarkerLayerOptions(
               markers: [
-                Marker(
-                  width: 40.0,
-                  height: 40.0,
-                  point: details.location,
-                  builder: (ctx) => const Icon(ChapChap.pin),
-                ),
+                ...getGarages(context).map(
+                  (e) => Marker(
+                    width: 40.0,
+                    height: 40.0,
+                    point: e.address.position,
+                    builder: (ctx) => Icon(
+                      ChapChap.pin,
+                      color: Colors
+                          .primaries[Random().nextInt(Colors.primaries.length)],
+                    ),
+                  ),
+                )
               ],
             ),
           ],

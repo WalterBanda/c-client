@@ -40,6 +40,7 @@ dependencies:
   firebase_core_desktop: ^1.0.0
   flutter_map_marker_cluster: ^0.4.4
   location: ^4.4.0
+  flutter_map_location_marker: ^3.1.0
 
 dev_dependencies:
   flutter_test:
