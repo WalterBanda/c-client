@@ -1,10 +1,13 @@
 import 'package:client/core/providers/appdata.dart';
+import 'package:client/core/providers/user.dart';
 import 'package:client/router/roles.dart';
 import 'package:client/styles/ui/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/models/user.dart';
 import '../../../styles/icons/chap_chap_icons.dart';
 import 'items.dart';
 
@@ -201,13 +204,37 @@ class GarageRequests extends StatelessWidget {
       separatorBuilder: (_, __) => const SizedBox(height: 15),
       itemCount: Provider.of<AppData>(context).garageRequest.length,
       itemBuilder: (_, i) => RoundedTile(
-        label: Provider.of<AppData>(context).garageRequest[i].garage.name,
-        avatar: Image.network(
-            Provider.of<AppData>(context).garageRequest[i].garage.image),
-        icon: const Icon(ChapChap.add),
-      ),
+          label: Provider.of<AppData>(context).garageRequest[i].garage.name,
+          avatar: Image.network(
+              Provider.of<AppData>(context).garageRequest[i].garage.image),
+          icon: const Icon(ChapChap.add),
+          onPressed: () {
+            Provider.of<AppData>(context, listen: false).createGarage(
+              garage: Provider.of<AppData>(context).garageRequest[i].garage,
+            );
+
+            updateUserDetails(
+              userId:
+                  Provider.of<AppData>(context).garageRequest[i].garage.userUid,
+              role: Roles.garage,
+            );
+          }),
     );
   }
+}
+
+updateUserDetails({required String userId, required Roles role}) {
+  FirebaseFirestore.instance
+      .collection("users")
+      .doc(userId)
+      .withConverter(
+          fromFirestore: UserModel.fromFirestore,
+          toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+      .update(
+    {
+      "roles": <Roles>[role].toRolesString()
+    },
+  );
 }
 
 class AdminRequests extends StatelessWidget {
@@ -220,12 +247,16 @@ class AdminRequests extends StatelessWidget {
       separatorBuilder: (_, __) => const SizedBox(height: 15),
       itemCount: Provider.of<AppData>(context).adminRequest.length,
       itemBuilder: (_, i) => RoundedTile(
-        label: Provider.of<AppData>(context).adminRequest[i].user!.name,
-        avatar: Image.network(
-          Provider.of<AppData>(context).adminRequest[i].user!.profilePhoto,
-        ),
-        icon: const Icon(ChapChap.add),
-      ),
+          label: Provider.of<AppData>(context).adminRequest[i].user!.name,
+          avatar: Image.network(
+            Provider.of<AppData>(context).adminRequest[i].user!.profilePhoto,
+          ),
+          icon: const Icon(ChapChap.add),
+          onPressed: () => updateUserDetails(
+                userId:
+                    Provider.of<AppData>(context).adminRequest[i].user!.uid!,
+                role: Roles.admin,
+              )),
     );
   }
 }

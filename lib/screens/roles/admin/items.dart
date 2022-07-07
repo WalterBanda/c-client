@@ -96,6 +96,7 @@ class AddAdmin extends StatelessWidget {
           label: "User ${i.toString()}",
           avatar: getImage(),
           icon: const Icon(ChapChap.add),
+          onPressed: () {},
         );
       },
     );
@@ -108,11 +109,13 @@ class RoundedTile extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.avatar,
+    required this.onPressed,
   }) : super(key: key);
 
   final String label;
   final Widget icon;
   final Widget avatar;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +165,7 @@ class RoundedTile extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               primary: AppColors.primary,
               minimumSize: Size.zero,
