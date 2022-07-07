@@ -77,7 +77,17 @@ class UserProvider extends ChangeNotifier {
                     fromFirestore: UserModel.fromFirestore,
                     toFirestore: (UserModel userModel, _) =>
                         userModel.toFirestore())
-                .set(payload);
+                .set(
+                  UserModel(
+                    uid: credentials.user!.uid,
+                    email: payload.email,
+                    password: payload.password,
+                    name: payload.name,
+                    phone: payload.phone,
+                    address: payload.address,
+                    roles: payload.roles,
+                  ),
+                );
           })
           .then((_) => init())
           .then((_) => GlobalNavigator.router.currentState!
