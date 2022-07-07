@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:client/core/providers/appdata.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -17,10 +18,16 @@ class OSM extends StatelessWidget {
 
   final MapController controller = MapController();
 
-  List<Garage> getGarages(BuildContext context) {
-    List<Garage> res = [Garage.sample()];
-    Provider.of<AppData>(context).getGaragesList().then((List<Garage> value) {
-      res = value;
+  List<Garage> getGarage(BuildContext context) {
+    List<Garage> res = [];
+    FirebaseFirestore.instance
+        .collection("garage")
+        .withConverter(
+            fromFirestore: Garage.fromFirestore,
+            toFirestore: (Garage userModel, _) => userModel.toFirestore())
+        .get()
+        .then((val) {
+      res = val.docs.toList().cast();
     });
 
     return res;
@@ -28,6 +35,7 @@ class OSM extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Garage> getGarages = getGarage(context);
     return Consumer<LocationProvider>(
       builder: (context, details, child) {
         return FlutterMap(
@@ -41,13 +49,12 @@ class OSM extends StatelessWidget {
               MarkerClusterPlugin(),
             ],
             onMapCreated: (_) {
-              Provider.of<AppData>(context).createGarage(
+              Provider.of<AppData>(context, listen: false).createGarage(
                   garage: Garage.sample(
                 name: "New Address",
                 address: Address(name: "Garage", position: details.location),
               ));
               details.getUserLocation(context: context, controller: controller);
-              Provider.of<AppData>(context).getGaragesList();
               details.locationInstance.onLocationChanged.listen((loc) {
                 details.updateLocation(
                   LatLng(loc.latitude!.toDouble(), loc.longitude!.toDouble()),
@@ -69,7 +76,7 @@ class OSM extends StatelessWidget {
                 padding: EdgeInsets.all(50),
               ),
               markers: [
-                ...getGarages(context)
+                ...getGarages
                     .map(
                       (e) => Marker(
                         width: 40.0,

@@ -16,7 +16,7 @@ class Garage {
     required this.userUid,
   });
 
-  factory Garage.sample({String? name, Address? address}) {
+  factory Garage.sample({String? name, Address? address, String? description}) {
     return Garage(
       name: name ?? "Garage Name ⚠️",
       address: address ??
@@ -47,7 +47,7 @@ class Garage {
       "name": name,
       "description": description,
       "image": image,
-      "address": address,
+      "address": address.toFirestore(),
       "userUid": userUid,
     };
   }
@@ -69,4 +69,9 @@ class Address {
     required this.name,
     required this.position,
   });
+
+  Map<String, dynamic> toFirestore() {
+    GeoPoint pos = GeoPoint(position.latitude, position.longitude);
+    return {"name": name, "position": pos};
+  }
 }

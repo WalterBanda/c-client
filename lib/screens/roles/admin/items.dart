@@ -1,12 +1,15 @@
 import 'package:client/core/models/garage.dart';
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/appdata.dart';
+import 'package:client/core/providers/location.dart';
 import 'package:client/router/roles.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/styles/icons/chap_chap_icons.dart';
 import 'package:client/styles/ui/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
 class AppDialog extends StatelessWidget {
@@ -221,10 +224,18 @@ class AddGarage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    createGarage(
-                      context: context,
-                      garage: Garage.sample(name: _nameController.text),
-                    );
+                    FirebaseFirestore.instance.collection("garage").doc().set({
+                      "name": _nameController.text,
+                      "description": _descriptionController.text,
+                      "image":
+                          "https://ui-avatars.com/api/?name=\"${_nameController.text}\"&background=f2f2f2&color=fff",
+                      "address": Address(
+                              name: _nameController.text,
+                              position: LatLng(-0.303099, 36.080025))
+                          .toFirestore(),
+                      "userUid": FirebaseAuth.instance.currentUser!.uid,
+                    }).then((value) =>
+                        Navigator.of(context, rootNavigator: true).pop());
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -257,9 +268,9 @@ class AddGarage extends StatelessWidget {
     );
   }
 
-  createGarage({required BuildContext context, required Garage garage}) {
-    Provider.of<AppData>(context).createGarage(garage: garage);
-  }
+  // createGarage({required BuildContext context, required Garage garage}) {
+  //   Provider.of<AppData>(context).createGarage(garage: garage);
+  // }
 
   garageAdminUser() {
     return Column(
