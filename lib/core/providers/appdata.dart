@@ -1,9 +1,16 @@
+import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/garage.dart';
 
 class AppData extends ChangeNotifier {
+  AppData() {
+    getGarageRequest();
+    getAdminRequest();
+    getGaragesList();
+  }
+
   List<Garage> garages = [];
 
   late List<GarageRequests> _garageRequest;
@@ -103,11 +110,26 @@ class AppData extends ChangeNotifier {
 
 class AdminRequests {
   String userId, description;
+  UserModel? user;
 
   AdminRequests({
     required this.userId,
     required this.description,
-  });
+  }) {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(userId)
+        .withConverter(
+          fromFirestore: UserModel.fromFirestore,
+          toFirestore: (UserModel userModel, _) => userModel.toFirestore(),
+        )
+        .get()
+        .then((value) {
+      user = value.data();
+    }).onError((error, stackTrace) {
+      user = UserModel.clear();
+    });
+  }
 
   factory AdminRequests.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,

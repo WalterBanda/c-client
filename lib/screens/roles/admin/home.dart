@@ -218,14 +218,14 @@ class AdminRequests extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.all(5),
       separatorBuilder: (_, __) => const SizedBox(height: 15),
-      itemCount: 20,
-      itemBuilder: (_, i) {
-        return RoundedTile(
-          label: "Admin Requests ${i.toString()}",
-          avatar: getImage(),
-          icon: const Icon(ChapChap.add),
-        );
-      },
+      itemCount: Provider.of<AppData>(context).adminRequest.length,
+      itemBuilder: (_, i) => RoundedTile(
+        label: Provider.of<AppData>(context).adminRequest[i].user!.name,
+        avatar: Image.network(
+          Provider.of<AppData>(context).adminRequest[i].user!.profilePhoto,
+        ),
+        icon: const Icon(ChapChap.add),
+      ),
     );
   }
 }
