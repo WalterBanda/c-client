@@ -16,10 +16,11 @@ class Garage {
     required this.userUid,
   });
 
-  factory Garage.sample({String? name}) {
+  factory Garage.sample({String? name, Address? address}) {
     return Garage(
       name: name ?? "Garage Name ⚠️",
-      address: Address(name: "address", position: LatLng(-0.303099, 36.080025)),
+      address: address ??
+          Address(name: "address", position: LatLng(-0.303099, 36.080025)),
       description: "description",
       image:
           "https://ui-avatars.com/api/?name=GarageName&background=f2f2f2&color=fff",
