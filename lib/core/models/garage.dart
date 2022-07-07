@@ -2,6 +2,7 @@ import 'dart:html';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -23,7 +24,7 @@ class Garage {
       address: address ??
           Address(name: "address", position: LatLng(-0.303099, 36.080025)),
       description: "description",
-      userUid: "userUid",
+      userUid: FirebaseAuth.instance.currentUser!.uid,
     );
   }
 

@@ -1,6 +1,8 @@
 import 'package:client/core/models/user.dart';
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/screens/roles/admin/items.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -94,7 +96,9 @@ class SettingsPage extends StatelessWidget {
                       label: "+ Create Garage",
                       onPressed: () => showDialog(
                         context: context,
-                        builder: (context) => AddGarage(),
+                        builder: (context) => AddGarage(
+                          admin: false,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -103,7 +107,7 @@ class SettingsPage extends StatelessWidget {
                       label: "+ Request Admin Role",
                       onPressed: () => showDialog(
                         context: context,
-                        builder: (context) => requestAdminAccess(),
+                        builder: (context) => RequestAdminAccess(),
                       ),
                     ),
                   ],
@@ -111,83 +115,6 @@ class SettingsPage extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  requestAdminAccess() {
-    return AppDialog(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Request Admin Access",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 30,
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              "Garage Description",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              minLines: 4,
-              maxLines: 5,
-              style: const TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.6,
-              ),
-              decoration: InputDecoration(
-                filled: true,
-                isCollapsed: true,
-                contentPadding: const EdgeInsets.fromLTRB(15, 20, 5, 20),
-                fillColor: AppColors.input,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                primary: AppColors.primary,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 17, horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    "Request for Access",
-                    style: TextStyle(
-                      fontFamily: "SF Pro Rounded",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
         ),
       ),
     );
@@ -350,6 +277,107 @@ class SettingsPage extends StatelessWidget {
               ],
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class RequestAdminAccess extends StatelessWidget {
+  RequestAdminAccess({
+    Key? key,
+  }) : super(key: key);
+
+  TextEditingController descriptionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppDialog(
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Request Admin Access",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontFamily: "SF Pro Rounded",
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                "Reason for Request",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: "SF Pro Rounded",
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                minLines: 4,
+                maxLines: 5,
+                validator: (val) => Validator.validateName(name: val!),
+                style: const TextStyle(
+                  fontFamily: "SF Pro Rounded",
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.6,
+                ),
+                decoration: InputDecoration(
+                  filled: true,
+                  isCollapsed: true,
+                  contentPadding: const EdgeInsets.fromLTRB(15, 20, 5, 20),
+                  fillColor: AppColors.input,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    Provider.of<AppData>(context, listen: false)
+                        .createAdminRequest(
+                      payload: AdminRequests(
+                        userId: FirebaseAuth.instance.currentUser!.uid,
+                        description: descriptionController.text,
+                      ),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.primary,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 17, horizontal: 24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      "Request for Access",
+                      style: TextStyle(
+                        fontFamily: "SF Pro Rounded",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
