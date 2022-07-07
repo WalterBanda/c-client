@@ -78,7 +78,7 @@ class AdminHome extends StatelessWidget {
                           label: "+ Add Garage",
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => const AddGarage(),
+                            builder: (context) => AddGarage(),
                           ),
                         ),
                         const SizedBox(width: 10),

@@ -13,7 +13,7 @@ class UserHome extends StatelessWidget {
   static const String id = "user";
 
   void _getLocation(BuildContext context) {
-    Provider.of<AppData>(context, listen: false)
+    Provider.of<LocationProvider>(context, listen: false)
         .getUserLocation(context: context);
   }
 
