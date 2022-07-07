@@ -21,93 +21,95 @@ class SettingsPage extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints: pageConstraints,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              buildEdit(
-                onPressed: () => showDialog(
-                  context: context,
-                  builder: (context) => changeProfilePic(context: context),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                buildEdit(
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => changeProfilePic(context: context),
+                  ),
+                  icon: Icons.camera_alt_rounded,
+                  child: CircleAvatar(
+                    minRadius: 30,
+                    maxRadius: 60,
+                    backgroundImage: NetworkImage(
+                        Provider.of<UserProvider>(context).user.profilePhoto),
+                  ),
                 ),
-                icon: Icons.camera_alt_rounded,
-                child: CircleAvatar(
-                  minRadius: 30,
-                  maxRadius: 60,
-                  backgroundImage: NetworkImage(
-                      Provider.of<UserProvider>(context).user.profilePhoto),
+                const SizedBox(height: 24),
+                buildEdit(
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => EditDetails(context: context),
+                  ),
+                  icon: Icons.edit_note_rounded,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        Provider.of<UserProvider>(context).user.name,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontFamily: "SF Pro Rounded",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 24,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        Provider.of<UserProvider>(context).user.description,
+                        softWrap: true,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 5,
+                        style: const TextStyle(
+                          fontFamily: "SF Pro Rounded",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              buildEdit(
-                onPressed: () => showDialog(
-                  context: context,
-                  builder: (context) => EditDetails(context: context),
+                const SizedBox(height: 24),
+                const Text(
+                  "Change Your Roles",
+                  style: TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
                 ),
-                icon: Icons.edit_note_rounded,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      Provider.of<UserProvider>(context).user.name,
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontFamily: "SF Pro Rounded",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 24,
+                    _buildAddItem(
+                      context: context,
+                      label: "+ Create Garage",
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (context) => AddGarage(),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Text(
-                      Provider.of<UserProvider>(context).user.description,
-                      softWrap: true,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 5,
-                      style: const TextStyle(
-                        fontFamily: "SF Pro Rounded",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        color: AppColors.textPrimary,
+                    const SizedBox(width: 10),
+                    _buildAddItem(
+                      context: context,
+                      label: "+ Request Admin Role",
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (context) => requestAdminAccess(),
                       ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                "Change Your Roles",
-                style: TextStyle(
-                  fontFamily: "SF Pro Rounded",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildAddItem(
-                    context: context,
-                    label: "+ Create Garage",
-                    onPressed: () => showDialog(
-                      context: context,
-                      builder: (context) => AddGarage(),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  _buildAddItem(
-                    context: context,
-                    label: "+ Request Admin Role",
-                    onPressed: () => showDialog(
-                      context: context,
-                      builder: (context) => requestAdminAccess(),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

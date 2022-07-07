@@ -194,62 +194,64 @@ class AddGarage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppDialog(
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Add Garage",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 30,
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 25),
-            garageInfo(),
-            const SizedBox(height: 25),
-            garageDescription(),
-            const SizedBox(height: 25),
-            garageAddress(),
-            const SizedBox(height: 25),
-            garageAdminUser(),
-            const SizedBox(height: 25),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  createGarage(
-                    context: context,
-                    garage: Garage.sample(name: _nameController.text),
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                primary: AppColors.primary,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 17, horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Add Garage",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontFamily: "SF Pro Rounded",
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    "Request for Access",
-                    style: TextStyle(
-                      fontFamily: "SF Pro Rounded",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
+              const SizedBox(height: 25),
+              garageInfo(),
+              const SizedBox(height: 25),
+              garageDescription(),
+              const SizedBox(height: 25),
+              garageAddress(),
+              const SizedBox(height: 25),
+              garageAdminUser(),
+              const SizedBox(height: 25),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    createGarage(
+                      context: context,
+                      garage: Garage.sample(name: _nameController.text),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.primary,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 17, horizontal: 24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      "Request for Access",
+                      style: TextStyle(
+                        fontFamily: "SF Pro Rounded",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 25),
-          ],
+              const SizedBox(height: 25),
+            ],
+          ),
         ),
       ),
     );

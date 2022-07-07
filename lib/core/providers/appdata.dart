@@ -28,9 +28,9 @@ class AppData extends ChangeNotifier {
         .then((res) {
       garages = res.docs.toList().cast();
       notifyListeners();
-    }).onError((error, stackTrace) => Future.error("Unable to fetch Garages"));
+    });
 
-    return res.docs.toList().cast();
+    return res.docs.toList().cast() ?? [Garage.sample()];
   }
 
   Future<Garage> getGarage({required String userUid}) async {

@@ -17,10 +17,10 @@ class OSM extends StatelessWidget {
   final MapController controller = MapController();
 
   List<Garage> getGarages(BuildContext context) {
-    List<Garage> res = Provider.of<AppData>(context)
-        .getGaragesList()
-        .then((List<Garage> value) => value)
-        .onError((error, stackTrace) => []) as List<Garage>;
+    List<Garage> res = [Garage.sample()];
+    Provider.of<AppData>(context).getGaragesList().then((List<Garage> value) {
+      res = value;
+    });
 
     return res;
   }
@@ -35,8 +35,17 @@ class OSM extends StatelessWidget {
             center: details.location,
             minZoom: 12,
             zoom: 17,
+            plugins: [
+              LocationMarkerPlugin(),
+            ],
             onMapCreated: (_) {
+              Provider.of<AppData>(context).createGarage(
+                  garage: Garage.sample(
+                name: "New Address",
+                address: Address(name: "Garage", position: details.location),
+              ));
               details.getUserLocation(context: context, controller: controller);
+              Provider.of<AppData>(context).getGaragesList();
               details.locationInstance.onLocationChanged.listen((loc) {
                 details.updateLocation(
                   LatLng(loc.latitude!.toDouble(), loc.longitude!.toDouble()),
@@ -53,18 +62,30 @@ class OSM extends StatelessWidget {
             LocationMarkerLayerOptions(),
             MarkerLayerOptions(
               markers: [
-                ...getGarages(context).map(
-                  (e) => Marker(
-                    width: 40.0,
-                    height: 40.0,
-                    point: e.address.position,
-                    builder: (ctx) => Icon(
-                      ChapChap.pin,
-                      color: Colors
-                          .primaries[Random().nextInt(Colors.primaries.length)],
-                    ),
+                ...getGarages(context)
+                    .map(
+                      (e) => Marker(
+                        width: 40.0,
+                        height: 40.0,
+                        point: e.address.position,
+                        builder: (ctx) => Icon(
+                          ChapChap.pin,
+                          color: Colors.primaries[
+                              Random().nextInt(Colors.primaries.length)],
+                        ),
+                      ),
+                    )
+                    .toList(),
+                Marker(
+                  width: 40.0,
+                  height: 40.0,
+                  point: details.location,
+                  builder: (ctx) => Icon(
+                    ChapChap.pin,
+                    color: Colors
+                        .primaries[Random().nextInt(Colors.primaries.length)],
                   ),
-                )
+                ),
               ],
             ),
           ],
