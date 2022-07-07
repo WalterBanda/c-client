@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:client/core/providers/appdata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -49,11 +48,6 @@ class OSM extends StatelessWidget {
               MarkerClusterPlugin(),
             ],
             onMapCreated: (_) {
-              Provider.of<AppData>(context, listen: false).createGarage(
-                  garage: Garage.sample(
-                name: "New Address",
-                address: Address(name: "Garage", position: details.location),
-              ));
               details.getUserLocation(context: context, controller: controller);
               details.locationInstance.onLocationChanged.listen((loc) {
                 details.updateLocation(
@@ -84,8 +78,7 @@ class OSM extends StatelessWidget {
                         point: e.address.position,
                         builder: (ctx) => Icon(
                           ChapChap.pin,
-                          color: Colors.primaries[
-                              Random().nextInt(Colors.primaries.length)],
+                          color: Colors.primaries[getGarages.indexOf(e)],
                         ),
                       ),
                     )
