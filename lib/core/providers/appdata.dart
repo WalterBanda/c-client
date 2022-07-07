@@ -9,15 +9,54 @@ class AppData extends ChangeNotifier {
     getGarageRequest();
     getAdminRequest();
     getGaragesList();
+    getServiceRequest();
   }
 
   List<Garage> garages = [];
 
   late List<GarageRequests> _garageRequest;
   late List<AdminRequests> _adminRequest;
+  late List<ServiceRequest> _serviceRequest;
 
   List<GarageRequests> get garageRequest => _garageRequest;
   List<AdminRequests> get adminRequest => _adminRequest;
+  List<ServiceRequest> get serviceRequest => _serviceRequest;
+
+  createServiceRequest(ServiceRequest request) async {
+    await FirebaseFirestore.instance
+        .collection("serviceRequest")
+        .doc(request.user.uid)
+        .withConverter(
+          fromFirestore: ServiceRequest.fromFirestore,
+          toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
+        )
+        .set(request);
+  }
+
+  getServiceRequest() {
+    FirebaseFirestore.instance
+        .collection("serviceRequest")
+        .withConverter(
+          fromFirestore: ServiceRequest.fromFirestore,
+          toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
+        )
+        .snapshots()
+        .listen((val) {
+      _serviceRequest = val.docs.map((e) => e.data()).toList();
+      notifyListeners();
+    });
+  }
+
+  updateServiceRequest({required bool completed, required String uid}) {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .withConverter(
+            fromFirestore: ServiceRequest.fromFirestore,
+            toFirestore: (ServiceRequest userModel, _) =>
+                userModel.toFirestore())
+        .update({'status': completed});
+  }
 
   Future<void> createGarage({required Garage garage}) async {
     return await FirebaseFirestore.instance
@@ -93,8 +132,8 @@ class AppData extends ChangeNotifier {
     });
   }
 
-  void getAdminRequest() async {
-    await FirebaseFirestore.instance
+  void getAdminRequest() {
+    FirebaseFirestore.instance
         .collection("garageRequests")
         .withConverter(
             fromFirestore: AdminRequests.fromFirestore,

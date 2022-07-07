@@ -140,6 +140,7 @@ class _SearchOverlayState extends State<SearchOverlay> {
                         label: data[i].name,
                         avatar: Image.network(data[i].image),
                         icon: const Icon(ChapChap.add),
+                        onPressed: () {},
                       );
                     },
                   ),

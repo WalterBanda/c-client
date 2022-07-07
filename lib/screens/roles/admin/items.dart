@@ -1,13 +1,14 @@
 import 'package:client/core/models/garage.dart';
+import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/router/roles.dart';
 import 'package:client/screens/auth/login.dart';
+import 'package:client/screens/roles/admin/home.dart';
 import 'package:client/styles/icons/chap_chap_icons.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
 class AppDialog extends StatelessWidget {
@@ -37,9 +38,14 @@ class AppDialog extends StatelessWidget {
   }
 }
 
-class AddAdmin extends StatelessWidget {
-  const AddAdmin({super.key});
+class AddAdmin extends StatefulWidget {
+  AddAdmin({super.key});
 
+  @override
+  State<AddAdmin> createState() => _AddAdminState();
+}
+
+class _AddAdminState extends State<AddAdmin> {
   @override
   Widget build(BuildContext context) {
     return AppDialog(
@@ -57,6 +63,7 @@ class AddAdmin extends StatelessWidget {
           ),
           const SizedBox(height: 25),
           TextField(
+            onChanged: (value) => runFilter(value),
             style: const TextStyle(
               fontFamily: "SF Pro Rounded",
               fontSize: 15,
@@ -86,17 +93,69 @@ class AddAdmin extends StatelessWidget {
     );
   }
 
+  late List<Garage> users = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    FirebaseFirestore.instance
+        .collection('garage')
+        .withConverter(
+          fromFirestore: Garage.fromFirestore,
+          toFirestore: (Garage userModel, _) => userModel.toFirestore(),
+        )
+        .snapshots()
+        .listen((val) {
+      setState(() {
+        users = val.docs
+            .map((QueryDocumentSnapshot<Garage> garageSnapshot) =>
+                garageSnapshot.data())
+            .toList();
+      });
+    });
+  }
+
+  void runFilter(String enteredKeyword) {
+    List<Garage> results = [];
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      results = users;
+    } else {
+      results = users
+              .where((garage) => garage.name
+                  .toLowerCase()
+                  .contains(enteredKeyword.toLowerCase()))
+              .toList()
+              .isEmpty
+          ? users
+          : users
+              .where((garage) => garage.name
+                  .toLowerCase()
+                  .contains(enteredKeyword.toLowerCase()))
+              .toList();
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+
+    // Refresh the UI
+    setState(() {
+      users = results;
+    });
+  }
+
   Widget getUsers() {
     return ListView.separated(
       padding: const EdgeInsets.all(5),
       separatorBuilder: (_, __) => const SizedBox(height: 15),
-      itemCount: 20,
+      itemCount: users.length,
       itemBuilder: (_, i) {
         return RoundedTile(
-          label: "User ${i.toString()}",
-          avatar: getImage(),
+          label: users[i].name,
+          avatar: Image.network(users[i].image),
           icon: const Icon(ChapChap.add),
-          onPressed: () {},
+          onPressed: () =>
+              updateUserDetails(userId: users[i].userUid, role: Roles.admin),
         );
       },
     );

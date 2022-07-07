@@ -94,7 +94,7 @@ class AdminHome extends StatelessWidget {
                           label: "+ Add Admin",
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => const AddAdmin(),
+                            builder: (context) => AddAdmin(),
                           ),
                         ),
                       ],
@@ -121,7 +121,7 @@ class AdminHome extends StatelessWidget {
                       child: TabbedLayout(
                         tabLabel: ["Garage Requests", "Admin Requests"],
                         tabs: [
-                          GarageRequests(),
+                          GarageRequestsTab(),
                           AdminRequests(),
                         ],
                       ),
@@ -194,8 +194,8 @@ class TabbedLayout extends StatelessWidget {
   }
 }
 
-class GarageRequests extends StatelessWidget {
-  const GarageRequests({Key? key}) : super(key: key);
+class GarageRequestsTab extends StatelessWidget {
+  const GarageRequestsTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
