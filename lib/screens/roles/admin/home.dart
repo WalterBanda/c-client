@@ -1,7 +1,9 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/router/roles.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../styles/icons/chap_chap_icons.dart';
 import 'items.dart';
@@ -78,7 +80,9 @@ class AdminHome extends StatelessWidget {
                           label: "+ Add Garage",
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => AddGarage(),
+                            builder: (context) => AddGarage(
+                              admin: true,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -195,10 +199,11 @@ class GarageRequests extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.all(5),
       separatorBuilder: (_, __) => const SizedBox(height: 15),
-      itemCount: 20,
+      itemCount: Provider.of<AppData>(context).garageRequest.length,
       itemBuilder: (_, i) => RoundedTile(
-        label: "Garage Requests ${i.toString()}",
-        avatar: getImage(),
+        label: Provider.of<AppData>(context).garageRequest[i].garage.name,
+        avatar: Image.network(
+            Provider.of<AppData>(context).garageRequest[i].garage.image),
         icon: const Icon(ChapChap.add),
       ),
     );

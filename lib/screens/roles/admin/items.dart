@@ -1,4 +1,5 @@
 import 'package:client/core/models/garage.dart';
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/router/roles.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/styles/icons/chap_chap_icons.dart';
@@ -7,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
 
 class AppDialog extends StatelessWidget {
   const AppDialog({required this.child, super.key});
@@ -178,7 +180,7 @@ class RoundedTile extends StatelessWidget {
 }
 
 class AddGarage extends StatelessWidget {
-  AddGarage({super.key});
+  AddGarage({required this.admin, super.key});
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -189,6 +191,7 @@ class AddGarage extends StatelessWidget {
   final FocusNode _descriptionFocusNode = FocusNode();
   final FocusNode _userFocusNode = FocusNode();
   final FocusNode _addressFocusNode = FocusNode();
+  final bool admin;
 
   @override
   Widget build(BuildContext context) {
@@ -220,18 +223,36 @@ class AddGarage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    FirebaseFirestore.instance.collection("garage").doc().set({
-                      "name": _nameController.text,
-                      "description": _descriptionController.text,
-                      "image":
-                          "https://ui-avatars.com/api/?name=\"${_nameController.text}\"&background=f2f2f2&color=fff",
-                      "address": Address(
+                    if (admin) {
+                      Provider.of<AppData>(context, listen: false)
+                          .createGarage(
+                            garage: Garage.sample(
                               name: _nameController.text,
-                              position: LatLng(-0.303099, 36.080025))
-                          .toFirestore(),
-                      "userUid": FirebaseAuth.instance.currentUser!.uid,
-                    }).then((value) =>
-                        Navigator.of(context, rootNavigator: true).pop());
+                              description: _descriptionController.text,
+                            ),
+                          )
+                          .then(
+                            (value) =>
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop(),
+                          );
+                    } else {
+                      Provider.of<AppData>(context, listen: false)
+                          .createGarageRequest(
+                            payload: GarageRequests(
+                              userId: FirebaseAuth.instance.currentUser!.uid,
+                              garage: Garage.sample(
+                                name: _nameController.text,
+                                description: _descriptionController.text,
+                              ),
+                            ),
+                          )
+                          .then(
+                            (value) =>
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop(),
+                          );
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
