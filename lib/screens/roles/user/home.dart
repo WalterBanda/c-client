@@ -46,7 +46,6 @@ class SearchOverlay extends StatelessWidget {
           fromFirestore: Garage.fromFirestore,
           toFirestore: (Garage userModel, _) => userModel.toFirestore(),
         )
-        .where('name', isEqualTo: searchController.text)
         .snapshots();
   }
 
@@ -93,6 +92,8 @@ class SearchOverlay extends StatelessWidget {
                 }
 
                 List<Garage> data = snapshot.data!.docs
+                    .where(
+                        (gr) => gr.data().name.contains(searchController.text))
                     .map((QueryDocumentSnapshot<Garage> garageSnapshot) =>
                         garageSnapshot.data())
                     .toList();
@@ -120,9 +121,6 @@ class SearchOverlay extends StatelessWidget {
   TextField searchBuilder() {
     return TextField(
       controller: searchController,
-      onChanged: (value) {
-        searchController.text = value;
-      },
       style: const TextStyle(
         fontFamily: "SF Pro Rounded",
         fontSize: 15,
