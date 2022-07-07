@@ -321,6 +321,7 @@ class RequestAdminAccess extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               TextFormField(
+                controller: descriptionController,
                 minLines: 4,
                 maxLines: 5,
                 validator: (val) => Validator.validateName(name: val!),
