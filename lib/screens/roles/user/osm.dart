@@ -38,6 +38,7 @@ class OSM extends StatelessWidget {
             zoom: 17,
             plugins: [
               const LocationMarkerPlugin(),
+              MarkerClusterPlugin(),
             ],
             onMapCreated: (_) {
               Provider.of<AppData>(context).createGarage(
