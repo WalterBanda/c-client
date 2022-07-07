@@ -36,9 +36,14 @@ class UserHome extends StatelessWidget {
   }
 }
 
-class SearchOverlay extends StatelessWidget {
+class SearchOverlay extends StatefulWidget {
   SearchOverlay({Key? key}) : super(key: key);
 
+  @override
+  State<SearchOverlay> createState() => _SearchOverlayState();
+}
+
+class _SearchOverlayState extends State<SearchOverlay> {
   Stream<QuerySnapshot<Garage>> getGarages() {
     return FirebaseFirestore.instance
         .collection('garage')
@@ -51,6 +56,60 @@ class SearchOverlay extends StatelessWidget {
 
   TextEditingController searchController = TextEditingController();
 
+  late List<Garage> data = [];
+
+  late Stream<QuerySnapshot<Garage>> instance;
+
+  @override
+  void initState() {
+    super.initState();
+
+    instance = FirebaseFirestore.instance
+        .collection('garage')
+        .withConverter(
+          fromFirestore: Garage.fromFirestore,
+          toFirestore: (Garage userModel, _) => userModel.toFirestore(),
+        )
+        .snapshots();
+
+    instance.listen((val) {
+      setState(() {
+        data = val.docs
+            .map((QueryDocumentSnapshot<Garage> garageSnapshot) =>
+                garageSnapshot.data())
+            .toList();
+      });
+    });
+  }
+
+  // This function is called whenever the text field changes
+  void runFilter(String enteredKeyword) {
+    List<Garage> results = [];
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      results = data;
+    } else {
+      results = data
+              .where((garage) => garage.name
+                  .toLowerCase()
+                  .contains(enteredKeyword.toLowerCase()))
+              .toList()
+              .isEmpty
+          ? data
+          : data
+              .where((garage) => garage.name
+                  .toLowerCase()
+                  .contains(enteredKeyword.toLowerCase()))
+              .toList();
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+
+    // Refresh the UI
+    setState(() {
+      data = results;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppDialog(
@@ -60,58 +119,30 @@ class SearchOverlay extends StatelessWidget {
           searchBuilder(),
           const SizedBox(height: 20),
           Expanded(
-            child: StreamBuilder(
-              stream: getGarages(),
-              builder:
-                  (context, AsyncSnapshot<QuerySnapshot<Garage>> snapshot) {
-                if (!snapshot.hasData) {
-                  return const Text(
-                    "Search for nearby Garages",
-                    style: TextStyle(
-                      fontFamily: "SF Pro Rounded",
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textPrimary,
-                      fontSize: 16,
+            child: data.isEmpty
+                ? const Center(
+                    child: Text(
+                      "Fetching Garages",
+                      style: TextStyle(
+                        fontFamily: "SF Pro Rounded",
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textPrimary,
+                        fontSize: 16,
+                      ),
                     ),
-                  );
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                if (snapshot.error == true) {
-                  const Text(
-                    "Unable to search for nearby Garages",
-                    style: TextStyle(
-                      fontFamily: "SF Pro Rounded",
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textPrimary,
-                      fontSize: 16,
-                    ),
-                  );
-                }
-
-                List<Garage> data = snapshot.data!.docs
-                    .where((gr) =>
-                        gr.data().name.contains(searchController.value.text))
-                    .map((QueryDocumentSnapshot<Garage> garageSnapshot) =>
-                        garageSnapshot.data())
-                    .toList();
-
-                return ListView.separated(
-                  padding: const EdgeInsets.all(5),
-                  separatorBuilder: (_, __) => const SizedBox(height: 15),
-                  itemCount: data.length,
-                  itemBuilder: (_, i) {
-                    return RoundedTile(
-                      label: data[i].name,
-                      avatar: Image.network(data[i].image),
-                      icon: const Icon(ChapChap.add),
-                    );
-                  },
-                );
-              },
-            ),
+                  )
+                : ListView.separated(
+                    padding: const EdgeInsets.all(5),
+                    separatorBuilder: (_, __) => const SizedBox(height: 15),
+                    itemCount: data.length,
+                    itemBuilder: (_, i) {
+                      return RoundedTile(
+                        label: data[i].name,
+                        avatar: Image.network(data[i].image),
+                        icon: const Icon(ChapChap.add),
+                      );
+                    },
+                  ),
           ),
         ],
       ),
@@ -121,6 +152,7 @@ class SearchOverlay extends StatelessWidget {
   TextField searchBuilder() {
     return TextField(
       controller: searchController,
+      onChanged: (value) => runFilter(value),
       style: const TextStyle(
         fontFamily: "SF Pro Rounded",
         fontSize: 15,
