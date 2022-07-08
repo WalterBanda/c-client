@@ -1,5 +1,4 @@
 import 'package:client/core/providers/appdata.dart';
-import 'package:client/core/providers/user.dart';
 import 'package:client/router/roles.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -94,7 +93,7 @@ class AdminHome extends StatelessWidget {
                           label: "+ Add Admin",
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => AddAdmin(),
+                            builder: (context) => const AddAdmin(),
                           ),
                         ),
                       ],
@@ -199,42 +198,51 @@ class GarageRequestsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(5),
-      separatorBuilder: (_, __) => const SizedBox(height: 15),
-      itemCount: Provider.of<AppData>(context).garageRequest.length,
-      itemBuilder: (_, i) => RoundedTile(
-          label: Provider.of<AppData>(context).garageRequest[i].garage.name,
-          avatar: Image.network(
-              Provider.of<AppData>(context).garageRequest[i].garage.image),
-          icon: const Icon(ChapChap.add),
-          onPressed: () {
-            Provider.of<AppData>(context, listen: false).createGarage(
-              garage: Provider.of<AppData>(context).garageRequest[i].garage,
-            );
-
-            updateUserDetails(
-              userId:
-                  Provider.of<AppData>(context).garageRequest[i].garage.userUid,
-              role: Roles.garage,
-            );
-          }),
-    );
+    return Consumer<AppData>(
+        builder: (context, instance, child) => ListView.separated(
+              padding: const EdgeInsets.all(5),
+              separatorBuilder: (_, __) => const SizedBox(height: 15),
+              itemCount: instance.garageRequest.length,
+              itemBuilder: (_, i) => RoundedTile(
+                label: instance.garageRequest[i].garage.name,
+                avatar: Image.network(instance.garageRequest[i].garage.image),
+                icon: const Icon(ChapChap.add),
+                onPressed: () {
+                  updateUserDetails(
+                    userId: instance.garageRequest[i].garage.userUid,
+                    role: Roles.garage,
+                  ).then(
+                    (_) => instance
+                        .createGarage(
+                          garage: instance.garageRequest[i].garage,
+                        )
+                        .then((value) => FirebaseFirestore.instance
+                            .collection("garageRequests")
+                            .doc(instance.garageRequest[i].userId)
+                            .delete()),
+                  );
+                },
+              ),
+            ));
   }
 }
 
-updateUserDetails({required String userId, required Roles role}) {
-  FirebaseFirestore.instance
+Future<void> updateUserDetails(
+    {required String userId, required Roles role}) async {
+  final instance = FirebaseFirestore.instance
       .collection("users")
-      .doc(userId)
       .withConverter(
           fromFirestore: UserModel.fromFirestore,
           toFirestore: (UserModel userModel, _) => userModel.toFirestore())
-      .update(
-    {
-      "roles": <Roles>[role].toRolesString()
-    },
-  );
+      .doc(userId);
+
+  List<Roles> doc = [role];
+  instance.get().then((value) {
+    doc = value.data()!.roles;
+    doc.add(role);
+  }).then((_) => {
+        instance.update({'roles': doc.toRolesString()})
+      });
 }
 
 class AdminRequests extends StatelessWidget {
@@ -242,21 +250,28 @@ class AdminRequests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(5),
-      separatorBuilder: (_, __) => const SizedBox(height: 15),
-      itemCount: Provider.of<AppData>(context).adminRequest.length,
-      itemBuilder: (_, i) => RoundedTile(
-          label: Provider.of<AppData>(context).adminRequest[i].user!.name,
+    return Consumer<AppData>(
+      builder: (context, instance, child) => ListView.separated(
+        padding: const EdgeInsets.all(5),
+        separatorBuilder: (_, __) => const SizedBox(height: 15),
+        itemCount: instance.adminRequest.length,
+        itemBuilder: (_, i) => RoundedTile(
+          label: instance.adminRequest[i].user!.name,
           avatar: Image.network(
-            Provider.of<AppData>(context).adminRequest[i].user!.profilePhoto,
+            instance.adminRequest[i].user!.profilePhoto,
           ),
           icon: const Icon(ChapChap.add),
           onPressed: () => updateUserDetails(
-                userId:
-                    Provider.of<AppData>(context).adminRequest[i].user!.uid!,
-                role: Roles.admin,
-              )),
+            userId: instance.adminRequest[i].user!.uid!,
+            role: Roles.admin,
+          ).then(
+            (value) => FirebaseFirestore.instance
+                .collection("adminRequests")
+                .doc(instance.adminRequest[i].userId)
+                .delete(),
+          ),
+        ),
+      ),
     );
   }
 }

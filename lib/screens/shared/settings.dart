@@ -288,7 +288,7 @@ class RequestAdminAccess extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  TextEditingController descriptionController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -348,11 +348,15 @@ class RequestAdminAccess extends StatelessWidget {
                   if (_formKey.currentState!.validate()) {
                     Provider.of<AppData>(context, listen: false)
                         .createAdminRequest(
-                      payload: AdminRequests(
-                        userId: FirebaseAuth.instance.currentUser!.uid,
-                        description: descriptionController.text,
-                      ),
-                    );
+                          payload: AdminRequests(
+                            userId: FirebaseAuth.instance.currentUser!.uid,
+                            description: descriptionController.text,
+                          ),
+                        )
+                        .then(
+                          (value) =>
+                              Navigator.of(context, rootNavigator: true).pop(),
+                        );
                   }
                 },
                 style: ElevatedButton.styleFrom(
