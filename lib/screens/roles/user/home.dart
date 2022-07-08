@@ -150,6 +150,7 @@ class _SearchOverlayState extends State<SearchOverlay> {
                               .createServiceRequest(
                             ServiceRequest(
                               userId: FirebaseAuth.instance.currentUser!.uid,
+                              garageId: data[i].userUid,
                               completed: false,
                             ),
                           );
