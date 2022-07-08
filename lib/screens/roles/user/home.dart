@@ -1,9 +1,14 @@
 import 'dart:async';
 
 import 'package:client/core/models/garage.dart';
+import 'package:client/core/models/user.dart';
+import 'package:client/core/providers/appdata.dart';
+import 'package:client/core/providers/user.dart';
 import 'package:client/screens/roles/admin/items.dart';
 import 'package:client/screens/roles/user/osm.dart';
+import 'package:client/screens/shared/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -140,7 +145,16 @@ class _SearchOverlayState extends State<SearchOverlay> {
                         label: data[i].name,
                         avatar: Image.network(data[i].image),
                         icon: const Icon(ChapChap.add),
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<AppData>(context, listen: false)
+                              .createServiceRequest(
+                            ServiceRequest(
+                              user: getUser(
+                                  FirebaseAuth.instance.currentUser!.uid),
+                              completed: false,
+                            ),
+                          );
+                        },
                       );
                     },
                   ),
@@ -148,6 +162,19 @@ class _SearchOverlayState extends State<SearchOverlay> {
         ],
       ),
     );
+  }
+
+  UserModel getUser(String uid) {
+    UserModel user = UserModel.clear();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .withConverter(
+            fromFirestore: UserModel.fromFirestore,
+            toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+        .get()
+        .then((value) => user = value.data()!);
+    return user;
   }
 
   TextField searchBuilder() {

@@ -188,32 +188,34 @@ class NewRequests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(5),
-      separatorBuilder: (_, __) => const SizedBox(height: 15),
-      itemCount:
-          filterReq(requests: Provider.of<AppData>(context).serviceRequest)
-              .length,
-      itemBuilder: (_, i) => RoundedTile(
-        label:
-            filterReq(requests: Provider.of<AppData>(context).serviceRequest)[i]
+    return Consumer<AppData>(
+      builder: (context, instance, child) => ListView.separated(
+        padding: const EdgeInsets.all(5),
+        separatorBuilder: (_, __) => const SizedBox(height: 15),
+        itemCount:
+            filterReq(requests: instance.serviceRequest, completed: false)
+                .length,
+        itemBuilder: (_, i) => RoundedTile(
+          label:
+              filterReq(requests: instance.serviceRequest, completed: false)[i]
+                  .user
+                  .name,
+          avatar: Image.network(
+            filterReq(requests: instance.serviceRequest, completed: false)[i]
                 .user
-                .name,
-        avatar: Image.network(
-          filterReq(requests: Provider.of<AppData>(context).serviceRequest)[i]
-              .user
-              .profilePhoto,
+                .profilePhoto,
+          ),
+          icon: const Icon(ChapChap.add),
+          onPressed: () {
+            instance.updateServiceRequest(
+              completed: true,
+              uid: filterReq(
+                      requests: instance.serviceRequest, completed: false)[i]
+                  .user
+                  .uid!,
+            );
+          },
         ),
-        icon: const Icon(ChapChap.add),
-        onPressed: () {
-          Provider.of<AppData>(context).updateServiceRequest(
-            completed: true,
-            uid: filterReq(
-                    requests: Provider.of<AppData>(context).serviceRequest)[i]
-                .user
-                .uid!,
-          );
-        },
       ),
     );
   }
@@ -224,40 +226,33 @@ class CompletedRequests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(5),
-      separatorBuilder: (_, __) => const SizedBox(height: 15),
-      itemCount: filterReq(
-        requests: Provider.of<AppData>(context).serviceRequest,
-        completed: true,
-      ).length,
-      itemBuilder: (_, i) => RoundedTile(
-        label: filterReq(
-          requests: Provider.of<AppData>(context).serviceRequest,
-          completed: true,
-        )[i]
-            .user
-            .name,
-        avatar: Image.network(
-          filterReq(
-            requests: Provider.of<AppData>(context).serviceRequest,
-            completed: true,
-          )[i]
-              .user
-              .profilePhoto,
-        ),
-        icon: const Icon(ChapChap.add),
-        onPressed: () {
-          Provider.of<AppData>(context).updateServiceRequest(
-            completed: false,
-            uid: filterReq(
-              requests: Provider.of<AppData>(context).serviceRequest,
-              completed: true,
-            )[i]
+    return Consumer<AppData>(
+      builder: (context, instance, child) => ListView.separated(
+        padding: const EdgeInsets.all(5),
+        separatorBuilder: (_, __) => const SizedBox(height: 15),
+        itemCount: filterReq(requests: instance.serviceRequest, completed: true)
+            .length,
+        itemBuilder: (_, i) => RoundedTile(
+          label:
+              filterReq(requests: instance.serviceRequest, completed: true)[i]
+                  .user
+                  .name,
+          avatar: Image.network(
+            filterReq(requests: instance.serviceRequest, completed: true)[i]
                 .user
-                .uid!,
-          );
-        },
+                .profilePhoto,
+          ),
+          icon: const Icon(ChapChap.add),
+          onPressed: () {
+            instance.updateServiceRequest(
+              completed: false,
+              uid: filterReq(
+                      requests: instance.serviceRequest, completed: true)[i]
+                  .user
+                  .uid!,
+            );
+          },
+        ),
       ),
     );
   }
