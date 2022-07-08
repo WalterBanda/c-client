@@ -84,9 +84,11 @@ class Address {
 
 class ServiceRequest {
   String userId;
+  String garageId;
   bool completed;
 
-  ServiceRequest({required this.userId, required this.completed});
+  ServiceRequest(
+      {required this.userId, required this.completed, required this.garageId});
 
   factory ServiceRequest.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -95,12 +97,13 @@ class ServiceRequest {
     final data = snapshot.data();
     return ServiceRequest(
       userId: data!['user'],
+      garageId: data['garageId'],
       completed: data['completed'],
     );
   }
 
   Map<String, dynamic> toFirestore() {
-    return {'user': userId, 'status': completed};
+    return {'user': userId, 'garageId': garageId, 'status': completed};
   }
 }
 
