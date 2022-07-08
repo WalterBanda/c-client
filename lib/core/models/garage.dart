@@ -57,7 +57,7 @@ String createProfilePic({required String name}) {
   String profileColor = Colors
       .primaries[Random().nextInt(Colors.primaries.length)]
       .toString()
-      .substring(39, 45);
+      .substring(39, 42);
   return "https://ui-avatars.com/api/?name=\"$name\"&background=$profileColor&color=fff";
 }
 
