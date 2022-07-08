@@ -24,7 +24,7 @@ class AppData extends ChangeNotifier {
   createServiceRequest(ServiceRequest request) async {
     await FirebaseFirestore.instance
         .collection("serviceRequest")
-        .doc(request.user.uid)
+        .doc(request.userId)
         .withConverter(
           fromFirestore: ServiceRequest.fromFirestore,
           toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),

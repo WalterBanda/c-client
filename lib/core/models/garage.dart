@@ -83,10 +83,10 @@ class Address {
 }
 
 class ServiceRequest {
-  UserModel user;
+  String userId;
   bool completed;
 
-  ServiceRequest({required this.user, required this.completed});
+  ServiceRequest({required this.userId, required this.completed});
 
   factory ServiceRequest.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -94,13 +94,13 @@ class ServiceRequest {
   ) {
     final data = snapshot.data();
     return ServiceRequest(
-      user: createUserModel(data!['user']),
+      userId: data!['user'],
       completed: data['completed'],
     );
   }
 
   Map<String, dynamic> toFirestore() {
-    return {'user': user.toFirestore(), 'status': completed};
+    return {'user': userId, 'status': completed};
   }
 }
 

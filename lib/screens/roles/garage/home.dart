@@ -1,10 +1,12 @@
 import 'package:client/core/models/garage.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/styles/ui/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/models/user.dart';
 import '../../../router/roles.dart';
 import '../../../styles/icons/chap_chap_icons.dart';
 import '../admin/home.dart';
@@ -196,22 +198,24 @@ class NewRequests extends StatelessWidget {
             filterReq(requests: instance.serviceRequest, completed: false)
                 .length,
         itemBuilder: (_, i) => RoundedTile(
-          label:
-              filterReq(requests: instance.serviceRequest, completed: false)[i]
-                  .user
-                  .name,
+          label: getUserDetails(filterReq(
+                      requests: instance.serviceRequest, completed: false)[i]
+                  .userId)
+              .name,
           avatar: Image.network(
-            filterReq(requests: instance.serviceRequest, completed: false)[i]
-                .user
+            getUserDetails(filterReq(
+                        requests: instance.serviceRequest, completed: false)[i]
+                    .userId)
                 .profilePhoto,
           ),
           icon: const Icon(ChapChap.add),
           onPressed: () {
             instance.updateServiceRequest(
               completed: true,
-              uid: filterReq(
-                      requests: instance.serviceRequest, completed: false)[i]
-                  .user
+              uid: getUserDetails(filterReq(
+                          requests: instance.serviceRequest,
+                          completed: false)[i]
+                      .userId)
                   .uid!,
             );
           },
@@ -219,6 +223,19 @@ class NewRequests extends StatelessWidget {
       ),
     );
   }
+}
+
+UserModel getUserDetails(userId) {
+  late UserModel res;
+  FirebaseFirestore.instance
+      .collection("users")
+      .withConverter(
+          fromFirestore: UserModel.fromFirestore,
+          toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+      .doc(userId)
+      .get()
+      .then((value) => res = value.data()!);
+  return res;
 }
 
 class CompletedRequests extends StatelessWidget {
@@ -233,22 +250,24 @@ class CompletedRequests extends StatelessWidget {
         itemCount: filterReq(requests: instance.serviceRequest, completed: true)
             .length,
         itemBuilder: (_, i) => RoundedTile(
-          label:
-              filterReq(requests: instance.serviceRequest, completed: true)[i]
-                  .user
-                  .name,
+          label: getUserDetails(filterReq(
+                      requests: instance.serviceRequest, completed: false)[i]
+                  .userId)
+              .name,
           avatar: Image.network(
-            filterReq(requests: instance.serviceRequest, completed: true)[i]
-                .user
+            getUserDetails(filterReq(
+                        requests: instance.serviceRequest, completed: false)[i]
+                    .userId)
                 .profilePhoto,
           ),
           icon: const Icon(ChapChap.add),
           onPressed: () {
             instance.updateServiceRequest(
               completed: false,
-              uid: filterReq(
-                      requests: instance.serviceRequest, completed: true)[i]
-                  .user
+              uid: getUserDetails(filterReq(
+                          requests: instance.serviceRequest,
+                          completed: false)[i]
+                      .userId)
                   .uid!,
             );
           },

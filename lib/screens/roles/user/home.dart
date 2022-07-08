@@ -149,8 +149,7 @@ class _SearchOverlayState extends State<SearchOverlay> {
                           Provider.of<AppData>(context, listen: false)
                               .createServiceRequest(
                             ServiceRequest(
-                              user: getUser(
-                                  FirebaseAuth.instance.currentUser!.uid),
+                              userId: FirebaseAuth.instance.currentUser!.uid,
                               completed: false,
                             ),
                           );
