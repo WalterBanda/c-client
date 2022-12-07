@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -44,8 +42,8 @@ class LocationProvider extends ChangeNotifier {
     try {
       final loc = await locationInstance.getLocation();
       return LatLng(loc.latitude!.toDouble(), loc.longitude!.toDouble());
-    } on PositionError catch (error) {
-      return Future.error("Unable to get location 😟 \n\n ${error.message}");
+    } catch (error) {
+      return Future.error("Unable to get location 😟");
     }
   }
 
