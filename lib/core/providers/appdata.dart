@@ -166,7 +166,6 @@ class AdminRequests {
       user = value.data();
     }).onError((error, stackTrace) {
       user = UserModel.clear(customName: 'Unable to Parse data');
-      print(error);
     });
   }
 
