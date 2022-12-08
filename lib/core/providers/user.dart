@@ -1,6 +1,7 @@
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -134,67 +135,116 @@ class UserProvider extends ChangeNotifier {
             );
         break;
       case SignInMethods.google:
-        // Trigger the authentication flow
-        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-        // Obtain the auth details from the request
-        final GoogleSignInAuthentication? googleAuth =
-            await googleUser?.authentication;
-
-        // Create a new credential
-        final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth?.accessToken,
-          idToken: googleAuth?.idToken,
-        );
-
-        await FirebaseAuth.instance
-            .signInWithCredential(credential)
-            .then((credentials) {
-          FirebaseFirestore.instance
-              .collection("users")
-              .doc(credentials.user!.uid)
-              .withConverter(
-                  fromFirestore: UserModel.fromFirestore,
-                  toFirestore: (UserModel userModel, _) =>
-                      userModel.toFirestore())
-              .get()
-              .then((doc) {
-                if (doc.exists == false) {
-                  if (credentials.user!.photoURL == null) {
-                    credentials.user!.updatePhotoURL(UserModel.clear(
-                            customName: credentials.user!.displayName!)
-                        .profilePhoto);
+        if (kIsWeb) {
+          await FirebaseAuth.instance
+              .signInWithPopup(GoogleAuthProvider())
+              .then((credentials) {
+            FirebaseFirestore.instance
+                .collection("users")
+                .doc(credentials.user!.uid)
+                .withConverter(
+                    fromFirestore: UserModel.fromFirestore,
+                    toFirestore: (UserModel userModel, _) =>
+                        userModel.toFirestore())
+                .get()
+                .then((doc) {
+                  if (doc.exists == false) {
+                    if (credentials.user!.photoURL == null) {
+                      credentials.user!.updatePhotoURL(UserModel.clear(
+                              customName: credentials.user!.displayName!)
+                          .profilePhoto);
+                    }
+                    createUser(
+                      context: context,
+                      payload: UserModel(
+                        name: credentials.user!.displayName!,
+                        email: credentials.user!.email!,
+                        uid: credentials.user!.uid,
+                        password:
+                            credentials.user!.refreshToken ?? "No Auth Token",
+                        phone: "No Phone Number",
+                        address: "No address",
+                        profileShot: credentials.user!.photoURL,
+                        roles: [Roles.user],
+                      ),
+                      signInMethods: SignInMethods.google,
+                    );
                   }
-                  createUser(
-                    context: context,
-                    payload: UserModel(
-                      name: credentials.user!.displayName!,
-                      email: credentials.user!.email!,
-                      uid: credentials.user!.uid,
-                      password:
-                          credentials.user!.refreshToken ?? "No Auth Token",
-                      phone: "No Phone Number",
-                      address: "No address",
-                      profileShot: credentials.user!.photoURL,
-                      roles: [Roles.user],
-                    ),
-                    signInMethods: SignInMethods.google,
-                  );
-                }
-              })
-              .then((_) => init())
-              .then(
-                (_) => GlobalNavigator.router.currentState!
-                    .pushReplacementNamed(GlobalRoutes.switchRoles),
-              );
-        }).onError((FirebaseAuthException error, stackTrace) {
-          _resolveAuthError(
-            error: error,
-            context: context,
-            signInMethods: SignInMethods.google,
-          );
-        });
+                })
+                .then((_) => init())
+                .then(
+                  (_) => GlobalNavigator.router.currentState!
+                      .pushReplacementNamed(GlobalRoutes.switchRoles),
+                );
+          }).onError((FirebaseAuthException error, stackTrace) {
+            _resolveAuthError(
+              error: error,
+              context: context,
+              signInMethods: SignInMethods.google,
+            );
+          });
+        } else {
+          // Trigger the authentication flow
+          final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
+          // Obtain the auth details from the request
+          final GoogleSignInAuthentication? googleAuth =
+              await googleUser?.authentication;
+
+          // Create a new credential
+          final credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth?.accessToken,
+            idToken: googleAuth?.idToken,
+          );
+
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
+              .then((credentials) {
+            FirebaseFirestore.instance
+                .collection("users")
+                .doc(credentials.user!.uid)
+                .withConverter(
+                    fromFirestore: UserModel.fromFirestore,
+                    toFirestore: (UserModel userModel, _) =>
+                        userModel.toFirestore())
+                .get()
+                .then((doc) {
+                  if (doc.exists == false) {
+                    if (credentials.user!.photoURL == null) {
+                      credentials.user!.updatePhotoURL(UserModel.clear(
+                              customName: credentials.user!.displayName!)
+                          .profilePhoto);
+                    }
+                    createUser(
+                      context: context,
+                      payload: UserModel(
+                        name: credentials.user!.displayName!,
+                        email: credentials.user!.email!,
+                        uid: credentials.user!.uid,
+                        password:
+                            credentials.user!.refreshToken ?? "No Auth Token",
+                        phone: "No Phone Number",
+                        address: "No address",
+                        profileShot: credentials.user!.photoURL,
+                        roles: [Roles.user],
+                      ),
+                      signInMethods: SignInMethods.google,
+                    );
+                  }
+                })
+                .then((_) => init())
+                .then(
+                  (_) => GlobalNavigator.router.currentState!
+                      .pushReplacementNamed(GlobalRoutes.switchRoles),
+                );
+          }).onError((FirebaseAuthException error, stackTrace) {
+            _resolveAuthError(
+              error: error,
+              context: context,
+              signInMethods: SignInMethods.google,
+            );
+          });
+        }
         break;
       case SignInMethods.github:
         FirebaseAuth.instance
