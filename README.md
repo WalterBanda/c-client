@@ -47,6 +47,8 @@ Then you have to initialize flutter in the project by running the following comm
 flutter pub get
 ```
 
+For linux users, you have to have `webkit2gtk-4.0` package installed. You can check your distros repository for it or check [Desktop View Auth](https://pub.dev/packages/desktop_webview_auth) for instructions on how to set it up.
+
 ### Running & Testing 🧪
 
 To run the application and test it in the android environment. Launch your terminal and run the following commands.
