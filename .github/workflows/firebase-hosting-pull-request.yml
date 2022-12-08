@@ -9,7 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: flutter build web
+      - name: Install Flutter
+        uses: britannio/action-install-flutter@v1
+#         with:
+#           version: $FLUTTER_VERSION
+      - name: Get Packages
+        run: flutter pub get
+      - name: Build App
+        run: flutter build web
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
