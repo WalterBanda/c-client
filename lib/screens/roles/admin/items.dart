@@ -288,11 +288,13 @@ class AddGarage extends StatelessWidget {
                     if (admin) {
                       Provider.of<AppData>(context, listen: false)
                           .createGarage(
-                            garage: Garage.sample(
-                              name: _nameController.text,
-                              description: _descriptionController.text,
-                            ),
-                          )
+                        garage: Garage(
+                          name: _nameController.text,
+                          description: _descriptionController.text,
+                          address: _addressController.value!,
+                          userUid: FirebaseAuth.instance.currentUser!.uid,
+                        ),
+                      )
                           .then(
                             (value) =>
                                 Navigator.of(context, rootNavigator: true)
@@ -301,14 +303,16 @@ class AddGarage extends StatelessWidget {
                     } else {
                       Provider.of<AppData>(context, listen: false)
                           .createGarageRequest(
-                            payload: GarageRequests(
-                              userId: FirebaseAuth.instance.currentUser!.uid,
-                              garage: Garage.sample(
-                                name: _nameController.text,
-                                description: _descriptionController.text,
-                              ),
-                            ),
-                          )
+                        payload: GarageRequests(
+                          userId: FirebaseAuth.instance.currentUser!.uid,
+                          garage: Garage(
+                            name: _nameController.text,
+                            description: _descriptionController.text,
+                            address: _addressController.value!,
+                            userUid: FirebaseAuth.instance.currentUser!.uid,
+                          ),
+                        ),
+                      )
                           .then(
                             (value) =>
                                 Navigator.of(context, rootNavigator: true)
