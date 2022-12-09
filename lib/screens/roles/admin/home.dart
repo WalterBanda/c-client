@@ -236,7 +236,7 @@ Future<void> updateUserDetails(
           toFirestore: (UserModel userModel, _) => userModel.toFirestore())
       .doc(userId);
 
-  List<Roles> doc = [role];
+  List<Roles> doc = [];
   instance.get().then((value) {
     doc = value.data()!.roles;
     doc.add(role);
