@@ -1,6 +1,7 @@
 import 'package:client/core/models/garage.dart';
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/appdata.dart';
+import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/roles/admin/items.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -524,17 +525,14 @@ class EditDetails extends StatelessWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    userUpdate(
-                      context: context,
-                      model: UpdateUserData(
-                          name: _nameController.text,
-                          email: _emailController.text,
-                          phone: _phoneController.text,
-                          description: _descriptionController.text,
-                          address: _addressController.value!),
-                    );
-                  }
+                  userUpdate(
+                    context: context,
+                    name: _nameController.text,
+                    email: _emailController.text,
+                    phone: _phoneController.text,
+                    description: _descriptionController.text,
+                    address: _addressController.value,
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.primary,
@@ -561,29 +559,25 @@ class EditDetails extends StatelessWidget {
   }
 }
 
-class UpdateUserData {
-  String? name, email, phone, description;
-  Address? address;
+void userUpdate({
+  required BuildContext context,
+  required String? name,
+  required Address? address,
+  required String? phone,
+  required String? description,
+  required String? email,
+}) {
+  UserModel user = Provider.of<UserProvider>(context, listen: false).user;
 
-  UpdateUserData({
-    required this.name,
-    required this.address,
-    required this.phone,
-    required this.description,
-    required this.email,
-  });
-}
-
-void userUpdate(
-    {required BuildContext context, required UpdateUserData model}) {
   FirebaseFirestore.instance
       .collection("users")
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .update({
-    "name": model.name,
-    "email": model.email,
-    "phone": model.phone,
-    "address": model.address?.toFirestore(),
-    "description": model.description,
+    "name": name ?? user.name,
+    "email": email ?? user.email,
+    "phone": phone ?? user.phone,
+    "address":
+        address != null ? address.toFirestore() : user.address.toFirestore(),
+    "description": description ?? user.description,
   });
 }
