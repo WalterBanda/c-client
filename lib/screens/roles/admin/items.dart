@@ -416,21 +416,28 @@ class AddGarage extends StatelessWidget {
             context: context,
             builder: (context) => AppDialog(
               child: FlutterLocationPicker(
-                  initZoom: 11,
-                  minZoomLevel: 5,
-                  maxZoomLevel: 16,
-                  trackMyPosition: true,
-                  selectLocationButtonText: 'Select Garage Location',
-                  selectLocationButtonStyle: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(AppColors.primary),
-                  ),
-                  markerIcon: ChapChap.garage,
-                  markerIconColor: AppColors.primary,
-                  searchBarBackgroundColor: AppColors.input,
-                  zoomButtonsBackgroundColor: AppColors.primary,
-                  locationButtonBackgroundColor: AppColors.primary,
-                  onPicked: (pickedData) {}),
+                initZoom: 11,
+                minZoomLevel: 5,
+                maxZoomLevel: 16,
+                trackMyPosition: true,
+                selectLocationButtonText: 'Select Garage Location',
+                selectLocationButtonStyle: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(AppColors.primary),
+                ),
+                markerIcon: ChapChap.garage,
+                markerIconColor: AppColors.primary,
+                searchBarBackgroundColor: AppColors.input,
+                zoomButtonsBackgroundColor: AppColors.primary,
+                locationButtonBackgroundColor: AppColors.primary,
+                onPicked: (pickedData) {
+                  _addressTextController.text = pickedData.address;
+                  Navigator.of(context, rootNavigator: true).pop();
+                  _addressController.value = Address(
+                      name: pickedData.address.toString(),
+                      position: LatLng(pickedData.latLong.latitude,
+                          pickedData.latLong.longitude));
+                },
+              ),
             ),
           ),
           style: const TextStyle(
