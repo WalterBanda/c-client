@@ -25,6 +25,7 @@ class AuthRoutes {
 class SharedRoutes {
   static const String settings = "settings";
   static const String profile = "profile";
+  static const String about = "about";
 }
 
 class PagesRoutes {

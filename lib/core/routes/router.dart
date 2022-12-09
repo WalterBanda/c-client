@@ -1,3 +1,4 @@
+import 'package:client/screens/shared/about.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -94,6 +95,9 @@ class PageRouter {
         break;
       case SharedRoutes.settings:
         page = const SettingsPage();
+        break;
+      case SharedRoutes.about:
+        page = const AboutPage();
         break;
 
       default:

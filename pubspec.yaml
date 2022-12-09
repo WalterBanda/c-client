@@ -56,7 +56,7 @@ dev_dependencies:
 flutter:
 
   # The following line ensures that the Material Icons font is included
-  uses-material-design: true # TODO: Return to false for production
+  uses-material-design: true
 
   # App assets:
   assets:
@@ -69,7 +69,7 @@ flutter:
     - family: ChapChap
       fonts:
         - asset: assets/fonts/ChapChap.ttf
-  #    Application Font
+    #    Application Font
     - family: SF Pro Rounded
       fonts:
         - asset: assets/fonts/SF-Pro-Rounded/Bold.otf
