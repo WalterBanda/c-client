@@ -322,11 +322,6 @@ class AddGarage extends StatelessWidget {
                       )
                           .then(
                         (value) {
-                          _addressController.dispose();
-                          _addressTextController.dispose();
-                          _userController.dispose();
-                          _descriptionController.dispose();
-                          _nameController.dispose();
                           Navigator.of(context, rootNavigator: true).pop();
                         },
                       );
