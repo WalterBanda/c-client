@@ -10,6 +10,7 @@ import '../models/garage.dart';
 class AppData extends ChangeNotifier {
   late StreamSubscription<QuerySnapshot<GarageRequests>> garageRequestListener;
   late StreamSubscription<QuerySnapshot<AdminRequests>> adminRequestListener;
+  late StreamSubscription<QuerySnapshot<ServiceRequest>> serviceListener;
 
   AppData() {
     getGarageRequest();
@@ -20,10 +21,12 @@ class AppData extends ChangeNotifier {
       if (FirebaseAuth.instance.currentUser == null && event == null) {
         garageRequestListener.cancel();
         adminRequestListener.cancel();
+        serviceListener.cancel();
       }
       if (FirebaseAuth.instance.currentUser != null && event != null) {
         garageRequestListener.resume();
         adminRequestListener.resume();
+        serviceListener.resume();
       }
     });
   }
@@ -54,7 +57,7 @@ class AppData extends ChangeNotifier {
   }
 
   getServiceRequest() {
-    FirebaseFirestore.instance
+    serviceListener = FirebaseFirestore.instance
         .collection("serviceRequest")
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .collection("Requests")
