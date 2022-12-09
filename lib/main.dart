@@ -1,4 +1,5 @@
 import 'package:client/core/core.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,9 +23,6 @@ void main() async {
   }
 
   runApp(
-    DevicePreview(
-      enabled: true,
-      builder: (context) => const App(), // Wrap your app
-    ),
+    App(), // Wrap your app
   );
 }
