@@ -19,99 +19,87 @@ class ProfilePage extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints: pageConstraints,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      minRadius: 30,
-                      maxRadius: 80,
-                      backgroundImage: NetworkImage(
-                          Provider.of<UserProvider>(context).user.profilePhoto),
-                    ),
-                    const SizedBox(height: 40),
-                    Text(
-                      Provider.of<UserProvider>(context).user.name,
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontFamily: "SF Pro Rounded",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 24,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      Provider.of<UserProvider>(context).user.description,
-                      softWrap: true,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 5,
-                      style: const TextStyle(
-                        fontFamily: "SF Pro Rounded",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  minRadius: 30,
+                  maxRadius: 80,
+                  backgroundImage: NetworkImage(
+                      Provider.of<UserProvider>(context).user.profilePhoto),
                 ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Column(
-                  children: const [
-                    Text(
-                      "Your Activity",
-                      style: TextStyle(
-                        fontFamily: "SF Pro Rounded",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      "No Activity Currently, Book a garage and your activity will be shown here",
-                      softWrap: true,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: "SF Pro Rounded",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () =>
-                    Provider.of<UserProvider>(context, listen: false)
-                        .signOut(context),
-                style: ElevatedButton.styleFrom(
-                  primary: AppColors.primary,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 17, horizontal: 124),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                const SizedBox(height: 40),
+                Text(
+                  Provider.of<UserProvider>(context).user.name,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 24,
                   ),
                 ),
-                child: const Text(
-                  "Logout",
+                const SizedBox(height: 20),
+                Text(
+                  Provider.of<UserProvider>(context).user.description,
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 5,
+                  style: const TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                const Text(
+                  "Your Activity",
                   style: TextStyle(
                     fontFamily: "SF Pro Rounded",
+                    fontWeight: FontWeight.w500,
                     fontSize: 18,
-                    fontWeight: FontWeight.w700,
                   ),
                 ),
-              )
-            ],
+                const SizedBox(height: 20),
+                const Text(
+                  "No Activity Currently, Book a garage and your activity will be shown here",
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () =>
+                      Provider.of<UserProvider>(context, listen: false)
+                          .signOut(context),
+                  style: ElevatedButton.styleFrom(
+                    primary: AppColors.primary,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 17, horizontal: 124),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: const Text(
+                    "Logout",
+                    style: TextStyle(
+                      fontFamily: "SF Pro Rounded",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
