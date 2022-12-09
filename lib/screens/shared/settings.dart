@@ -437,8 +437,6 @@ class EditDetails extends StatelessWidget {
               TextFormField(
                 controller: _descriptionController,
                 focusNode: _descriptionFocusNode,
-                validator: (value) => Validator.validateName(
-                    name: value!, label: 'Garage Description'),
                 minLines: 4,
                 maxLines: 5,
                 style: const TextStyle(
@@ -489,8 +487,6 @@ class EditDetails extends StatelessWidget {
                 controller: _addressTextController,
                 focusNode: _addressFocusNode,
                 inputType: TextInputType.streetAddress,
-                validator: (value) => Validator.validateAddress(
-                    address: _addressController.value),
                 onTap: () => showDialog(
                   context: context,
                   builder: (context) => AppDialog(
@@ -566,8 +562,8 @@ class EditDetails extends StatelessWidget {
 }
 
 class UpdateUserData {
-  String name, email, phone, description;
-  Address address;
+  String? name, email, phone, description;
+  Address? address;
 
   UpdateUserData({
     required this.name,
@@ -587,7 +583,7 @@ void userUpdate(
     "name": model.name,
     "email": model.email,
     "phone": model.phone,
-    "address": model.address.toFirestore(),
+    "address": model.address?.toFirestore(),
     "description": model.description,
   });
 }
