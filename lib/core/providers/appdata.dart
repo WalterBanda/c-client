@@ -12,6 +12,15 @@ class AppData extends ChangeNotifier {
   late StreamSubscription<QuerySnapshot<AdminRequests>> adminRequestListener;
   late StreamSubscription<QuerySnapshot<ServiceRequest>> serviceListener;
 
+  String _currentRoute = 'ChapChap';
+
+  String get currentRoute => _currentRoute;
+
+  Future<void> changeRoute(route) async {
+    _currentRoute = route;
+    notifyListeners();
+  }
+
   AppData() {
     getGarageRequest();
     getAdminRequest();
