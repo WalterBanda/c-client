@@ -1,4 +1,3 @@
-import 'package:client/core/models/garage.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -180,11 +179,6 @@ class GarageHome extends StatelessWidget {
   }
 }
 
-List<ServiceRequest> filterReq(
-    {required List<ServiceRequest> requests, bool completed = false}) {
-  return requests.where((req) => req.completed == completed).toList();
-}
-
 class NewRequests extends StatelessWidget {
   const NewRequests({Key? key}) : super(key: key);
 
@@ -194,29 +188,18 @@ class NewRequests extends StatelessWidget {
       builder: (context, instance, child) => ListView.separated(
         padding: const EdgeInsets.all(5),
         separatorBuilder: (_, __) => const SizedBox(height: 15),
-        itemCount:
-            filterReq(requests: instance.serviceRequest, completed: false)
-                .length,
+        itemCount: instance.serviceRequestN.length,
         itemBuilder: (_, i) => RoundedTile(
-          label: getUserDetails(filterReq(
-                      requests: instance.serviceRequest, completed: false)[i]
-                  .userId)
-              .name,
+          label: getUserDetails(instance.serviceRequestN[i].userId)?.name,
           avatar: Image.network(
-            getUserDetails(filterReq(
-                        requests: instance.serviceRequest, completed: false)[i]
-                    .userId)
-                .profilePhoto,
+            getUserDetails(instance.serviceRequestN[i].userId)?.profilePhoto ??
+                UserModel.clear().profilePhoto,
           ),
           icon: const Icon(ChapChap.add),
           onPressed: () {
             instance.updateServiceRequest(
-              completed: true,
-              uid: getUserDetails(filterReq(
-                          requests: instance.serviceRequest,
-                          completed: false)[i]
-                      .userId)
-                  .uid!,
+              completed: false,
+              uid: instance.serviceRequestN[i].userId,
             );
           },
         ),
@@ -225,8 +208,8 @@ class NewRequests extends StatelessWidget {
   }
 }
 
-UserModel getUserDetails(userId) {
-  late UserModel res;
+UserModel? getUserDetails(userId) {
+  UserModel? res;
   FirebaseFirestore.instance
       .collection("users")
       .withConverter(
@@ -234,7 +217,9 @@ UserModel getUserDetails(userId) {
           toFirestore: (UserModel userModel, _) => userModel.toFirestore())
       .doc(userId)
       .get()
-      .then((value) => res = value.data()!);
+      .then((value) {
+    res = value.data();
+  });
   return res;
 }
 
@@ -247,30 +232,14 @@ class CompletedRequests extends StatelessWidget {
       builder: (context, instance, child) => ListView.separated(
         padding: const EdgeInsets.all(5),
         separatorBuilder: (_, __) => const SizedBox(height: 15),
-        itemCount: filterReq(requests: instance.serviceRequest, completed: true)
-            .length,
+        itemCount: instance.serviceRequestC.length,
         itemBuilder: (_, i) => RoundedTile(
-          label: getUserDetails(filterReq(
-                      requests: instance.serviceRequest, completed: false)[i]
-                  .userId)
-              .name,
+          label: getUserDetails(instance.serviceRequestC[i].userId)?.name,
           avatar: Image.network(
-            getUserDetails(filterReq(
-                        requests: instance.serviceRequest, completed: false)[i]
-                    .userId)
-                .profilePhoto,
+            getUserDetails(instance.serviceRequestC[i].userId)?.profilePhoto ??
+                UserModel.clear().profilePhoto,
           ),
-          icon: const Icon(ChapChap.add),
-          onPressed: () {
-            instance.updateServiceRequest(
-              completed: false,
-              uid: getUserDetails(filterReq(
-                          requests: instance.serviceRequest,
-                          completed: false)[i]
-                      .userId)
-                  .uid!,
-            );
-          },
+          icon: const Icon(ChapChap.info),
         ),
       ),
     );
