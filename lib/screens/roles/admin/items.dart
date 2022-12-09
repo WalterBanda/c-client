@@ -9,6 +9,7 @@ import 'package:client/styles/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
@@ -248,7 +249,8 @@ class AddGarage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _userController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _addressTextController = TextEditingController();
+  final ValueNotifier<Address?> _addressController = ValueNotifier(null);
   final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _descriptionFocusNode = FocusNode();
   final FocusNode _userFocusNode = FocusNode();
@@ -296,10 +298,15 @@ class AddGarage extends StatelessWidget {
                         ),
                       )
                           .then(
-                            (value) =>
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop(),
-                          );
+                        (value) {
+                          _addressController.dispose();
+                          _addressTextController.dispose();
+                          _userController.dispose();
+                          _descriptionController.dispose();
+                          _nameController.dispose();
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                      );
                     } else {
                       Provider.of<AppData>(context, listen: false)
                           .createGarageRequest(
@@ -314,10 +321,15 @@ class AddGarage extends StatelessWidget {
                         ),
                       )
                           .then(
-                            (value) =>
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop(),
-                          );
+                        (value) {
+                          _addressController.dispose();
+                          _addressTextController.dispose();
+                          _userController.dispose();
+                          _descriptionController.dispose();
+                          _nameController.dispose();
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                      );
                     }
                   }
                 },
