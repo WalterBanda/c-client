@@ -1,14 +1,31 @@
+import 'dart:async';
+
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../models/garage.dart';
 
 class AppData extends ChangeNotifier {
+  late StreamSubscription<QuerySnapshot<GarageRequests>> garageRequestListener;
+  late StreamSubscription<QuerySnapshot<AdminRequests>> adminRequestListener;
+
   AppData() {
     getGarageRequest();
     getAdminRequest();
     getServiceRequest();
+
+    FirebaseAuth.instance.authStateChanges().listen((event) {
+      if (FirebaseAuth.instance.currentUser == null && event == null) {
+        garageRequestListener.cancel();
+        adminRequestListener.cancel();
+      }
+      if (FirebaseAuth.instance.currentUser != null && event != null) {
+        garageRequestListener.resume();
+        adminRequestListener.resume();
+      }
+    });
   }
 
   List<Garage> garages = [];
@@ -18,7 +35,9 @@ class AppData extends ChangeNotifier {
   late List<ServiceRequest> _serviceRequest = [];
 
   List<GarageRequests> get garageRequest => _garageRequest;
+
   List<AdminRequests> get adminRequest => _adminRequest;
+
   List<ServiceRequest> get serviceRequest => _serviceRequest;
 
   createServiceRequest(ServiceRequest request) async {
@@ -118,7 +137,7 @@ class AppData extends ChangeNotifier {
   }
 
   void getGarageRequest() {
-    FirebaseFirestore.instance
+    garageRequestListener = FirebaseFirestore.instance
         .collection("garageRequests")
         .withConverter(
           fromFirestore: GarageRequests.fromFirestore,
@@ -132,7 +151,7 @@ class AppData extends ChangeNotifier {
   }
 
   void getAdminRequest() {
-    FirebaseFirestore.instance
+    adminRequestListener = FirebaseFirestore.instance
         .collection("adminRequests")
         .withConverter(
             fromFirestore: AdminRequests.fromFirestore,
