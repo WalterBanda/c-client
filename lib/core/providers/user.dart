@@ -1,3 +1,4 @@
+import 'package:client/core/models/garage.dart';
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -163,7 +164,7 @@ class UserProvider extends ChangeNotifier {
                         password:
                             credentials.user!.refreshToken ?? "No Auth Token",
                         phone: "No Phone Number",
-                        address: "No address",
+                        address: Garage.sample().address,
                         profileShot: credentials.user!.photoURL,
                         roles: [Roles.user],
                       ),
@@ -224,7 +225,7 @@ class UserProvider extends ChangeNotifier {
                         password:
                             credentials.user!.refreshToken ?? "No Auth Token",
                         phone: "No Phone Number",
-                        address: "No address",
+                        address: Garage.sample().address,
                         profileShot: credentials.user!.photoURL,
                         roles: [Roles.user],
                       ),
@@ -274,7 +275,7 @@ class UserProvider extends ChangeNotifier {
                       password:
                           credentials.user!.refreshToken ?? "No Auth Token",
                       phone: "No Phone Number",
-                      address: "No address",
+                      address: Garage.sample().address,
                       profileShot: credentials.user!.photoURL,
                       roles: [Roles.user],
                     ),
