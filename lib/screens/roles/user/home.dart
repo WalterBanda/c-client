@@ -18,7 +18,7 @@ import 'package:client/styles/ui/colors.dart';
 class UserHome extends StatelessWidget {
   const UserHome({super.key});
 
-  static const String id = "user";
+  static const String id = "home";
 
   void _getLocation(BuildContext context) {
     Provider.of<LocationProvider>(context, listen: false)
