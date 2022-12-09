@@ -134,11 +134,13 @@ Widget authInput({
   bool private = false,
   Widget? prefix,
   Widget? suffix,
+  GestureTapCallback? onTap,
 }) {
   return SizedBox(
     width: 300,
     child: TextFormField(
       controller: controller,
+      onTap: onTap,
       focusNode: focusNode,
       validator: validator,
       textAlignVertical: TextAlignVertical.center,
