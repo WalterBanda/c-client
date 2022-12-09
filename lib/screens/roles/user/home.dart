@@ -145,13 +145,15 @@ class _SearchOverlayState extends State<SearchOverlay> {
                         icon: const Icon(ChapChap.add),
                         onPressed: () {
                           Provider.of<AppData>(context, listen: false)
-                              .createServiceRequest(
-                            ServiceRequest(
-                              userId: FirebaseAuth.instance.currentUser!.uid,
-                              garageId: data[i].userUid,
-                              completed: false,
-                            ),
-                          );
+                              .createServiceRequest(ServiceRequest(
+                                userId: FirebaseAuth.instance.currentUser!.uid,
+                                garageId: data[i].userUid,
+                                completed: false,
+                              ))
+                              .then((value) => {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop()
+                                  });
                         },
                       );
                     },

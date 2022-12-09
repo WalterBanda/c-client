@@ -1,14 +1,34 @@
+import 'dart:async';
+
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../models/garage.dart';
 
 class AppData extends ChangeNotifier {
+  late StreamSubscription<QuerySnapshot<GarageRequests>> garageRequestListener;
+  late StreamSubscription<QuerySnapshot<AdminRequests>> adminRequestListener;
+  late StreamSubscription<QuerySnapshot<ServiceRequest>> serviceListener;
+
   AppData() {
     getGarageRequest();
     getAdminRequest();
     getServiceRequest();
+
+    FirebaseAuth.instance.authStateChanges().listen((event) {
+      if (FirebaseAuth.instance.currentUser == null && event == null) {
+        garageRequestListener.cancel();
+        adminRequestListener.cancel();
+        serviceListener.cancel();
+      }
+      if (FirebaseAuth.instance.currentUser != null && event != null) {
+        garageRequestListener.resume();
+        adminRequestListener.resume();
+        serviceListener.resume();
+      }
+    });
   }
 
   List<Garage> garages = [];
@@ -18,13 +38,21 @@ class AppData extends ChangeNotifier {
   late List<ServiceRequest> _serviceRequest = [];
 
   List<GarageRequests> get garageRequest => _garageRequest;
-  List<AdminRequests> get adminRequest => _adminRequest;
-  List<ServiceRequest> get serviceRequest => _serviceRequest;
 
-  createServiceRequest(ServiceRequest request) async {
-    await FirebaseFirestore.instance
+  List<AdminRequests> get adminRequest => _adminRequest;
+
+  List<ServiceRequest> get serviceRequestN =>
+      _serviceRequest.where((req) => req.completed == false).toList();
+
+  List<ServiceRequest> get serviceRequestC =>
+      _serviceRequest.where((req) => req.completed == true).toList();
+
+  Future<void> createServiceRequest(ServiceRequest request) async {
+    return await FirebaseFirestore.instance
         .collection("serviceRequest")
         .doc(request.garageId)
+        .collection("Requests")
+        .doc(request.userId)
         .withConverter(
           fromFirestore: ServiceRequest.fromFirestore,
           toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
@@ -33,8 +61,10 @@ class AppData extends ChangeNotifier {
   }
 
   getServiceRequest() {
-    FirebaseFirestore.instance
+    serviceListener = FirebaseFirestore.instance
         .collection("serviceRequest")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("Requests")
         .withConverter(
           fromFirestore: ServiceRequest.fromFirestore,
           toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
@@ -48,19 +78,21 @@ class AppData extends ChangeNotifier {
 
   updateServiceRequest({required bool completed, required String uid}) {
     FirebaseFirestore.instance
-        .collection("users")
-        .doc(uid)
+        .collection("serviceRequest")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("Requests")
         .withConverter(
-            fromFirestore: ServiceRequest.fromFirestore,
-            toFirestore: (ServiceRequest userModel, _) =>
-                userModel.toFirestore())
+          fromFirestore: ServiceRequest.fromFirestore,
+          toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
+        )
+        .doc(uid)
         .update({'status': completed});
   }
 
   Future<void> createGarage({required Garage garage}) async {
     return await FirebaseFirestore.instance
         .collection("garage")
-        .doc()
+        .doc(garage.userUid)
         .withConverter(
             fromFirestore: Garage.fromFirestore,
             toFirestore: (Garage userModel, _) => userModel.toFirestore())
@@ -118,7 +150,7 @@ class AppData extends ChangeNotifier {
   }
 
   void getGarageRequest() {
-    FirebaseFirestore.instance
+    garageRequestListener = FirebaseFirestore.instance
         .collection("garageRequests")
         .withConverter(
           fromFirestore: GarageRequests.fromFirestore,
@@ -132,7 +164,7 @@ class AppData extends ChangeNotifier {
   }
 
   void getAdminRequest() {
-    FirebaseFirestore.instance
+    adminRequestListener = FirebaseFirestore.instance
         .collection("adminRequests")
         .withConverter(
             fromFirestore: AdminRequests.fromFirestore,

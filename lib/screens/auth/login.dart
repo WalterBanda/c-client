@@ -1,3 +1,4 @@
+import 'package:client/core/models/garage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -133,11 +134,13 @@ Widget authInput({
   bool private = false,
   Widget? prefix,
   Widget? suffix,
+  GestureTapCallback? onTap,
 }) {
   return SizedBox(
     width: 300,
     child: TextFormField(
       controller: controller,
+      onTap: onTap,
       focusNode: focusNode,
       validator: validator,
       textAlignVertical: TextAlignVertical.center,
@@ -175,9 +178,9 @@ Widget authInput({
 }
 
 class Validator {
-  static String? validateName({required String name}) {
+  static String? validateName({required String name, String? label}) {
     if (name.isEmpty) {
-      return 'Name can\'t be empty';
+      return '${label ?? 'Name'} can\'t be empty';
     }
 
     return null;
@@ -216,8 +219,8 @@ class Validator {
     return null;
   }
 
-  static String? validateAddress({required String address}) {
-    if (address.isEmpty) {
+  static String? validateAddress({Address? address}) {
+    if (address == null) {
       return 'Please add your address for garage booking';
     }
     return null;

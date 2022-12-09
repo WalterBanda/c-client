@@ -1,4 +1,8 @@
+import 'package:client/core/models/garage.dart';
+import 'package:client/screens/roles/admin/items.dart';
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/models/user.dart';
@@ -19,7 +23,8 @@ class Register extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _addressTextController = TextEditingController();
+  final ValueNotifier<Address?> _addressController = ValueNotifier(null);
   final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
@@ -109,11 +114,40 @@ class Register extends StatelessWidget {
                   const SizedBox(height: 15),
                   authInput(
                     hint: "Enter your Address",
-                    controller: _addressController,
+                    controller: _addressTextController,
                     focusNode: _addressFocusNode,
                     inputType: TextInputType.streetAddress,
-                    validator: (value) =>
-                        Validator.validateAddress(address: value),
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => AppDialog(
+                        child: FlutterLocationPicker(
+                          initZoom: 11,
+                          minZoomLevel: 5,
+                          maxZoomLevel: 16,
+                          trackMyPosition: true,
+                          selectLocationButtonText: 'Select Garage Location',
+                          selectLocationButtonStyle: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(AppColors.primary),
+                          ),
+                          markerIcon: ChapChap.garage,
+                          markerIconColor: AppColors.primary,
+                          searchBarBackgroundColor: AppColors.input,
+                          zoomButtonsBackgroundColor: AppColors.primary,
+                          locationButtonBackgroundColor: AppColors.primary,
+                          onPicked: (pickedData) {
+                            _addressTextController.text = pickedData.address;
+                            Navigator.of(context, rootNavigator: true).pop();
+                            _addressController.value = Address(
+                                name: pickedData.address.toString(),
+                                position: LatLng(pickedData.latLong.latitude,
+                                    pickedData.latLong.longitude));
+                          },
+                        ),
+                      ),
+                    ),
+                    validator: (value) => Validator.validateAddress(
+                        address: _addressController.value),
                     prefix: const Icon(
                       ChapChap.location,
                       size: 15,
@@ -129,7 +163,7 @@ class Register extends StatelessWidget {
                           email: _emailController.text,
                           password: _passwordController.text,
                           phone: _phoneController.text,
-                          address: _addressController.text,
+                          address: _addressController.value!,
                         );
                       }
                     },
@@ -165,7 +199,7 @@ class Register extends StatelessWidget {
     required String email,
     required String password,
     required String phone,
-    required String address,
+    required Address address,
   }) {
     Provider.of<UserProvider>(context, listen: false).createUser(
         context: context,

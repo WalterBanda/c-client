@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:client/core/models/garage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ extension AuthMethods on SignInMethods {
 extension StringCasingExtension on String {
   String toCapitalized() =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+
   String toTitleCase() => replaceAll(RegExp(' +'), ' ')
       .split(' ')
       .map((str) => str.toCapitalized())
@@ -39,7 +41,8 @@ extension StringCasingExtension on String {
 }
 
 class UserModel {
-  String name, email, phone, profilePhoto, address, description, password;
+  String name, email, phone, profilePhoto, description, password;
+  Address address;
   List<Roles> roles;
   User? firebaseUser;
   String? uid;
@@ -76,7 +79,7 @@ class UserModel {
       email: "email",
       password: "password",
       phone: "phone",
-      address: "address",
+      address: Garage.sample().address,
       roles: [Roles.error],
     );
   }
@@ -91,7 +94,7 @@ class UserModel {
       email: data["email"],
       password: data["password"],
       phone: data["phone"],
-      address: data["address"],
+      address: Address.fromFirestore(data["address"]),
       profileShot: data["profilePhoto"],
       roles: toRoles(
         List<String>.from(
@@ -109,7 +112,7 @@ class UserModel {
       "email": email,
       "password": password,
       "phone": phone,
-      "address": address,
+      "address": address.toFirestore(),
       "profilePhoto": profilePhoto,
       "roles": roles.toRolesString(),
       "description": description,

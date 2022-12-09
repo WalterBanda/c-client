@@ -9,6 +9,8 @@ import 'package:client/styles/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
 class AppDialog extends StatelessWidget {
@@ -164,16 +166,16 @@ class _AddAdminState extends State<AddAdmin> {
 class RoundedTile extends StatelessWidget {
   const RoundedTile({
     Key? key,
-    required this.label,
+    this.label,
     required this.icon,
     required this.avatar,
-    required this.onPressed,
+    this.onPressed,
   }) : super(key: key);
 
-  final String label;
+  final String? label;
   final Widget icon;
   final Widget avatar;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +213,7 @@ class RoundedTile extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              label,
+              label ?? '',
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: const TextStyle(
@@ -225,7 +227,7 @@ class RoundedTile extends StatelessWidget {
           ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              primary: AppColors.primary,
+              backgroundColor: AppColors.primary,
               minimumSize: Size.zero,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -247,7 +249,8 @@ class AddGarage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _userController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _addressTextController = TextEditingController();
+  final ValueNotifier<Address?> _addressController = ValueNotifier(null);
   final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _descriptionFocusNode = FocusNode();
   final FocusNode _userFocusNode = FocusNode();
@@ -277,7 +280,7 @@ class AddGarage extends StatelessWidget {
               const SizedBox(height: 25),
               garageDescription(),
               const SizedBox(height: 25),
-              garageAddress(),
+              garageAddress(context),
               const SizedBox(height: 25),
               garageAdminUser(),
               const SizedBox(height: 25),
@@ -287,32 +290,41 @@ class AddGarage extends StatelessWidget {
                     if (admin) {
                       Provider.of<AppData>(context, listen: false)
                           .createGarage(
-                            garage: Garage.sample(
-                              name: _nameController.text,
-                              description: _descriptionController.text,
-                            ),
-                          )
+                        garage: Garage(
+                          name: _nameController.text,
+                          description: _descriptionController.text,
+                          address: _addressController.value!,
+                          userUid: FirebaseAuth.instance.currentUser!.uid,
+                        ),
+                      )
                           .then(
-                            (value) =>
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop(),
-                          );
+                        (value) {
+                          _addressController.dispose();
+                          _addressTextController.dispose();
+                          _userController.dispose();
+                          _descriptionController.dispose();
+                          _nameController.dispose();
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                      );
                     } else {
                       Provider.of<AppData>(context, listen: false)
                           .createGarageRequest(
-                            payload: GarageRequests(
-                              userId: FirebaseAuth.instance.currentUser!.uid,
-                              garage: Garage.sample(
-                                name: _nameController.text,
-                                description: _descriptionController.text,
-                              ),
-                            ),
-                          )
+                        payload: GarageRequests(
+                          userId: FirebaseAuth.instance.currentUser!.uid,
+                          garage: Garage(
+                            name: _nameController.text,
+                            description: _descriptionController.text,
+                            address: _addressController.value!,
+                            userUid: FirebaseAuth.instance.currentUser!.uid,
+                          ),
+                        ),
+                      )
                           .then(
-                            (value) =>
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop(),
-                          );
+                        (value) {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                      );
                     }
                   }
                 },
@@ -345,10 +357,6 @@ class AddGarage extends StatelessWidget {
       ),
     );
   }
-
-  // createGarage({required BuildContext context, required Garage garage}) {
-  //   Provider.of<AppData>(context).createGarage(garage: garage);
-  // }
 
   garageAdminUser() {
     return Column(
@@ -392,7 +400,7 @@ class AddGarage extends StatelessWidget {
     );
   }
 
-  garageAddress() {
+  garageAddress(context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -408,9 +416,38 @@ class AddGarage extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         TextFormField(
-          controller: _addressController,
+          controller: _addressTextController,
           focusNode: _addressFocusNode,
-          onSaved: (val) {},
+          validator: (value) =>
+              Validator.validateAddress(address: _addressController.value),
+          onTap: () => showDialog(
+            context: context,
+            builder: (context) => AppDialog(
+              child: FlutterLocationPicker(
+                initZoom: 11,
+                minZoomLevel: 5,
+                maxZoomLevel: 16,
+                trackMyPosition: true,
+                selectLocationButtonText: 'Select Garage Location',
+                selectLocationButtonStyle: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(AppColors.primary),
+                ),
+                markerIcon: ChapChap.garage,
+                markerIconColor: AppColors.primary,
+                searchBarBackgroundColor: AppColors.input,
+                zoomButtonsBackgroundColor: AppColors.primary,
+                locationButtonBackgroundColor: AppColors.primary,
+                onPicked: (pickedData) {
+                  _addressTextController.text = pickedData.address;
+                  Navigator.of(context, rootNavigator: true).pop();
+                  _addressController.value = Address(
+                      name: pickedData.address.toString(),
+                      position: LatLng(pickedData.latLong.latitude,
+                          pickedData.latLong.longitude));
+                },
+              ),
+            ),
+          ),
           style: const TextStyle(
             fontFamily: "SF Pro Rounded",
             fontSize: 15,
@@ -453,7 +490,8 @@ class AddGarage extends StatelessWidget {
         TextFormField(
           controller: _descriptionController,
           focusNode: _descriptionFocusNode,
-          validator: (value) => Validator.validateName(name: value!),
+          validator: (value) =>
+              Validator.validateName(name: value!, label: 'Garage Description'),
           minLines: 4,
           maxLines: 5,
           style: const TextStyle(
@@ -517,7 +555,8 @@ class AddGarage extends StatelessWidget {
           child: TextFormField(
             controller: _nameController,
             focusNode: _nameFocusNode,
-            validator: (value) => Validator.validateName(name: value!),
+            validator: (value) =>
+                Validator.validateName(name: value!, label: 'Garage Name'),
             style: const TextStyle(
               fontFamily: "SF Pro Rounded",
               fontSize: 15,

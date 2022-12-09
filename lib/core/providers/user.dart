@@ -1,6 +1,8 @@
+import 'package:client/core/models/garage.dart';
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -37,14 +39,46 @@ class UserProvider extends ChangeNotifier {
 
   UserModel get user => _user;
 
-  void updateUser(UserModel user) {
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .withConverter(
-            fromFirestore: UserModel.fromFirestore,
-            toFirestore: (UserModel userModel, _) => userModel.toFirestore())
-        .update(_user.toFirestore());
+  void updateUser({
+    required BuildContext context,
+    required String name,
+    required Address? address,
+    required String phone,
+    required String description,
+    required String email,
+  }) {
+    if (_user != UserModel.clear() &&
+        FirebaseAuth.instance.currentUser != null) {
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+        "name": name.isEmpty ? _user.name : name,
+        "email": email.isEmpty ? _user.email : email,
+        "phone": phone.isEmpty ? _user.phone : phone,
+        "address": address != null
+            ? address.toFirestore()
+            : _user.address.toFirestore(),
+        "description": description.isEmpty ? _user.description : description,
+      }).then((value) {
+        User? currentDetails = FirebaseAuth.instance.currentUser;
+        currentDetails?.updateDisplayName(name.isEmpty ? _user.name : name);
+        currentDetails?.updateEmail(email.isEmpty ? _user.email : email);
+      }).then((value) {
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .withConverter(
+                fromFirestore: UserModel.fromFirestore,
+                toFirestore: (UserModel userModel, _) =>
+                    userModel.toFirestore())
+            .get()
+            .then((snap) {
+          _user = snap.data()!;
+          notifyListeners();
+        }).then((value) => Navigator.of(context, rootNavigator: true).pop());
+      });
+    }
   }
 
   void _resolveAuthError(
@@ -134,67 +168,116 @@ class UserProvider extends ChangeNotifier {
             );
         break;
       case SignInMethods.google:
-        // Trigger the authentication flow
-        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-        // Obtain the auth details from the request
-        final GoogleSignInAuthentication? googleAuth =
-            await googleUser?.authentication;
-
-        // Create a new credential
-        final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth?.accessToken,
-          idToken: googleAuth?.idToken,
-        );
-
-        await FirebaseAuth.instance
-            .signInWithCredential(credential)
-            .then((credentials) {
-          FirebaseFirestore.instance
-              .collection("users")
-              .doc(credentials.user!.uid)
-              .withConverter(
-                  fromFirestore: UserModel.fromFirestore,
-                  toFirestore: (UserModel userModel, _) =>
-                      userModel.toFirestore())
-              .get()
-              .then((doc) {
-                if (doc.exists == false) {
-                  if (credentials.user!.photoURL == null) {
-                    credentials.user!.updatePhotoURL(UserModel.clear(
-                            customName: credentials.user!.displayName!)
-                        .profilePhoto);
+        if (kIsWeb) {
+          await FirebaseAuth.instance
+              .signInWithPopup(GoogleAuthProvider())
+              .then((credentials) {
+            FirebaseFirestore.instance
+                .collection("users")
+                .doc(credentials.user!.uid)
+                .withConverter(
+                    fromFirestore: UserModel.fromFirestore,
+                    toFirestore: (UserModel userModel, _) =>
+                        userModel.toFirestore())
+                .get()
+                .then((doc) {
+                  if (doc.exists == false) {
+                    if (credentials.user!.photoURL == null) {
+                      credentials.user!.updatePhotoURL(UserModel.clear(
+                              customName: credentials.user!.displayName!)
+                          .profilePhoto);
+                    }
+                    createUser(
+                      context: context,
+                      payload: UserModel(
+                        name: credentials.user!.displayName!,
+                        email: credentials.user!.email!,
+                        uid: credentials.user!.uid,
+                        password:
+                            credentials.user!.refreshToken ?? "No Auth Token",
+                        phone: "No Phone Number",
+                        address: Garage.sample().address,
+                        profileShot: credentials.user!.photoURL,
+                        roles: [Roles.user],
+                      ),
+                      signInMethods: SignInMethods.google,
+                    );
                   }
-                  createUser(
-                    context: context,
-                    payload: UserModel(
-                      name: credentials.user!.displayName!,
-                      email: credentials.user!.email!,
-                      uid: credentials.user!.uid,
-                      password:
-                          credentials.user!.refreshToken ?? "No Auth Token",
-                      phone: "No Phone Number",
-                      address: "No address",
-                      profileShot: credentials.user!.photoURL,
-                      roles: [Roles.user],
-                    ),
-                    signInMethods: SignInMethods.google,
-                  );
-                }
-              })
-              .then((_) => init())
-              .then(
-                (_) => GlobalNavigator.router.currentState!
-                    .pushReplacementNamed(GlobalRoutes.switchRoles),
-              );
-        }).onError((FirebaseAuthException error, stackTrace) {
-          _resolveAuthError(
-            error: error,
-            context: context,
-            signInMethods: SignInMethods.google,
-          );
-        });
+                })
+                .then((_) => init())
+                .then(
+                  (_) => GlobalNavigator.router.currentState!
+                      .pushReplacementNamed(GlobalRoutes.switchRoles),
+                );
+          }).onError((FirebaseAuthException error, stackTrace) {
+            _resolveAuthError(
+              error: error,
+              context: context,
+              signInMethods: SignInMethods.google,
+            );
+          });
+        } else {
+          // Trigger the authentication flow
+          final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
+          // Obtain the auth details from the request
+          final GoogleSignInAuthentication? googleAuth =
+              await googleUser?.authentication;
+
+          // Create a new credential
+          final credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth?.accessToken,
+            idToken: googleAuth?.idToken,
+          );
+
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
+              .then((credentials) {
+            FirebaseFirestore.instance
+                .collection("users")
+                .doc(credentials.user!.uid)
+                .withConverter(
+                    fromFirestore: UserModel.fromFirestore,
+                    toFirestore: (UserModel userModel, _) =>
+                        userModel.toFirestore())
+                .get()
+                .then((doc) {
+                  if (doc.exists == false) {
+                    if (credentials.user!.photoURL == null) {
+                      credentials.user!.updatePhotoURL(UserModel.clear(
+                              customName: credentials.user!.displayName!)
+                          .profilePhoto);
+                    }
+                    createUser(
+                      context: context,
+                      payload: UserModel(
+                        name: credentials.user!.displayName!,
+                        email: credentials.user!.email!,
+                        uid: credentials.user!.uid,
+                        password:
+                            credentials.user!.refreshToken ?? "No Auth Token",
+                        phone: "No Phone Number",
+                        address: Garage.sample().address,
+                        profileShot: credentials.user!.photoURL,
+                        roles: [Roles.user],
+                      ),
+                      signInMethods: SignInMethods.google,
+                    );
+                  }
+                })
+                .then((_) => init())
+                .then(
+                  (_) => GlobalNavigator.router.currentState!
+                      .pushReplacementNamed(GlobalRoutes.switchRoles),
+                );
+          }).onError((FirebaseAuthException error, stackTrace) {
+            _resolveAuthError(
+              error: error,
+              context: context,
+              signInMethods: SignInMethods.google,
+            );
+          });
+        }
         break;
       case SignInMethods.github:
         FirebaseAuth.instance
@@ -224,7 +307,7 @@ class UserProvider extends ChangeNotifier {
                       password:
                           credentials.user!.refreshToken ?? "No Auth Token",
                       phone: "No Phone Number",
-                      address: "No address",
+                      address: Garage.sample().address,
                       profileShot: credentials.user!.photoURL,
                       roles: [Roles.user],
                     ),
