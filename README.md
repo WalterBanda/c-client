@@ -67,10 +67,10 @@ flutter run -d chrome
 
 The application contains the following features.
 
-- [ ] `Auth :` user Authentication
-- [ ] `Profile:` User Profiles & settings
-- [ ] `Admin Home:` User Administrator dash and home
-- [ ] `User Home:` Client User home and way finder
+- [x] `Auth :` user Authentication
+- [x] `Profile:` User Profiles & settings
+- [x] `Admin Home:` User Administrator dash and home
+- [x] `User Home:` Client User home and way finder
 
 ### Auth 🔐
 
