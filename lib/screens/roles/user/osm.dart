@@ -43,11 +43,7 @@ class OSM extends StatelessWidget {
             center: details.location,
             minZoom: 12,
             zoom: 17,
-            plugins: [
-              const LocationMarkerPlugin(),
-              MarkerClusterPlugin(),
-            ],
-            onMapCreated: (_) {
+            onMapReady: () {
               details.getUserLocation(context: context, controller: controller);
               details.locationInstance.onLocationChanged.listen((loc) {
                 details.updateLocation(
@@ -57,53 +53,55 @@ class OSM extends StatelessWidget {
               });
             },
           ),
-          layers: [
-            TileLayerOptions(
+          children: [
+            TileLayer(
               urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              subdomains: ['a', 'b', 'c'],
+              subdomains: const ['a', 'b', 'c'],
             ),
-            LocationMarkerLayerOptions(),
-            MarkerClusterLayerOptions(
-              maxClusterRadius: 120,
-              size: const Size(40, 40),
-              fitBoundsOptions: const FitBoundsOptions(
-                padding: EdgeInsets.all(50),
-              ),
-              markers: [
-                ...getGarages
-                    .map(
-                      (e) => Marker(
-                        width: 40.0,
-                        height: 40.0,
-                        point: e.address.position,
-                        builder: (ctx) => Icon(
-                          ChapChap.pin,
-                          color: Colors.primaries[getGarages.indexOf(e)],
-                        ),
-                      ),
-                    )
-                    .toList(),
-                Marker(
-                  width: 40.0,
-                  height: 40.0,
-                  point: details.location,
-                  builder: (ctx) => Icon(
-                    ChapChap.pin,
-                    color: Colors
-                        .primaries[Random().nextInt(Colors.primaries.length)],
-                  ),
+            CurrentLocationLayer(),
+            MarkerClusterLayerWidget(
+              options: MarkerClusterLayerOptions(
+                maxClusterRadius: 120,
+                size: const Size(40, 40),
+                fitBoundsOptions: const FitBoundsOptions(
+                  padding: EdgeInsets.all(50),
                 ),
-              ],
-              polygonOptions: const PolygonOptions(
-                  borderColor: Colors.blueAccent,
-                  color: Colors.black12,
-                  borderStrokeWidth: 3),
-              builder: (context, markers) {
-                return FloatingActionButton(
-                  onPressed: null,
-                  child: Text(markers.length.toString()),
-                );
-              },
+                markers: [
+                  ...getGarages
+                      .map(
+                        (e) => Marker(
+                          width: 40.0,
+                          height: 40.0,
+                          point: e.address.position,
+                          builder: (ctx) => Icon(
+                            ChapChap.pin,
+                            color: Colors.primaries[getGarages.indexOf(e)],
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  Marker(
+                    width: 40.0,
+                    height: 40.0,
+                    point: details.location,
+                    builder: (ctx) => Icon(
+                      ChapChap.pin,
+                      color: Colors
+                          .primaries[Random().nextInt(Colors.primaries.length)],
+                    ),
+                  ),
+                ],
+                polygonOptions: const PolygonOptions(
+                    borderColor: Colors.blueAccent,
+                    color: Colors.black12,
+                    borderStrokeWidth: 3),
+                builder: (context, markers) {
+                  return FloatingActionButton(
+                    onPressed: null,
+                    child: Text(markers.length.toString()),
+                  );
+                },
+              ),
             ),
           ],
         );
