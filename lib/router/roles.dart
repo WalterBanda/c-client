@@ -1,3 +1,4 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -116,6 +117,7 @@ class PageNavigator extends StatelessWidget {
             route = SharedRoutes.profile;
         }
 
+        Provider.of<AppData>(context, listen: false).changeRoute(route);
         PageRouter.router.currentState!.pushReplacementNamed(route);
       }
 
@@ -163,6 +165,8 @@ class PageNavigator extends StatelessWidget {
             icon: ChapChap.home,
             label: "Home ⚠",
             onPressed: () {
+              Provider.of<AppData>(context, listen: false)
+                  .changeRoute(SharedRoutes.about);
               PageRouter.router.currentState!
                   .pushReplacementNamed(SharedRoutes.profile);
             });
@@ -183,19 +187,35 @@ class PageNavigator extends StatelessWidget {
                 children: [
                   buildRoles(context),
                   navLink(
-                      icon: ChapChap.user,
-                      label: "Profile",
-                      onPressed: () {
-                        PageRouter.router.currentState!
-                            .pushReplacementNamed(SharedRoutes.profile);
-                      }),
+                    icon: ChapChap.user,
+                    label: "Profile",
+                    onPressed: () {
+                      Provider.of<AppData>(context, listen: false)
+                          .changeRoute(SharedRoutes.profile);
+                      PageRouter.router.currentState!
+                          .pushReplacementNamed(SharedRoutes.profile);
+                    },
+                  ),
                   navLink(
-                      icon: Icons.settings,
-                      label: "Settings",
-                      onPressed: () {
-                        PageRouter.router.currentState!
-                            .pushReplacementNamed(SharedRoutes.settings);
-                      }),
+                    icon: Icons.settings,
+                    label: "Settings",
+                    onPressed: () {
+                      Provider.of<AppData>(context, listen: false)
+                          .changeRoute(SharedRoutes.settings);
+                      PageRouter.router.currentState!
+                          .pushReplacementNamed(SharedRoutes.settings);
+                    },
+                  ),
+                  navLink(
+                    icon: ChapChap.info,
+                    label: "About",
+                    onPressed: () {
+                      Provider.of<AppData>(context, listen: false)
+                          .changeRoute(SharedRoutes.about);
+                      PageRouter.router.currentState!
+                          .pushReplacementNamed(SharedRoutes.about);
+                    },
+                  ),
                 ]),
             const SizedBox(height: 40),
             logoutButton(),
@@ -250,11 +270,9 @@ class PageAppBar extends StatelessWidget {
                   PageNavigator.scaffold.currentState!.openDrawer();
                 },
                 icon: const Icon(ChapChap.menu)),
-            const Text(
-              // TODO Implement automatic headings
-              "Home",
-              // PageRouter.router.currentContext.
-              style: TextStyle(
+            Text(
+              Provider.of<AppData>(context).currentRoute,
+              style: const TextStyle(
                 fontFamily: "SF Pro Rounded",
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
