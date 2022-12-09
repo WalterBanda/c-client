@@ -39,14 +39,46 @@ class UserProvider extends ChangeNotifier {
 
   UserModel get user => _user;
 
-  void updateUser(UserModel user) {
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .withConverter(
-            fromFirestore: UserModel.fromFirestore,
-            toFirestore: (UserModel userModel, _) => userModel.toFirestore())
-        .update(_user.toFirestore());
+  void updateUser({
+    required BuildContext context,
+    required String name,
+    required Address? address,
+    required String phone,
+    required String description,
+    required String email,
+  }) {
+    if (_user != UserModel.clear() &&
+        FirebaseAuth.instance.currentUser != null) {
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+        "name": name.isEmpty ? _user.name : name,
+        "email": email.isEmpty ? _user.email : email,
+        "phone": phone.isEmpty ? _user.phone : phone,
+        "address": address != null
+            ? address.toFirestore()
+            : _user.address.toFirestore(),
+        "description": description.isEmpty ? _user.description : description,
+      }).then((value) {
+        User? currentDetails = FirebaseAuth.instance.currentUser;
+        currentDetails?.updateDisplayName(name.isEmpty ? _user.name : name);
+        currentDetails?.updateEmail(email.isEmpty ? _user.email : email);
+      }).then((value) {
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .withConverter(
+                fromFirestore: UserModel.fromFirestore,
+                toFirestore: (UserModel userModel, _) =>
+                    userModel.toFirestore())
+            .get()
+            .then((snap) {
+          _user = snap.data()!;
+          notifyListeners();
+        }).then((value) => Navigator.of(context, rootNavigator: true).pop());
+      });
+    }
   }
 
   void _resolveAuthError(
