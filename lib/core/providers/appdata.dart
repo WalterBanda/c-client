@@ -41,7 +41,11 @@ class AppData extends ChangeNotifier {
 
   List<AdminRequests> get adminRequest => _adminRequest;
 
-  List<ServiceRequest> get serviceRequest => _serviceRequest;
+  List<ServiceRequest> get serviceRequestN =>
+      _serviceRequest.where((req) => req.completed == false).toList();
+
+  List<ServiceRequest> get serviceRequestC =>
+      _serviceRequest.where((req) => req.completed == true).toList();
 
   Future<void> createServiceRequest(ServiceRequest request) async {
     return await FirebaseFirestore.instance
@@ -74,12 +78,14 @@ class AppData extends ChangeNotifier {
 
   updateServiceRequest({required bool completed, required String uid}) {
     FirebaseFirestore.instance
-        .collection("users")
-        .doc(uid)
+        .collection("serviceRequest")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("Requests")
         .withConverter(
-            fromFirestore: ServiceRequest.fromFirestore,
-            toFirestore: (ServiceRequest userModel, _) =>
-                userModel.toFirestore())
+          fromFirestore: ServiceRequest.fromFirestore,
+          toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
+        )
+        .doc(uid)
         .update({'status': completed});
   }
 
