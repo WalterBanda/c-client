@@ -525,7 +525,8 @@ class EditDetails extends StatelessWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  Provider.of<UserProvider>(context,listen: false).updateUser(
+                  Provider.of<UserProvider>(context, listen: false).updateUser(
+                    context: context,
                     name: _nameController.text,
                     email: _emailController.text,
                     phone: _phoneController.text,
