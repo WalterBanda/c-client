@@ -347,10 +347,6 @@ class AddGarage extends StatelessWidget {
     );
   }
 
-  // createGarage({required BuildContext context, required Garage garage}) {
-  //   Provider.of<AppData>(context).createGarage(garage: garage);
-  // }
-
   garageAdminUser() {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -409,9 +405,10 @@ class AddGarage extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         TextFormField(
-          controller: _addressController,
+          controller: _addressTextController,
           focusNode: _addressFocusNode,
-          onSaved: (val) {},
+          validator: (value) =>
+              Validator.validateAddress(address: _addressController.value),
           onTap: () => showDialog(
             context: context,
             builder: (context) => AppDialog(
@@ -482,7 +479,8 @@ class AddGarage extends StatelessWidget {
         TextFormField(
           controller: _descriptionController,
           focusNode: _descriptionFocusNode,
-          validator: (value) => Validator.validateName(name: value!),
+          validator: (value) =>
+              Validator.validateName(name: value!, label: 'Garage Description'),
           minLines: 4,
           maxLines: 5,
           style: const TextStyle(
@@ -546,7 +544,8 @@ class AddGarage extends StatelessWidget {
           child: TextFormField(
             controller: _nameController,
             focusNode: _nameFocusNode,
-            validator: (value) => Validator.validateName(name: value!),
+            validator: (value) =>
+                Validator.validateName(name: value!, label: 'Garage Name'),
             style: const TextStyle(
               fontFamily: "SF Pro Rounded",
               fontSize: 15,
