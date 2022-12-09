@@ -1,9 +1,13 @@
+import 'package:client/core/models/garage.dart';
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/screens/roles/admin/items.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/providers/user.dart';
@@ -400,12 +404,13 @@ class EditDetails extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
+  final ValueNotifier<Address?> _addressController = ValueNotifier(null);
+  final TextEditingController _addressTextController = TextEditingController();
   final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
-  final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _descriptionFocusNode = FocusNode();
   final FocusNode _phoneFocusNode = FocusNode();
   final FocusNode _addressFocusNode = FocusNode();
 
@@ -429,6 +434,32 @@ class EditDetails extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
+              TextFormField(
+                controller: _descriptionController,
+                focusNode: _descriptionFocusNode,
+                validator: (value) => Validator.validateName(
+                    name: value!, label: 'Garage Description'),
+                minLines: 4,
+                maxLines: 5,
+                style: const TextStyle(
+                  fontFamily: "SF Pro Rounded",
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.6,
+                ),
+                decoration: InputDecoration(
+                  filled: true,
+                  isCollapsed: true,
+                  contentPadding: const EdgeInsets.fromLTRB(15, 20, 5, 20),
+                  fillColor: AppColors.input,
+                  hintText: "Enter your Description",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
               authInput(
                 hint: "Enter your Email",
                 controller: _emailController,
@@ -437,20 +468,6 @@ class EditDetails extends StatelessWidget {
                 // validator: (value) => Validator.validateEmail(email: value),
                 prefix: const Icon(
                   Icons.email_rounded,
-                  size: 15,
-                ),
-              ),
-              const SizedBox(height: 15),
-              authInput(
-                hint: "Enter your Password",
-                controller: _passwordController,
-                focusNode: _passwordFocusNode,
-                // validator: (value) =>
-                // Validator.validatePassword(password: value),
-                inputType: TextInputType.visiblePassword,
-                private: true,
-                prefix: const Icon(
-                  Icons.lock_rounded,
                   size: 15,
                 ),
               ),
@@ -469,10 +486,40 @@ class EditDetails extends StatelessWidget {
               const SizedBox(height: 15),
               authInput(
                 hint: "Enter your Address",
-                controller: _addressController,
+                controller: _addressTextController,
                 focusNode: _addressFocusNode,
                 inputType: TextInputType.streetAddress,
-                // validator: (value) => Validator.validateAddress(address: value),
+                validator: (value) => Validator.validateAddress(
+                    address: _addressController.value),
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => AppDialog(
+                    child: FlutterLocationPicker(
+                      initZoom: 11,
+                      minZoomLevel: 5,
+                      maxZoomLevel: 16,
+                      trackMyPosition: true,
+                      selectLocationButtonText: 'Select Garage Location',
+                      selectLocationButtonStyle: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(AppColors.primary),
+                      ),
+                      markerIcon: ChapChap.garage,
+                      markerIconColor: AppColors.primary,
+                      searchBarBackgroundColor: AppColors.input,
+                      zoomButtonsBackgroundColor: AppColors.primary,
+                      locationButtonBackgroundColor: AppColors.primary,
+                      onPicked: (pickedData) {
+                        _addressTextController.text = pickedData.address;
+                        Navigator.of(context, rootNavigator: true).pop();
+                        _addressController.value = Address(
+                            name: pickedData.address.toString(),
+                            position: LatLng(pickedData.latLong.latitude,
+                                pickedData.latLong.longitude));
+                      },
+                    ),
+                  ),
+                ),
                 prefix: const Icon(
                   ChapChap.location,
                   size: 15,
@@ -481,16 +528,17 @@ class EditDetails extends StatelessWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // if (_formKey.currentState!.validate()) {
-                  userUpdate(
-                    context: context,
-                    username: _nameController.text,
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                    phone: _phoneController.text,
-                    address: _addressController.text,
-                  );
-                  // }
+                  if (_formKey.currentState!.validate()) {
+                    userUpdate(
+                      context: context,
+                      model: UpdateUserData(
+                          name: _nameController.text,
+                          email: _emailController.text,
+                          phone: _phoneController.text,
+                          description: _descriptionController.text,
+                          address: _addressController.value!),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.primary,
@@ -517,13 +565,29 @@ class EditDetails extends StatelessWidget {
   }
 }
 
-void userUpdate({
-  required BuildContext context,
-  String? username,
-  String? email,
-  String? password,
-  String? phone,
-  String? address,
-}) {
-  Provider.of<UserProvider>(context).updateUser(UserModel.clear());
+class UpdateUserData {
+  String name, email, phone, description;
+  Address address;
+
+  UpdateUserData({
+    required this.name,
+    required this.address,
+    required this.phone,
+    required this.description,
+    required this.email,
+  });
+}
+
+void userUpdate(
+    {required BuildContext context, required UpdateUserData model}) {
+  FirebaseFirestore.instance
+      .collection("users")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .update({
+    "name": model.name,
+    "email": model.email,
+    "phone": model.phone,
+    "address": model.address.toFirestore(),
+    "description": model.description,
+  });
 }
