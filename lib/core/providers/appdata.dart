@@ -79,7 +79,7 @@ class AppData extends ChangeNotifier {
   Future<void> createGarage({required Garage garage}) async {
     return await FirebaseFirestore.instance
         .collection("garage")
-        .doc()
+        .doc(garage.userUid)
         .withConverter(
             fromFirestore: Garage.fromFirestore,
             toFirestore: (Garage userModel, _) => userModel.toFirestore())
