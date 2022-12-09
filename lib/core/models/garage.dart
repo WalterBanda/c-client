@@ -98,7 +98,7 @@ class ServiceRequest {
     return ServiceRequest(
       userId: data!['user'],
       garageId: data['garageId'],
-      completed: data['completed'],
+      completed: data['status'],
     );
   }
 
