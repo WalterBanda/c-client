@@ -525,8 +525,7 @@ class EditDetails extends StatelessWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  userUpdate(
-                    context: context,
+                  Provider.of<UserProvider>(context,listen: false).updateUser(
                     name: _nameController.text,
                     email: _emailController.text,
                     phone: _phoneController.text,
@@ -557,27 +556,4 @@ class EditDetails extends StatelessWidget {
       ),
     );
   }
-}
-
-void userUpdate({
-  required BuildContext context,
-  required String? name,
-  required Address? address,
-  required String? phone,
-  required String? description,
-  required String? email,
-}) {
-  UserModel user = Provider.of<UserProvider>(context, listen: false).user;
-
-  FirebaseFirestore.instance
-      .collection("users")
-      .doc(FirebaseAuth.instance.currentUser!.uid)
-      .update({
-    "name": name ?? user.name,
-    "email": email ?? user.email,
-    "phone": phone ?? user.phone,
-    "address":
-        address != null ? address.toFirestore() : user.address.toFirestore(),
-    "description": description ?? user.description,
-  });
 }
