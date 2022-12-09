@@ -9,6 +9,7 @@ import 'package:client/styles/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
 class AppDialog extends StatelessWidget {
@@ -277,7 +278,7 @@ class AddGarage extends StatelessWidget {
               const SizedBox(height: 25),
               garageDescription(),
               const SizedBox(height: 25),
-              garageAddress(),
+              garageAddress(context),
               const SizedBox(height: 25),
               garageAdminUser(),
               const SizedBox(height: 25),
@@ -392,7 +393,7 @@ class AddGarage extends StatelessWidget {
     );
   }
 
-  garageAddress() {
+  garageAddress(context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -411,6 +412,27 @@ class AddGarage extends StatelessWidget {
           controller: _addressController,
           focusNode: _addressFocusNode,
           onSaved: (val) {},
+          onTap: () => showDialog(
+            context: context,
+            builder: (context) => AppDialog(
+              child: FlutterLocationPicker(
+                  initZoom: 11,
+                  minZoomLevel: 5,
+                  maxZoomLevel: 16,
+                  trackMyPosition: true,
+                  selectLocationButtonText: 'Select Garage Location',
+                  selectLocationButtonStyle: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(AppColors.primary),
+                  ),
+                  markerIcon: ChapChap.garage,
+                  markerIconColor: AppColors.primary,
+                  searchBarBackgroundColor: AppColors.input,
+                  zoomButtonsBackgroundColor: AppColors.primary,
+                  locationButtonBackgroundColor: AppColors.primary,
+                  onPicked: (pickedData) {}),
+            ),
+          ),
           style: const TextStyle(
             fontFamily: "SF Pro Rounded",
             fontSize: 15,
