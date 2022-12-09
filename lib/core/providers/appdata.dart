@@ -40,8 +40,8 @@ class AppData extends ChangeNotifier {
 
   List<ServiceRequest> get serviceRequest => _serviceRequest;
 
-  createServiceRequest(ServiceRequest request) async {
-    await FirebaseFirestore.instance
+  Future<void> createServiceRequest(ServiceRequest request) async {
+    return await FirebaseFirestore.instance
         .collection("serviceRequest")
         .doc(request.garageId)
         .collection("Requests")
