@@ -166,16 +166,16 @@ class _AddAdminState extends State<AddAdmin> {
 class RoundedTile extends StatelessWidget {
   const RoundedTile({
     Key? key,
-    required this.label,
+    this.label,
     required this.icon,
     required this.avatar,
-    required this.onPressed,
+    this.onPressed,
   }) : super(key: key);
 
-  final String label;
+  final String? label;
   final Widget icon;
   final Widget avatar;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +213,7 @@ class RoundedTile extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              label,
+              label ?? '',
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: const TextStyle(
@@ -227,7 +227,7 @@ class RoundedTile extends StatelessWidget {
           ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              primary: AppColors.primary,
+              backgroundColor: AppColors.primary,
               minimumSize: Size.zero,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
