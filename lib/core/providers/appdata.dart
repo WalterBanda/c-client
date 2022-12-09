@@ -14,7 +14,9 @@ class AppData extends ChangeNotifier {
 
   String _currentRoute = 'ChapChap';
 
-  String get currentRoute => _currentRoute;
+  String get currentRoute {
+    return _currentRoute[0].toUpperCase() + _currentRoute.substring(1);
+  }
 
   Future<void> changeRoute(route) async {
     _currentRoute = route;
