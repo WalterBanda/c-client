@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:client/core/providers/appdata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -17,24 +18,8 @@ class OSM extends StatelessWidget {
 
   final MapController controller = MapController();
 
-  List<Garage> getGarage(BuildContext context) {
-    List<Garage> res = [];
-    FirebaseFirestore.instance
-        .collection("garage")
-        .withConverter(
-            fromFirestore: Garage.fromFirestore,
-            toFirestore: (Garage userModel, _) => userModel.toFirestore())
-        .get()
-        .then((val) {
-      res = val.docs.toList().cast();
-    });
-
-    return res;
-  }
-
   @override
   Widget build(BuildContext context) {
-    List<Garage> getGarages = getGarage(context);
     return Consumer<LocationProvider>(
       builder: (context, details, child) {
         return FlutterMap(
@@ -61,36 +46,21 @@ class OSM extends StatelessWidget {
             CurrentLocationLayer(),
             MarkerClusterLayerWidget(
               options: MarkerClusterLayerOptions(
-                maxClusterRadius: 120,
+                maxClusterRadius: 60,
                 size: const Size(40, 40),
                 fitBoundsOptions: const FitBoundsOptions(
                   padding: EdgeInsets.all(50),
                 ),
-                markers: [
-                  ...getGarages
-                      .map(
-                        (e) => Marker(
-                          width: 40.0,
-                          height: 40.0,
-                          point: e.address.position,
-                          builder: (ctx) => Icon(
-                            ChapChap.pin,
-                            color: Colors.primaries[getGarages.indexOf(e)],
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  Marker(
+                markers: Provider.of<AppData>(context).garages.map((garage) {
+                  return Marker(
                     width: 40.0,
                     height: 40.0,
-                    point: details.location,
-                    builder: (ctx) => Icon(
-                      ChapChap.pin,
-                      color: Colors
-                          .primaries[Random().nextInt(Colors.primaries.length)],
+                    point: garage.address.position,
+                    builder: (ctx) => const Icon(
+                      Icons.garage_rounded,
                     ),
-                  ),
-                ],
+                  );
+                }).toList(),
                 polygonOptions: const PolygonOptions(
                     borderColor: Colors.blueAccent,
                     color: Colors.black12,
