@@ -13,14 +13,9 @@ class LocationProvider extends ChangeNotifier {
   LatLng get location => _userLocation;
 
   Future<LatLng> checkPermissions({LatLng? loc}) async {
-    // _userLocation = loc;
-    // updateMap();
-    // notifyListeners();
-
-    locationInstance.changeSettings(accuracy: LocationAccuracy.high);
-
     bool serviceenabled;
     PermissionStatus permissionGranted;
+
     //  check if user is having permission or not
     serviceenabled = await locationInstance.serviceEnabled();
 
@@ -33,9 +28,12 @@ class LocationProvider extends ChangeNotifier {
     if (permissionGranted == PermissionStatus.denied) {
       permissionGranted = await locationInstance.requestPermission();
 
-      if (permissionGranted == PermissionStatus.granted ||
-          permissionGranted == PermissionStatus.grantedLimited) {
+      if (permissionGranted != PermissionStatus.granted ||
+          permissionGranted != PermissionStatus.grantedLimited) {
         return Future.error("Location Permissions denied ⚠");
+      } else {
+        locationInstance.enableBackgroundMode(enable: true);
+        locationInstance.changeSettings(accuracy: LocationAccuracy.high);
       }
     }
 
