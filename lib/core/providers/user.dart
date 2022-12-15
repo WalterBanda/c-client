@@ -227,6 +227,13 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  Future<UserCredential> signInWithGitHub() async {
+    // Create a new provider
+    GithubAuthProvider githubProvider = GithubAuthProvider();
+
+    return await FirebaseAuth.instance.signInWithProvider(githubProvider);
+  }
+
   void githubSignIn(BuildContext context) {
     if (kIsWeb) {
       FirebaseAuth.instance
@@ -245,7 +252,18 @@ class UserProvider extends ChangeNotifier {
             ),
           );
     } else {
-      //   TODO: Implement android/ ios signin
+      signInWithGitHub()
+          .then((credentials) => socialAuth(
+              auth: SignInMethods.github,
+              credentials: credentials,
+              context: context))
+          .onError(
+            (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+              error: error,
+              context: context,
+              signInMethods: SignInMethods.google,
+            ),
+          );
     }
   }
 
