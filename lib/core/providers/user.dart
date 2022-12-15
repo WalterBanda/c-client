@@ -181,24 +181,28 @@ class UserProvider extends ChangeNotifier {
           }
         })
         .then((_) => init())
-        .then((_) => GlobalNavigator.router.currentState!
-            .pushReplacementNamed(GlobalRoutes.switchRoles))
-        .onError(
-          (FirebaseAuthException error, stackTrace) => _resolveAuthError(
-            error: error,
-            context: context,
-            signInMethods: auth,
-          ),
+        .then(
+          (_) => GlobalNavigator.router.currentState!
+              .pushReplacementNamed(GlobalRoutes.switchRoles),
         );
   }
 
   void googleSignIn(BuildContext context) {
     if (kIsWeb) {
-      FirebaseAuth.instance.signInWithPopup(GoogleAuthProvider()).then(
+      FirebaseAuth.instance
+          .signInWithPopup(GoogleAuthProvider())
+          .then(
             (credentials) => socialAuth(
                 auth: SignInMethods.google,
                 credentials: credentials,
                 context: context),
+          )
+          .onError(
+            (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+              error: error,
+              context: context,
+              signInMethods: SignInMethods.google,
+            ),
           );
     } else {
       //   TODO: Implement android/ ios signin
@@ -207,11 +211,20 @@ class UserProvider extends ChangeNotifier {
 
   void githubSignIn(BuildContext context) {
     if (kIsWeb) {
-      FirebaseAuth.instance.signInWithPopup(GithubAuthProvider()).then(
+      FirebaseAuth.instance
+          .signInWithPopup(GithubAuthProvider())
+          .then(
             (credentials) => socialAuth(
                 auth: SignInMethods.github,
                 credentials: credentials,
                 context: context),
+          )
+          .onError(
+            (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+              error: error,
+              context: context,
+              signInMethods: SignInMethods.google,
+            ),
           );
     } else {
       //   TODO: Implement android/ ios signin
