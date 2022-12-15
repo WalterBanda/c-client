@@ -36,6 +36,10 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  UserProvider() {
+    init();
+  }
+
   UserModel get user => _user;
 
   void updateUser({
@@ -193,7 +197,6 @@ class UserProvider extends ChangeNotifier {
     return await FirebaseAuth.instance.signInWithProvider(googleProvider);
   }
 
-
   void googleSignIn(BuildContext context) {
     if (kIsWeb) {
       FirebaseAuth.instance
@@ -214,16 +217,16 @@ class UserProvider extends ChangeNotifier {
     } else {
       signInWithGoogle()
           .then((credentials) => socialAuth(
-          auth: SignInMethods.google,
-          credentials: credentials,
-          context: context))
+              auth: SignInMethods.google,
+              credentials: credentials,
+              context: context))
           .onError(
             (FirebaseAuthException error, stackTrace) => _resolveAuthError(
-          error: error,
-          context: context,
-          signInMethods: SignInMethods.google,
-        ),
-      );
+              error: error,
+              context: context,
+              signInMethods: SignInMethods.google,
+            ),
+          );
     }
   }
 
