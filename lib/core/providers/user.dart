@@ -150,38 +150,36 @@ class UserProvider extends ChangeNotifier {
       {required SignInMethods auth,
       required UserCredential credentials,
       required BuildContext context}) {
-              FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(credentials.user!.uid)
-                  .withConverter(
-                      fromFirestore: UserModel.fromFirestore,
-                      toFirestore: (UserModel userModel, _) =>
-                          userModel.toFirestore())
-                  .get()
-                  .then((doc) {
-                if (doc.exists == false) {
-                  if (credentials.user!.photoURL == null) {
-                    credentials.user!.updatePhotoURL(UserModel.clear(
-                            customName: credentials.user!.displayName!)
-                        .profilePhoto);
-                  }
-                  createUser(
-                    context: context,
-                    payload: UserModel(
-                      name: credentials.user!.displayName!,
-                      email: credentials.user!.email!,
-                      uid: credentials.user!.uid,
-                      password:
-                          credentials.user!.refreshToken ?? "No Auth Token",
-                      phone: "No Phone Number",
-                      address: Garage.sample().address,
-                      profileShot: credentials.user!.photoURL,
-                      roles: [Roles.user],
-                    ),
-                    signInMethods: auth,
-                  );
-                }
-              })
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(credentials.user!.uid)
+        .withConverter(
+            fromFirestore: UserModel.fromFirestore,
+            toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+        .get()
+        .then((doc) {
+          if (doc.exists == false) {
+            if (credentials.user!.photoURL == null) {
+              credentials.user!.updatePhotoURL(
+                  UserModel.clear(customName: credentials.user!.displayName!)
+                      .profilePhoto);
+            }
+            createUser(
+              context: context,
+              payload: UserModel(
+                name: credentials.user!.displayName!,
+                email: credentials.user!.email!,
+                uid: credentials.user!.uid,
+                password: credentials.user!.refreshToken ?? "No Auth Token",
+                phone: "No Phone Number",
+                address: Garage.sample().address,
+                profileShot: credentials.user!.photoURL,
+                roles: [Roles.user],
+              ),
+              signInMethods: auth,
+            );
+          }
+        })
         .then((_) => init())
         .then((_) => GlobalNavigator.router.currentState!
             .pushReplacementNamed(GlobalRoutes.switchRoles))
@@ -194,17 +192,27 @@ class UserProvider extends ChangeNotifier {
         );
   }
 
-  void googleSignIn() {
-        if (kIsWeb) {
-        //   TODO: Implement web signin
-        } else {
-        //   TODO: Implement android/ ios signin
-        }
+  void googleSignIn(BuildContext context) {
+    if (kIsWeb) {
+      FirebaseAuth.instance.signInWithPopup(GoogleAuthProvider()).then(
+            (credentials) => socialAuth(
+                auth: SignInMethods.google,
+                credentials: credentials,
+                context: context),
+          );
+    } else {
+      //   TODO: Implement android/ ios signin
+    }
   }
 
-  void githubSignIn() {
+  void githubSignIn(BuildContext context) {
     if (kIsWeb) {
-      //   TODO: Implement web signin
+      FirebaseAuth.instance.signInWithPopup(GithubAuthProvider()).then(
+            (credentials) => socialAuth(
+            auth: SignInMethods.google,
+            credentials: credentials,
+            context: context),
+      );
     } else {
       //   TODO: Implement android/ ios signin
     }
@@ -232,10 +240,10 @@ class UserProvider extends ChangeNotifier {
             );
         break;
       case SignInMethods.google:
-        googleSignIn();
+        googleSignIn(context);
         break;
       case SignInMethods.github:
-        githubSignIn();
+        githubSignIn(context);
         break;
 
       default:
