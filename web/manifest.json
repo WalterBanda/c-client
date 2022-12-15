@@ -1,18 +1,28 @@
 {
-    "name": "ChapChap",
-    "short_name": "ChapChap",
-    "start_url": ".",
-    "display": "standalone",
-    "background_color": "#F2F2F",
-    "theme_color": "#F2F2F",
-    "description": "ChapChap Mechanical friend",
-    "orientation": "portrait-primary",
-    "prefer_related_applications": false,
-    "icons": [
-        { "src": "favicon.ico", "type": "image/x-icon", "sizes": "16x16 32x32" },
-        { "src": "icons/icon-192.png", "type": "image/png", "sizes": "192x192" },
-        { "src": "icons/icon-512.png", "type": "image/png", "sizes": "512x512" },
-        { "src": "icons/icon-192-maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable" },
-        { "src": "icons/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
-    ]
+  "name": "ChapChap",
+  "short_name": "ChapChap",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#F2F2F",
+  "theme_color": "#F2F2F",
+  "description": "ChapChap is a location based mechanical service delivery.",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "favicon.ico", "type": "image/x-icon", "sizes": "16x16 32x32" },
+    { "src": "icons/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "icons/icon-512.png", "type": "image/png", "sizes": "512x512" },
+    {
+      "src": "icons/icon-192-maskable.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-512-maskable.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ]
 }
