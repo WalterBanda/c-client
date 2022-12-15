@@ -1,3 +1,5 @@
+import 'package:client/screens/auth/resetPassword.dart';
+
 import '../../router/auth.dart';
 import '../../router/roles.dart';
 import '../../screens/auth/login.dart';
@@ -20,6 +22,7 @@ class AuthRoutes {
   static const String onboarding = Onboarding.id;
   static const String login = Login.id;
   static const String register = Register.id;
+  static const String resetPassword = ResetPassword.id;
 }
 
 class SharedRoutes {

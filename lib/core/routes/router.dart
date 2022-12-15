@@ -1,3 +1,4 @@
+import 'package:client/screens/auth/resetPassword.dart';
 import 'package:client/screens/shared/about.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +64,8 @@ class AuthRouter {
         return PageRouteBuilder(pageBuilder: (_, __, ___) => Login());
       case AuthRoutes.register:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => Register());
+      case AuthRoutes.resetPassword:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => ResetPassword());
       default:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Splash());
     }

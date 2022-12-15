@@ -24,7 +24,7 @@ class Garage {
       address: address ??
           Address(name: "address", position: LatLng(-0.303099, 36.080025)),
       description: "description",
-      userUid: FirebaseAuth.instance.currentUser!.uid,
+      userUid: 'sjdfhjsdhfhsdfhsdjhflsdhfjl',
     );
   }
 

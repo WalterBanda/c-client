@@ -101,7 +101,20 @@ class Login extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () => AuthRouter.router.currentState!
+                    .pushReplacementNamed(AuthRoutes.resetPassword),
+                child: const Text(
+                  "Forgot password?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.success,
+                    fontSize: 13,
+                    fontFamily: "SF Pro Rounded",
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
               createAccountShortcut()
             ],
           ),

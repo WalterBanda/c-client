@@ -1,8 +1,6 @@
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/styles/ui/colors.dart';
-// ignore: depend_on_referenced_packages
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,9 +20,6 @@ class App extends StatelessWidget {
       ],
       child: MaterialApp(
         title: "ChapChap",
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.bgDark,
           fontFamily: "SF Pro Rounded",
