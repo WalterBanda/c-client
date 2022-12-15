@@ -146,6 +146,82 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  void socialAuth(
+      {required SignInMethods auth,
+      required UserCredential credentials,
+      required BuildContext context}) {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(credentials.user!.uid)
+        .withConverter(
+            fromFirestore: UserModel.fromFirestore,
+            toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+        .get()
+        .then((doc) {
+      if (doc.exists == false) {
+        if (credentials.user!.photoURL == null) {
+          credentials.user!.updatePhotoURL(
+              UserModel.clear(customName: credentials.user!.displayName!)
+                  .profilePhoto);
+        }
+        createUser(
+          context: context,
+          payload: UserModel(
+            name: credentials.user!.displayName!,
+            email: credentials.user!.email!,
+            uid: credentials.user!.uid,
+            password: credentials.user!.refreshToken ?? "No Auth Token",
+            phone: "No Phone Number",
+            address: Garage.sample().address,
+            profileShot: credentials.user!.photoURL,
+            roles: [Roles.user],
+          ),
+          signInMethods: auth,
+        );
+      }
+    });
+  }
+
+  void googleSignIn() {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        break;
+      case TargetPlatform.iOS:
+        break;
+      case TargetPlatform.linux:
+        break;
+      case TargetPlatform.windows:
+        break;
+      default:
+        if (kIsWeb) {
+        } else {
+          throw UnsupportedError(
+            'Google Signin is not supported for this platform.',
+          );
+        }
+    }
+  }
+
+  void githubSignIn() {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        break;
+      case TargetPlatform.iOS:
+        break;
+      case TargetPlatform.linux:
+        break;
+      case TargetPlatform.windows:
+        break;
+      default:
+        if (kIsWeb) {
+        } else {
+          throw UnsupportedError(
+            'Github Signin is not supported for this platform.',
+          );
+        }
+    }
+  }
+
   void authUser({
     required BuildContext context,
     required SignInMethods signInMethods,
@@ -168,165 +244,8 @@ class UserProvider extends ChangeNotifier {
             );
         break;
       case SignInMethods.google:
-        if (kIsWeb) {
-          await FirebaseAuth.instance
-              .signInWithPopup(GoogleAuthProvider())
-              .then((credentials) {
-            FirebaseFirestore.instance
-                .collection("users")
-                .doc(credentials.user!.uid)
-                .withConverter(
-                    fromFirestore: UserModel.fromFirestore,
-                    toFirestore: (UserModel userModel, _) =>
-                        userModel.toFirestore())
-                .get()
-                .then((doc) {
-                  if (doc.exists == false) {
-                    if (credentials.user!.photoURL == null) {
-                      credentials.user!.updatePhotoURL(UserModel.clear(
-                              customName: credentials.user!.displayName!)
-                          .profilePhoto);
-                    }
-                    createUser(
-                      context: context,
-                      payload: UserModel(
-                        name: credentials.user!.displayName!,
-                        email: credentials.user!.email!,
-                        uid: credentials.user!.uid,
-                        password:
-                            credentials.user!.refreshToken ?? "No Auth Token",
-                        phone: "No Phone Number",
-                        address: Garage.sample().address,
-                        profileShot: credentials.user!.photoURL,
-                        roles: [Roles.user],
-                      ),
-                      signInMethods: SignInMethods.google,
-                    );
-                  }
-                })
-                .then((_) => init())
-                .then(
-                  (_) => GlobalNavigator.router.currentState!
-                      .pushReplacementNamed(GlobalRoutes.switchRoles),
-                );
-          }).onError((FirebaseAuthException error, stackTrace) {
-            _resolveAuthError(
-              error: error,
-              context: context,
-              signInMethods: SignInMethods.google,
-            );
-          });
-        } else {
-          // Trigger the authentication flow
-          final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-          // Obtain the auth details from the request
-          final GoogleSignInAuthentication? googleAuth =
-              await googleUser?.authentication;
-
-          // Create a new credential
-          final credential = GoogleAuthProvider.credential(
-            accessToken: googleAuth?.accessToken,
-            idToken: googleAuth?.idToken,
-          );
-
-          await FirebaseAuth.instance
-              .signInWithCredential(credential)
-              .then((credentials) {
-            FirebaseFirestore.instance
-                .collection("users")
-                .doc(credentials.user!.uid)
-                .withConverter(
-                    fromFirestore: UserModel.fromFirestore,
-                    toFirestore: (UserModel userModel, _) =>
-                        userModel.toFirestore())
-                .get()
-                .then((doc) {
-                  if (doc.exists == false) {
-                    if (credentials.user!.photoURL == null) {
-                      credentials.user!.updatePhotoURL(UserModel.clear(
-                              customName: credentials.user!.displayName!)
-                          .profilePhoto);
-                    }
-                    createUser(
-                      context: context,
-                      payload: UserModel(
-                        name: credentials.user!.displayName!,
-                        email: credentials.user!.email!,
-                        uid: credentials.user!.uid,
-                        password:
-                            credentials.user!.refreshToken ?? "No Auth Token",
-                        phone: "No Phone Number",
-                        address: Garage.sample().address,
-                        profileShot: credentials.user!.photoURL,
-                        roles: [Roles.user],
-                      ),
-                      signInMethods: SignInMethods.google,
-                    );
-                  }
-                })
-                .then((_) => init())
-                .then(
-                  (_) => GlobalNavigator.router.currentState!
-                      .pushReplacementNamed(GlobalRoutes.switchRoles),
-                );
-          }).onError((FirebaseAuthException error, stackTrace) {
-            _resolveAuthError(
-              error: error,
-              context: context,
-              signInMethods: SignInMethods.google,
-            );
-          });
-        }
         break;
       case SignInMethods.github:
-        FirebaseAuth.instance
-            .signInWithPopup(GithubAuthProvider())
-            .then((credentials) {
-          FirebaseFirestore.instance
-              .collection("users")
-              .doc(credentials.user!.uid)
-              .withConverter(
-                  fromFirestore: UserModel.fromFirestore,
-                  toFirestore: (UserModel userModel, _) =>
-                      userModel.toFirestore())
-              .get()
-              .then((doc) {
-                if (doc.exists == false) {
-                  if (credentials.user!.photoURL == null) {
-                    credentials.user!.updatePhotoURL(UserModel.clear(
-                            customName: credentials.user!.displayName!)
-                        .profilePhoto);
-                  }
-                  createUser(
-                    context: context,
-                    payload: UserModel(
-                      name: credentials.user!.displayName!,
-                      email: credentials.user!.email!,
-                      uid: credentials.user!.uid,
-                      password:
-                          credentials.user!.refreshToken ?? "No Auth Token",
-                      phone: "No Phone Number",
-                      address: Garage.sample().address,
-                      profileShot: credentials.user!.photoURL,
-                      roles: [Roles.user],
-                    ),
-                    signInMethods: SignInMethods.github,
-                  );
-                }
-              })
-              .then((_) => init())
-              .then(
-                (_) => GlobalNavigator.router.currentState!
-                    .pushReplacementNamed(GlobalRoutes.switchRoles),
-              );
-        }).onError((FirebaseAuthException error, stackTrace) {
-          _resolveAuthError(
-            error: error,
-            context: context,
-            signInMethods: SignInMethods.github,
-          );
-        });
         break;
 
       default:
