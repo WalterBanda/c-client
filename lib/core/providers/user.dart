@@ -320,4 +320,20 @@ class UserProvider extends ChangeNotifier {
       );
     }
   }
+
+  void resetPassword({required String email}) {
+    FirebaseAuth.instance
+        .sendPasswordResetEmail(email: email)
+        .then(
+          (value) => alertSnackBar(
+              message:
+                  "Password reset request succesfully sent, check your email"),
+        )
+        .catchError(
+          (error) => alertSnackBar(
+              message: "Unable to send request, ${error.toString()}"),
+        )
+        .then((value) => AuthRouter.router.currentState
+            ?.pushReplacementNamed(AuthRoutes.splash));
+  }
 }

@@ -1,9 +1,11 @@
+import 'package:client/core/providers/user.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:flutter/material.dart';
 
 import 'package:client/core/routes/routes.dart';
 import 'package:client/core/routes/router.dart';
 import 'package:client/styles/ui/colors.dart';
+import 'package:provider/provider.dart';
 
 import 'onboarding.dart';
 
@@ -44,6 +46,7 @@ class ResetPassword extends StatelessWidget {
                     authInput(
                         controller: _emailController,
                         focusNode: _emailFocusNode,
+                        inputType: TextInputType.emailAddress,
                         hint: "Enter Email Address to reset"),
                     const SizedBox(
                       height: 20,
@@ -51,8 +54,8 @@ class ResetPassword extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          _resetEmail(email: _emailController.text)
-                              .then(() => {});
+                          _resetEmail(
+                              email: _emailController.text, context: context);
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -82,5 +85,8 @@ class ResetPassword extends StatelessWidget {
     );
   }
 
-  _resetEmail({required String email}) {}
+  _resetEmail({required String email, required BuildContext context}) {
+    Provider.of<UserProvider>(context, listen: false)
+        .resetPassword(email: email);
+  }
 }
