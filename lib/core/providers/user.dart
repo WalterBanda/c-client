@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../screens/auth/onboarding.dart';
 import '../routes/router.dart';
@@ -187,6 +186,14 @@ class UserProvider extends ChangeNotifier {
         );
   }
 
+  Future<UserCredential> signInWithGoogle() async {
+    // Create a new provider
+    GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+    return await FirebaseAuth.instance.signInWithProvider(googleProvider);
+  }
+
+
   void googleSignIn(BuildContext context) {
     if (kIsWeb) {
       FirebaseAuth.instance
@@ -205,7 +212,18 @@ class UserProvider extends ChangeNotifier {
             ),
           );
     } else {
-      //   TODO: Implement android/ ios signin
+      signInWithGoogle()
+          .then((credentials) => socialAuth(
+          auth: SignInMethods.google,
+          credentials: credentials,
+          context: context))
+          .onError(
+            (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+          error: error,
+          context: context,
+          signInMethods: SignInMethods.google,
+        ),
+      );
     }
   }
 
