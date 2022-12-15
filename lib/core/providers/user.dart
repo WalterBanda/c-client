@@ -148,11 +148,8 @@ class UserProvider extends ChangeNotifier {
 
   void socialAuth(
       {required SignInMethods auth,
-      required AuthCredential credential,
+      required UserCredential credentials,
       required BuildContext context}) {
-    FirebaseAuth.instance
-        .signInWithCredential(credential)
-        .then((credentials) => {
               FirebaseFirestore.instance
                   .collection("users")
                   .doc(credentials.user!.uid)
@@ -185,7 +182,6 @@ class UserProvider extends ChangeNotifier {
                   );
                 }
               })
-            })
         .then((_) => init())
         .then((_) => GlobalNavigator.router.currentState!
             .pushReplacementNamed(GlobalRoutes.switchRoles))
@@ -199,42 +195,18 @@ class UserProvider extends ChangeNotifier {
   }
 
   void googleSignIn() {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        break;
-      case TargetPlatform.iOS:
-        break;
-      case TargetPlatform.linux:
-        break;
-      case TargetPlatform.windows:
-        break;
-      default:
         if (kIsWeb) {
+        //   TODO: Implement web signin
         } else {
-          throw UnsupportedError(
-            'Google Signin is not supported for this platform.',
-          );
+        //   TODO: Implement android/ ios signin
         }
-    }
   }
 
   void githubSignIn() {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        break;
-      case TargetPlatform.iOS:
-        break;
-      case TargetPlatform.linux:
-        break;
-      case TargetPlatform.windows:
-        break;
-      default:
-        if (kIsWeb) {
-        } else {
-          throw UnsupportedError(
-            'Github Signin is not supported for this platform.',
-          );
-        }
+    if (kIsWeb) {
+      //   TODO: Implement web signin
+    } else {
+      //   TODO: Implement android/ ios signin
     }
   }
 
@@ -260,8 +232,10 @@ class UserProvider extends ChangeNotifier {
             );
         break;
       case SignInMethods.google:
+        googleSignIn();
         break;
       case SignInMethods.github:
+        githubSignIn();
         break;
 
       default:
