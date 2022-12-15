@@ -223,7 +223,7 @@ class UserProvider extends ChangeNotifier {
             (FirebaseAuthException error, stackTrace) => _resolveAuthError(
               error: error,
               context: context,
-              signInMethods: SignInMethods.google,
+              signInMethods: SignInMethods.github,
             ),
           );
     } else {
