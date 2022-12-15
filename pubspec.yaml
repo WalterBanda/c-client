@@ -25,8 +25,6 @@ dependencies:
 
   firebase_auth_desktop: ^1.0.0
   firebase_core_desktop: ^1.0.0
-  google_sign_in: ^4.5.1
-  github_sign_in: ^0.0.5-dev.4
 
   # Core Features dependacies
   flutter_map: ^3.0.0
