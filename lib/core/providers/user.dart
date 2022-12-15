@@ -148,38 +148,54 @@ class UserProvider extends ChangeNotifier {
 
   void socialAuth(
       {required SignInMethods auth,
-      required UserCredential credentials,
+      required AuthCredential credential,
       required BuildContext context}) {
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(credentials.user!.uid)
-        .withConverter(
-            fromFirestore: UserModel.fromFirestore,
-            toFirestore: (UserModel userModel, _) => userModel.toFirestore())
-        .get()
-        .then((doc) {
-      if (doc.exists == false) {
-        if (credentials.user!.photoURL == null) {
-          credentials.user!.updatePhotoURL(
-              UserModel.clear(customName: credentials.user!.displayName!)
-                  .profilePhoto);
-        }
-        createUser(
-          context: context,
-          payload: UserModel(
-            name: credentials.user!.displayName!,
-            email: credentials.user!.email!,
-            uid: credentials.user!.uid,
-            password: credentials.user!.refreshToken ?? "No Auth Token",
-            phone: "No Phone Number",
-            address: Garage.sample().address,
-            profileShot: credentials.user!.photoURL,
-            roles: [Roles.user],
+    FirebaseAuth.instance
+        .signInWithCredential(credential)
+        .then((credentials) => {
+              FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(credentials.user!.uid)
+                  .withConverter(
+                      fromFirestore: UserModel.fromFirestore,
+                      toFirestore: (UserModel userModel, _) =>
+                          userModel.toFirestore())
+                  .get()
+                  .then((doc) {
+                if (doc.exists == false) {
+                  if (credentials.user!.photoURL == null) {
+                    credentials.user!.updatePhotoURL(UserModel.clear(
+                            customName: credentials.user!.displayName!)
+                        .profilePhoto);
+                  }
+                  createUser(
+                    context: context,
+                    payload: UserModel(
+                      name: credentials.user!.displayName!,
+                      email: credentials.user!.email!,
+                      uid: credentials.user!.uid,
+                      password:
+                          credentials.user!.refreshToken ?? "No Auth Token",
+                      phone: "No Phone Number",
+                      address: Garage.sample().address,
+                      profileShot: credentials.user!.photoURL,
+                      roles: [Roles.user],
+                    ),
+                    signInMethods: auth,
+                  );
+                }
+              })
+            })
+        .then((_) => init())
+        .then((_) => GlobalNavigator.router.currentState!
+            .pushReplacementNamed(GlobalRoutes.switchRoles))
+        .onError(
+          (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+            error: error,
+            context: context,
+            signInMethods: auth,
           ),
-          signInMethods: auth,
         );
-      }
-    });
   }
 
   void googleSignIn() {
