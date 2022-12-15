@@ -209,10 +209,10 @@ class UserProvider extends ChangeNotifier {
     if (kIsWeb) {
       FirebaseAuth.instance.signInWithPopup(GithubAuthProvider()).then(
             (credentials) => socialAuth(
-            auth: SignInMethods.google,
-            credentials: credentials,
-            context: context),
-      );
+                auth: SignInMethods.github,
+                credentials: credentials,
+                context: context),
+          );
     } else {
       //   TODO: Implement android/ ios signin
     }
