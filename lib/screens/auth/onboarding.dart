@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/user.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 
 import '../../styles/icons/chap_chap_icons.dart';
@@ -90,7 +91,7 @@ class Onboarding extends StatelessWidget {
 
   Widget authLet(GestureTapCallback onPressed, Widget icon) {
     return SizedBox(
-      height: 60,
+      height: kIsWeb ? 60 : null,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
