@@ -80,6 +80,7 @@ class PageNavigator extends StatelessWidget {
             CircleAvatar(
               minRadius: 30,
               maxRadius: 60,
+              backgroundColor: AppColors.input.withOpacity(0.7),
               backgroundImage: NetworkImage(
                 Provider.of<UserProvider>(context).user.profilePhoto,
               ),

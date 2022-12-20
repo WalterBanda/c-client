@@ -26,8 +26,10 @@ class ProfilePage extends StatelessWidget {
                 CircleAvatar(
                   minRadius: 30,
                   maxRadius: 80,
+                  backgroundColor: AppColors.input.withOpacity(0.7),
                   backgroundImage: NetworkImage(
-                      Provider.of<UserProvider>(context).user.profilePhoto),
+                    Provider.of<UserProvider>(context).user.profilePhoto,
+                  ),
                 ),
                 const SizedBox(height: 40),
                 Text(

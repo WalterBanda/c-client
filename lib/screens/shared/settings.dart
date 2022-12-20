@@ -1,9 +1,6 @@
 import 'package:client/core/models/garage.dart';
-import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/appdata.dart';
-import 'package:client/screens/auth/onboarding.dart';
 import 'package:client/screens/roles/admin/items.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +38,10 @@ class SettingsPage extends StatelessWidget {
                   child: CircleAvatar(
                     minRadius: 30,
                     maxRadius: 60,
+                    backgroundColor: AppColors.input,
                     backgroundImage: NetworkImage(
-                        Provider.of<UserProvider>(context).user.profilePhoto),
+                      Provider.of<UserProvider>(context).user.profilePhoto,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),
