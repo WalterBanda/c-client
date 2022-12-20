@@ -31,8 +31,22 @@ class AppDialog extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           elevation: 0,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
-            child: child,
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () =>
+                          Navigator.of(context, rootNavigator: true).pop(),
+                      icon: const Icon(Icons.close),
+                    )
+                  ],
+                ),
+                Expanded(child: child),
+              ],
+            ),
           ),
         ),
       ),
