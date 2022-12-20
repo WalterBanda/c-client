@@ -29,10 +29,11 @@ dependencies:
   # Core Features dependacies
   flutter_map: ^3.0.0
   vector_map_tiles: ^3.1.4
-  geolocator: ^9.0.2
   provider: ^6.0.3
-  google_maps_flutter: ^2.1.7
-  google_maps_flutter_web: ^0.4.0+3
+  flutter_map_marker_cluster: ^1.0.1
+  location: ^4.4.0
+  flutter_map_location_marker: ^5.0.0+1
+  location_picker_flutter_map: ^1.1.5
 
   # Utilities
   dotted_border: ^2.0.0+2
@@ -40,10 +41,6 @@ dependencies:
   shared_preferences: ^2.0.15
   http: ^0.13.4
   latlong2: ^0.8.1
-  flutter_map_marker_cluster: ^1.0.1
-  location: ^4.4.0
-  flutter_map_location_marker: ^5.0.0+1
-  location_picker_flutter_map: ^1.1.5
 
 dev_dependencies:
   flutter_test:
