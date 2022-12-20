@@ -1,5 +1,6 @@
 import 'package:client/core/providers/user.dart';
 import 'package:client/screens/auth/login.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:client/core/routes/routes.dart';
@@ -51,27 +52,30 @@ class ResetPassword extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _resetEmail(
-                              email: _emailController.text, context: context);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColors.primary,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 17, horizontal: 80),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                    SizedBox(
+                      height: kIsWeb ? 50 : null,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _resetEmail(
+                                email: _emailController.text, context: context);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: AppColors.primary,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 17, horizontal: 80),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        "Reset Password",
-                        style: TextStyle(
-                          fontFamily: "SF Pro Rounded",
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
+                        child: const Text(
+                          "Reset Password",
+                          style: TextStyle(
+                            fontFamily: "SF Pro Rounded",
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),

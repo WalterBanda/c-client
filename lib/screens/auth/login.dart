@@ -1,4 +1,5 @@
 import 'package:client/core/models/garage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -72,30 +73,33 @@ class Login extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _userAuth(
-                              context: context,
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: AppColors.primary,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 17, horizontal: 124),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                      SizedBox(
+                        height: kIsWeb ? 50 : null,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _userAuth(
+                                context: context,
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: AppColors.primary,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 17, horizontal: 124),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
-                            fontFamily: "SF Pro Rounded",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              fontFamily: "SF Pro Rounded",
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),

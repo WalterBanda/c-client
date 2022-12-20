@@ -1,5 +1,6 @@
 import 'package:client/core/models/garage.dart';
 import 'package:client/screens/roles/admin/items.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
@@ -155,33 +156,36 @@ class Register extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _userRegister(
-                            context: context,
-                            username: _nameController.text,
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                            phone: _phoneController.text,
-                            address: _addressController.value!,
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColors.primary,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 17, horizontal: 124),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                    SizedBox(
+                      height: kIsWeb ? 50 : null,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _userRegister(
+                              context: context,
+                              username: _nameController.text,
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                              phone: _phoneController.text,
+                              address: _addressController.value!,
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: AppColors.primary,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 17, horizontal: 124),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        "Register",
-                        style: TextStyle(
-                          fontFamily: "SF Pro Rounded",
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
+                        child: const Text(
+                          "Register",
+                          style: TextStyle(
+                            fontFamily: "SF Pro Rounded",
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
