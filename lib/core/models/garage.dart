@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -58,7 +57,7 @@ String createProfilePic({required String name}) {
       .primaries[Random().nextInt(Colors.primaries.length)]
       .toString()
       .substring(39, 42);
-  return "https://ui-avatars.com/api/?name=\"$name\"&background=$profileColor&color=fff";
+  return "https://avatars.dicebear.com/api/initials/$name";
 }
 
 class Address {
