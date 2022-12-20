@@ -48,23 +48,26 @@ class PageNavigator extends StatelessWidget {
   }
 
   Drawer customDrawer(BuildContext context) {
-    ElevatedButton logoutButton() {
-      return ElevatedButton(
-        onPressed: () =>
-            Provider.of<UserProvider>(context, listen: false).signOut(context),
-        style: ElevatedButton.styleFrom(
-          primary: AppColors.primary,
-          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 80),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+    Widget logoutButton() {
+      return SizedBox(
+        height: kIsWeb ? 50 : null,
+        child: ElevatedButton(
+          onPressed: () => Provider.of<UserProvider>(context, listen: false)
+              .signOut(context),
+          style: ElevatedButton.styleFrom(
+            primary: AppColors.primary,
+            padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 80),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
           ),
-        ),
-        child: const Text(
-          "Logout",
-          style: TextStyle(
-            fontFamily: "SF Pro Rounded",
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
+          child: const Text(
+            "Logout",
+            style: TextStyle(
+              fontFamily: "SF Pro Rounded",
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
       );

@@ -79,24 +79,27 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () =>
-                      Provider.of<UserProvider>(context, listen: false)
-                          .signOut(context),
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.primary,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 17, horizontal: 124),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                SizedBox(
+                  height: kIsWeb ? 50 : null,
+                  child: ElevatedButton(
+                    onPressed: () =>
+                        Provider.of<UserProvider>(context, listen: false)
+                            .signOut(context),
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.primary,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 17, horizontal: 124),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
-                  ),
-                  child: const Text(
-                    "Logout",
-                    style: TextStyle(
-                      fontFamily: "SF Pro Rounded",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
+                    child: const Text(
+                      "Logout",
+                      style: TextStyle(
+                        fontFamily: "SF Pro Rounded",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 )
