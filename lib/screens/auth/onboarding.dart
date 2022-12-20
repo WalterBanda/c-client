@@ -89,15 +89,19 @@ class Onboarding extends StatelessWidget {
   static const String id = "onboarding";
 
   Widget authLet(GestureTapCallback onPressed, Widget icon) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        primary: AppColors.primary,
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    return SizedBox(
+      height: 60,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          primary: AppColors.primary,
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
+        child: icon,
       ),
-      child: icon,
     );
   }
 
