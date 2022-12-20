@@ -1,5 +1,5 @@
 <p align="center">
-    <img align="center" src="docs/assets/logo.svg" height="128">
+    <img align="center" src="web/icons/icon-512.png" height="128">
 </p>
 <h4 align="center">A Motorist best friend.</h4>
 <p align="center">
@@ -21,7 +21,7 @@
   <a href="#license">License</a>
 </p>
 
-<p align="center"><img src="docs/assets/thumbnail.svg" alt="Thumbnail" style="zoom:25%;" /></p>
+<p align="center"><img src="web/marketing/thumbnail.png" alt="Thumbnail" style="zoom:25%;" /></p>
 
 <h1 id="About">About ChapChap  🧰</h1>
 
@@ -82,8 +82,8 @@ This page deals with user authentication and user verification. The features in 
 
 Below are screenshot pages
 
-| Auth Page                                                                   | Login Page                                                                   |
-| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Auth Page                                                                        | Login Page                                                                        |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | <img src="docs/assets/screenshots/auth.svg" alt="Thumbnail" style="zoom:50%;" /> | <img src="docs/assets/screenshots/login.svg" alt="Thumbnail" style="zoom:50%;" /> |
 
 ### User Home
@@ -95,8 +95,8 @@ First Page the user sees, its where the user can look for nearby service centers
 
 Below are the shots
 
-| User Home Page                                                                   | User Home Overlay Page                                                                   |
-| -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| User Home Page                                                                        | User Home Overlay Page                                                                        |
+| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | <img src="docs/assets/screenshots/user_home.svg" alt="Thumbnail" style="zoom:50%;" /> | <img src="docs/assets/screenshots/user_home_overlay.svg" alt="Thumbnail" style="zoom:50%;" /> |
 
 ### Admin Home
@@ -108,14 +108,14 @@ The features that can be controlled in this app are;
 1. Add or remove a service center from the app
 2. Enable or disable automatic google service centers
 
-| Admin Home Page                                                                   | Admin Home Overlay Page                                                                   |
-| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Admin Home Page                                                                        | Admin Home Overlay Page                                                                        |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | <img src="docs/assets/screenshots/admin_home.svg" alt="Thumbnail" style="zoom:50%;" /> | <img src="docs/assets/screenshots/admin_home_overlay.svg" alt="Thumbnail" style="zoom:50%;" /> |
 
 ### Profile
 
 This screen shows the profile of the user. Its also provides options for users such as admin
 
-| Profile                                                                           |
-| --------------------------------------------------------------------------------- |
+| Profile                                                                                |
+| -------------------------------------------------------------------------------------- |
 | <img src="docs/assets/screenshots/admin_home.svg" alt="Thumbnail" style="zoom:50%;" /> |
