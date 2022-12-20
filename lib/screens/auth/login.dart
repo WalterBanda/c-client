@@ -34,89 +34,91 @@ class Login extends StatelessWidget {
       ),
       body: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              buildBranding(context),
-              const SizedBox(height: 40),
-              Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    authInput(
-                      hint: "Enter your Email",
-                      controller: _emailController,
-                      focusNode: _emailFocusNode,
-                      validator: (value) =>
-                          Validator.validateEmail(email: value),
-                      inputType: TextInputType.emailAddress,
-                      prefix: const Icon(
-                        Icons.email_rounded,
-                        size: 15,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    authInput(
-                      hint: "Enter your Password",
-                      controller: _passwordController,
-                      focusNode: _passwordFocusNode,
-                      validator: (value) =>
-                          Validator.validatePassword(password: value),
-                      inputType: TextInputType.visiblePassword,
-                      private: true,
-                      prefix: const Icon(
-                        Icons.lock_rounded,
-                        size: 15,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _userAuth(
-                            context: context,
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColors.primary,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 17, horizontal: 124),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                buildBranding(context),
+                const SizedBox(height: 40),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      authInput(
+                        hint: "Enter your Email",
+                        controller: _emailController,
+                        focusNode: _emailFocusNode,
+                        validator: (value) =>
+                            Validator.validateEmail(email: value),
+                        inputType: TextInputType.emailAddress,
+                        prefix: const Icon(
+                          Icons.email_rounded,
+                          size: 15,
                         ),
                       ),
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(
-                          fontFamily: "SF Pro Rounded",
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
+                      const SizedBox(height: 14),
+                      authInput(
+                        hint: "Enter your Password",
+                        controller: _passwordController,
+                        focusNode: _passwordFocusNode,
+                        validator: (value) =>
+                            Validator.validatePassword(password: value),
+                        inputType: TextInputType.visiblePassword,
+                        private: true,
+                        prefix: const Icon(
+                          Icons.lock_rounded,
+                          size: 15,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              TextButton(
-                onPressed: () => AuthRouter.router.currentState!
-                    .pushReplacementNamed(AuthRoutes.resetPassword),
-                child: const Text(
-                  "Forgot password?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.success,
-                    fontSize: 13,
-                    fontFamily: "SF Pro Rounded",
-                    fontWeight: FontWeight.w700,
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _userAuth(
+                              context: context,
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: AppColors.primary,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 17, horizontal: 124),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(
+                            fontFamily: "SF Pro Rounded",
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              createAccountShortcut()
-            ],
+                TextButton(
+                  onPressed: () => AuthRouter.router.currentState!
+                      .pushReplacementNamed(AuthRoutes.resetPassword),
+                  child: const Text(
+                    "Forgot password?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.success,
+                      fontSize: 13,
+                      fontFamily: "SF Pro Rounded",
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                createAccountShortcut()
+              ],
+            ),
           ),
         ),
       ),

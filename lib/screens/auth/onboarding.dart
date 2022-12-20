@@ -122,35 +122,37 @@ class Onboarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            buildBranding(context),
-            const SizedBox(height: 40),
-            const Text(
-              "Login to your Account ",
-              style: TextStyle(
-                fontFamily: "SF Pro Rounded",
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              buildBranding(context),
+              const SizedBox(height: 40),
+              const Text(
+                "Login to your Account ",
+                style: TextStyle(
+                  fontFamily: "SF Pro Rounded",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                authLet(() => _googleSignIn(context),
-                    const Icon(ChapChap.google, size: 36)),
-                const SizedBox(width: 15),
-                authLet(() => _gitHubSignIn(context),
-                    const Icon(ChapChap.github, size: 36)),
-                const SizedBox(width: 15),
-                authLet(_emailSignIn, const Icon(ChapChap.email, size: 36)),
-              ],
-            ),
-            const SizedBox(height: 20),
-            createAccountShortcut(),
-          ],
+              const SizedBox(height: 20),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  authLet(() => _googleSignIn(context),
+                      const Icon(ChapChap.google, size: 36)),
+                  const SizedBox(width: 15),
+                  authLet(() => _gitHubSignIn(context),
+                      const Icon(ChapChap.github, size: 36)),
+                  const SizedBox(width: 15),
+                  authLet(_emailSignIn, const Icon(ChapChap.email, size: 36)),
+                ],
+              ),
+              const SizedBox(height: 20),
+              createAccountShortcut(),
+            ],
+          ),
         ),
       ),
     );

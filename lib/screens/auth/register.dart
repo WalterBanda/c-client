@@ -46,147 +46,149 @@ class Register extends StatelessWidget {
       ),
       body: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 40),
-              const Text(
-                "Create your Account",
-                style: TextStyle(
-                  fontFamily: "SF Pro Rounded",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 40),
+                const Text(
+                  "Create your Account",
+                  style: TextStyle(
+                    fontFamily: "SF Pro Rounded",
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Form(
-                key: _formKey,
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  authInput(
-                    hint: "Your Username",
-                    controller: _nameController,
-                    focusNode: _nameFocusNode,
-                    inputType: TextInputType.name,
-                    validator: (value) => Validator.validateName(name: value),
-                    prefix: const Icon(
-                      ChapChap.user,
-                      size: 15,
+                const SizedBox(height: 20),
+                Form(
+                  key: _formKey,
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    authInput(
+                      hint: "Your Username",
+                      controller: _nameController,
+                      focusNode: _nameFocusNode,
+                      inputType: TextInputType.name,
+                      validator: (value) => Validator.validateName(name: value),
+                      prefix: const Icon(
+                        ChapChap.user,
+                        size: 15,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  authInput(
-                    hint: "Enter your Email",
-                    controller: _emailController,
-                    focusNode: _emailFocusNode,
-                    inputType: TextInputType.emailAddress,
-                    validator: (value) => Validator.validateEmail(email: value),
-                    prefix: const Icon(
-                      Icons.email_rounded,
-                      size: 15,
+                    const SizedBox(height: 15),
+                    authInput(
+                      hint: "Enter your Email",
+                      controller: _emailController,
+                      focusNode: _emailFocusNode,
+                      inputType: TextInputType.emailAddress,
+                      validator: (value) => Validator.validateEmail(email: value),
+                      prefix: const Icon(
+                        Icons.email_rounded,
+                        size: 15,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  authInput(
-                    hint: "Enter your Password",
-                    controller: _passwordController,
-                    focusNode: _passwordFocusNode,
-                    validator: (value) =>
-                        Validator.validatePassword(password: value),
-                    inputType: TextInputType.visiblePassword,
-                    private: true,
-                    prefix: const Icon(
-                      Icons.lock_rounded,
-                      size: 15,
+                    const SizedBox(height: 15),
+                    authInput(
+                      hint: "Enter your Password",
+                      controller: _passwordController,
+                      focusNode: _passwordFocusNode,
+                      validator: (value) =>
+                          Validator.validatePassword(password: value),
+                      inputType: TextInputType.visiblePassword,
+                      private: true,
+                      prefix: const Icon(
+                        Icons.lock_rounded,
+                        size: 15,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  authInput(
-                    hint: "Enter your Phone Number",
-                    controller: _phoneController,
-                    focusNode: _phoneFocusNode,
-                    inputType: TextInputType.phone,
-                    validator: (value) => Validator.validatePhone(phone: value),
-                    prefix: const Icon(
-                      Icons.phone_rounded,
-                      size: 15,
+                    const SizedBox(height: 15),
+                    authInput(
+                      hint: "Enter your Phone Number",
+                      controller: _phoneController,
+                      focusNode: _phoneFocusNode,
+                      inputType: TextInputType.phone,
+                      validator: (value) => Validator.validatePhone(phone: value),
+                      prefix: const Icon(
+                        Icons.phone_rounded,
+                        size: 15,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  authInput(
-                    hint: "Enter your Address",
-                    controller: _addressTextController,
-                    focusNode: _addressFocusNode,
-                    inputType: TextInputType.streetAddress,
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (context) => AppDialog(
-                        child: FlutterLocationPicker(
-                          initZoom: 11,
-                          minZoomLevel: 5,
-                          maxZoomLevel: 16,
-                          trackMyPosition: true,
-                          selectLocationButtonText: 'Select Garage Location',
-                          selectLocationButtonStyle: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(AppColors.primary),
+                    const SizedBox(height: 15),
+                    authInput(
+                      hint: "Enter your Address",
+                      controller: _addressTextController,
+                      focusNode: _addressFocusNode,
+                      inputType: TextInputType.streetAddress,
+                      onTap: () => showDialog(
+                        context: context,
+                        builder: (context) => AppDialog(
+                          child: FlutterLocationPicker(
+                            initZoom: 11,
+                            minZoomLevel: 5,
+                            maxZoomLevel: 16,
+                            trackMyPosition: true,
+                            selectLocationButtonText: 'Select Garage Location',
+                            selectLocationButtonStyle: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(AppColors.primary),
+                            ),
+                            markerIcon: ChapChap.garage,
+                            markerIconColor: AppColors.primary,
+                            searchBarBackgroundColor: AppColors.input,
+                            zoomButtonsBackgroundColor: AppColors.primary,
+                            locationButtonBackgroundColor: AppColors.primary,
+                            onPicked: (pickedData) {
+                              _addressTextController.text = pickedData.address;
+                              Navigator.of(context, rootNavigator: true).pop();
+                              _addressController.value = Address(
+                                  name: pickedData.address.toString(),
+                                  position: LatLng(pickedData.latLong.latitude,
+                                      pickedData.latLong.longitude));
+                            },
                           ),
-                          markerIcon: ChapChap.garage,
-                          markerIconColor: AppColors.primary,
-                          searchBarBackgroundColor: AppColors.input,
-                          zoomButtonsBackgroundColor: AppColors.primary,
-                          locationButtonBackgroundColor: AppColors.primary,
-                          onPicked: (pickedData) {
-                            _addressTextController.text = pickedData.address;
-                            Navigator.of(context, rootNavigator: true).pop();
-                            _addressController.value = Address(
-                                name: pickedData.address.toString(),
-                                position: LatLng(pickedData.latLong.latitude,
-                                    pickedData.latLong.longitude));
-                          },
+                        ),
+                      ),
+                      validator: (value) => Validator.validateAddress(
+                          address: _addressController.value),
+                      prefix: const Icon(
+                        ChapChap.location,
+                        size: 15,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _userRegister(
+                            context: context,
+                            username: _nameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            phone: _phoneController.text,
+                            address: _addressController.value!,
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: AppColors.primary,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 17, horizontal: 124),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Text(
+                        "Register",
+                        style: TextStyle(
+                          fontFamily: "SF Pro Rounded",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
-                    validator: (value) => Validator.validateAddress(
-                        address: _addressController.value),
-                    prefix: const Icon(
-                      ChapChap.location,
-                      size: 15,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _userRegister(
-                          context: context,
-                          username: _nameController.text,
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          phone: _phoneController.text,
-                          address: _addressController.value!,
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 17, horizontal: 124),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: const Text(
-                      "Register",
-                      style: TextStyle(
-                        fontFamily: "SF Pro Rounded",
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-            ],
+                  ]),
+                ),
+              ],
+            ),
           ),
         ),
       ),
