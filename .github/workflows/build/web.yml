@@ -12,3 +12,9 @@ runs:
   using: "composite"
   steps:
     - run: flutter build web
+    - name: Archive build artifacts
+      if: ${{ inputs.upload_artifact == true }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: web-build-artifact
+        path: build/web
