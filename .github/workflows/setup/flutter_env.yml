@@ -1,4 +1,5 @@
 # Workflow for setting up flutter environment
+# Accepts flutter_version env for version of flutter to setup
 
 name: "Environment Setup"
 description: "Setup the flutter environments"
@@ -12,4 +13,4 @@ runs:
   steps:
     - uses: britannio/action-install-flutter@v1
       with:
-        version: ${{ FLUTTER_VERSION }}
+        version: ${{ inputs.flutter_version }}
