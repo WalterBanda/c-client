@@ -1,0 +1,18 @@
+# Compose action for Deploying to firebase
+# Accepts one parameter, channelId that determines where its deployed into production
+
+name: "Host to firebase"
+description: "Hosts the built packages to firebase"
+inputs:
+  channelId:
+    description: "Whether to deploy the build into production or preview"
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: "${{ secrets.GITHUB_TOKEN }}"
+        firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHAPCHAP_90547 }}"
+        channelId: ${{ inputs.channelId }}
+        projectId: chapchap-90547
