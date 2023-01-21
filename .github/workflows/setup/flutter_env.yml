@@ -1,0 +1,13 @@
+name: "Environment Setup"
+description: "Setup the flutter environments"
+inputs:
+  flutter_version:
+    description: "Setup flutter environment with specific version"
+    required: false
+    default: 3.3.9
+runs:
+  using: "composite"
+  steps:
+    - uses: britannio/action-install-flutter@v1
+      with:
+        version: ${{ FLUTTER_VERSION }}
