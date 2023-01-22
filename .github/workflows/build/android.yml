@@ -1,0 +1,23 @@
+# Workflow for building the app for the android platform
+# Builds the android app using the various packaging formats, apk,aar,appbundles.
+# Optionally uploads the build artifacts into build artifact store
+
+name: "Build for the android platform"
+description: "Builds chapchap targeting the android platform"
+inputs:
+  upload_artifact:
+    description: "Optionally upload artifact when build finishes"
+    required: false
+    default: false
+runs:
+  using: "composite"
+  steps:
+    - run: flutter build apk
+    - run: flutter build aar
+    - run: flutter build appbundle
+    - name: Archive build artifacts
+      if: ${{ inputs.upload_artifact == true }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: android-build-artifact
+        path: build/app
