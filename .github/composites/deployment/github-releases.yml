@@ -1,3 +1,5 @@
+# Create Github release for app
+
 name: "Release to Github"
 description: "Creates a github release the various builds of the app"
 runs:
