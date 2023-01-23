@@ -13,4 +13,15 @@ jobs:
         uses: ./.github/actions/setup-project
       - name: Test flutter code
         uses: ./.github/actions/test-flutter
-
+  
+  deploy_preview_web_builds:
+    needs: project_setup_testing
+    name: Build and Deploy preview PR builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Project setup + Flutter SDK setup
+        uses: ./.github/actions/setup-project
+      - name: Build and Deploy Preview builds
+        uses: ./.github/actions/build-web
+        with:
+         is_prod: false
