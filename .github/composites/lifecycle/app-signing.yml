@@ -1,4 +1,5 @@
 # Configuration for Signing of app
+# `💡` Lifecycle folder contains composite workflows that are involved with the CI\CD lifecycle of chapchap such as signing of application code before deployment.
 
 name: "Code sign android Application"
 description: "Creates a github release the various builds of the app"
