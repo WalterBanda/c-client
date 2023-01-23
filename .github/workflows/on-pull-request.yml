@@ -1,0 +1,16 @@
+# Runs when a PR is created, this is reponsible for testing and building a preview app to facilitate the review process.
+
+name: Workflow on PR
+on:
+  pull_request:
+jobs:
+  project_setup_testing:
+    name: Setup and testing of the Project
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Project setup + Flutter SDK setup
+        uses: ./.github/actions/setup-project
+      - name: Test flutter code
+        uses: ./.github/actions/test-flutter
+
