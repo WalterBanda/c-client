@@ -14,9 +14,3 @@ runs:
   steps:
     - run: flutter build apk
     - run: flutter build appbundle
-    - name: Archive build artifacts
-      if: ${{ inputs.upload_artifact == true }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: android-build-artifact
-        path: build/app
