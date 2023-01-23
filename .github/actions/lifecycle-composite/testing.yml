@@ -1,9 +1,0 @@
-# Workflow responsible for testing and mocking before deployment or building
-# Setup unit test other tests to come.
-
-name: "Testing workflow"
-description: "Tests the code before deployment"
-runs:
-  using: "composite"
-  steps:
-    - run: flutter test
