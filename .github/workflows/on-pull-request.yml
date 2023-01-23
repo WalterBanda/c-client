@@ -16,12 +16,24 @@ jobs:
   
   deploy_preview_web_builds:
     needs: project_setup_testing
-    name: Build and Deploy preview PR builds
+    name: Build and Deploy preview web PR builds
     runs-on: ubuntu-latest
     steps:
       - name: Project setup + Flutter SDK setup
         uses: ./.github/actions/setup-project
       - name: Build and Deploy Preview builds
         uses: ./.github/actions/build-web
+        with:
+         is_prod: false
+
+  deploy_preview_mobile_builds:
+    needs: project_setup_testing
+    name: Build and Deploy preview mobile PR builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Project setup + Flutter SDK setup
+        uses: ./.github/actions/setup-project
+      - name: Build and Deploy Preview builds
+        uses: ./.github/actions/build-mobile
         with:
          is_prod: false
