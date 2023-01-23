@@ -1,0 +1,24 @@
+# Workflow that sets up project, install flutter sdk and installs project dependacies
+
+name: Project Setup
+description: Clone's project, setup flutter sdk with locked version, installs project dependacies
+inputs:
+  flutter_version:
+    description: Version that would install locked flutter sdk
+    required: false
+    default: 3.3.9
+runs:
+  using: composite
+  steps:
+    - name: Clone & checkout to the repository
+      uses: actions/checkout@v3
+    - name: Setup Flutter SDK
+      uses: britannio/action-install-flutter@v1
+      with:
+        version: ${{ inputs.flutter_version }}
+    - name: Install project dependacies
+      run: flutter pub get
+      shell: bash
+    - name: Caching build binaries
+      run: flutter precache
+      shell: bash
