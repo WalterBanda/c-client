@@ -13,7 +13,6 @@ runs:
   using: "composite"
   steps:
     - run: flutter build apk
-    - run: flutter build aar
     - run: flutter build appbundle
     - name: Archive build artifacts
       if: ${{ inputs.upload_artifact == true }}
