@@ -10,17 +10,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Build an APK all targets
-      if: ${{inputs.is_prod == "true"}}
-      run: flutter build apk
-      shell: bash
-    - name: Build an APK and splits them for all targets
-      if: ${{inputs.is_prod == "true"}}
-      run: flutter build apk --split-per-abi
-      shell: bash
-
-    # Preview builds
-    - name: Build AAR package if the build is production
+    - name: Build APK package for preview
       if: ${{inputs.is_prod == "false"}}
       run: flutter build apk
       shell: bash
