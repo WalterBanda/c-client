@@ -22,9 +22,9 @@ jobs:
       - name: Project setup + Flutter SDK setup
         uses: ./.github/actions/setup-project
       - name: Build Preview builds
-        uses: ./.github/actions/build-web
+        uses: ./.github/actions/build/web
       - name: Deploy Preview builds
-        uses: ./.github/actions/deploy-web
+        uses: ./.github/actions/deploy/web
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHAPCHAP_90547 }}
@@ -37,10 +37,10 @@ jobs:
       - name: Project setup + Flutter SDK setup
         uses: ./.github/actions/setup-project
       - name: Build Preview builds
-        uses: ./.github/actions/build/mobile-preview
+        uses: ./.github/actions/build/mobile/android-preview
         with:
           is_prod: "false"
       - name: Deploy Preview builds
-        uses: ./.github/actions/deploy/mobile-releases
+        uses: ./.github/actions/deploy/mobile/android-releases
         with:
           is_prod: false
