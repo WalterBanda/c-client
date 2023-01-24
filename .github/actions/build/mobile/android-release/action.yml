@@ -1,0 +1,30 @@
+name: Builds for android
+description: Workflow that builds the project targeting android, it builds apk, aar depending on whether its a release build or not. It also signs the APK/AAR
+
+inputs:
+  is_prod:
+    description: Check whether its a release build then creates an app bundle build for release builds
+    required: true
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    # Production Builds
+    - name: Build an APK all targets
+      if: ${{inputs.is_prod == "true"}}
+      run: flutter build apk
+      shell: bash
+    - name: Build an APK and splits them for all targets
+      if: ${{inputs.is_prod == "true"}}
+      run: flutter build apk --split-per-abi
+      shell: bash
+
+    - name: Build AAR package if the build is production
+      if: ${{inputs.is_prod == "true"}}
+      run: flutter build appbundle
+      shell: bash
+    - name: Build an APK all targets
+      if: ${{inputs.is_prod == "true"}}
+      run: flutter build appbundle
+      shell: bash
