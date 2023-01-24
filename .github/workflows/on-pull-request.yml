@@ -38,6 +38,8 @@ jobs:
         uses: ./.github/actions/setup-project
       - name: Build Preview builds
         uses: ./.github/actions/build/mobile-preview
+        with:
+          is_prod: "false"
       - name: Deploy Preview builds
         uses: ./.github/actions/deploy/mobile-releases
         with:
