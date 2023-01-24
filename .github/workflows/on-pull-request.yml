@@ -27,6 +27,8 @@ jobs:
         uses: ./.github/actions/deploy-web
         with:
           is_prod: false
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHAPCHAP_90547 }}
 
   deploy_preview_mobile_builds:
     needs: project_setup_testing

@@ -1,5 +1,6 @@
 name: Deploy built web Project
 description: Workflow that deploys the project to firebase
+
 inputs:
   github_token:
     required: true
@@ -10,13 +11,14 @@ inputs:
   is_prod:
     required: true
     description: Channel to deploy project to
+
 runs:
   using: composite
   steps:
     - name: Deploy to Firebase
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:
-        repoToken: ${{ secrets.GITHUB_TOKEN }}
-        firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHAPCHAP_90547 }}
+        repoToken: ${{ inputs.github_token }}
+        firebaseServiceAccount: ${{ inputs.firebaseServiceAccount }}
         channelId: ${{ inputs.is_prod }}
         projectId: chapchap-90547
