@@ -36,11 +36,7 @@ jobs:
     steps:
       - name: Project setup + Flutter SDK setup
         uses: ./.github/actions/setup-project
-      - name: Build Preview builds
-        uses: ./.github/actions/build/mobile/android-preview
+      - name: Appetize preview workflow
+        uses: ./.github/actions/deploy/mobile/appetize-workflow
         with:
           is_prod: "false"
-      - name: Deploy Preview builds
-        uses: ./.github/actions/deploy/mobile/android-releases
-        with:
-          is_prod: false
