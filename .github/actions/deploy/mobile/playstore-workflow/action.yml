@@ -6,6 +6,15 @@ inputs:
   GOOGLE_SERVICE_ACCOUNT_KEY:
     description: Secret key for deploying apk to Google playstore
     required: true
+  KEYSTORE_FILE:
+    description: Keystore file for signing APK
+    required: true
+  KEY_ALIAS:
+    description: Keystore alias for signing APK
+    required: true
+  KEY_PASSWORD:
+    description: Keystore password for signing APK
+    required: true
 
 runs:
   using: composite
@@ -19,6 +28,12 @@ runs:
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: 307.0.0
+
+    - name: Sign Android APK
+      shell: bash
+      run: |
+        echo $KEYSTORE_FILE | base64 --decode > keystore.jks
+        jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keystore.jks -storepass $KEY_PASSWORD -keypass $KEY_PASSWORD app/build/outputs/apk/release/app-release.apk $KEY_ALIAS
 
     - name: Deploy to Google Play Store
       uses: GoogleCloudPlatform/github-actions/deploy-google-play-store@master
