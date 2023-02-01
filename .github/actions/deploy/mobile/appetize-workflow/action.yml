@@ -31,7 +31,8 @@ runs:
         path: app/build/outputs/apk/release/app-release.apk
 
     - name: Show preview URL on merge or pull request merge
-      if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed')
+      # On pull request config, can change to merge
+      # if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed')
       uses: actions/github-script@v3
       shell: bash
       env:

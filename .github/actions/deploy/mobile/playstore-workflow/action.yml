@@ -1,5 +1,5 @@
 # TODO Update release workflow
-name: Release for android
+name: Deployment to Google playstore
 description: Workflow that signs the built apk and aab, deploys it to playstore
 
 inputs:
