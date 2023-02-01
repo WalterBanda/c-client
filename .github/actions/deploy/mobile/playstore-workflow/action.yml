@@ -1,6 +1,6 @@
 # TODO Update release workflow
 name: Release for android
-description: Workflow that builds the project targeting android, it builds apk, aar depending on whether its a release build or not. It also signs the APK/AAR
+description: Workflow that signs the built apk and aab, deploys it to playstore
 
 inputs:
   GOOGLE_SERVICE_ACCOUNT_KEY:
