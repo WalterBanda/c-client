@@ -1,6 +1,5 @@
-# TODO Update release workflow
-name: Release for android
-description: Workflow that builds the project targeting android, it builds apk, aar depending on whether its a release build or not. It also signs the APK/AAR
+name: Preview on Appetize
+description: Workflow that creates preview url and showcase url on Appetize when a PR is created and accepted
 
 inputs:
   is_prod:
@@ -8,18 +7,52 @@ inputs:
     required: true
     default: "false"
 
+  APPETIZE_API_KEY:
+    description: Check whether its a release build then creates an app bundle build for release builds
+    required: true
+
 runs:
   using: composite
   steps:
-    - name: Build an APK all targets
-      if: ${{inputs.is_prod == "true"}}
-      run: flutter build apk
+    - name: Deploy to Appetize
+      if: github.event_name == 'pull_request'
+      uses: actions/upload-artifact@v2
+      with:
+        name: preview
+        path: app/build/outputs/apk/release/app-release.apk
+
+    - name: Create preview URL on Appetize
+      if: github.event_name == 'pull_request'
+      id: create_preview
+      uses: extiff/appetize-action@v1.0
+      with:
+        apiKey: ${{ inputs.APPETIZE_API_KEY }}
+        platform: android
+        path: app/build/outputs/apk/release/app-release.apk
+
+    - name: Show preview URL on merge or pull request merge
+      if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed')
+      uses: actions/github-script@v3
       shell: bash
-    - name: Build an APK and splits them for all targets
-      if: ${{inputs.is_prod == "true"}}
-      run: flutter build apk --split-per-abi
-      shell: bash
-    - name: Build an APK all targets, splitting is playstores job
-      if: ${{inputs.is_prod == "true"}}
-      run: flutter build appbundle
-      shell: bash
+      env:
+        PREVIEW_URL: ${{ steps.create_preview.outputs.url }}
+      with:
+        script: |
+          const pullRequest = context.payload.pull_request;
+          if (!pullRequest) {
+            return;
+          }
+
+          const pullRequestNumber = pullRequest.number;
+          const pullRequestUrl = pullRequest.html_url;
+
+          const previewUrl = process.env.PREVIEW_URL;
+
+          const body = `App preview URL: ${previewUrl}`;
+
+          const params = context.repo({
+            pull_number: pullRequestNumber,
+            body
+          });
+
+          return github.pulls.update(params);
