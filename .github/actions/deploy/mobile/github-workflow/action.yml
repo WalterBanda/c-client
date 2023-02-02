@@ -1,6 +1,5 @@
-# TODO Update release workflow
-name: Release for android
-description: Workflow that builds the project targeting android, it builds apk, aar depending on whether its a release build or not. It also signs the APK/AAR
+name: Creates a Github release doc
+description: Workflow that creates a download Github release with the various binaries when PR is merged
 
 inputs:
   is_prod:
