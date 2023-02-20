@@ -14,17 +14,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Generate screenshot
-      shell: bash
-      run: |
-        # Take a screenshot and save it in the `screenshots` directory
-        make screenshot
-
-    - name: Upload screenshot
-      uses: actions/upload-artifact@v2
-      with:
-        name: screenshot
-        path: screenshots/screenshot.png
 
     - name: Create release
       uses: actions/create-release@v1
