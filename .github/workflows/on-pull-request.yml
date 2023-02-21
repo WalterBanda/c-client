@@ -29,15 +29,3 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHAPCHAP_90547 }}
-
-  deploy_preview_mobile_builds:
-    needs: project_setup_testing
-    name: Build and Deploy preview mobile PR builds
-    runs-on: ubuntu-latest
-    steps:
-      - name: Project setup + Flutter SDK setup
-        uses: ./.github/actions/setup-project
-      - name: Appetize preview workflow
-        uses: ./.github/actions/deploy/mobile/appetize-workflow
-        with:
-          is_prod: "false"
