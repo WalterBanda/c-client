@@ -9,6 +9,7 @@ jobs:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
     runs-on: ubuntu-latest
     steps:
+      # Create Tag for the pull request
       - name: Project setup + Flutter SDK setup
         uses: ./.github/actions/setup-project
       - name: Test flutter code
