@@ -1,0 +1,59 @@
+# Runs when a PR is merged or production bug is fixed.
+
+name: Release workflow
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  project_setup_testing:
+    name: Setup and testing of the Project
+    runs-on: ubuntu-latest
+    steps:
+      # Setup environment for building and testing.
+      - name: Project setup + Flutter SDK setup
+        uses: ./.github/actions/setup-project
+      - name: Test flutter code
+        uses: ./.github/actions/test-flutter
+
+  create_build_number:
+    name: Create build number by bumping previous build number
+    runs-on: ubuntu-latest
+    needs: project_setup_testing
+    outputs:
+      version: ${{ steps.create_tag.outputs.upload_url }}
+      build_number: ${{ steps.create_tag.outputs.upload_url }}
+    steps:
+      - name: Setup
+        uses: ./.github/actions/setup-project
+
+      - name: Create Tag
+        id: create_tag
+        run: git tag v1.0.0.1
+        shell: bash
+      
+
+  github_releases:
+    needs: create_build_number
+    name: Build and Create github releases for android, linux, windows
+    uses: "./.github/workflow/release_github_release.yml"
+    with:
+      version: ${{ needs.create_build_number.version }}
+    secrets: inherit
+
+  deploy_web_builds:
+    needs: create_build_number
+    name: Build and Deploy preview web PR builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Project setup + Flutter SDK setup
+        uses: ./.github/actions/setup-project
+      - name: Build Preview builds
+        uses: ./.github/actions/build/web
+      - name: Deploy Preview builds
+        uses: ./.github/actions/deploy/web
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHAPCHAP_90547 }}
+          channelId: live
