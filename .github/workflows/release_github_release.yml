@@ -26,11 +26,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.event.inputs.version }}
+          name: Release - version ${{ github.event.inputs.version }}
           draft: true
           prerelease: false
           generate_release_notes: true
           body: |
-            <h1> <img src="https://chapchap-90547.web.app/icons/icon-512.png" height="24"> Release - version v2.5.6 </h1>
+            <h1> <img src="https://chapchap-90547.web.app/icons/icon-512.png" height="24"> Release - version ${{ github.event.inputs.version }} </h1>
             ### Build Details & Changelog
 
   create-build:
