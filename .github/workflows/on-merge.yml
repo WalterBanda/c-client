@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - develop
 
 jobs:
   project_setup_testing:
@@ -22,11 +23,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: project_setup_testing
     outputs:
-      new_semver: ${{ steps.create_tag.shell.new_semver }}
+      build_number: ${{ steps.get_build_number.outputs.build_number }}
     steps:
       - name: Setup
         uses: ./.github/actions/setup-project
       - name: Bump pubspec yaml
+        id: get_build_number
         shell: bash
         run: |
           version=$(grep -m1 version: pubspec.yaml | awk '{print $2}' | tr -d \'\" | cut -d '+' -f1)
@@ -35,20 +37,29 @@ jobs:
           new_version="$version+$new_build
           new_semver="$version.$new_build
           sed -i "s/$old_version/$new_version/g" pubspec.yaml
+          echo "build_number=$new_semver" >> $GITHUB_OUTPUT
 
       - name: Sync changes to git, publish tags
         shell: bash
         run: |
-          git commit -am "Bumped build tag"
-          git tag $new_semver
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -am "🔧 Updated build number and project version"
+          git tag -a v${{ steps.get_build_number.outputs.build_number }} -m "🚀 Project moving to v${{ steps.get_build_number.outputs.build_number }}"
 
-      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          tags: true
+
   github_releases:
     needs: create_build_number
     name: Build and Create github releases for android, linux, windows
     uses: "./.github/workflow/release_github_release.yml"
     with:
-      version: ${{ needs.create_build_number.new_semver }}
+      version: ${{ needs.create_build_number.outputs.build_number }}
     secrets: inherit
 
   deploy_web_builds:
