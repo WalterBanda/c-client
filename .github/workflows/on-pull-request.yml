@@ -3,6 +3,10 @@
 name: Workflow on PR
 on:
   pull_request:
+    branches:
+      - main
+      - develop
+
 jobs:
   project_setup_testing:
     name: Setup and testing of the Project
