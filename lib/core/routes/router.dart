@@ -3,8 +3,8 @@ import 'package:client/screens/shared/about.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../router/auth.dart';
-import '../../router/roles.dart';
+import '../router/auth.dart';
+import '../router/roles.dart';
 import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../screens/auth/register.dart';

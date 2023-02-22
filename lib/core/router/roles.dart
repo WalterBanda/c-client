@@ -5,12 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../core/models/user.dart';
-import '../core/providers/user.dart';
-import '../core/routes/router.dart';
-import '../core/routes/routes.dart';
-import '../styles/icons/chap_chap_icons.dart';
-import '../styles/ui/colors.dart';
+import '../models/user.dart';
+import '../providers/user.dart';
+import '../routes/router.dart';
+import '../routes/routes.dart';
+import '../../styles/icons/chap_chap_icons.dart';
+import '../../styles/ui/colors.dart';
 
 BoxConstraints pageConstraints =
     const BoxConstraints(minWidth: 320, maxWidth: 480);

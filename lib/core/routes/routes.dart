@@ -1,7 +1,7 @@
 import 'package:client/screens/auth/resetPassword.dart';
 
-import '../../router/auth.dart';
-import '../../router/roles.dart';
+import '../router/auth.dart';
+import '../router/roles.dart';
 import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../screens/auth/register.dart';

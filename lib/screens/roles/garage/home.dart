@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/models/user.dart';
-import '../../../router/roles.dart';
+import '../../../core/router/roles.dart';
 import '../../../styles/icons/chap_chap_icons.dart';
 import '../admin/home.dart';
 import '../admin/items.dart';
