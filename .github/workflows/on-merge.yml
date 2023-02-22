@@ -1,8 +1,10 @@
 # Runs when a PR is merged or production bug is fixed.
 
 name: Release workflow
+
 on:
   push:
+    # Sequence of patterns matched against refs/heads
     branches:
       - main
       - develop
@@ -57,7 +59,7 @@ jobs:
   github_releases:
     needs: create_build_number
     name: Build and Create github releases for android, linux, windows
-    uses: "./.github/workflow/release_github_release.yml"
+    uses: "./.github/workflows/release_github.yml"
     with:
       version: ${{ needs.create_build_number.outputs.build_number }}
     secrets: inherit
