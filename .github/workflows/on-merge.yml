@@ -22,24 +22,33 @@ jobs:
     runs-on: ubuntu-latest
     needs: project_setup_testing
     outputs:
-      version: ${{ steps.create_tag.outputs.upload_url }}
-      build_number: ${{ steps.create_tag.outputs.upload_url }}
+      new_semver: ${{ steps.create_tag.shell.new_semver }}
     steps:
       - name: Setup
         uses: ./.github/actions/setup-project
-
-      - name: Create Tag
-        id: create_tag
-        run: git tag v1.0.0.1
+      - name: Bump pubspec yaml
         shell: bash
-      
+        run: |
+          version=$(grep -m1 version: pubspec.yaml | awk '{print $2}' | tr -d \'\" | cut -d '+' -f1)
+          old_version=$(grep -m1 version: pubspec.yaml | awk '{print $2}' | sed 's/ //g;s/'"'"'//g')
+          new_build=$(grep -m1 version: pubspec.yaml | awk -F '+' '{if (NF>1) print $NF+1; else print "1"}')
+          new_version="$version+$new_build
+          new_semver="$version.$new_build
+          sed -i "s/$old_version/$new_version/g" pubspec.yaml
 
+      - name: Sync changes to git, publish tags
+        shell: bash
+        run: |
+          git commit -am "Bumped build tag"
+          git tag $new_semver
+
+      
   github_releases:
     needs: create_build_number
     name: Build and Create github releases for android, linux, windows
     uses: "./.github/workflow/release_github_release.yml"
     with:
-      version: ${{ needs.create_build_number.version }}
+      version: ${{ needs.create_build_number.new_semver }}
     secrets: inherit
 
   deploy_web_builds:
