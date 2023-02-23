@@ -63,8 +63,10 @@ jobs:
       fail-fast: false
     needs: draft-release
     steps:
+      - name: Checkout to the repository
+        uses: actions/checkout@v3
       # Set up Flutter.
-      - name: Clone Flutter repository with stable channel
+      - name: Flutter SDK setup
         uses: ./.github/actions/setup-project
 
       - name: Install Linux dependencies
