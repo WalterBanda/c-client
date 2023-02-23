@@ -15,9 +15,9 @@ jobs:
     steps:
       # Setup environment for building and testing.
       - name: Project setup + Flutter SDK setup
-        uses: WalterBanda/chapchap-client/.github/actions/setup-project
+        uses: walterBanda/chapchap-client/.github/actions/setup-project
       - name: Test flutter code
-        uses: WalterBanda/chapchap-client/.github/actions/test-flutter
+        uses: walterBanda/chapchap-client/.github/actions/test-flutter
 
   deploy_preview_web_builds:
     needs: project_setup_testing
@@ -25,11 +25,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Project setup + Flutter SDK setup
-        uses: WalterBanda/chapchap-client/.github/actions/setup-project
+        uses: walterBanda/chapchap-client/.github/actions/setup-project
       - name: Build Preview builds
-        uses: WalterBanda/chapchap-client/.github/actions/build/web
+        uses: walterBanda/chapchap-client/.github/actions/build/web
       - name: Deploy Preview builds
-        uses: WalterBanda/chapchap-client/.github/actions/deploy/web
+        uses: walterBanda/chapchap-client/.github/actions/deploy/web
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHAPCHAP_90547 }}

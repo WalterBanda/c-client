@@ -65,7 +65,7 @@ jobs:
     steps:
       # Set up Flutter.
       - name: Clone Flutter repository with stable channel
-        uses: WalterBanda/chapchap-client/.github/actions/setup-project
+        uses: walterBanda/chapchap-client/.github/actions/setup-project
 
       - name: Install Linux dependencies
         if: matrix.target == 'Linux'
