@@ -71,7 +71,7 @@ jobs:
         if: matrix.target == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev
+          sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev libwebkit2gtk-4.0-dev
       - name: Install Android dependencies
         if: matrix.target == 'Android'
         uses: actions/setup-java@1df8dbefe2a8cbc99770194893dd902763bee34b
