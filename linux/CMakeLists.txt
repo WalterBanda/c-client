@@ -130,6 +130,7 @@ install(CODE "
   " COMPONENT Runtime)
 install(DIRECTORY "${PROJECT_BUILD_DIR}/${FLUTTER_ASSET_DIR_NAME}"
   DESTINATION "${INSTALL_BUNDLE_DATA_DIR}" COMPONENT Runtime)
+install(FILES assets/icon.png DESTINATION "${INSTALL_BUNDLE_DATA_DIR}/${FLUTTER_ASSET_DIR_NAME}/app-icons" COMPONENT Runtime)
 
 # Install the AOT library on non-Debug builds only.
 if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
