@@ -16,9 +16,9 @@ jobs:
     steps:
       # Setup environment for building and testing.
       - name: Project setup + Flutter SDK setup
-        uses: walterBanda/chapchap-client/.github/actions/setup-project
+        uses: ./.github/actions/setup-project
       - name: Test flutter code
-        uses: walterBanda/chapchap-client/.github/actions/test-flutter
+        uses: ./.github/actions/test-flutter
 
   create_build_number:
     name: Create build number by bumping previous build number
@@ -28,7 +28,7 @@ jobs:
       build_number: ${{ steps.get_build_number.outputs.build_number }}
     steps:
       - name: Setup
-        uses: walterBanda/chapchap-client/.github/actions/setup-project
+        uses: ./.github/actions/setup-project
       - name: Bump pubspec yaml
         id: get_build_number
         shell: bash
@@ -59,7 +59,7 @@ jobs:
   github_releases:
     needs: create_build_number
     name: Build and Create github releases for android, linux, windows
-    uses: "walterBanda/chapchap-client/.github/workflows/release_github.yml"
+    uses: "./.github/workflows/release_github.yml"
     with:
       version: ${{ needs.create_build_number.outputs.build_number }}
     secrets: inherit
@@ -70,11 +70,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Project setup + Flutter SDK setup
-        uses: walterBanda/chapchap-client/.github/actions/setup-project
+        uses: ./.github/actions/setup-project
       - name: Build Preview builds
-        uses: walterBanda/chapchap-client/.github/actions/build/web
+        uses: ./.github/actions/build/web
       - name: Deploy Preview builds
-        uses: walterBanda/chapchap-client/.github/actions/deploy/web
+        uses: ./.github/actions/deploy/web
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHAPCHAP_90547 }}
