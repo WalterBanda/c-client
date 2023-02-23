@@ -1,7 +1,7 @@
 name: Draft Github Release
 on:
   # Enable manual run
-  workflow_dispatch:
+  workflow_call:
     inputs:
       version:
         description: "Tag to create (e.g. v2.10.0). Must include 'v' and must match pubspec"
