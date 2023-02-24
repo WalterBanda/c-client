@@ -6,7 +6,7 @@ import 'providers/location.dart';
 import 'providers/appdata.dart';
 import 'providers/user.dart';
 import '../styles/ui/colors.dart';
-import '../routes/router.dart';
+import '../router/router.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

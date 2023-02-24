@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 // 🏘️ Local imports
 import '../screens/auth/resetPassword.dart';
 import '../screens/shared/about.dart';
-import '../router/auth.dart';
-import '../router/roles.dart';
+import 'auth.dart';
+import 'roles.dart';
 import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../screens/auth/register.dart';
@@ -15,7 +15,7 @@ import '../../screens/roles/switch_roles.dart';
 import '../../screens/roles/user/home.dart';
 import '../../screens/shared/profile.dart';
 import '../../screens/shared/settings.dart';
-import '../router/routes.dart';
+import 'routes.dart';
 
 class GlobalNavigator {
   static GlobalKey<NavigatorState> router = GlobalKey();

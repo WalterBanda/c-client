@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../models/garage.dart';
 import '../models/user.dart';
 import '../../screens/auth/onboarding.dart';
-import '../../routes/router.dart';
+import '../../router/router.dart';
 import '../../router/routes.dart';
 
 class UserProvider extends ChangeNotifier {

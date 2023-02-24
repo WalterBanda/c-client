@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../core/providers/user.dart';
 import 'login.dart';
 import '../../router/routes.dart';
-import '../../routes/router.dart';
+import '../../router/router.dart';
 import '../../styles/ui/colors.dart';
 import 'onboarding.dart';
 

@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../core/models/user.dart';
 import '../core/providers/appdata.dart';
 import '../core/providers/user.dart';
-import '../routes/router.dart';
+import 'router.dart';
 import 'routes.dart';
 import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
