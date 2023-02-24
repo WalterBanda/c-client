@@ -1,5 +1,20 @@
 import '../models/garage.dart';
 
+/// ### `📖` About this validator
+/// This is a validator class responsible for all validation
+/// concerning users input from input fields to other methods of input
+///
+/// It contains various methods that are responsible for validation,
+/// Most validations are powered by [Regex] `😸 For those who fear [Regex] dont worry
+/// there are explainations for them`
+///
+///  #### 💡 Validator Methods
+///  These are the methods provided
+///  - [validateName] - Responsible for validating Usernames, relatively simple
+///  - [validateEmail] - Handles email validation, powered by [Regex], read the fn docs to know how it works
+/// - [validatePassword] - Handles password validation, just a simple check to see if the password passes lenght requirement
+/// - [validatePhone] - Handles phone validation, powered by [Regex], read the fn docs to know
+/// - [validateAddress] - Handles validation of location, check fn docs to see more details
 class InputValidator {
   static String? validateName({required String name, String? label}) {
     if (name.isEmpty) {
@@ -54,6 +69,10 @@ class InputValidator {
     return null;
   }
 
+  /// `📖` [validatePhone]
+  /// Check is phone number meets internation standard validation,
+  /// Powered by [Regex], here is the breakdown
+  /// > The input must start with `+` this ensures that its in international format,
   static String? validatePhone({required String phone}) {
     RegExp phoneRegExp = RegExp(r"^\+(?:[0-9] ?){6,14}[0-9]$");
     if (phone.isEmpty) {
@@ -64,6 +83,7 @@ class InputValidator {
     return null;
   }
 
+  // TODO: Add address checking from [Address] model in garage class.
   static String? validateAddress({Address? address}) {
     if (address == null) {
       return 'Please add your address for garage booking';
