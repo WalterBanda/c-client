@@ -1,6 +1,6 @@
 import '../models/garage.dart';
 
-class Validator {
+class InputValidator {
   static String? validateName({required String name, String? label}) {
     if (name.isEmpty) {
       return '${label ?? 'Name'} can\'t be empty';
