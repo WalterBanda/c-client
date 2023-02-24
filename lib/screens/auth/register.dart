@@ -71,7 +71,8 @@ class Register extends StatelessWidget {
                       controller: _nameController,
                       focusNode: _nameFocusNode,
                       inputType: TextInputType.name,
-                      validator: (value) => Validator.validateName(name: value),
+                      validator: (value) =>
+                          InputValidator.validateName(name: value),
                       prefix: const Icon(
                         ChapChap.user,
                         size: 15,
@@ -84,7 +85,7 @@ class Register extends StatelessWidget {
                       focusNode: _emailFocusNode,
                       inputType: TextInputType.emailAddress,
                       validator: (value) =>
-                          Validator.validateEmail(email: value),
+                          InputValidator.validateEmail(email: value),
                       prefix: const Icon(
                         Icons.email_rounded,
                         size: 15,
@@ -96,7 +97,7 @@ class Register extends StatelessWidget {
                       controller: _passwordController,
                       focusNode: _passwordFocusNode,
                       validator: (value) =>
-                          Validator.validatePassword(password: value),
+                          InputValidator.validatePassword(password: value),
                       inputType: TextInputType.visiblePassword,
                       private: true,
                       prefix: const Icon(
@@ -111,7 +112,7 @@ class Register extends StatelessWidget {
                       focusNode: _phoneFocusNode,
                       inputType: TextInputType.phone,
                       validator: (value) =>
-                          Validator.validatePhone(phone: value),
+                          InputValidator.validatePhone(phone: value),
                       prefix: const Icon(
                         Icons.phone_rounded,
                         size: 15,
@@ -152,7 +153,7 @@ class Register extends StatelessWidget {
                           ),
                         ),
                       ),
-                      validator: (value) => Validator.validateAddress(
+                      validator: (value) => InputValidator.validateAddress(
                           address: _addressController.value),
                       prefix: const Icon(
                         ChapChap.location,

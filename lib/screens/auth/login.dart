@@ -52,7 +52,7 @@ class Login extends StatelessWidget {
                         controller: _emailController,
                         focusNode: _emailFocusNode,
                         validator: (value) =>
-                            Validator.validateEmail(email: value),
+                            InputValidator.validateEmail(email: value),
                         inputType: TextInputType.emailAddress,
                         prefix: const Icon(
                           Icons.email_rounded,
@@ -65,7 +65,7 @@ class Login extends StatelessWidget {
                         controller: _passwordController,
                         focusNode: _passwordFocusNode,
                         validator: (value) =>
-                            Validator.validatePassword(password: value),
+                            InputValidator.validatePassword(password: value),
                         inputType: TextInputType.visiblePassword,
                         private: true,
                         prefix: const Icon(

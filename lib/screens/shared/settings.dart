@@ -229,7 +229,7 @@ class SettingsPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextFormField(
-              validator: (value) => Validator.validateName(name: value!),
+              validator: (value) => InputValidator.validateName(name: value!),
               style: const TextStyle(
                 fontFamily: "SF Pro Rounded",
                 fontSize: 15,
@@ -330,7 +330,7 @@ class RequestAdminAccess extends StatelessWidget {
                 controller: descriptionController,
                 minLines: 4,
                 maxLines: 5,
-                validator: (val) => Validator.validateName(name: val!),
+                validator: (val) => InputValidator.validateName(name: val!),
                 style: const TextStyle(
                   fontFamily: "SF Pro Rounded",
                   fontSize: 15,
