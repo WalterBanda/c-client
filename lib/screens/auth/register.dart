@@ -4,15 +4,16 @@ import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/models/garage.dart';
 // 🏘️ Local imports
 import '../../core/models/user.dart';
-import '../../core/models/garage.dart';
-import '../roles/admin/items.dart';
 import '../../core/providers/user.dart';
+import '../../core/utils/validator.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
+import '../roles/admin/items.dart';
 import 'login.dart';
 
 class Register extends StatelessWidget {
@@ -82,7 +83,8 @@ class Register extends StatelessWidget {
                       controller: _emailController,
                       focusNode: _emailFocusNode,
                       inputType: TextInputType.emailAddress,
-                      validator: (value) => Validator.validateEmail(email: value),
+                      validator: (value) =>
+                          Validator.validateEmail(email: value),
                       prefix: const Icon(
                         Icons.email_rounded,
                         size: 15,
@@ -108,7 +110,8 @@ class Register extends StatelessWidget {
                       controller: _phoneController,
                       focusNode: _phoneFocusNode,
                       inputType: TextInputType.phone,
-                      validator: (value) => Validator.validatePhone(phone: value),
+                      validator: (value) =>
+                          Validator.validatePhone(phone: value),
                       prefix: const Icon(
                         Icons.phone_rounded,
                         size: 15,

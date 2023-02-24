@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../core/models/garage.dart';
 import '../../../core/models/user.dart';
 import '../../../core/providers/appdata.dart';
+import '../../../core/utils/validator.dart';
 import '../../../router/navigator/roles.dart';
 import '../../auth/login.dart';
 import '../../../styles/icons/chap_chap_icons.dart';
