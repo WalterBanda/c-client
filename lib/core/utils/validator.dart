@@ -73,8 +73,11 @@ class InputValidator {
   /// Check is phone number meets internation standard validation,
   /// Powered by [Regex], here is the breakdown
   /// > The input must start with `+` this ensures that its in international format,
+  /// > The second group checks for a number `\d` with a length of [1,3]
+  /// > The third group checks for a number `\d` with a length of [6,14]
+  /// `ℹ️` This ensures that the number meets the E.164 format
   static String? validatePhone({required String phone}) {
-    RegExp phoneRegExp = RegExp(r"^\+(?:[0-9] ?){6,14}[0-9]$");
+    RegExp phoneRegExp = RegExp(r"^(\+\d{1,3})?\d{1,3}\d{6,14}$");
     if (phone.isEmpty) {
       return 'Please add your phone number easier communications';
     } else if (!phoneRegExp.hasMatch(phone)) {
