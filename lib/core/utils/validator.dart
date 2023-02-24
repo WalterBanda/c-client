@@ -33,7 +33,7 @@ class Validator {
 
   static String? validateEmail({required String email}) {
     RegExp emailRegExp = RegExp(
-        r"^((\w+(?!.*[.\s]{2})[\w!#$%&'*+-=?^_'{|}~.]+)?\w+)@(([a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9-]+)*)\.([a-zA-Z]{2,}))$");
+        r"^((\w+(?!.*[.\s]{2})[\w!#$%&'*+-=?^_`{|}~.]+)?\w+)@(([a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9-]+)*)\.([a-zA-Z]{2,}))$");
 
     if (email.isEmpty) {
       return 'Email can\'t be empty';
