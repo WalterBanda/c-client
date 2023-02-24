@@ -1,7 +1,7 @@
 {
   "name": "ChapChap",
   "short_name": "ChapChap",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "rgba(255, 255, 255, 0.8)",
   "theme_color": "rgba(255, 255, 255, 0.8)",
