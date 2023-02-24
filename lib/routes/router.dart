@@ -1,8 +1,9 @@
-import 'package:client/screens/auth/resetPassword.dart';
-import 'package:client/screens/shared/about.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// 🏘️ Local imports
+import '../screens/auth/resetPassword.dart';
+import '../screens/shared/about.dart';
 import '../router/auth.dart';
 import '../router/roles.dart';
 import '../../screens/auth/login.dart';

@@ -1,7 +1,3 @@
-import 'dart:math';
-
-import 'package:client/core/providers/appdata.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -9,9 +5,9 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/models/garage.dart';
+// 🏘️ Local imports
+import '../../../core/providers/appdata.dart';
 import '../../../core/providers/location.dart';
-import '../../../styles/icons/chap_chap_icons.dart';
 
 class OSM extends StatelessWidget {
   OSM({super.key});

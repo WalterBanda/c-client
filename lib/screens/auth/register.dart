@@ -1,12 +1,13 @@
-import 'package:client/core/models/garage.dart';
-import 'package:client/screens/roles/admin/items.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
+// 🏘️ Local imports
 import '../../core/models/user.dart';
+import '../../core/models/garage.dart';
+import '../roles/admin/items.dart';
 import '../../core/providers/user.dart';
 import '../../routes/router.dart';
 import '../../routes/routes.dart';

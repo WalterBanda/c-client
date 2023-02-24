@@ -1,11 +1,12 @@
-import 'package:client/core/providers/appdata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// 🏘️ Local imports
 import '../core/models/user.dart';
+import '../core/providers/appdata.dart';
 import '../core/providers/user.dart';
 import '../routes/router.dart';
 import '../routes/routes.dart';

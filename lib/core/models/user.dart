@@ -1,9 +1,11 @@
 import 'dart:math';
 
-import 'package:client/core/models/garage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+// 🏘️ Local imports
+import 'garage.dart';
 
 enum Roles { user, garage, admin, error }
 

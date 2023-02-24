@@ -1,11 +1,12 @@
-import 'package:client/core/models/garage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// 🏘️ Local imports
 import '../../core/models/user.dart';
 import '../../core/providers/user.dart';
 import '../../routes/router.dart';
+import '../../core/models/garage.dart';
 import '../../routes/routes.dart';
 import '../../styles/ui/colors.dart';
 import 'onboarding.dart';

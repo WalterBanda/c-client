@@ -4,11 +4,11 @@ import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
-
-import '../../styles/icons/chap_chap_icons.dart';
-import '../../styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 
+// 🏘️ Local imports
+import '../../styles/icons/chap_chap_icons.dart';
+import '../../styles/ui/colors.dart';
 import '../../routes/router.dart';
 import '../../routes/routes.dart';
 

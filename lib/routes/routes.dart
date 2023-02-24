@@ -1,5 +1,6 @@
-import 'package:client/screens/auth/resetPassword.dart';
 
+// 🏘️ Local imports
+import '../screens/auth/resetPassword.dart';
 import '../router/auth.dart';
 import '../router/roles.dart';
 import '../../screens/auth/login.dart';
