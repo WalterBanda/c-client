@@ -3,7 +3,7 @@
   "short_name": "ChapChap",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "rgba(255, 255, 255, 0.8)",
+  "background_color": "#FFFFFF",
   "theme_color": "rgba(255, 255, 255, 0.8)",
   "description": "ChapChap is a location based mechanical service delivery.",
   "orientation": "portrait-primary",
