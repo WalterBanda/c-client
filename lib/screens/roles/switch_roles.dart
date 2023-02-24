@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../core/models/user.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
-import '../../router/roles.dart';
+import '../../router/navigator/roles.dart';
 import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
 

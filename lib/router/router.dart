@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 // 🏘️ Local imports
 import '../screens/auth/resetPassword.dart';
 import '../screens/shared/about.dart';
-import 'auth.dart';
-import 'roles.dart';
+import 'navigator/auth.dart';
+import 'navigator/roles.dart';
 import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../screens/auth/register.dart';
