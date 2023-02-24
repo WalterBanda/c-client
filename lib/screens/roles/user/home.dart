@@ -1,19 +1,19 @@
 import 'dart:async';
 
-import 'package:client/core/models/garage.dart';
-import 'package:client/core/models/user.dart';
-import 'package:client/core/providers/appdata.dart';
-import 'package:client/screens/roles/admin/items.dart';
-import 'package:client/screens/roles/user/osm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:client/core/providers/location.dart';
-import 'package:client/core/router/roles.dart';
-import 'package:client/styles/icons/chap_chap_icons.dart';
-import 'package:client/styles/ui/colors.dart';
+import '../../../core/providers/location.dart';
+import '../../../router/roles.dart';
+import '../../../styles/icons/chap_chap_icons.dart';
+import '../../../styles/ui/colors.dart';
+import '../../../core/models/garage.dart';
+import '../../../core/models/user.dart';
+import '../../../core/providers/appdata.dart';
+import '../admin/items.dart';
+import 'osm.dart';
 
 class UserHome extends StatelessWidget {
   const UserHome({super.key});

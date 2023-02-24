@@ -1,6 +1,3 @@
-import 'package:client/core/models/garage.dart';
-import 'package:client/core/providers/appdata.dart';
-import 'package:client/screens/roles/admin/items.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +6,11 @@ import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/providers/user.dart';
-import '../../core/router/roles.dart';
+import '../../router/roles.dart';
 import '../../styles/icons/chap_chap_icons.dart';
+import '../../core/models/garage.dart';
+import '../../core/providers/appdata.dart';
+import '../roles/admin/items.dart';
 import '../../styles/ui/colors.dart';
 import '../auth/login.dart';
 

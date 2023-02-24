@@ -1,17 +1,18 @@
-import 'package:client/core/models/garage.dart';
-import 'package:client/core/models/user.dart';
-import 'package:client/core/providers/appdata.dart';
-import 'package:client/core/router/roles.dart';
-import 'package:client/screens/auth/login.dart';
-import 'package:client/screens/roles/admin/home.dart';
-import 'package:client/styles/icons/chap_chap_icons.dart';
-import 'package:client/styles/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/models/garage.dart';
+import '../../../core/models/user.dart';
+import '../../../core/providers/appdata.dart';
+import '../../../router/roles.dart';
+import '../../auth/login.dart';
+import '../../../styles/icons/chap_chap_icons.dart';
+import '../../../styles/ui/colors.dart';
+import 'home.dart';
 
 class AppDialog extends StatelessWidget {
   const AppDialog({required this.child, super.key});

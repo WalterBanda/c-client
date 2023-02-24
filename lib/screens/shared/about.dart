@@ -1,6 +1,7 @@
-import 'package:client/core/router/roles.dart';
-import 'package:client/styles/icons/chap_chap_icons.dart';
 import 'package:flutter/material.dart';
+
+import '../../router/roles.dart';
+import '../../styles/icons/chap_chap_icons.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);

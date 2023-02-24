@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/models/user.dart';
-import '../../core/routes/router.dart';
-import '../../core/routes/routes.dart';
-import '../../core/router/roles.dart';
+import '../../routes/router.dart';
+import '../../routes/routes.dart';
+import '../../router/roles.dart';
 import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
 

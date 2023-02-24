@@ -6,8 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../screens/auth/onboarding.dart';
-import '../routes/router.dart';
-import '../routes/routes.dart';
+import '../../routes/router.dart';
+import '../../routes/routes.dart';
 
 class UserProvider extends ChangeNotifier {
   late UserModel _user = UserModel.clear();

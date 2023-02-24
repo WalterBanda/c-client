@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/user.dart';
-import '../providers/user.dart';
+import '../core/models/user.dart';
+import '../core/providers/user.dart';
 import '../routes/router.dart';
 import '../routes/routes.dart';
 import '../../styles/icons/chap_chap_icons.dart';

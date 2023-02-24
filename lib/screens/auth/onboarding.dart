@@ -9,8 +9,8 @@ import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/routes/router.dart';
-import '../../core/routes/routes.dart';
+import '../../routes/router.dart';
+import '../../routes/routes.dart';
 
 Widget buildBranding(BuildContext context) {
   return Column(
