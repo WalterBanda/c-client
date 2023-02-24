@@ -9,7 +9,7 @@ import '../core/models/user.dart';
 import '../core/providers/appdata.dart';
 import '../core/providers/user.dart';
 import '../routes/router.dart';
-import '../routes/routes.dart';
+import 'routes.dart';
 import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
 

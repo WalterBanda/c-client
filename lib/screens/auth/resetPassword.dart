@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 // 🏘️ Local imports
 import '../../core/providers/user.dart';
 import 'login.dart';
-import '../../routes/routes.dart';
+import '../../router/routes.dart';
 import '../../routes/router.dart';
 import '../../styles/ui/colors.dart';
 import 'onboarding.dart';

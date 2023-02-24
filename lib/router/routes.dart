@@ -1,8 +1,8 @@
 
 // 🏘️ Local imports
 import '../screens/auth/resetPassword.dart';
-import '../router/auth.dart';
-import '../router/roles.dart';
+import 'auth.dart';
+import 'roles.dart';
 import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../screens/auth/register.dart';

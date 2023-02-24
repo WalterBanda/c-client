@@ -7,7 +7,7 @@ import '../../core/models/user.dart';
 import '../../core/providers/user.dart';
 import '../../routes/router.dart';
 import '../../core/models/garage.dart';
-import '../../routes/routes.dart';
+import '../../router/routes.dart';
 import '../../styles/ui/colors.dart';
 import 'onboarding.dart';
 

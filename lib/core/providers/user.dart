@@ -8,7 +8,7 @@ import '../models/garage.dart';
 import '../models/user.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../routes/router.dart';
-import '../../routes/routes.dart';
+import '../../router/routes.dart';
 
 class UserProvider extends ChangeNotifier {
   late UserModel _user = UserModel.clear();

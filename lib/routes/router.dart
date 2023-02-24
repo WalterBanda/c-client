@@ -15,7 +15,7 @@ import '../../screens/roles/switch_roles.dart';
 import '../../screens/roles/user/home.dart';
 import '../../screens/shared/profile.dart';
 import '../../screens/shared/settings.dart';
-import 'routes.dart';
+import '../router/routes.dart';
 
 class GlobalNavigator {
   static GlobalKey<NavigatorState> router = GlobalKey();
