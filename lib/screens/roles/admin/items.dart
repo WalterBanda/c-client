@@ -1,17 +1,19 @@
-import 'package:client/core/models/garage.dart';
-import 'package:client/core/models/user.dart';
-import 'package:client/core/providers/appdata.dart';
-import 'package:client/router/roles.dart';
-import 'package:client/screens/auth/login.dart';
-import 'package:client/screens/roles/admin/home.dart';
-import 'package:client/styles/icons/chap_chap_icons.dart';
-import 'package:client/styles/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
+
+// 🏘️ Local imports
+import '../../../core/models/garage.dart';
+import '../../../core/models/user.dart';
+import '../../../core/providers/appdata.dart';
+import '../../../core/utils/validator.dart';
+import '../../../router/navigator/roles.dart';
+import '../../../styles/icons/chap_chap_icons.dart';
+import '../../../styles/ui/colors.dart';
+import 'home.dart';
 
 class AppDialog extends StatelessWidget {
   const AppDialog({required this.child, super.key});
@@ -433,7 +435,7 @@ class AddGarage extends StatelessWidget {
           controller: _addressTextController,
           focusNode: _addressFocusNode,
           validator: (value) =>
-              Validator.validateAddress(address: _addressController.value),
+              InputValidator.validateAddress(address: _addressController.value),
           onTap: () => showDialog(
             context: context,
             builder: (context) => AppDialog(
@@ -504,8 +506,8 @@ class AddGarage extends StatelessWidget {
         TextFormField(
           controller: _descriptionController,
           focusNode: _descriptionFocusNode,
-          validator: (value) =>
-              Validator.validateName(name: value!, label: 'Garage Description'),
+          validator: (value) => InputValidator.validateName(
+              name: value!, label: 'Garage Description'),
           minLines: 4,
           maxLines: 5,
           style: const TextStyle(
@@ -570,7 +572,7 @@ class AddGarage extends StatelessWidget {
             controller: _nameController,
             focusNode: _nameFocusNode,
             validator: (value) =>
-                Validator.validateName(name: value!, label: 'Garage Name'),
+                InputValidator.validateName(name: value!, label: 'Garage Name'),
             style: const TextStyle(
               fontFamily: "SF Pro Rounded",
               fontSize: 15,

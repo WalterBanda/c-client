@@ -48,7 +48,7 @@ class DefaultFirebaseOptions {
     appId: '1:687165872597:web:491aa7e0c4b24b4a89055c',
     messagingSenderId: '687165872597',
     projectId: 'chapchap-90547',
-    authDomain: 'chapchap-90547.firebaseapp.com',
+    authDomain: 'app.chapchap.murima.me',
     storageBucket: 'chapchap-90547.appspot.com',
     measurementId: 'G-DQ1QZYFF66',
   );
@@ -66,7 +66,7 @@ class DefaultFirebaseOptions {
     appId: '1:687165872597:web:09ac8fff0088ca9389055c',
     messagingSenderId: '687165872597',
     projectId: 'chapchap-90547',
-    authDomain: 'chapchap-90547.firebaseapp.com',
+    authDomain: 'app.chapchap.murima.me',
     storageBucket: 'chapchap-90547.appspot.com',
     measurementId: 'G-0PT3KV58VL',
   );
@@ -76,7 +76,7 @@ class DefaultFirebaseOptions {
     appId: '1:687165872597:web:6b75c5e0c68ea29989055c',
     messagingSenderId: '687165872597',
     projectId: 'chapchap-90547',
-    authDomain: 'chapchap-90547.firebaseapp.com',
+    authDomain: 'app.chapchap.murima.me',
     storageBucket: 'chapchap-90547.appspot.com',
     measurementId: 'G-JX75CD5W34',
   );

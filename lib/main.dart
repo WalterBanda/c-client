@@ -1,6 +1,8 @@
-import 'package:client/core/core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+// 🏘️ Local imports
+import 'core/core.dart';
 import 'core/config/firebase_options.dart';
 
 void main() async {

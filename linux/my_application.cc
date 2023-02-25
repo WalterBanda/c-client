@@ -40,17 +40,26 @@ static void my_application_activate(GApplication* application) {
   if (use_header_bar) {
     GtkHeaderBar* header_bar = GTK_HEADER_BAR(gtk_header_bar_new());
     gtk_widget_show(GTK_WIDGET(header_bar));
-    gtk_header_bar_set_title(header_bar, "client");
+    gtk_header_bar_set_title(header_bar, "ChapChap");
     gtk_header_bar_set_show_close_button(header_bar, TRUE);
     gtk_window_set_titlebar(window, GTK_WIDGET(header_bar));
   } else {
-    gtk_window_set_title(window, "client");
+    gtk_window_set_title(window, "ChapChap");
   }
 
   gtk_window_set_default_size(window, 1280, 720);
+  g_autoptr(FlDartProject) project = fl_dart_project_new();
+
+  g_autoptr(GError) error = nullptr;
+  
+  gtk_window_set_icon_from_file(window, g_strconcat(fl_dart_project_get_assets_path(project), "/app-icons/icon.png", NULL), &error);
+  if (error != nullptr)
+  {
+    g_warning("Failed to set icon: %s", error->message);
+  }
+
   gtk_widget_show(GTK_WIDGET(window));
 
-  g_autoptr(FlDartProject) project = fl_dart_project_new();
   fl_dart_project_set_dart_entrypoint_arguments(project, self->dart_entrypoint_arguments);
 
   FlView* view = fl_view_new(project);

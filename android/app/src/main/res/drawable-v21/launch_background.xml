@@ -5,5 +5,7 @@
     <!-- You can insert your own image assets here -->
     <item
         android:drawable="@drawable/ic_launcher_foreground"
+        android:width="@android:dimen/thumbnail_width"
+        android:height="@android:dimen/thumbnail_height"
         android:gravity="center" />
 </layer-list>

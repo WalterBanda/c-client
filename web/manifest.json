@@ -1,17 +1,52 @@
 {
   "name": "ChapChap",
   "short_name": "ChapChap",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#F2F2F",
-  "theme_color": "#F2F2F",
+  "background_color": "#FFFFFF",
+  "theme_color": "rgba(255, 255, 255, 0.8)",
   "description": "ChapChap is a location based mechanical service delivery.",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [
-    { "src": "favicon.ico", "type": "image/x-icon", "sizes": "16x16 32x32" },
+    { "src": "favicon.ico", "type": "image/x-icon", "sizes": "16x16" },
+    { "src": "icons/icon-32.png", "type": "image/png", "sizes": "32x32" },
+    { "src": "icons/icon-48.png", "type": "image/png", "sizes": "48x48" },
+    { "src": "icons/icon-72.png", "type": "image/png", "sizes": "72x72" },
+    { "src": "icons/icon-96.png", "type": "image/png", "sizes": "96x96" },
+    { "src": "icons/icon-144.png", "type": "image/png", "sizes": "144x144" },
     { "src": "icons/icon-192.png", "type": "image/png", "sizes": "192x192" },
     { "src": "icons/icon-512.png", "type": "image/png", "sizes": "512x512" },
+    {
+      "src": "icons/icon-32-maskable.png",
+      "type": "image/png",
+      "sizes": "32x32",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-48-maskable.png",
+      "type": "image/png",
+      "sizes": "48x48",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-72-maskable.png",
+      "type": "image/png",
+      "sizes": "72x72",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-96-maskable.png",
+      "type": "image/png",
+      "sizes": "96x96",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-144-maskable.png",
+      "type": "image/png",
+      "sizes": "144x144",
+      "purpose": "maskable"
+    },
     {
       "src": "icons/icon-192-maskable.png",
       "type": "image/png",

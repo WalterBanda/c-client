@@ -1,16 +1,17 @@
-import 'package:client/core/providers/appdata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../core/models/user.dart';
-import '../core/providers/user.dart';
-import '../core/routes/router.dart';
-import '../core/routes/routes.dart';
-import '../styles/icons/chap_chap_icons.dart';
-import '../styles/ui/colors.dart';
+// 🏘️ Local imports
+import '../../core/models/user.dart';
+import '../../core/providers/appdata.dart';
+import '../../core/providers/user.dart';
+import '../router.dart';
+import '../routes.dart';
+import '../../../styles/icons/chap_chap_icons.dart';
+import '../../../styles/ui/colors.dart';
 
 BoxConstraints pageConstraints =
     const BoxConstraints(minWidth: 320, maxWidth: 480);

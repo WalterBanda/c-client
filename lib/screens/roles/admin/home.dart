@@ -1,13 +1,14 @@
-import 'package:client/core/providers/appdata.dart';
-import 'package:client/router/roles.dart';
-import 'package:client/styles/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// 🏘️ Local imports
 import '../../../core/models/user.dart';
 import '../../../styles/icons/chap_chap_icons.dart';
+import '../../../core/providers/appdata.dart';
+import '../../../router/navigator/roles.dart';
+import '../../../styles/ui/colors.dart';
 import 'items.dart';
 
 class AdminHome extends StatelessWidget {

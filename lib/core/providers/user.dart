@@ -1,13 +1,14 @@
-import 'package:client/core/models/garage.dart';
-import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+// 🏘️ Local imports
+import '../models/garage.dart';
+import '../models/user.dart';
 import '../../screens/auth/onboarding.dart';
-import '../routes/router.dart';
-import '../routes/routes.dart';
+import '../../router/router.dart';
+import '../../router/routes.dart';
 
 class UserProvider extends ChangeNotifier {
   late UserModel _user = UserModel.clear();

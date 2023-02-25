@@ -2,10 +2,11 @@ import 'package:client/core/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// 🏘️ Local imports
 import '../../core/models/user.dart';
-import '../../core/routes/router.dart';
-import '../../core/routes/routes.dart';
-import '../../router/roles.dart';
+import '../../router/router.dart';
+import '../../router/routes.dart';
+import '../../router/navigator/roles.dart';
 import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
 

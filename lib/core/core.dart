@@ -1,11 +1,12 @@
-import 'package:client/core/providers/appdata.dart';
-import 'package:client/core/providers/user.dart';
-import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// 🏘️ Local imports
 import 'providers/location.dart';
-import 'routes/router.dart';
+import 'providers/appdata.dart';
+import 'providers/user.dart';
+import '../styles/ui/colors.dart';
+import '../router/router.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

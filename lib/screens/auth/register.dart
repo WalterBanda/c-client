@@ -1,17 +1,19 @@
-import 'package:client/core/models/garage.dart';
-import 'package:client/screens/roles/admin/items.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/models/garage.dart';
+// 🏘️ Local imports
 import '../../core/models/user.dart';
 import '../../core/providers/user.dart';
-import '../../core/routes/router.dart';
-import '../../core/routes/routes.dart';
+import '../../core/utils/validator.dart';
+import '../../router/router.dart';
+import '../../router/routes.dart';
 import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
+import '../roles/admin/items.dart';
 import 'login.dart';
 
 class Register extends StatelessWidget {
@@ -69,7 +71,8 @@ class Register extends StatelessWidget {
                       controller: _nameController,
                       focusNode: _nameFocusNode,
                       inputType: TextInputType.name,
-                      validator: (value) => Validator.validateName(name: value),
+                      validator: (value) =>
+                          InputValidator.validateName(name: value),
                       prefix: const Icon(
                         ChapChap.user,
                         size: 15,
@@ -81,7 +84,8 @@ class Register extends StatelessWidget {
                       controller: _emailController,
                       focusNode: _emailFocusNode,
                       inputType: TextInputType.emailAddress,
-                      validator: (value) => Validator.validateEmail(email: value),
+                      validator: (value) =>
+                          InputValidator.validateEmail(email: value),
                       prefix: const Icon(
                         Icons.email_rounded,
                         size: 15,
@@ -93,7 +97,7 @@ class Register extends StatelessWidget {
                       controller: _passwordController,
                       focusNode: _passwordFocusNode,
                       validator: (value) =>
-                          Validator.validatePassword(password: value),
+                          InputValidator.validatePassword(password: value),
                       inputType: TextInputType.visiblePassword,
                       private: true,
                       prefix: const Icon(
@@ -107,7 +111,8 @@ class Register extends StatelessWidget {
                       controller: _phoneController,
                       focusNode: _phoneFocusNode,
                       inputType: TextInputType.phone,
-                      validator: (value) => Validator.validatePhone(phone: value),
+                      validator: (value) =>
+                          InputValidator.validatePhone(phone: value),
                       prefix: const Icon(
                         Icons.phone_rounded,
                         size: 15,
@@ -148,7 +153,7 @@ class Register extends StatelessWidget {
                           ),
                         ),
                       ),
-                      validator: (value) => Validator.validateAddress(
+                      validator: (value) => InputValidator.validateAddress(
                           address: _addressController.value),
                       prefix: const Icon(
                         ChapChap.location,

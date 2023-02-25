@@ -1,6 +1,3 @@
-import 'package:client/core/models/garage.dart';
-import 'package:client/core/providers/appdata.dart';
-import 'package:client/screens/roles/admin/items.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,11 +5,16 @@ import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/models/garage.dart';
+import '../../core/providers/appdata.dart';
+// 🏘️ Local imports
 import '../../core/providers/user.dart';
-import '../../router/roles.dart';
+import '../../core/utils/validator.dart';
+import '../../router/navigator/roles.dart';
 import '../../styles/icons/chap_chap_icons.dart';
 import '../../styles/ui/colors.dart';
 import '../auth/login.dart';
+import '../roles/admin/items.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -227,7 +229,7 @@ class SettingsPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextFormField(
-              validator: (value) => Validator.validateName(name: value!),
+              validator: (value) => InputValidator.validateName(name: value!),
               style: const TextStyle(
                 fontFamily: "SF Pro Rounded",
                 fontSize: 15,
@@ -328,7 +330,7 @@ class RequestAdminAccess extends StatelessWidget {
                 controller: descriptionController,
                 minLines: 4,
                 maxLines: 5,
-                validator: (val) => Validator.validateName(name: val!),
+                validator: (val) => InputValidator.validateName(name: val!),
                 style: const TextStyle(
                   fontFamily: "SF Pro Rounded",
                   fontSize: 15,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../core/routes/router.dart';
+// 🏘️ Local imports
+import '../router.dart';
 
 class AuthNavigator extends StatelessWidget {
   const AuthNavigator({Key? key}) : super(key: key);

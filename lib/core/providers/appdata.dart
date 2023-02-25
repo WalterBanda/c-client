@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// 🏘️ Local imports
+import '../models/user.dart';
 import '../models/garage.dart';
 
 class AppData extends ChangeNotifier {

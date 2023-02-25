@@ -1,13 +1,13 @@
-import 'package:client/core/providers/user.dart';
-import 'package:client/screens/auth/login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'package:client/core/routes/routes.dart';
-import 'package:client/core/routes/router.dart';
-import 'package:client/styles/ui/colors.dart';
 import 'package:provider/provider.dart';
 
+// 🏘️ Local imports
+import '../../core/providers/user.dart';
+import 'login.dart';
+import '../../router/routes.dart';
+import '../../router/router.dart';
+import '../../styles/ui/colors.dart';
 import 'onboarding.dart';
 
 class ResetPassword extends StatelessWidget {

@@ -1,12 +1,13 @@
-import 'package:client/core/models/garage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// 🏘️ Local imports
 import '../../core/models/user.dart';
 import '../../core/providers/user.dart';
-import '../../core/routes/router.dart';
-import '../../core/routes/routes.dart';
+import '../../core/utils/validator.dart';
+import '../../router/router.dart';
+import '../../router/routes.dart';
 import '../../styles/ui/colors.dart';
 import 'onboarding.dart';
 
@@ -51,7 +52,7 @@ class Login extends StatelessWidget {
                         controller: _emailController,
                         focusNode: _emailFocusNode,
                         validator: (value) =>
-                            Validator.validateEmail(email: value),
+                            InputValidator.validateEmail(email: value),
                         inputType: TextInputType.emailAddress,
                         prefix: const Icon(
                           Icons.email_rounded,
@@ -64,7 +65,7 @@ class Login extends StatelessWidget {
                         controller: _passwordController,
                         focusNode: _passwordFocusNode,
                         validator: (value) =>
-                            Validator.validatePassword(password: value),
+                            InputValidator.validatePassword(password: value),
                         inputType: TextInputType.visiblePassword,
                         private: true,
                         prefix: const Icon(
@@ -194,54 +195,4 @@ Widget authInput({
       ),
     ),
   );
-}
-
-class Validator {
-  static String? validateName({required String name, String? label}) {
-    if (name.isEmpty) {
-      return '${label ?? 'Name'} can\'t be empty';
-    }
-
-    return null;
-  }
-
-  static String? validateEmail({required String email}) {
-    RegExp emailRegExp = RegExp(
-        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
-
-    if (email.isEmpty) {
-      return 'Email can\'t be empty';
-    } else if (!emailRegExp.hasMatch(email)) {
-      return 'Enter a correct email';
-    }
-
-    return null;
-  }
-
-  static String? validatePassword({required String password}) {
-    if (password.isEmpty) {
-      return 'Password can\'t be empty';
-    } else if (password.length < 6) {
-      return 'Enter a password with length at least 6';
-    }
-
-    return null;
-  }
-
-  static String? validatePhone({required String phone}) {
-    RegExp phoneRegExp = RegExp(r"^\+(?:[0-9] ?){6,14}[0-9]$");
-    if (phone.isEmpty) {
-      return 'Please add your phone number easier communications';
-    } else if (!phoneRegExp.hasMatch(phone)) {
-      return 'Phone number has to be in International Format ie +254';
-    }
-    return null;
-  }
-
-  static String? validateAddress({Address? address}) {
-    if (address == null) {
-      return 'Please add your address for garage booking';
-    }
-    return null;
-  }
 }
