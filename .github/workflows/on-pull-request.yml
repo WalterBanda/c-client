@@ -35,5 +35,5 @@ jobs:
       - name: Deploy Preview builds
         uses: ./.github/actions/deploy/web
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHAPCHAP_90547 }}
