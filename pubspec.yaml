@@ -4,7 +4,7 @@ description: ChapChap Mechanical friend
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
-version: 1.0.0+2
+version: 1.0.0+1
 
 environment:
   sdk: ">=2.17.0-266.1.beta <3.0.0"
