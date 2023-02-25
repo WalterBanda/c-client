@@ -42,7 +42,7 @@ jobs:
           && new_version="$version+$new_build" \
           && new_semver="$version.$new_build" \
           && sed -i "s#$old_version#$new_version#g" pubspec.yaml \
-          && echo "::set-output name=build_number::$new_semver"
+          && echo "build_number=$new_semver" >> $GITHUB_OUTPUT
 
       - name: Sync changes to git, publish tags
         shell: bash
@@ -81,6 +81,6 @@ jobs:
       - name: Deploy Preview builds
         uses: ./.github/actions/deploy/web
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHAPCHAP_90547 }}
           production_channel: live
