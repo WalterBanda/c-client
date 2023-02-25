@@ -1,8 +1,10 @@
 # Runs when a PR is merged or production bug is fixed.
 
 name: Release workflow
+
 on:
   push:
+    # Sequence of patterns matched against refs/heads
     branches:
       - main
       - develop
@@ -12,6 +14,8 @@ jobs:
     name: Setup and testing of the Project
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout to the repository
+        uses: actions/checkout@v3
       # Setup environment for building and testing.
       - name: Project setup + Flutter SDK setup
         uses: ./.github/actions/setup-project
@@ -25,7 +29,9 @@ jobs:
     outputs:
       build_number: ${{ steps.get_build_number.outputs.build_number }}
     steps:
-      - name: Setup
+      - name: Checkout to the repository
+        uses: actions/checkout@v3
+      - name: Environment setup
         uses: ./.github/actions/setup-project
       - name: Bump pubspec yaml
         id: get_build_number
@@ -57,7 +63,7 @@ jobs:
   github_releases:
     needs: create_build_number
     name: Build and Create github releases for android, linux, windows
-    uses: "./.github/workflow/release_github_release.yml"
+    uses: "./.github/workflows/release_github.yml"
     with:
       version: ${{ needs.create_build_number.outputs.build_number }}
     secrets: inherit
@@ -67,7 +73,9 @@ jobs:
     name: Build and Deploy preview web PR builds
     runs-on: ubuntu-latest
     steps:
-      - name: Project setup + Flutter SDK setup
+      - name: Checkout to the repository
+        uses: actions/checkout@v3
+      - name: Flutter SDK setup
         uses: ./.github/actions/setup-project
       - name: Build Preview builds
         uses: ./.github/actions/build/web

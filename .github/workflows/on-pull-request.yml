@@ -13,8 +13,10 @@ jobs:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout to the repository
+        uses: actions/checkout@v3
       # Setup environment for building and testing.
-      - name: Project setup + Flutter SDK setup
+      - name: Flutter SDK setup
         uses: ./.github/actions/setup-project
       - name: Test flutter code
         uses: ./.github/actions/test-flutter
@@ -24,7 +26,9 @@ jobs:
     name: Build and Deploy preview web PR builds
     runs-on: ubuntu-latest
     steps:
-      - name: Project setup + Flutter SDK setup
+      - name: Checkout to the repository
+        uses: actions/checkout@v3
+      - name: Flutter SDK setup
         uses: ./.github/actions/setup-project
       - name: Build Preview builds
         uses: ./.github/actions/build/web

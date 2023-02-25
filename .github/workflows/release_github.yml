@@ -1,7 +1,7 @@
 name: Draft Github Release
 on:
   # Enable manual run
-  workflow_dispatch:
+  workflow_call:
     inputs:
       version:
         description: "Tag to create (e.g. v2.10.0). Must include 'v' and must match pubspec"
@@ -63,8 +63,10 @@ jobs:
       fail-fast: false
     needs: draft-release
     steps:
+      - name: Checkout to the repository
+        uses: actions/checkout@v3
       # Set up Flutter.
-      - name: Clone Flutter repository with stable channel
+      - name: Flutter SDK setup
         uses: ./.github/actions/setup-project
 
       - name: Install Linux dependencies
