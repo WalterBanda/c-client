@@ -19,7 +19,7 @@ runs:
     - name: Deploy to Firebase
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:
-        github_token: ${{ inputs.github_token }}
+        repoToken: ${{ inputs.github_token }}
         firebaseServiceAccount: ${{ inputs.firebaseServiceAccount }}
         channelId: ${{ inputs.production_channel }}
         projectId: chapchap-90547

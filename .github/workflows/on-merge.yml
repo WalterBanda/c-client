@@ -7,7 +7,6 @@ on:
     # Sequence of patterns matched against refs/heads
     branches:
       - main
-      - develop
   workflow_dispatch:
 
 jobs:
