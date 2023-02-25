@@ -38,7 +38,7 @@ jobs:
         shell: bash
         run: |
           version=$(grep -m1 version: pubspec.yaml | awk '{print $2}' | tr -d \'\" | cut -d '+' -f1)
-          old_version=$(grep -m1 version: pubspec.yaml | awk '{print $2}' | sed "s/ //g;s/'"'"'//g")
+          old_version=$(grep -m1 version: pubspec.yaml | awk '{print $2}' | sed "s/ //g;s/'\"'\"'//g")
           new_build=$(grep -m1 version: pubspec.yaml | awk -F '+' '{if (NF>1) print $NF+1; else print "1"}')
           new_version="$version+$new_build
           new_semver="$version.$new_build
