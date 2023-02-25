@@ -23,6 +23,4 @@ runs:
     - name: Install project dependacies
       run: flutter pub get
       shell: bash
-    - name: Caching build binaries
-      run: flutter precache
-      shell: bash
+      
