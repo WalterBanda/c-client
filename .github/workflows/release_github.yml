@@ -30,9 +30,7 @@ jobs:
           prerelease: false
           generate_release_notes: true
           body: |
-            <h1> <img src="https://chapchap-90547.web.app/icons/icon-512.png" height="24"> Release - version ${{ inputs.version }} </h1>
-            ### Build Details & Changelog
-             > 
+            <h2> <img src="https://chapchap-90547.web.app/icons/icon-512.png" height="24"> Release for version ${{ inputs.version }} </h2>
           append_body: true
 
   create-build:

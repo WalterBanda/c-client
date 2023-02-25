@@ -5,10 +5,6 @@
 
 Please describe the changes made in this pull request.
 
-## Screenshots of changes
-
-Please attach a screenshot of the changes made.
-
 ## Project tasks and goals
 
 - [ ] Task 1.
