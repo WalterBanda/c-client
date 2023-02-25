@@ -18,7 +18,7 @@ import '../models/garage.dart';
 class InputValidator {
   static String? validateName({required String name, String? label}) {
     if (name.isEmpty) {
-      return '${label ?? 'Name'} can\'t be empty';
+      return "${label ?? 'Name'} can't be empty";
     }
 
     return null;
@@ -51,7 +51,7 @@ class InputValidator {
         r"^((\w+(?!.*[.\s]{2})[\w!#$%&'*+-=?^_`{|}~.]+)?\w+)@(([a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9-]+)*)\.([a-zA-Z]{2,}))$");
 
     if (email.isEmpty) {
-      return 'Email can\'t be empty';
+      return "Email can't be empty";
     } else if (!emailRegExp.hasMatch(email)) {
       return 'Enter a correct email';
     }
@@ -61,7 +61,7 @@ class InputValidator {
 
   static String? validatePassword({required String password}) {
     if (password.isEmpty) {
-      return 'Password can\'t be empty';
+      return "Password can't be empty";
     } else if (password.length < 6) {
       return 'Enter a password with length at least 6';
     }
@@ -77,11 +77,11 @@ class InputValidator {
   /// > The third group checks for a number `\d` with a length of [6,14]
   /// `ℹ️` This ensures that the number meets the E.164 format
   static String? validatePhone({required String phone}) {
-    RegExp phoneRegExp = RegExp(r"^(\+\d{1,3})?\d{1,3}\d{6,14}$");
+    RegExp phoneRegExp = RegExp(r"^\+\d{1,3}\d{6,14}$");
     if (phone.isEmpty) {
       return 'Please add your phone number easier communications';
     } else if (!phoneRegExp.hasMatch(phone)) {
-      return 'Phone number has to be in International Format ie +254';
+      return 'Phone number has to be in International Format ie +<countrycode>';
     }
     return null;
   }
