@@ -2,35 +2,28 @@ name: Draft Github Release
 on:
   # Enable manual run
   workflow_call:
-    inputs:
-      version:
-        description: "Tag to create (e.g. v2.10.0). Must include 'v' and must match pubspec"
-        required: false
-        default: v1.0.0.1
-        type: string
   workflow_dispatch:
 
 jobs:
   draft-release:
     name: Draft Github release
-    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
       - name: Draft release with release notes
         id: create_release
+        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ inputs.version }}
-          name: Release - version ${{ inputs.version }}
+          name: Prerelease of version ${{ github.ref_name }}
           draft: true
           prerelease: false
           generate_release_notes: true
           body: |
-            <h2> <img src="https://chapchap-90547.web.app/icons/icon-512.png" height="24"> Release for version ${{ inputs.version }} </h2>
+            <h2> <img src="https://chapchap-90547.web.app/icons/icon-512.png" height="24"> Release for version ${{ github.ref_name }} </h2>
           append_body: true
 
   create-build:
@@ -73,14 +66,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev libwebkit2gtk-4.0-dev
-      
+
       - name: Enable desktop support
         if: matrix.target != 'Android'
         run: |
           flutter config --enable-linux-desktop
           flutter config --enable-windows-desktop
       - run: flutter doctor -v
-        
       - name: Configure Keystore for Android
         if: matrix.target == 'Android'
         run: |
