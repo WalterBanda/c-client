@@ -64,7 +64,7 @@ jobs:
     name: Build and Create github releases for android, linux, windows
     uses: "./.github/workflows/release_github.yml"
     with:
-      version: ${{ needs.create_build_number.outputs.build_number }}
+      version: v${{ needs.create_build_number.outputs.build_number }}
     secrets: inherit
 
   deploy_web_builds:
