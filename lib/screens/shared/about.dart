@@ -24,14 +24,14 @@ class AboutPage extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 'Its an opensource application, with a couple of features. I you like its concept you can checkout its github repo and contribute ',
-                style: Theme.of(context).textTheme.bodyText2!,
+                style: Theme.of(context).textTheme.bodyMedium!,
               ),
               const SizedBox(height: 4),
               Text(
                 'https://github.com/WalterBanda/chapchap-app',
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2!
+                    .bodyMedium!
                     .copyWith(color: Theme.of(context).colorScheme.primary),
               ),
               TextButton(
@@ -39,7 +39,7 @@ class AboutPage extends StatelessWidget {
                   'Show Licences',
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2!
+                      .bodyMedium!
                       .copyWith(color: Theme.of(context).colorScheme.primary),
                 ),
                 onPressed: () => showAboutDialog(
@@ -53,17 +53,17 @@ class AboutPage extends StatelessWidget {
                     Text(
                       "ChapChap is a proof-of-concept application that was created "
                       'for service providers that deliver mechanical services locally.',
-                      style: Theme.of(context).textTheme.bodyText2!,
+                      style: Theme.of(context).textTheme.bodyMedium!,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'Its an opensource application, with a couple of features. I you like its concept you can checkout its github repo and contribute ',
-                      style: Theme.of(context).textTheme.bodyText2!,
+                      style: Theme.of(context).textTheme.bodyMedium!,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'https://github.com/WalterBanda/chapchap-app',
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           color: Theme.of(context).colorScheme.primary),
                     )
                   ],
