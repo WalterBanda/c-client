@@ -118,4 +118,4 @@ This screen shows the profile of the user. Its also provides options for users s
 
 | Profile                                                                                |
 | -------------------------------------------------------------------------------------- |
-| <img src="docs/assets/screenshots/admin_home.svg" alt="Thumbnail" style="zoom:50%;" /> |
+| <img src="docs/assets/screenshots/profile.svg" alt="Thumbnail" style="zoom:50%;" /> |
