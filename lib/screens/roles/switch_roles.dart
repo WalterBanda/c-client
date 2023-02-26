@@ -54,7 +54,8 @@ class SwitchRoles extends StatelessWidget {
           onPressed: () => _navToRole(role),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.bgDark,
-            onSurface: AppColors.primary,
+            disabledForegroundColor: AppColors.primary.withOpacity(0.38),
+            disabledBackgroundColor: AppColors.primary.withOpacity(0.12),
             padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 19),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
