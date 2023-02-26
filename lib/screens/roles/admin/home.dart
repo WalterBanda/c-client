@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
 import '../../../core/models/user.dart';
-import '../../../styles/icons/chap_chap_icons.dart';
+import '../../../styles/icons/chapchap.dart';
 import '../../../core/providers/appdata.dart';
 import '../../../router/navigator/roles.dart';
 import '../../../styles/ui/colors.dart';

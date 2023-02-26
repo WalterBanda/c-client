@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 // 🏘️ Local imports
-import '../../styles/icons/chap_chap_icons.dart';
+import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';

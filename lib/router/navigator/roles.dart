@@ -10,7 +10,7 @@ import '../../core/providers/appdata.dart';
 import '../../core/providers/user.dart';
 import '../router.dart';
 import '../routes.dart';
-import '../../../styles/icons/chap_chap_icons.dart';
+import '../../styles/icons/chapchap.dart';
 import '../../../styles/ui/colors.dart';
 
 BoxConstraints pageConstraints =

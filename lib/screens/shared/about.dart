@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // 🏘️ Local imports
 import '../../router/navigator/roles.dart';
-import '../../styles/icons/chap_chap_icons.dart';
+import '../../styles/icons/chapchap.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);

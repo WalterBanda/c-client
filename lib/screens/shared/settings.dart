@@ -11,7 +11,7 @@ import '../../core/providers/appdata.dart';
 import '../../core/providers/user.dart';
 import '../../core/utils/validator.dart';
 import '../../router/navigator/roles.dart';
-import '../../styles/icons/chap_chap_icons.dart';
+import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
 import '../auth/login.dart';
 import '../roles/admin/items.dart';

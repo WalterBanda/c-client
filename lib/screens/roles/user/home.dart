@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 // 🏘️ Local imports
 import '../../../core/providers/location.dart';
 import '../../../router/navigator/roles.dart';
-import '../../../styles/icons/chap_chap_icons.dart';
+import '../../../styles/icons/chapchap.dart';
 import '../../../styles/ui/colors.dart';
 import '../../../core/models/garage.dart';
 import '../../../core/models/user.dart';
