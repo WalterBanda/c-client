@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
 // 🏘️ Local imports
@@ -55,10 +52,6 @@ class Garage {
 }
 
 String createProfilePic({required String name}) {
-  String profileColor = Colors
-      .primaries[Random().nextInt(Colors.primaries.length)]
-      .toString()
-      .substring(39, 42);
   return "https://avatars.dicebear.com/api/initials/$name";
 }
 

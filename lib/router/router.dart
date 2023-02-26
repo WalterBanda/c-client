@@ -1,11 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-// 🏘️ Local imports
-import '../screens/auth/resetPassword.dart';
-import '../screens/shared/about.dart';
-import 'navigator/auth.dart';
-import 'navigator/roles.dart';
 import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../screens/auth/register.dart';
@@ -15,6 +10,11 @@ import '../../screens/roles/switch_roles.dart';
 import '../../screens/roles/user/home.dart';
 import '../../screens/shared/profile.dart';
 import '../../screens/shared/settings.dart';
+// 🏘️ Local imports
+import '../screens/auth/reset_password.dart';
+import '../screens/shared/about.dart';
+import 'navigator/auth.dart';
+import 'navigator/roles.dart';
 import 'routes.dart';
 
 class GlobalNavigator {
