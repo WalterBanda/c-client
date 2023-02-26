@@ -64,7 +64,7 @@ flutter:
     #    Icon Font
     - family: ChapChap
       fonts:
-        - asset: assets/fonts/ChapChap.ttf
+        - asset: assets/fonts/ChapChap/icons.ttf
     #    Application Font
     - family: SF Pro Rounded
       fonts:
