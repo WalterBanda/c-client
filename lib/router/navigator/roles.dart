@@ -57,7 +57,7 @@ class PageNavigator extends StatelessWidget {
           onPressed: () => Provider.of<UserProvider>(context, listen: false)
               .signOut(context),
           style: ElevatedButton.styleFrom(
-            primary: AppColors.primary,
+            backgroundColor: AppColors.primary,
             padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 80),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
@@ -240,7 +240,7 @@ class PageNavigator extends StatelessWidget {
       onPressed: onPressed,
       icon: Icon(icon),
       style: TextButton.styleFrom(
-        primary: AppColors.primary,
+        foregroundColor: AppColors.primary,
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 60),
         textStyle: const TextStyle(
           fontFamily: "SF Pro Rounded",

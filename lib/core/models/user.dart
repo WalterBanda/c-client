@@ -64,7 +64,7 @@ class UserModel {
         description = userInfo ??
             "Currently you have no description about you, add your description about you so that other people can know about you",
         profilePhoto = profileShot ??
-            "https://avatars.dicebear.com/api/adventurer/$name\.svg";
+            "https://avatars.dicebear.com/api/adventurer/$name.svg";
 
   createProfilePic() {
     String profileColor = Colors
