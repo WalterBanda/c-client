@@ -189,7 +189,7 @@ class _SearchOverlayState extends State<SearchOverlay> {
       ),
       decoration: InputDecoration(
         filled: true,
-        prefixIcon: const Icon(ChapChap.search_filled),
+        prefixIcon: const Icon(ChapChap.search),
         fillColor: AppColors.input,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
@@ -252,7 +252,7 @@ Positioned mapUtils(
                 ),
                 decoration: InputDecoration(
                   filled: true,
-                  prefixIcon: const Icon(ChapChap.search_filled),
+                  prefixIcon: const Icon(ChapChap.search),
                   fillColor: AppColors.input,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),

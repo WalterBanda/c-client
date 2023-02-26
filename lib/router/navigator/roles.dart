@@ -134,7 +134,7 @@ class PageNavigator extends StatelessWidget {
           case Roles.user:
             return ChapChap.home;
           case Roles.garage:
-            return ChapChap.car;
+            return ChapChap.garage;
           default:
             return ChapChap.info;
         }
