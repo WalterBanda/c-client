@@ -264,7 +264,7 @@ class SettingsPage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    primary: AppColors.primary,
+                    backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(
                         vertical: 17, horizontal: 60),
                     shape: RoundedRectangleBorder(
@@ -366,7 +366,7 @@ class RequestAdminAccess extends StatelessWidget {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: AppColors.primary,
+                  backgroundColor: AppColors.primary,
                   padding:
                       const EdgeInsets.symmetric(vertical: 17, horizontal: 24),
                   shape: RoundedRectangleBorder(
@@ -536,7 +536,7 @@ class EditDetails extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: AppColors.primary,
+                  backgroundColor: AppColors.primary,
                   padding:
                       const EdgeInsets.symmetric(vertical: 17, horizontal: 80),
                   shape: RoundedRectangleBorder(

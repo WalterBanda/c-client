@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
 import '../../core/providers/user.dart';
-import 'login.dart';
-import '../../router/routes.dart';
 import '../../router/router.dart';
+import '../../router/routes.dart';
 import '../../styles/ui/colors.dart';
+import 'login.dart';
 import 'onboarding.dart';
 
 class ResetPassword extends StatelessWidget {
@@ -62,7 +62,7 @@ class ResetPassword extends StatelessWidget {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: AppColors.primary,
+                          backgroundColor: AppColors.primary,
                           padding: const EdgeInsets.symmetric(
                               vertical: 17, horizontal: 80),
                           shape: RoundedRectangleBorder(

@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../router/router.dart';
+import '../../router/routes.dart';
 // 🏘️ Local imports
 import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
-import '../../router/router.dart';
-import '../../router/routes.dart';
 
 Widget buildBranding(BuildContext context) {
   return Column(
@@ -95,7 +95,7 @@ class Onboarding extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          primary: AppColors.primary,
+          backgroundColor: AppColors.primary,
           elevation: 0,
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           shape:

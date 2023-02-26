@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
 import '../../core/providers/user.dart';
-import '../../styles/ui/colors.dart';
 import '../../router/navigator/roles.dart';
+import '../../styles/ui/colors.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
@@ -88,7 +88,7 @@ class ProfilePage extends StatelessWidget {
                         Provider.of<UserProvider>(context, listen: false)
                             .signOut(context),
                     style: ElevatedButton.styleFrom(
-                      primary: AppColors.primary,
+                      backgroundColor: AppColors.primary,
                       padding: const EdgeInsets.symmetric(
                           vertical: 17, horizontal: 124),
                       shape: RoundedRectangleBorder(

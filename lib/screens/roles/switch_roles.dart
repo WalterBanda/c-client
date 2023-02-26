@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
 import '../../core/models/user.dart';
+import '../../router/navigator/roles.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
-import '../../router/navigator/roles.dart';
 import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
 
@@ -53,7 +53,7 @@ class SwitchRoles extends StatelessWidget {
     Widget roleItem(Roles role) => ElevatedButton(
           onPressed: () => _navToRole(role),
           style: ElevatedButton.styleFrom(
-            primary: AppColors.bgDark,
+            backgroundColor: AppColors.bgDark,
             onSurface: AppColors.primary,
             padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 19),
             shape:

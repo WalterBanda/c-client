@@ -87,7 +87,7 @@ class Login extends StatelessWidget {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: AppColors.primary,
+                            backgroundColor: AppColors.primary,
                             padding: const EdgeInsets.symmetric(
                                 vertical: 17, horizontal: 124),
                             shape: RoundedRectangleBorder(
