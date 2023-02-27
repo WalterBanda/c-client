@@ -36,7 +36,7 @@ class SettingsPage extends StatelessWidget {
                     context: context,
                     builder: (context) => changeProfilePic(context: context),
                   ),
-                  icon: ChapChap.upload,
+                  icon: ChapChap.camera,
                   child: CircleAvatar(
                     minRadius: 30,
                     maxRadius: 60,
