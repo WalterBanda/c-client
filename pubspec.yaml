@@ -51,9 +51,6 @@ dev_dependencies:
 # Flutter Framework Settings
 flutter:
 
-  # The following line ensures that the Material Icons font is included
-  uses-material-design: true
-
   #  Custom Fonts
   fonts:
     #    Icon Font
