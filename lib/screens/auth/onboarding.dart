@@ -147,7 +147,7 @@ class Onboarding extends StatelessWidget {
                   authLet(() => _gitHubSignIn(context),
                       const Icon(ChapChap.github, size: 36)),
                   const SizedBox(width: 15),
-                  authLet(_emailSignIn, const Icon(ChapChap.email, size: 36)),
+                  authLet(_emailSignIn, const Icon(ChapChap.login, size: 36)),
                 ],
               ),
               const SizedBox(height: 20),

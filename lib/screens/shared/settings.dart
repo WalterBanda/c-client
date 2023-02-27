@@ -36,7 +36,7 @@ class SettingsPage extends StatelessWidget {
                     context: context,
                     builder: (context) => changeProfilePic(context: context),
                   ),
-                  icon: Icons.camera_alt_rounded,
+                  icon: ChapChap.upload,
                   child: CircleAvatar(
                     minRadius: 30,
                     maxRadius: 60,
@@ -52,7 +52,7 @@ class SettingsPage extends StatelessWidget {
                     context: context,
                     builder: (context) => EditDetails(context: context),
                   ),
-                  icon: Icons.edit_note_rounded,
+                  icon: ChapChap.edit,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -467,7 +467,7 @@ class EditDetails extends StatelessWidget {
                 inputType: TextInputType.emailAddress,
                 // validator: (value) => Validator.validateEmail(email: value),
                 prefix: const Icon(
-                  Icons.email_rounded,
+                  ChapChap.email,
                   size: 15,
                 ),
               ),
@@ -479,7 +479,7 @@ class EditDetails extends StatelessWidget {
                 inputType: TextInputType.phone,
                 // validator: (value) => Validator.validatePhone(phone: value),
                 prefix: const Icon(
-                  Icons.phone_rounded,
+                  ChapChap.phone,
                   size: 15,
                 ),
               ),

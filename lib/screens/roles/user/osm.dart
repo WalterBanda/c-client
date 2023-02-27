@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 // 🏘️ Local imports
 import '../../../core/providers/appdata.dart';
 import '../../../core/providers/location.dart';
+import '../../../styles/icons/chapchap.dart';
 
 class OSM extends StatelessWidget {
   OSM({super.key});
@@ -53,7 +54,7 @@ class OSM extends StatelessWidget {
                     height: 40.0,
                     point: garage.address.position,
                     builder: (ctx) => const Icon(
-                      Icons.garage_rounded,
+                      ChapChap.garage,
                     ),
                   );
                 }).toList(),

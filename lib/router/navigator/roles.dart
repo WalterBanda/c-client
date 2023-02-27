@@ -203,7 +203,7 @@ class PageNavigator extends StatelessWidget {
                     },
                   ),
                   navLink(
-                    icon: Icons.settings,
+                    icon: ChapChap.settings,
                     label: "Settings",
                     onPressed: () {
                       Provider.of<AppData>(context, listen: false)

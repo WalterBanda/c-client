@@ -8,6 +8,7 @@ import '../../core/providers/user.dart';
 import '../../core/utils/validator.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
+import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
 import 'onboarding.dart';
 
@@ -29,7 +30,7 @@ class Login extends StatelessWidget {
         backgroundColor: Colors.transparent,
         foregroundColor: AppColors.primary,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded),
+          icon: const Icon(ChapChap.back),
           onPressed: () => AuthRouter.router.currentState!
               .popAndPushNamed(AuthRoutes.onboarding),
         ),
@@ -55,7 +56,7 @@ class Login extends StatelessWidget {
                             InputValidator.validateEmail(email: value),
                         inputType: TextInputType.emailAddress,
                         prefix: const Icon(
-                          Icons.email_rounded,
+                          ChapChap.email,
                           size: 15,
                         ),
                       ),
@@ -69,7 +70,7 @@ class Login extends StatelessWidget {
                         inputType: TextInputType.visiblePassword,
                         private: true,
                         prefix: const Icon(
-                          Icons.lock_rounded,
+                          ChapChap.lock,
                           size: 15,
                         ),
                       ),

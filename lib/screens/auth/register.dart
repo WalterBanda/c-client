@@ -42,7 +42,7 @@ class Register extends StatelessWidget {
         backgroundColor: Colors.transparent,
         foregroundColor: AppColors.primary,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded),
+          icon: const Icon(ChapChap.back),
           onPressed: () => AuthRouter.router.currentState!
               .popAndPushNamed(AuthRoutes.onboarding),
         ),
@@ -87,7 +87,7 @@ class Register extends StatelessWidget {
                       validator: (value) =>
                           InputValidator.validateEmail(email: value),
                       prefix: const Icon(
-                        Icons.email_rounded,
+                        ChapChap.email,
                         size: 15,
                       ),
                     ),
@@ -101,7 +101,7 @@ class Register extends StatelessWidget {
                       inputType: TextInputType.visiblePassword,
                       private: true,
                       prefix: const Icon(
-                        Icons.lock_rounded,
+                        ChapChap.lock,
                         size: 15,
                       ),
                     ),
@@ -114,7 +114,7 @@ class Register extends StatelessWidget {
                       validator: (value) =>
                           InputValidator.validatePhone(phone: value),
                       prefix: const Icon(
-                        Icons.phone_rounded,
+                        ChapChap.phone,
                         size: 15,
                       ),
                     ),

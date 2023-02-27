@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../core/providers/user.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
+import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
 import 'login.dart';
 import 'onboarding.dart';
@@ -27,7 +28,7 @@ class ResetPassword extends StatelessWidget {
         backgroundColor: Colors.transparent,
         foregroundColor: AppColors.primary,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded),
+          icon: const Icon(ChapChap.back),
           onPressed: () => AuthRouter.router.currentState!
               .popAndPushNamed(AuthRoutes.onboarding),
         ),
