@@ -30,34 +30,6 @@ Widget buildBranding(BuildContext context) {
   );
 }
 
-class Splash extends StatelessWidget {
-  const Splash({Key? key}) : super(key: key);
-
-  static const String id = "splash";
-
-  void _delay() {
-    Timer(const Duration(seconds: 3), () {
-      AuthRouter.router.currentState!
-          .pushReplacementNamed(AuthRoutes.onboarding);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _delay();
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            buildBranding(context),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 SnackBar alertSnackBar({
   String? message,
   String? errorLabel,
