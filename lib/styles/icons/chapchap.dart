@@ -7,8 +7,8 @@ import 'package:flutter/widgets.dart';
 class ChapChap {
   ChapChap._();
 
-  static const _kFontFam = 'Chapchap';
-  static const String _kFontPkg = 'icons';
+  static const _kFontFam = 'ChapChap';
+  static const String? _kFontPkg = null;
 
   static const IconData upload =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
