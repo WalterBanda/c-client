@@ -11,24 +11,7 @@ import '../../router/routes.dart';
 // 🏘️ Local imports
 import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
-
-Widget buildBranding(BuildContext context) {
-  return Column(
-    mainAxisSize: MainAxisSize.min,
-    children: const <Widget>[
-      Icon(ChapChap.logo, size: 100),
-      SizedBox(height: 18),
-      Text(
-        "ChapChap",
-        style: TextStyle(
-          fontFamily: "SF Pro Rounded",
-          fontSize: 36,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-    ],
-  );
-}
+import '../../widgets/screens/auth/branding.dart';
 
 SnackBar alertSnackBar({
   String? message,
@@ -99,7 +82,7 @@ class Onboarding extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              buildBranding(context),
+              const Logo(),
               const SizedBox(height: 40),
               const Text(
                 "Login to your Account ",

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../router/router.dart';
 import '../../router/routes.dart';
-import 'onboarding.dart';
+import '../../widgets/screens/auth/branding.dart';
 
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
@@ -25,8 +25,8 @@ class Splash extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            buildBranding(context),
+          children: const [
+            Logo(),
           ],
         ),
       ),

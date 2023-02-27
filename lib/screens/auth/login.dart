@@ -10,6 +10,7 @@ import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
+import '../../widgets/screens/auth/branding.dart';
 import 'onboarding.dart';
 
 class Login extends StatelessWidget {
@@ -41,7 +42,7 @@ class Login extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                buildBranding(context),
+                const Logo(),
                 const SizedBox(height: 40),
                 Form(
                   key: _formKey,
