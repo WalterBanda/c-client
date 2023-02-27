@@ -54,11 +54,6 @@ flutter:
   # The following line ensures that the Material Icons font is included
   uses-material-design: true
 
-  # App assets:
-  assets:
-    - assets/images/
-    - assets/images/res/
-
   #  Custom Fonts
   fonts:
     #    Icon Font
