@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../router/router.dart';
 import '../../router/routes.dart';
-import '../../widgets/screens/auth/branding.dart';
+import '../../widgets/screens/auth/shared.dart';
 
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);

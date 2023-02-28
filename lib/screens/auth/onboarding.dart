@@ -11,7 +11,7 @@ import '../../router/routes.dart';
 // 🏘️ Local imports
 import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
-import '../../widgets/screens/auth/branding.dart';
+import '../../widgets/screens/auth/shared.dart';
 
 SnackBar alertSnackBar({
   String? message,

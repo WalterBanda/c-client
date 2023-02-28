@@ -10,7 +10,7 @@ import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
-import '../../widgets/screens/auth/branding.dart';
+import '../../widgets/screens/auth/shared.dart';
 import 'onboarding.dart';
 
 class Login extends StatelessWidget {

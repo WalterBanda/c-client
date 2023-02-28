@@ -12,6 +12,7 @@ import '../../screens/shared/profile.dart';
 import '../../screens/shared/settings.dart';
 // 🏘️ Local imports
 import '../screens/auth/reset_password.dart';
+import '../screens/auth/splash.dart';
 import '../screens/shared/about.dart';
 import 'navigator/auth.dart';
 import 'navigator/roles.dart';

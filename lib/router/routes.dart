@@ -7,6 +7,7 @@ import '../../screens/roles/garage/home.dart';
 import '../../screens/roles/switch_roles.dart';
 import '../../screens/roles/user/home.dart';
 import '../screens/auth/reset_password.dart';
+import '../screens/auth/splash.dart';
 import 'navigator/auth.dart';
 import 'navigator/roles.dart';
 
