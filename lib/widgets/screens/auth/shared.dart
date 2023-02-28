@@ -10,7 +10,7 @@ class Logo extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: const <Widget>[
-        Icon(ChapChap.logo, size: 100),
+        Icon(ChapChap.logo, size: 160),
         SizedBox(height: 18),
         Text(
           "ChapChap",
