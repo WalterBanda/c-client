@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../styles/icons/chapchap.dart';
 
 class Logo extends StatelessWidget {
+  /// This widget displays the branding with consists of the logo and brand text
   const Logo({super.key});
 
   @override
