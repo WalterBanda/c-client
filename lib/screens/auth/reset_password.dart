@@ -10,7 +10,6 @@ import '../../styles/icons/chapchap.dart';
 import '../../styles/ui/colors.dart';
 import '../../widgets/screens/auth/shared.dart';
 import 'login.dart';
-import 'onboarding.dart';
 
 class ResetPassword extends StatelessWidget {
   ResetPassword({Key? key}) : super(key: key);

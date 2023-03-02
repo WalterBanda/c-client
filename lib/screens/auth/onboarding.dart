@@ -104,53 +104,11 @@ class Onboarding extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              CreateAccountShortcut(),
+              const CreateAccountShortcut(),
             ],
           ),
         ),
       ),
     );
   }
-}
-
-Container CreateAccountShortcut() {
-  return Container(
-    decoration: const BoxDecoration(
-      border: Border(
-        top: BorderSide(color: AppColors.primary, width: 2),
-      ),
-    ),
-    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-    child: TextButton(
-      onPressed: () => AuthRouter.router.currentState!
-          .pushReplacementNamed(AuthRoutes.register),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          Text(
-            "Don’t have an Account ?  ",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.primary,
-              fontSize: 13,
-              fontFamily: "SF Pro Rounded",
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Text(
-            "Create Account",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              // color: Color(0xff4285f4),
-              color: AppColors.success,
-              fontSize: 13,
-              fontFamily: "SF Pro Rounded",
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }
