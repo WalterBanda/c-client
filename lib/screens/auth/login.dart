@@ -123,7 +123,7 @@ class Login extends StatelessWidget {
                     ),
                   ),
                 ),
-                createAccountShortcut()
+                CreateAccountShortcut()
               ],
             ),
           ),

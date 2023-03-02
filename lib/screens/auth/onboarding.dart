@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:flutter/foundation.dart';
@@ -106,7 +104,7 @@ class Onboarding extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              createAccountShortcut(),
+              CreateAccountShortcut(),
             ],
           ),
         ),
@@ -115,7 +113,7 @@ class Onboarding extends StatelessWidget {
   }
 }
 
-Container createAccountShortcut() {
+Container CreateAccountShortcut() {
   return Container(
     decoration: const BoxDecoration(
       border: Border(
