@@ -10,14 +10,7 @@ void main() {
         (tester) async {
       await tester.pumpWidget(const Sandbox(testWidget: Logo()));
 
-// Checks respective widgets in tree
-      expect(find.text('ChapChap'), findsOneWidget);
-      expect(find.byIcon(ChapChap.logo), findsOneWidget);
-    });
-    testWidgets('Test splash screen element dimensions', (tester) async {
-      await tester.pumpWidget(const Sandbox(testWidget: Logo()));
-
-// Checks respective widgets in tree
+      // Checks respective widgets in tree
       expect(find.text('ChapChap'), findsOneWidget);
       expect(find.byIcon(ChapChap.logo), findsOneWidget);
     });
