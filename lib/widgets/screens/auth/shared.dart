@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../router/router.dart';
@@ -34,45 +35,68 @@ class CreateAccountShortcut extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return Container(
-    decoration: const BoxDecoration(
-      border: Border(
-        top: BorderSide(color: AppColors.primary, width: 2),
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          top: BorderSide(color: AppColors.primary, width: 2),
+        ),
       ),
-    ),
-    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-    child: TextButton(
-      onPressed: () => AuthRouter.router.currentState!
-          .pushReplacementNamed(AuthRoutes.register),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          Text(
-            "Don’t have an Account ?  ",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.primary,
-              fontSize: 13,
-              fontFamily: "SF Pro Rounded",
-              fontWeight: FontWeight.w700,
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+      child: TextButton(
+        onPressed: () => AuthRouter.router.currentState!
+            .pushReplacementNamed(AuthRoutes.register),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Text(
+              "Don't have an Account ?  ",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primary,
+                fontSize: 13,
+                fontFamily: "SF Pro Rounded",
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-          Text(
-            "Create Account",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              // color: Color(0xff4285f4),
-              color: AppColors.success,
-              fontSize: 13,
-              fontFamily: "SF Pro Rounded",
-              fontWeight: FontWeight.w700,
+            Text(
+              "Create Account",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                // color: Color(0xff4285f4),
+                color: AppColors.success,
+                fontSize: 13,
+                fontFamily: "SF Pro Rounded",
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
   }
+}
 
+class Authlet extends StatelessWidget {
+  final GestureTapCallback onPressed;
+  final Widget icon;
+  const Authlet({required this.icon, required this.onPressed, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: kIsWeb ? 60 : null,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
+        child: icon,
+      ),
+    );
+  }
 }

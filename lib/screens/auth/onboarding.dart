@@ -42,23 +42,6 @@ class Onboarding extends StatelessWidget {
 
   static const String id = "onboarding";
 
-  Widget authLet(GestureTapCallback onPressed, Widget icon) {
-    return SizedBox(
-      height: kIsWeb ? 60 : null,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        ),
-        child: icon,
-      ),
-    );
-  }
-
   void _googleSignIn(BuildContext context) {
     Provider.of<UserProvider>(context, listen: false)
         .authUser(context: context, signInMethods: SignInMethods.google);
@@ -94,13 +77,17 @@ class Onboarding extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  authLet(() => _googleSignIn(context),
-                      const Icon(ChapChap.google, size: 36)),
+                  Authlet(
+                      onPressed: () => _googleSignIn(context),
+                      icon: const Icon(ChapChap.google, size: 36)),
                   const SizedBox(width: 15),
-                  authLet(() => _gitHubSignIn(context),
-                      const Icon(ChapChap.github, size: 36)),
+                  Authlet(
+                      onPressed: () => _gitHubSignIn(context),
+                      icon: const Icon(ChapChap.github, size: 36)),
                   const SizedBox(width: 15),
-                  authLet(_emailSignIn, const Icon(ChapChap.login, size: 36)),
+                  Authlet(
+                      onPressed: _emailSignIn,
+                      icon: const Icon(ChapChap.login, size: 36)),
                 ],
               ),
               const SizedBox(height: 20),
