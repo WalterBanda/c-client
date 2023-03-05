@@ -79,15 +79,15 @@ class Onboarding extends StatelessWidget {
                 children: [
                   Authlet(
                       onPressed: () => _googleSignIn(context),
-                      icon: const Icon(ChapChap.google, size: 36)),
+                      icon: const Icon(ChapChap.google, size: 40)),
                   const SizedBox(width: 15),
                   Authlet(
                       onPressed: () => _gitHubSignIn(context),
-                      icon: const Icon(ChapChap.github, size: 36)),
+                      icon: const Icon(ChapChap.github, size: 40)),
                   const SizedBox(width: 15),
                   Authlet(
                       onPressed: _emailSignIn,
-                      icon: const Icon(ChapChap.login, size: 36)),
+                      icon: const Icon(ChapChap.login, size: 40)),
                 ],
               ),
               const SizedBox(height: 20),
