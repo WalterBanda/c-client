@@ -1,1 +1,0 @@
-// This is a transition that occurs when one navigates from main screen to secondary screen ie `screen with back arrow`
