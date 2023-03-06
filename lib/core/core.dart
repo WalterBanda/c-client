@@ -15,17 +15,22 @@ class App extends StatelessWidget {
         fontFamily: "SF Pro Rounded",
       ),
       // TODO: Implement Theming 🎨
-      home: MyHomePage(),
+      home: const MyHomePage(),
+      themeMode: ThemeMode.system,
+      darkTheme: ThemeData.dark(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Hello')),
       body: Column(
-        children: [
+        children: const [
           Text('A random idea:'),
         ],
       ),
