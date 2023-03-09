@@ -1,4 +1,6 @@
+import 'package:client/styles/theme/manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
 import '../styles/ui/colors.dart';
@@ -8,16 +10,23 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "ChapChap",
-      theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.bgDark,
-        fontFamily: "SF Pro Rounded",
+    return MultiProvider(
+      providers: [
+        Provider(
+          create: (context) => ThemeManager(),
+        )
+      ],
+      child: MaterialApp(
+        title: "ChapChap",
+        themeMode: Provider.of<ThemeManager>(context).mode,
+        theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.bgDark,
+          fontFamily: "SF Pro Rounded",
+        ),
+        // TODO: Implement Theming 🎨
+        darkTheme: ThemeData.dark(),
+        home: const MyHomePage(),
       ),
-      // TODO: Implement Theming 🎨
-      home: const MyHomePage(),
-      themeMode: ThemeMode.system,
-      darkTheme: ThemeData.dark(),
     );
   }
 }
