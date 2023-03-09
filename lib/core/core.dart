@@ -1,9 +1,9 @@
-import 'package:client/styles/theme/manager.dart';
+import 'package:client/design/theme/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
-import '../styles/ui/colors.dart';
+import '../design/styles/colors.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
