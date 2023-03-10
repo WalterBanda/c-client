@@ -16,26 +16,30 @@ class FontSizes {
 
 /// Contains all typography styles for this app.
 class TextStyles {
-  static TextStyle get display => TextStyle(
-        fontSize: FontSizes.display,
-      );
+  static TextStyle get display =>
+      TextStyle(fontSize: FontSizes.display, fontWeight: FontWeight.bold);
+  static TextStyle get title =>
+      TextStyle(fontSize: FontSizes.title, fontWeight: FontWeight.bold);
 
-  static TextStyle get title => TextStyle(
-        fontSize: FontSizes.title,
-      );
-  static TextStyle get heading => TextStyle(
-        fontSize: FontSizes.heading,
-      );
-  static TextStyle get label => TextStyle(
-        fontSize: FontSizes.label,
-      );
-  static TextStyle get headline => TextStyle(
-        fontSize: FontSizes.headline,
-      );
-  static TextStyle get body => TextStyle(
-        fontSize: FontSizes.body,
-      );
-  static TextStyle get caption => TextStyle(
-        fontSize: FontSizes.caption,
-      );
+  static TextStyle get heading =>
+      TextStyle(fontSize: FontSizes.heading, fontWeight: FontWeight.w500);
+  static TextStyle get headingBold =>
+      heading.copyWith(fontWeight: FontWeight.bold);
+
+  static TextStyle get label =>
+      TextStyle(fontSize: FontSizes.label, fontWeight: FontWeight.w600);
+  static TextStyle get labelBold => label.copyWith(fontWeight: FontWeight.bold);
+
+  static TextStyle get headline => TextStyle(fontSize: FontSizes.headline);
+  static TextStyle get headlineBold =>
+      headline.copyWith(fontWeight: FontWeight.bold);
+
+  static TextStyle get body => TextStyle(fontSize: FontSizes.body);
+  static TextStyle get bodySemibold =>
+      body.copyWith(fontWeight: FontWeight.w600);
+  static TextStyle get bodyBold => body.copyWith(fontWeight: FontWeight.bold);
+
+  static TextStyle get caption => TextStyle(fontSize: FontSizes.caption);
+  static TextStyle get captionBold =>
+      caption.copyWith(fontWeight: FontWeight.bold);
 }
