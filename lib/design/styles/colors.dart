@@ -62,6 +62,7 @@ class ColorsScheme {
   /// Gradient that applies to losses, can be used instead of [loss]
   LinearGradient lossGradient;
 
+  /// [ColorsScheme] to be applied to [ThemeMode.light]
   static ColorsScheme light() => ColorsScheme(
         primary: const Color.fromRGBO(0, 0, 0, 1),
         bg: const Color.fromRGBO(255, 255, 255, 1),
@@ -95,6 +96,7 @@ class ColorsScheme {
         success: const Color.fromRGBO(66, 133, 244, 1),
       );
 
+  /// [ColorsScheme] to be applied to [ThemeMode.dark]
   static ColorsScheme dark() => ColorsScheme(
         primary: const Color.fromRGBO(255, 255, 255, 1),
         bg: const Color.fromRGBO(53, 54, 58, 1),
