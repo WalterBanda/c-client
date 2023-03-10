@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ColorScheme {
-  ColorScheme({
+class ColorsScheme {
+  ColorsScheme({
     required this.primary,
     required this.bg,
     required this.input,
