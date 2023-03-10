@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
+/// This is the color scheme blueprint that would be used to generate the colors for the different themes
+/// `🤔` Its similar to [ColorScheme] material class but is suited for this app with custom
+/// color aligned into chapchap branding.
+///
+/// `💡` Has two factory methods [ColorsScheme.light] and [ColorsScheme.dark] that generate dark and light scheme colors for this app.
 class ColorsScheme {
+  /// Constructor for [ColorScheme], you can customize app colors by specifying the colors inside.
   ColorsScheme({
     required this.primary,
     required this.bg,
@@ -17,21 +23,42 @@ class ColorsScheme {
     required this.success,
   });
 
+  /// Primary color in the app, applies to [Button] and others background color etc
   Color primary;
 
+  /// Background color of [Scaffold] and other widgets
   Color bg;
+
+  /// Background color of input Elements
   Color input;
 
+  /// This applies a translucent effect on UI elements
   Color translucent;
 
+  /// Primary text color of app
   Color text;
+
+  /// Color of input placeholders
   Color placeholder;
 
+  /// Color that creates an emphasis on a element
   Color emphasis;
+
+  /// Color for all success prompts
   Color success;
+
+  /// Branded color used in errors
   Color error;
+
+  /// This color is used to show gains in graphs
   Color gain;
+
+  /// This color shows losses in graphs
   Color loss;
+
+  /// This gradient color applies to gains, can be used instead of [gain]
   Color gainGradient;
+
+  /// Gradient that applies to losses, can be used instead of [loss]
   Color lossGradient;
 }
