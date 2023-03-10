@@ -1,79 +1,41 @@
 import 'package:flutter/material.dart';
 
-
 class Fonts {
-  static String get body => "Lato";
   static String get title => "Roboto";
 }
- 
+
 class FontSizes {
-  static double scale = 1;
-   
-  static double get body => 14 * scale;
- 
+  static double get display => 36;
+  static double get title => 30;
+  static double get heading => 24;
+  static double get label => 18;
+  static double get headline => 16;
+  static double get body => 15;
+  static double get caption => 13;
 }
 
 /// Contains all typography styles for this app.
 class TextStyles {
+  static TextStyle get display => TextStyle(
+        fontSize: FontSizes.display,
+      );
 
-  static TextStyle largeTitle({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 36,
-        fontWeight: FontWeight.w700,
+  static TextStyle get title => TextStyle(
+        fontSize: FontSizes.title,
       );
-  static TextStyle title({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 30,
-        fontWeight: FontWeight.w700,
+  static TextStyle get heading => TextStyle(
+        fontSize: FontSizes.heading,
       );
-  static TextStyle headingBold({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 24,
-        fontWeight: FontWeight.w700,
+  static TextStyle get label => TextStyle(
+        fontSize: FontSizes.label,
       );
-  static TextStyle headingMedium({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 24,
-        fontWeight: FontWeight.w500,
+  static TextStyle get headline => TextStyle(
+        fontSize: FontSizes.headline,
       );
-  static TextStyle subheadingBold({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 18,
-        fontWeight: FontWeight.w700,
+  static TextStyle get body => TextStyle(
+        fontSize: FontSizes.body,
       );
-  static TextStyle subheadingSemiBold({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 18,
-        fontWeight: FontWeight.w600,
-      );
-  static TextStyle headlineBold({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 16,
-        fontWeight: FontWeight.w700,
-      );
-  static TextStyle headline({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 16,
-      );
-  static TextStyle body({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 15,
-      );
-  static TextStyle bodySemiBold({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 15,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0.90,
-      );
-  static TextStyle bodyBold({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 15,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0.90,
-      );
-  static TextStyle captionBold({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 13,
-        fontWeight: FontWeight.w700,
+  static TextStyle get caption => TextStyle(
+        fontSize: FontSizes.caption,
       );
 }
