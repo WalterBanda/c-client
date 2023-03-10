@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
-import '../design/styles/colors.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

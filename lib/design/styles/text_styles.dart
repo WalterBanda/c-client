@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
+
+class Fonts {
+  static String get body => "Lato";
+  static String get title => "Roboto";
+}
+ 
+class FontSizes {
+  static double scale = 1;
+   
+  static double get body => 14 * scale;
+ 
+}
+
 /// Contains all typography styles for this app.
-class TypographyStyles {
+class TextStyles {
 
   static TextStyle largeTitle({required Color color}) => TextStyle(
         color: color,
