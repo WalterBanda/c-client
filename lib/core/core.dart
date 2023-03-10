@@ -19,7 +19,7 @@ class App extends StatelessWidget {
         title: "ChapChap",
         themeMode: Provider.of<ThemeManager>(context).mode,
         theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.bgDark,
+          scaffoldBackgroundColor: Colors.white,
           fontFamily: "SF Pro Rounded",
         ),
         // TODO: Implement Theming 🎨
