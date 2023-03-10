@@ -1,6 +1,7 @@
 import 'package:client/design/theme/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../design/icons/chapchap.dart';
 
 // 🏘️ Local imports
 
@@ -9,23 +10,16 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider(
-          create: (context) => ThemeManager(),
-        )
-      ],
-      child: MaterialApp(
-        title: "ChapChap",
-        themeMode: Provider.of<ThemeManager>(context).mode,
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          fontFamily: "SF Pro Rounded",
-        ),
-        // TODO: Implement Theming 🎨
-        darkTheme: ThemeData.dark(),
-        home: const MyHomePage(),
+    return MaterialApp(
+      title: "ChapChap",
+      themeMode: Provider.of<ThemeManager>(context).mode,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        fontFamily: "SF Pro Rounded",
       ),
+      // TODO: Implement Theming 🎨
+      darkTheme: ThemeData.dark(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -38,8 +32,15 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Hello')),
       body: Column(
-        children: const [
-          Text('A random idea:'),
+        children: [
+          Text(
+              'A random idea: ${Provider.of<ThemeManager>(context).mode.toString()}'),
+          ElevatedButton.icon(
+            onPressed: () => Provider.of<ThemeManager>(context, listen: false)
+                .changeTheme(ThemeMode.dark),
+            icon: const Icon(ChapChap.light),
+            label: const Text("Change Theme"),
+          ),
         ],
       ),
     );
