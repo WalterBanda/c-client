@@ -16,29 +16,37 @@ class FontSizes {
 
 /// Contains all typography styles for this app.
 class TextStyles {
+  /// This is the style used for the branded name of app
   static TextStyle get display =>
       TextStyle(fontSize: FontSizes.display, fontWeight: FontWeight.bold);
+
+  /// Style used mostly for title of dialogs
   static TextStyle get title =>
       TextStyle(fontSize: FontSizes.title, fontWeight: FontWeight.bold);
 
+  /// Styles used mostly for `screen or page` headings
   static TextStyle get heading =>
       TextStyle(fontSize: FontSizes.heading, fontWeight: FontWeight.w500);
   static TextStyle get headingBold =>
       heading.copyWith(fontWeight: FontWeight.bold);
 
+  /// Styles used for labels of form fields
   static TextStyle get label =>
       TextStyle(fontSize: FontSizes.label, fontWeight: FontWeight.w600);
   static TextStyle get labelBold => label.copyWith(fontWeight: FontWeight.bold);
 
+  /// Styles used for headings of sections
   static TextStyle get headline => TextStyle(fontSize: FontSizes.headline);
   static TextStyle get headlineBold =>
       headline.copyWith(fontWeight: FontWeight.bold);
 
+  /// General styles to be used in the body of app.
   static TextStyle get body => TextStyle(fontSize: FontSizes.body);
   static TextStyle get bodySemibold =>
       body.copyWith(fontWeight: FontWeight.w600);
   static TextStyle get bodyBold => body.copyWith(fontWeight: FontWeight.bold);
 
+  /// Used for captions of any emphasis texts.
   static TextStyle get caption => TextStyle(fontSize: FontSizes.caption);
   static TextStyle get captionBold =>
       caption.copyWith(fontWeight: FontWeight.bold);
