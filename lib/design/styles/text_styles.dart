@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Contains all typography styles for this app.
-class Typography {
+class TypographyStyles {
 
   static TextStyle largeTitle({required Color color}) => TextStyle(
         color: color,
