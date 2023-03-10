@@ -4,28 +4,34 @@ class ColorScheme {
   ColorScheme({
     required this.primary,
     required this.bg,
+    required this.input,
+    required this.text,
+    required this.placeholder,
     required this.translucent,
-    required this.opacity,
-    required this.textPrimary,
+    required this.gain,
+    required this.loss,
+    required this.gainGradient,
+    required this.lossGradient,
     required this.emphasis,
     required this.error,
     required this.success,
-    required this.input,
-    required this.inputDark,
   });
 
   Color primary;
 
   Color bg;
+  Color input;
 
   Color translucent;
-  Color opacity;
 
-  Color textPrimary;
+  Color text;
+  Color placeholder;
 
   Color emphasis;
   Color success;
   Color error;
-  Color input;
-  Color inputDark;
+  Color gain;
+  Color loss;
+  Color gainGradient;
+  Color lossGradient;
 }
