@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Responsible for switching between the various themes and theme modes in the application
-class ThemeManager extends ChangeNotifier {
+class ThemeManager with ChangeNotifier {
   /// This is responsible for switching between the various themes modes, has a default of [ThemeMode.system]
   ThemeMode _mode = ThemeMode.system;
 
