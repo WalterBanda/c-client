@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
-  AppColors._();
+class ColorScheme {
+  ColorScheme({
+    required this.primary,
+    required this.bg,
+    required this.translucent,
+    required this.opacity,
+    required this.textPrimary,
+    required this.emphasis,
+    required this.error,
+    required this.success,
+    required this.input,
+    required this.inputDark,
+  });
 
-  static const Color primary = Color.fromRGBO(0, 0, 0, 1);
+  Color primary;
 
-  static const Color bg = Color.fromRGBO(53, 54, 58, 1);
-  static const Color bgDark = Color.fromRGBO(255, 255, 255, 1);
+  Color bg;
 
-  static const Color translucent = Color.fromRGBO(0, 0, 0, 0.260);
-  static Color opacity({double? level}) =>
-      Color.fromRGBO(0, 0, 0, level ?? 0.15);
+  Color translucent;
+  Color opacity;
 
-  static const Color textPrimary = Color.fromRGBO(106, 106, 106, 1);
-  static const Color textDark = Color.fromRGBO(234, 234, 234, 1);
+  Color textPrimary;
 
-  static const Color emphasis = Color.fromRGBO(250, 74, 12, 1);
-  static const Color success = Color.fromRGBO(66, 133, 244, 1);
-  static const Color error = Color.fromRGBO(255, 26, 26, 1);
-
-  static const Color input = Color.fromRGBO(241, 243, 244, 1);
-  static const Color inputDark = Color.fromRGBO(32, 33, 36, 1);
+  Color emphasis;
+  Color success;
+  Color error;
+  Color input;
+  Color inputDark;
 }
