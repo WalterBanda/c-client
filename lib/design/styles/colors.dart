@@ -94,4 +94,37 @@ class ColorsScheme {
         error: const Color.fromRGBO(255, 26, 26, 1),
         success: const Color.fromRGBO(66, 133, 244, 1),
       );
+
+  static ColorsScheme dark() => ColorsScheme(
+        primary: const Color.fromRGBO(255, 255, 255, 1),
+        bg: const Color.fromRGBO(53, 54, 58, 1),
+        input: const Color.fromRGBO(32, 33, 36, 1),
+        text: const Color.fromRGBO(234, 234, 234, 1),
+        placeholder: const Color.fromRGBO(234, 234, 234, 1),
+        translucent: const Color.fromRGBO(0, 0, 0, 0.26),
+        gain: const Color.fromRGBO(80, 227, 194, 1),
+        loss: const Color.fromRGBO(227, 80, 122, 1),
+        gainGradient: const LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Color.fromRGBO(48, 154, 255, 1),
+            Color.fromRGBO(48, 154, 255, 1),
+            Color.fromRGBO(83, 100, 174, 1),
+            Color.fromRGBO(112, 54, 107, 0)
+          ],
+        ),
+        lossGradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color.fromRGBO(162, 48, 255, 0),
+            Color.fromRGBO(188, 61, 203, 1),
+            Color.fromRGBO(227, 80, 122, 1),
+          ],
+        ),
+        emphasis: const Color.fromRGBO(250, 74, 12, 1),
+        error: const Color.fromRGBO(255, 26, 26, 1),
+        success: const Color.fromRGBO(66, 133, 244, 1),
+      );
 }
