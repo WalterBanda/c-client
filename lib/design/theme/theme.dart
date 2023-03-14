@@ -23,15 +23,15 @@ mixin BaseTheme {
       const DrawerThemeData();
 }
 
-class AppTheme with BaseTheme {
-  static final AppTheme _singleton = AppTheme._internal();
+class Theming with BaseTheme {
+  static final Theming _singleton = Theming._internal();
 
   /// This singleton class holds themedata helpers for dark and light mode, also responsible for styling.
-  factory AppTheme() {
+  factory Theming() {
     return _singleton;
   }
 
-  AppTheme._internal();
+  Theming._internal();
 
   ThemeData light() {
     return ThemeData(
