@@ -1,11 +1,10 @@
 import 'package:client/design/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-
 /// `💡` This class contains base theme indepedent styles. The styles are used as a basis where the various themes are applied onto it.
 class BaseTheme {
   /// Default font family for application.
-  final String fontFamily = "SF Pro Rounded";
+  static const String fontFamily = "SF Pro Rounded";
 
   /// Default theme agnostic text theme. This overrides the material styling for text and also introduces custom text themes for app.
   static TextTheme get textTheme => const TextTheme();
@@ -41,4 +40,29 @@ class BaseTheme {
 }
 
 /// `💡` This applies theming onto [BaseTheme] generating dark and light mode styles or themes
-class Theming {}
+class Theming {
+  static ThemeData get light => ThemeData(
+        brightness: Brightness.light,
+        fontFamily: BaseTheme.fontFamily,
+        textTheme: BaseTheme.textTheme,
+        textButtonTheme: BaseTheme.textButtonThemeData,
+        elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
+        iconButtonTheme: BaseTheme.iconButtonThemeData,
+        appBarTheme: BaseTheme.appBarTheme,
+        drawerTheme: BaseTheme.drawerThemeData,
+        snackBarTheme: BaseTheme.snackBarTheme,
+        dialogTheme: BaseTheme.dialogTheme,
+      );
+  static ThemeData get dark => ThemeData(
+        brightness: Brightness.dark,
+        fontFamily: BaseTheme.fontFamily,
+        textTheme: BaseTheme.textTheme,
+        textButtonTheme: BaseTheme.textButtonThemeData,
+        elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
+        iconButtonTheme: BaseTheme.iconButtonThemeData,
+        appBarTheme: BaseTheme.appBarTheme,
+        drawerTheme: BaseTheme.drawerThemeData,
+        snackBarTheme: BaseTheme.snackBarTheme,
+        dialogTheme: BaseTheme.dialogTheme,
+      );
+}

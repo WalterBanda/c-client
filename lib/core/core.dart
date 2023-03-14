@@ -1,4 +1,5 @@
 import 'package:client/design/theme/manager.dart';
+import 'package:client/design/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../design/icons/chapchap.dart';
@@ -13,12 +14,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: "ChapChap",
       themeMode: Provider.of<ThemeManager>(context).mode,
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        fontFamily: "SF Pro Rounded",
-      ),
-      // TODO: Implement Theming 🎨
-      darkTheme: ThemeData.dark(),
+      theme: Theming.light,
+      darkTheme: Theming.dark,
       home: const MyHomePage(),
     );
   }
