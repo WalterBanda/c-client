@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:client/design/theme/manager.dart';
 import 'package:client/design/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -28,17 +30,38 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Hello')),
-      body: Column(
-        children: [
-          Text(
-              'A random idea: ${Provider.of<ThemeManager>(context).mode.toString()}'),
-          ElevatedButton.icon(
-            onPressed: () => Provider.of<ThemeManager>(context, listen: false)
-                .changeTheme(ThemeMode.dark),
-            icon: const Icon(ChapChap.light),
-            label: const Text("Change Theme"),
-          ),
-        ],
+      body: Consumer<ThemeManager>(
+        builder: (context, manager, child) => Column(
+          children: [
+            Row(
+              children: [
+                Text('Current ThemeMode: ${manager.mode}'),
+                ElevatedButton.icon(
+                  onPressed: () => manager
+                      .changeTheme(ThemeMode.values[Random().nextInt(2)]),
+                  icon: Icon(
+                    manager.mode == ThemeMode.system
+                        ? ChapChap.monitor
+                        : manager.mode == ThemeMode.light
+                            ? ChapChap.light
+                            : ChapChap.dark,
+                  ),
+                  label: const Text("Change Theme"),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text("Current theme: ${Theme.of(context).brightness}"),
+                Icon(
+                  Theme.of(context).brightness == Brightness.light
+                      ? ChapChap.light
+                      : ChapChap.dark,
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

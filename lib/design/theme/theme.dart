@@ -1,5 +1,6 @@
 import 'package:client/design/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// `💡` This class contains base theme indepedent styles. The styles are used as a basis where the various themes are applied onto it.
 class BaseTheme {
@@ -12,6 +13,7 @@ class BaseTheme {
   /// Overrides default material appbar to provide custom appbar that aligns with the app branding.
   static AppBarTheme get appBarTheme => AppBarTheme(
         elevation: 0,
+        centerTitle: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
