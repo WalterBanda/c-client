@@ -1,6 +1,8 @@
 import 'package:client/design/styles/colors.dart';
 import 'package:flutter/material.dart';
 
+
+/// `💡` This class contains base theme indepedent styles. The styles are used as a basis where the various themes are applied onto it.
 class BaseTheme {
   /// Default font family for application.
   final String fontFamily = "SF Pro Rounded";
@@ -38,4 +40,5 @@ class BaseTheme {
   static DrawerThemeData get drawerThemeData => const DrawerThemeData();
 }
 
+/// `💡` This applies theming onto [BaseTheme] generating dark and light mode styles or themes
 class Theming {}
