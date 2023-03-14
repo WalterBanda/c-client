@@ -68,4 +68,6 @@ class ChapChap {
       IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData link =
       IconData(0xe81c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData monitor =
+      IconData(0xe81d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
