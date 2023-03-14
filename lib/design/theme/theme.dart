@@ -25,6 +25,9 @@ class BaseTheme {
   /// Theming for alert widget that aligns with the branding of app.
   static SnackBarThemeData get snackBarTheme => const SnackBarThemeData();
 
+  /// Overriden tooltip theme to match to rest of app
+  static TooltipThemeData get tooltipTheme => const TooltipThemeData();
+
   /// Overrides default styles of buttons to provide themed buttons for application.
   static ElevatedButtonThemeData get elevatedButtonTheme =>
       const ElevatedButtonThemeData();
@@ -53,6 +56,7 @@ class Theming {
         appBarTheme: BaseTheme.appBarTheme,
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
+        tooltipTheme: BaseTheme.tooltipTheme,
         dialogTheme: BaseTheme.dialogTheme,
       );
   static ThemeData get dark => ThemeData(
@@ -65,6 +69,7 @@ class Theming {
         appBarTheme: BaseTheme.appBarTheme,
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
+        tooltipTheme: BaseTheme.tooltipTheme,
         dialogTheme: BaseTheme.dialogTheme,
       );
 }
