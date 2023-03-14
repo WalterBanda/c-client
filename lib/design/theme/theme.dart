@@ -24,6 +24,15 @@ mixin BaseTheme {
 }
 
 class AppTheme with BaseTheme {
+  static final AppTheme _singleton = AppTheme._internal();
+
+  /// This singleton class holds themedata helpers for dark and light mode, also responsible for styling.
+  factory AppTheme() {
+    return _singleton;
+  }
+
+  AppTheme._internal();
+
   ThemeData light() {
     return ThemeData(
       brightness: Brightness.light,

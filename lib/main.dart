@@ -17,10 +17,13 @@ void main() async {
   );
 
   runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider(
-        create: (context) => ThemeManager(),
-      )
-    ], child: const App()), // Wrap your app
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ThemeManager(),
+        )
+      ],
+      child: const App(),
+    ),
   );
 }
