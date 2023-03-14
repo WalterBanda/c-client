@@ -1,71 +1,41 @@
 import 'package:client/design/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-mixin BaseTheme {
+class BaseTheme {
+  /// Default font family for application.
   final String fontFamily = "SF Pro Rounded";
-  TextTheme textTheme({required ThemeMode mode}) => const TextTheme();
-  AppBarTheme appBarTheme({required Color bg}) => AppBarTheme(
-      backgroundColor: bg,
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
-  DialogTheme dialogTheme({required ThemeMode mode}) => const DialogTheme();
 
-  SnackBarThemeData snackBarTheme({required ThemeMode mode}) =>
-      const SnackBarThemeData();
+  /// Default theme agnostic text theme. This overrides the material styling for text and also introduces custom text themes for app.
+  static TextTheme get textTheme => const TextTheme();
 
-  ElevatedButtonThemeData elevatedButtonTheme({required ThemeMode mode}) =>
+  /// Overrides default material appbar to provide custom appbar that aligns with the app branding.
+  static AppBarTheme get appBarTheme => AppBarTheme(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      );
+
+  /// This provides a custom dialog that aligns with app branding.
+  static DialogTheme get dialogTheme => const DialogTheme();
+
+  /// Theming for alert widget that aligns with the branding of app.
+  static SnackBarThemeData get snackBarTheme => const SnackBarThemeData();
+
+  /// Overrides default styles of buttons to provide themed buttons for application.
+  static ElevatedButtonThemeData get elevatedButtonTheme =>
       const ElevatedButtonThemeData();
-  TextButtonThemeData textButtonThemeData({required ThemeMode mode}) =>
+
+  /// Overrides styles of textbutton adding custom theming to it.
+  static TextButtonThemeData get textButtonThemeData =>
       const TextButtonThemeData();
-  IconButtonThemeData iconButtonThemeData({required ThemeMode mode}) =>
+
+  /// Enables custom iconbuttons ie this is where buttons such as authbutton will derive their styling from.
+  static IconButtonThemeData get iconButtonThemeData =>
       const IconButtonThemeData();
-  DrawerThemeData drawerThemeData({required ThemeMode mode}) =>
-      const DrawerThemeData();
+
+  /// Overrides default styling of drawers in the app.
+  static DrawerThemeData get drawerThemeData => const DrawerThemeData();
 }
 
-class Theming with BaseTheme {
-  static final Theming _singleton = Theming._internal();
-
-  /// This singleton class holds themedata helpers for dark and light mode, also responsible for styling.
-  factory Theming() {
-    return _singleton;
-  }
-
-  Theming._internal();
-
-  ThemeData light() {
-    return ThemeData(
-      brightness: Brightness.light,
-      primaryColor: ColorsScheme.light.primary,
-      fontFamily: fontFamily,
-      scaffoldBackgroundColor: ColorsScheme.light.bg,
-      appBarTheme: appBarTheme(bg: ColorsScheme.light.bg),
-      textTheme: textTheme(mode: ThemeMode.light),
-      dialogBackgroundColor: ColorsScheme.light.bg,
-      dialogTheme: dialogTheme(mode: ThemeMode.light),
-      snackBarTheme: snackBarTheme(mode: ThemeMode.light),
-      elevatedButtonTheme: elevatedButtonTheme(mode: ThemeMode.light),
-      textButtonTheme: textButtonThemeData(mode: ThemeMode.light),
-      iconButtonTheme: iconButtonThemeData(mode: ThemeMode.light),
-      drawerTheme: drawerThemeData(mode: ThemeMode.light),
-    );
-  }
-
-  ThemeData dark() {
-    return ThemeData(
-      brightness: Brightness.dark,
-      fontFamily: fontFamily,
-      primaryColor: ColorsScheme.dark.primary,
-      scaffoldBackgroundColor: ColorsScheme.dark.bg,
-      appBarTheme: appBarTheme(bg: ColorsScheme.dark.bg),
-      textTheme: textTheme(mode: ThemeMode.dark),
-      dialogBackgroundColor: ColorsScheme.dark.bg,
-      dialogTheme: dialogTheme(mode: ThemeMode.dark),
-      snackBarTheme: snackBarTheme(mode: ThemeMode.dark),
-      elevatedButtonTheme: elevatedButtonTheme(mode: ThemeMode.dark),
-      textButtonTheme: textButtonThemeData(mode: ThemeMode.dark),
-      iconButtonTheme: iconButtonThemeData(mode: ThemeMode.dark),
-      drawerTheme: drawerThemeData(mode: ThemeMode.dark),
-    );
-  }
-}
+class Theming {}
