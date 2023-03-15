@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 /// `🤔` Its similar to [ColorScheme] material class but is suited for this app with custom
 /// color aligned into chapchap branding.
 ///
-/// `💡` Has two factory methods [ColorsScheme.light] and [ColorsScheme.dark] that generate dark and light scheme colors for this app.
-class ColorsScheme {
+/// `💡` Has two factory methods [ThemedColors.light] and [ThemedColors.dark] that generate dark and light scheme colors for this app.
+class ThemedColors {
   /// Constructor for [ColorScheme], you can customize app colors by specifying the colors inside.
-  ColorsScheme({
+  ThemedColors({
     required this.primary,
     required this.bg,
     required this.input,
@@ -62,8 +62,8 @@ class ColorsScheme {
   /// Gradient that applies to losses, can be used instead of [loss]
   LinearGradient lossGradient;
 
-  /// [ColorsScheme] to be applied to [ThemeMode.light]
-  static ColorsScheme light = ColorsScheme(
+  /// [ThemedColors] to be applied to [ThemeMode.light]
+  static ThemedColors light = ThemedColors(
         primary: const Color.fromRGBO(0, 0, 0, 1),
         bg: const Color.fromRGBO(255, 255, 255, 1),
         input: const Color.fromRGBO(241, 243, 244, 1),
@@ -96,8 +96,8 @@ class ColorsScheme {
         success: const Color.fromRGBO(66, 133, 244, 1),
       );
 
-  /// [ColorsScheme] to be applied to [ThemeMode.dark]
-  static ColorsScheme dark = ColorsScheme(
+  /// [ThemedColors] to be applied to [ThemeMode.dark]
+  static ThemedColors dark = ThemedColors(
         primary: const Color.fromRGBO(255, 255, 255, 1),
         bg: const Color.fromRGBO(53, 54, 58, 1),
         input: const Color.fromRGBO(32, 33, 36, 1),
