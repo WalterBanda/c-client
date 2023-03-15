@@ -100,28 +100,69 @@ class MyHomePage extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          ElevatedButton(
-                              onPressed: () {},
-                              child: const Text("Elevated Button")),
-                          ElevatedButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(ChapChap.login),
-                            label: const Text("Icon Button Sample, Login"),
+                          SingleChildScrollView(
+                            child: Flex(
+                              direction: Axis.vertical,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: const [
+                                Text('Display'),
+                                SizedBox(height: 20),
+                                Text('Title'),
+                                SizedBox(height: 20),
+                                Text('Heading'),
+                                SizedBox(height: 20),
+                                Text('Heading/Bold'),
+                                SizedBox(height: 20),
+                                Text('Label'),
+                                SizedBox(height: 20),
+                                Text('Label/Bold'),
+                                SizedBox(height: 20),
+                                Text('Headline'),
+                                SizedBox(height: 20),
+                                Text('Headline/Bold'),
+                                SizedBox(height: 20),
+                                Text('Body'),
+                                SizedBox(height: 20),
+                                Text('Body/Semibold'),
+                                SizedBox(height: 20),
+                                Text('Body/Bold'),
+                                SizedBox(height: 20),
+                                Text('Caption'),
+                                SizedBox(height: 20),
+                                Text('Caption/Bold'),
+                                SizedBox(height: 20),
+                              ],
+                            ),
                           ),
-                          TextButton(
-                              onPressed: () {}, child: const Text("textBtn")),
-                          TextButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(ChapChap.login),
-                            label: const Text("Icon Button Sample, Login"),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Text("Elevated Button")),
+                              ElevatedButton.icon(
+                                onPressed: () {},
+                                icon: const Icon(ChapChap.login),
+                                label: const Text("Icon Button Sample, Login"),
+                              ),
+                              TextButton(
+                                  onPressed: () {},
+                                  child: const Text("textBtn")),
+                              TextButton.icon(
+                                onPressed: () {},
+                                icon: const Icon(ChapChap.login),
+                                label: const Text("Icon Button Sample, Login"),
+                              ),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(ChapChap.github)),
+                            ],
                           ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(ChapChap.github)),
                         ],
                       ),
                     ),
