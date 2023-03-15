@@ -39,7 +39,6 @@ class MyHomePage extends StatelessWidget {
               AppBar(
                 title: const Text('Widget Theming'),
                 automaticallyImplyLeading: true,
-                leadingWidth: 60,
                 leading: IconButton(
                   icon: const Icon(ChapChap.menu),
                   iconSize: 26,

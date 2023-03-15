@@ -42,6 +42,10 @@ class BaseTheme {
 
   /// Overrides default styling of drawers in the app.
   static DrawerThemeData get drawerThemeData => const DrawerThemeData();
+
+  /// Overrides default scrollbar to fit theme
+  static ScrollbarThemeData get scrollbarThemeData =>
+      const ScrollbarThemeData();
 }
 
 /// `💡` This applies theming onto [BaseTheme] generating dark and light mode styles or themes
@@ -52,13 +56,18 @@ class Theming {
         brightness: Brightness.light,
         visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
         fontFamily: BaseTheme.fontFamily,
+        scaffoldBackgroundColor: ThemedColors.light.bg,
+        canvasColor: ThemedColors.light.bg,
+        scrollbarTheme: BaseTheme.scrollbarThemeData,
 
         /// |-------- Component Styling ----------|
         textTheme: BaseTheme.textTheme,
         textButtonTheme: BaseTheme.textButtonThemeData,
         elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
         iconButtonTheme: BaseTheme.iconButtonThemeData,
-        appBarTheme: BaseTheme.appBarTheme,
+        appBarTheme: BaseTheme.appBarTheme
+            .copyWith(backgroundColor: ThemedColors.dark.emphasis),
+
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
         tooltipTheme: BaseTheme.tooltipTheme,
@@ -71,13 +80,17 @@ class Theming {
         brightness: Brightness.dark,
         visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
         fontFamily: BaseTheme.fontFamily,
+        scaffoldBackgroundColor: ThemedColors.dark.bg,
+        canvasColor: ThemedColors.dark.bg,
+        scrollbarTheme: BaseTheme.scrollbarThemeData,
 
         /// |-------- Component Styling ----------|
         textTheme: BaseTheme.textTheme,
         textButtonTheme: BaseTheme.textButtonThemeData,
         elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
         iconButtonTheme: BaseTheme.iconButtonThemeData,
-        appBarTheme: BaseTheme.appBarTheme,
+        appBarTheme: BaseTheme.appBarTheme
+            .copyWith(backgroundColor: ThemedColors.light.emphasis),
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
         tooltipTheme: BaseTheme.tooltipTheme,
