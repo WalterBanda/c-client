@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:client/design/theme/manager.dart';
 import 'package:client/design/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -29,38 +27,109 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Hello')),
-      body: Consumer<ThemeManager>(
-        builder: (context, manager, child) => Column(
-          children: [
-            Row(
-              children: [
-                Text('Current ThemeMode: ${manager.mode}'),
-                ElevatedButton.icon(
-                  onPressed: () => manager
-                      .changeTheme(ThemeMode.values[Random().nextInt(2)]),
-                  icon: Icon(
-                    manager.mode == ThemeMode.system
-                        ? ChapChap.monitor
-                        : manager.mode == ThemeMode.light
-                            ? ChapChap.light
-                            : ChapChap.dark,
-                  ),
-                  label: const Text("Change Theme"),
+      body: SafeArea(
+        minimum: const EdgeInsets.symmetric(
+          vertical: 30,
+          horizontal: 20,
+        ),
+        child: Consumer<ThemeManager>(
+          builder: (context, manager, child) => Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AppBar(
+                title: const Text('Widget Theming'),
+                leading: IconButton(
+                  icon: const Icon(ChapChap.menu),
+                  tooltip: 'Change theme',
+                  onPressed: () {
+                    // handle the press
+                  },
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                Text("Current theme: ${Theme.of(context).brightness}"),
-                Icon(
-                  Theme.of(context).brightness == Brightness.light
-                      ? ChapChap.light
-                      : ChapChap.dark,
-                )
-              ],
-            )
-          ],
+                actions: [
+                  IconButton(
+                    icon: const Icon(ChapChap.light),
+                    tooltip: 'Change theme',
+                    onPressed: () {
+                      // handle the press
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          const CircleAvatar(
+                            child: FlutterLogo(),
+                          ),
+                          const Text(
+                            "Username",
+                          ),
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(ChapChap.home),
+                            label: const Text("Home"),
+                          ),
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(ChapChap.admin),
+                            label: const Text("Admin"),
+                          ),
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(ChapChap.garage),
+                            label: const Text("Garage"),
+                          ),
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(ChapChap.settings),
+                            label: const Text("Settings"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: const Text("Logout"),
+                          )
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {},
+                              child: const Text("Elevated Button")),
+                          ElevatedButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(ChapChap.login),
+                            label: const Text("Icon Button Sample, Login"),
+                          ),
+                          TextButton(
+                              onPressed: () {}, child: const Text("textBtn")),
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(ChapChap.login),
+                            label: const Text("Icon Button Sample, Login"),
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(ChapChap.github)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
