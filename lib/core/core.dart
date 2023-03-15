@@ -38,8 +38,11 @@ class MyHomePage extends StatelessWidget {
             children: [
               AppBar(
                 title: const Text('Widget Theming'),
+                automaticallyImplyLeading: true,
+                leadingWidth: 60,
                 leading: IconButton(
                   icon: const Icon(ChapChap.menu),
+                  iconSize: 26,
                   tooltip: 'Change theme',
                   onPressed: () {
                     // handle the press
@@ -48,6 +51,7 @@ class MyHomePage extends StatelessWidget {
                 actions: [
                   IconButton(
                     icon: const Icon(ChapChap.light),
+                    iconSize: 26,
                     tooltip: 'Change theme',
                     onPressed: () {
                       // handle the press
@@ -100,70 +104,76 @@ class MyHomePage extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 2,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SingleChildScrollView(
-                            child: Flex(
-                              direction: Axis.vertical,
-                              mainAxisSize: MainAxisSize.max,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SingleChildScrollView(
+                              child: Flex(
+                                direction: Axis.vertical,
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: const [
+                                  Text('Display'),
+                                  SizedBox(height: 20),
+                                  Text('Title'),
+                                  SizedBox(height: 20),
+                                  Text('Heading'),
+                                  SizedBox(height: 20),
+                                  Text('Heading/Bold'),
+                                  SizedBox(height: 20),
+                                  Text('Label'),
+                                  SizedBox(height: 20),
+                                  Text('Label/Bold'),
+                                  SizedBox(height: 20),
+                                  Text('Headline'),
+                                  SizedBox(height: 20),
+                                  Text('Headline/Bold'),
+                                  SizedBox(height: 20),
+                                  Text('Body'),
+                                  SizedBox(height: 20),
+                                  Text('Body/Semibold'),
+                                  SizedBox(height: 20),
+                                  Text('Body/Bold'),
+                                  SizedBox(height: 20),
+                                  Text('Caption'),
+                                  SizedBox(height: 20),
+                                  Text('Caption/Bold'),
+                                  SizedBox(height: 20),
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: const [
-                                Text('Display'),
-                                SizedBox(height: 20),
-                                Text('Title'),
-                                SizedBox(height: 20),
-                                Text('Heading'),
-                                SizedBox(height: 20),
-                                Text('Heading/Bold'),
-                                SizedBox(height: 20),
-                                Text('Label'),
-                                SizedBox(height: 20),
-                                Text('Label/Bold'),
-                                SizedBox(height: 20),
-                                Text('Headline'),
-                                SizedBox(height: 20),
-                                Text('Headline/Bold'),
-                                SizedBox(height: 20),
-                                Text('Body'),
-                                SizedBox(height: 20),
-                                Text('Body/Semibold'),
-                                SizedBox(height: 20),
-                                Text('Body/Bold'),
-                                SizedBox(height: 20),
-                                Text('Caption'),
-                                SizedBox(height: 20),
-                                Text('Caption/Bold'),
-                                SizedBox(height: 20),
+                              children: [
+                                ElevatedButton(
+                                    onPressed: () {},
+                                    child: const Text("Elevated Button")),
+                                ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(ChapChap.login),
+                                  label:
+                                      const Text("Icon Button Sample, Login"),
+                                ),
+                                TextButton(
+                                    onPressed: () {},
+                                    child: const Text("textBtn")),
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(ChapChap.login),
+                                  label:
+                                      const Text("Icon Button Sample, Login"),
+                                ),
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(ChapChap.github)),
                               ],
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {},
-                                  child: const Text("Elevated Button")),
-                              ElevatedButton.icon(
-                                onPressed: () {},
-                                icon: const Icon(ChapChap.login),
-                                label: const Text("Icon Button Sample, Login"),
-                              ),
-                              TextButton(
-                                  onPressed: () {},
-                                  child: const Text("textBtn")),
-                              TextButton.icon(
-                                onPressed: () {},
-                                icon: const Icon(ChapChap.login),
-                                label: const Text("Icon Button Sample, Login"),
-                              ),
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(ChapChap.github)),
-                            ],
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],

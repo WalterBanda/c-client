@@ -15,7 +15,7 @@ class BaseTheme {
         elevation: 0,
         centerTitle: true,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
         ),
       );
 
@@ -48,6 +48,7 @@ class BaseTheme {
 class Theming {
   static ThemeData get light => ThemeData(
         brightness: Brightness.light,
+        visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
         fontFamily: BaseTheme.fontFamily,
         textTheme: BaseTheme.textTheme,
         textButtonTheme: BaseTheme.textButtonThemeData,
@@ -61,6 +62,7 @@ class Theming {
       );
   static ThemeData get dark => ThemeData(
         brightness: Brightness.dark,
+        visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
         fontFamily: BaseTheme.fontFamily,
         textTheme: BaseTheme.textTheme,
         textButtonTheme: BaseTheme.textButtonThemeData,
