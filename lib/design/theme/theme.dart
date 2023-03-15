@@ -46,10 +46,14 @@ class BaseTheme {
 
 /// `💡` This applies theming onto [BaseTheme] generating dark and light mode styles or themes
 class Theming {
+  /// Theming and styling for light mode
   static ThemeData get light => ThemeData(
+        /// |-------- Global Styling ----------|
         brightness: Brightness.light,
         visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
         fontFamily: BaseTheme.fontFamily,
+
+        /// |-------- Component Styling ----------|
         textTheme: BaseTheme.textTheme,
         textButtonTheme: BaseTheme.textButtonThemeData,
         elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
@@ -60,10 +64,15 @@ class Theming {
         tooltipTheme: BaseTheme.tooltipTheme,
         dialogTheme: BaseTheme.dialogTheme,
       );
+
+  /// Theming and styling for dark mode
   static ThemeData get dark => ThemeData(
+        /// |-------- Global Styling ----------|
         brightness: Brightness.dark,
         visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
         fontFamily: BaseTheme.fontFamily,
+
+        /// |-------- Component Styling ----------|
         textTheme: BaseTheme.textTheme,
         textButtonTheme: BaseTheme.textButtonThemeData,
         elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
