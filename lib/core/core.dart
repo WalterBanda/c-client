@@ -37,12 +37,12 @@ class MyHomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               AppBar(
-                title: const Text('Widget Theming'),
+                title: const Text(
+                    'Widget Theming and working page, default theming'),
                 automaticallyImplyLeading: true,
                 leading: IconButton(
                   icon: const Icon(ChapChap.menu),
-                  iconSize: 26,
-                  tooltip: 'Change theme',
+                  tooltip: 'Menu',
                   onPressed: () {
                     // handle the press
                   },
@@ -50,7 +50,6 @@ class MyHomePage extends StatelessWidget {
                 actions: [
                   IconButton(
                     icon: const Icon(ChapChap.light),
-                    iconSize: 26,
                     tooltip: 'Change theme',
                     onPressed: () {
                       // handle the press

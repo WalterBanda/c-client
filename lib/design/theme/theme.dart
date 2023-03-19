@@ -1,4 +1,5 @@
 import 'package:client/design/styles/colors.dart';
+import 'package:client/design/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +15,9 @@ class BaseTheme {
   static AppBarTheme get appBarTheme => AppBarTheme(
         elevation: 0,
         centerTitle: true,
+        iconTheme: const IconThemeData(
+          size: 30,
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -65,8 +69,12 @@ class Theming {
         textButtonTheme: BaseTheme.textButtonThemeData,
         elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
         iconButtonTheme: BaseTheme.iconButtonThemeData,
-        appBarTheme: BaseTheme.appBarTheme
-            .copyWith(backgroundColor: ThemedColors.dark.emphasis),
+        appBarTheme: BaseTheme.appBarTheme.copyWith(
+          foregroundColor: ThemedColors.light.text,
+          backgroundColor: ThemedColors.light.bg,
+          titleTextStyle:
+              TextStyles.heading.copyWith(color: ThemedColors.light.text),
+        ),
 
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
@@ -89,8 +97,12 @@ class Theming {
         textButtonTheme: BaseTheme.textButtonThemeData,
         elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
         iconButtonTheme: BaseTheme.iconButtonThemeData,
-        appBarTheme: BaseTheme.appBarTheme
-            .copyWith(backgroundColor: ThemedColors.light.emphasis),
+        appBarTheme: BaseTheme.appBarTheme.copyWith(
+          foregroundColor: ThemedColors.dark.text,
+          backgroundColor: ThemedColors.dark.bg,
+          titleTextStyle:
+              TextStyles.heading.copyWith(color: ThemedColors.dark.text),
+        ),
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
         tooltipTheme: BaseTheme.tooltipTheme,
