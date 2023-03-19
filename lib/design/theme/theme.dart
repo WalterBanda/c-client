@@ -1,7 +1,6 @@
 import 'package:client/design/styles/colors.dart';
 import 'package:client/design/styles/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 /// `💡` This class contains base theme indepedent styles. The styles are used as a basis where the various themes are applied onto it.
 class BaseTheme {
@@ -9,7 +8,21 @@ class BaseTheme {
   static const String fontFamily = "SF Pro Rounded";
 
   /// Default theme agnostic text theme. This overrides the material styling for text and also introduces custom text themes for app.
-  static TextTheme get textTheme => const TextTheme();
+  static TextTheme get textTheme => TextTheme(
+        displaySmall: TextStyles.display,
+        headlineLarge: TextStyles.title,
+        headlineMedium: TextStyles.title,
+        headlineSmall: TextStyles.heading,
+        titleLarge: TextStyles.headingBold,
+        titleMedium: TextStyles.headlineBold,
+        titleSmall: TextStyles.headline,
+        labelLarge: TextStyles.labelBold,
+        labelMedium: TextStyles.label,
+        labelSmall: TextStyles.label,
+        bodyLarge: TextStyles.headline,
+        bodyMedium: TextStyles.body,
+        bodySmall: TextStyles.caption,
+      );
 
   /// Overrides default material appbar to provide custom appbar that aligns with the app branding.
   static AppBarTheme get appBarTheme => AppBarTheme(
