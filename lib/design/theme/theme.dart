@@ -50,7 +50,7 @@ class BaseTheme {
       ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: ThemedColors.light.primary,
-          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 14),
+          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 30),
           textStyle: TextStyles.labelBold,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -60,7 +60,7 @@ class BaseTheme {
 
   /// Overrides styles of textbutton adding custom theming to it.
   static TextButtonThemeData get textButtonThemeData =>
-      const TextButtonThemeData();
+      TextButtonThemeData();
 
   /// Enables custom iconbuttons ie this is where buttons such as authbutton will derive their styling from.
   static IconButtonThemeData get iconButtonThemeData =>
