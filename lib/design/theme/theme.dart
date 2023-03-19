@@ -47,7 +47,16 @@ class BaseTheme {
 
   /// Overrides default styles of buttons to provide themed buttons for application.
   static ElevatedButtonThemeData get elevatedButtonTheme =>
-      const ElevatedButtonThemeData();
+      ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: ThemedColors.light.primary,
+          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 14),
+          textStyle: TextStyles.labelBold,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+      );
 
   /// Overrides styles of textbutton adding custom theming to it.
   static TextButtonThemeData get textButtonThemeData =>
