@@ -59,8 +59,9 @@ class BaseTheme {
       );
 
   /// Overrides styles of textbutton adding custom theming to it.
-  static TextButtonThemeData get textButtonThemeData =>
-      TextButtonThemeData();
+  static TextButtonThemeData textButtonThemeData({required Color primary}) =>
+      TextButtonThemeData(
+          style: TextButton.styleFrom(foregroundColor: primary));
 
   /// Enables custom iconbuttons ie this is where buttons such as authbutton will derive their styling from.
   static IconButtonThemeData get iconButtonThemeData =>
@@ -116,7 +117,8 @@ class Theming {
 
         /// |-------- Component Styling ----------|
         textTheme: BaseTheme.textTheme,
-        textButtonTheme: BaseTheme.textButtonThemeData,
+        textButtonTheme:
+            BaseTheme.textButtonThemeData(primary: ThemedColors.light.text),
         elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
         iconButtonTheme: BaseTheme.iconButtonThemeData,
         appBarTheme: BaseTheme.appBarTheme.copyWith(
@@ -144,7 +146,8 @@ class Theming {
 
         /// |-------- Component Styling ----------|
         textTheme: BaseTheme.textTheme,
-        textButtonTheme: BaseTheme.textButtonThemeData,
+        textButtonTheme:
+            BaseTheme.textButtonThemeData(primary: ThemedColors.dark.text),
         elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
         iconButtonTheme: BaseTheme.iconButtonThemeData,
         appBarTheme: BaseTheme.appBarTheme.copyWith(
