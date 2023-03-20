@@ -76,31 +76,31 @@ class BaseTheme {
 }
 
 extension CustomTextTheme on TextTheme {
-  static TextStyle get display => TextStyles.display;
+  TextStyle get display => TextStyles.display;
 
   /// Style used mostly for title of dialogs
-  static TextStyle get title => TextStyles.title;
+  TextStyle get title => TextStyles.title;
 
   /// Styles used mostly for `screen or page` headings
-  static TextStyle get heading => TextStyles.heading;
-  static TextStyle get headingBold => TextStyles.headingBold;
+  TextStyle get heading => TextStyles.heading;
+  TextStyle get headingBold => TextStyles.headingBold;
 
   /// Styles used for labels of form fields
-  static TextStyle get label => TextStyles.label;
-  static TextStyle get labelBold => TextStyles.labelBold;
+  TextStyle get label => TextStyles.label;
+  TextStyle get labelBold => TextStyles.labelBold;
 
   /// Styles used for headings of sections
-  static TextStyle get headline => TextStyles.headline;
-  static TextStyle get headlineBold => TextStyles.headlineBold;
+  TextStyle get headline => TextStyles.headline;
+  TextStyle get headlineBold => TextStyles.headlineBold;
 
   /// General styles to be used in the body of app.
-  static TextStyle get body => TextStyles.body;
-  static TextStyle get bodySemibold => TextStyles.bodySemibold;
-  static TextStyle get bodyBold => TextStyles.bodyBold;
+  TextStyle get body => TextStyles.body;
+  TextStyle get bodySemibold => TextStyles.bodySemibold;
+  TextStyle get bodyBold => TextStyles.bodyBold;
 
   /// Used for captions of any emphasis texts.
-  static TextStyle get caption => TextStyles.caption;
-  static TextStyle get captionBold => TextStyles.captionBold;
+  TextStyle get caption => TextStyles.caption;
+  TextStyle get captionBold => TextStyles.captionBold;
 }
 
 /// `💡` This applies theming onto [BaseTheme] generating dark and light mode styles or themes
