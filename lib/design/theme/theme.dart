@@ -72,7 +72,7 @@ class BaseTheme {
 
   /// Overrides default scrollbar to fit theme
   static ScrollbarThemeData get scrollbarThemeData =>
-      const ScrollbarThemeData();
+      const ScrollbarThemeData(radius: Radius.circular(5));
 }
 
 extension CustomTextTheme on TextTheme {
@@ -113,7 +113,8 @@ class Theming {
         fontFamily: BaseTheme.fontFamily,
         scaffoldBackgroundColor: ThemedColors.light.bg,
         canvasColor: ThemedColors.light.bg,
-        scrollbarTheme: BaseTheme.scrollbarThemeData,
+        scrollbarTheme: BaseTheme.scrollbarThemeData.copyWith(
+            thumbColor: MaterialStateProperty.all(ThemedColors.light.text)),
 
         /// |-------- Component Styling ----------|
         textTheme: BaseTheme.textTheme,
@@ -142,7 +143,8 @@ class Theming {
         fontFamily: BaseTheme.fontFamily,
         scaffoldBackgroundColor: ThemedColors.dark.bg,
         canvasColor: ThemedColors.dark.bg,
-        scrollbarTheme: BaseTheme.scrollbarThemeData,
+        scrollbarTheme: BaseTheme.scrollbarThemeData.copyWith(
+            thumbColor: MaterialStateProperty.all(ThemedColors.dark.text)),
 
         /// |-------- Component Styling ----------|
         textTheme: BaseTheme.textTheme,
