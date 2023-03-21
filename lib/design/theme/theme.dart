@@ -122,7 +122,7 @@ class Theming {
           foregroundColor: ThemedColors.light.text,
           backgroundColor: ThemedColors.light.bg,
           titleTextStyle:
-              TextStyles.heading.copyWith(color: ThemedColors.light.text),
+              TextStyles.headingBold.copyWith(color: ThemedColors.light.text),
         ),
 
         drawerTheme: BaseTheme.drawerThemeData,
@@ -150,7 +150,7 @@ class Theming {
           foregroundColor: ThemedColors.dark.text,
           backgroundColor: ThemedColors.dark.bg,
           titleTextStyle:
-              TextStyles.heading.copyWith(color: ThemedColors.dark.text),
+              TextStyles.headingBold.copyWith(color: ThemedColors.dark.text),
         ),
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
