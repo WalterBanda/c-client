@@ -130,6 +130,7 @@ class ThemedColors {
     success: const Color.fromRGBO(66, 133, 244, 1),
   );
 
+  /// This method facilitates auto switching of color scheme based on the brightness value in [Theme] context. This enables the widget attached to it to autoswitch when the theme is changed thus automatic theming for widgets not covered by the material theming system.
   static ThemedColors adaptive(BuildContext context) {
     if (Theme.of(context).brightness == Brightness.dark) {
       return dark;
