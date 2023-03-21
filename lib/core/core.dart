@@ -53,7 +53,11 @@ class MyHomePage extends StatelessWidget {
                     icon: const Icon(ChapChap.light),
                     tooltip: 'Change theme',
                     onPressed: () {
-                      // handle the press
+                      manager.changeTheme(
+                        Theme.of(context).brightness == Brightness.dark
+                            ? ThemeMode.light
+                            : ThemeMode.dark,
+                      );
                     },
                   ),
                 ],
