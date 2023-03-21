@@ -20,5 +20,26 @@ void main() {
       expect(Provider.of<ThemeManager>(context, listen: false).mode,
           ThemeMode.system);
     });
+    testWidgets("Test Theme Switching", (widgetTester) async {
+      await widgetTester.pumpWidget(ProviderSandbox(
+        providers: [
+          ChangeNotifierProvider(create: (context) => ThemeManager())
+        ],
+        testWidget: Consumer<ThemeManager>(
+          builder: (context, manager, child) => ElevatedButton(
+              onPressed: () => manager.changeTheme(ThemeMode.dark),
+              child: const Text("Hello")),
+        ),
+      ));
+
+      /// FIXME: Choose rendering technique that allows for Provider changes.
+      await widgetTester.press(find.byType(ElevatedButton));
+
+      final BuildContext context =
+          widgetTester.element(find.byType(ElevatedButton));
+
+      expect(Provider.of<ThemeManager>(context, listen: false).mode,
+          ThemeMode.system);
+    });
   });
 }
