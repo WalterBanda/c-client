@@ -42,9 +42,6 @@ class BaseTheme {
   /// Theming for alert widget that aligns with the branding of app.
   static SnackBarThemeData get snackBarTheme => const SnackBarThemeData();
 
-  /// Overriden tooltip theme to match to rest of app
-  static TooltipThemeData get tooltipTheme => const TooltipThemeData();
-
   /// Overrides default styles of buttons to provide themed buttons for application.
   static ElevatedButtonThemeData get elevatedButtonTheme =>
       ElevatedButtonThemeData(
@@ -63,16 +60,12 @@ class BaseTheme {
       TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: primary));
 
-  /// Enables custom iconbuttons ie this is where buttons such as authbutton will derive their styling from.
-  static IconButtonThemeData get iconButtonThemeData =>
-      const IconButtonThemeData();
-
   /// Overrides default styling of drawers in the app.
   static DrawerThemeData get drawerThemeData => const DrawerThemeData();
 
   /// Overrides default scrollbar to fit theme
   static ScrollbarThemeData get scrollbarThemeData =>
-      const ScrollbarThemeData(radius: Radius.circular(5));
+      const ScrollbarThemeData(radius: Radius.circular(4));
 }
 
 extension CustomTextTheme on TextTheme {
@@ -109,6 +102,10 @@ class Theming {
   static ThemeData get light => ThemeData(
         /// |-------- Global Styling ----------|
         brightness: Brightness.light,
+        colorScheme: ColorScheme.light(
+          secondary: ThemedColors.light.primary,
+          error: ThemedColors.light.error,
+        ),
         visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
         fontFamily: BaseTheme.fontFamily,
         scaffoldBackgroundColor: ThemedColors.light.bg,
@@ -121,7 +118,6 @@ class Theming {
         textButtonTheme:
             BaseTheme.textButtonThemeData(primary: ThemedColors.light.text),
         elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
-        iconButtonTheme: BaseTheme.iconButtonThemeData,
         appBarTheme: BaseTheme.appBarTheme.copyWith(
           foregroundColor: ThemedColors.light.text,
           backgroundColor: ThemedColors.light.bg,
@@ -131,7 +127,6 @@ class Theming {
 
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
-        tooltipTheme: BaseTheme.tooltipTheme,
         dialogTheme: BaseTheme.dialogTheme,
       );
 
@@ -151,7 +146,6 @@ class Theming {
         textButtonTheme:
             BaseTheme.textButtonThemeData(primary: ThemedColors.dark.text),
         elevatedButtonTheme: BaseTheme.elevatedButtonTheme,
-        iconButtonTheme: BaseTheme.iconButtonThemeData,
         appBarTheme: BaseTheme.appBarTheme.copyWith(
           foregroundColor: ThemedColors.dark.text,
           backgroundColor: ThemedColors.dark.bg,
@@ -160,7 +154,6 @@ class Theming {
         ),
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
-        tooltipTheme: BaseTheme.tooltipTheme,
         dialogTheme: BaseTheme.dialogTheme,
       );
 }
