@@ -100,6 +100,7 @@ class MyHomePage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    const SizedBox(width: 50),
                     Expanded(
                       flex: 2,
                       child: SingleChildScrollView(
@@ -118,77 +119,78 @@ class MyHomePage extends StatelessWidget {
                                     'Display',
                                     style: Theme.of(context).textTheme.display,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Title',
                                     style: Theme.of(context).textTheme.title,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Heading',
                                     style: Theme.of(context).textTheme.heading,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Heading/Bold',
                                     style:
                                         Theme.of(context).textTheme.headingBold,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Label',
                                     style: Theme.of(context).textTheme.label,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Label/Bold',
                                     style:
                                         Theme.of(context).textTheme.labelBold,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Headline',
                                     style: Theme.of(context).textTheme.headline,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Headline/Bold',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineBold,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Body',
                                     style: Theme.of(context).textTheme.body,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Body/Semibold',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySemibold,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Body/Bold',
                                     style: Theme.of(context).textTheme.bodyBold,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Caption',
                                     style: Theme.of(context).textTheme.caption,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                   Text(
                                     'Caption/Bold',
                                     style:
                                         Theme.of(context).textTheme.captionBold,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 40),
                                 ],
                               ),
                             ),
+                            const SizedBox(width: 50),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
