@@ -1,3 +1,4 @@
+import 'package:client/design/styles/colors.dart';
 import 'package:client/design/theme/manager.dart';
 import 'package:client/design/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -67,11 +68,17 @@ class MyHomePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          const CircleAvatar(
-                            child: FlutterLogo(),
+                          CircleAvatar(
+                            minRadius: 30,
+                            maxRadius: 60,
+                            backgroundColor: ThemedColors.adaptive(context)
+                                .input
+                                .withOpacity(0.7),
+                            child: const FlutterLogo(size: 60),
                           ),
-                          const Text(
+                          Text(
                             "Username",
+                            style: Theme.of(context).textTheme.headingBold,
                           ),
                           TextButton.icon(
                             onPressed: () {},
