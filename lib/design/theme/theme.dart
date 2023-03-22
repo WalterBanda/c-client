@@ -41,6 +41,12 @@ class BaseTheme {
   /// Theming for alert widget that aligns with the branding of app.
   static SnackBarThemeData get snackBarTheme => const SnackBarThemeData();
 
+  static MaterialBannerThemeData get bannerTheme =>
+      const MaterialBannerThemeData();
+
+  /// Overrides default styling of drawers in the app.
+  static DrawerThemeData get drawerThemeData => const DrawerThemeData();
+
   /// Overrides default styles of buttons to provide themed buttons for application.
   static ElevatedButtonThemeData get elevatedButtonTheme =>
       ElevatedButtonThemeData(
@@ -57,9 +63,6 @@ class BaseTheme {
   static TextButtonThemeData textButtonThemeData({required Color primary}) =>
       TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: primary));
-
-  /// Overrides default styling of drawers in the app.
-  static DrawerThemeData get drawerThemeData => const DrawerThemeData();
 
   /// Overrides default scrollbar to fit theme
   static ScrollbarThemeData get scrollbarThemeData =>
@@ -125,6 +128,7 @@ class Theming {
 
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
+        bannerTheme: BaseTheme.bannerTheme,
         dialogTheme: BaseTheme.dialogTheme,
       );
 
@@ -152,6 +156,7 @@ class Theming {
         ),
         drawerTheme: BaseTheme.drawerThemeData,
         snackBarTheme: BaseTheme.snackBarTheme,
+        bannerTheme: BaseTheme.bannerTheme,
         dialogTheme: BaseTheme.dialogTheme,
       );
 }
