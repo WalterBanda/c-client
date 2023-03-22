@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../design/icons/chapchap.dart';
-import '../../../design/styles/colors.dart';
-import '../../../design/styles/text_styles.dart';
-import '../../../design/theme/manager.dart';
-import '../../../design/theme/theme.dart';
+import '../../design/icons/chapchap.dart';
+import '../../design/styles/colors.dart';
+import '../../design/styles/text_styles.dart';
+import '../../design/theme/manager.dart';
+import '../../design/theme/theme.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({super.key});

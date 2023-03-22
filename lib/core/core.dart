@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../design/theme/manager.dart';
 import '../design/theme/theme.dart';
-import 'screens/test/test_screen.dart';
+import '../screens/test/test_screen.dart';
 
 // 🏘️ Local imports
 
