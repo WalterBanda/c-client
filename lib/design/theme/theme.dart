@@ -55,7 +55,9 @@ class BaseTheme {
       );
 
   /// Overrides default styling of drawers in the app.
-  static DrawerThemeData get drawerThemeData => const DrawerThemeData();
+  static DrawerThemeData get drawerThemeData => const DrawerThemeData(
+        elevation: 0,
+      );
   static ListTileThemeData get listTile => ListTileThemeData();
 
   /// Overrides default styles of buttons to provide themed buttons for application.

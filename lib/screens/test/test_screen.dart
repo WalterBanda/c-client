@@ -92,7 +92,6 @@ class TestScreen extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: Drawer(
-                        elevation: 0,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           mainAxisSize: MainAxisSize.max,
