@@ -36,7 +36,10 @@ class BaseTheme {
       );
 
   /// This provides a custom dialog that aligns with app branding.
-  static DialogTheme get dialogTheme => const DialogTheme();
+  static DialogTheme get dialogTheme => DialogTheme(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        elevation: 0,
+      );
 
   /// Theming for alert widget that aligns with the branding of app.
   static SnackBarThemeData get snackBarTheme => SnackBarThemeData(
