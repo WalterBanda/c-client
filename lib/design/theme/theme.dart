@@ -144,8 +144,17 @@ class Theming {
 
         drawerTheme: BaseTheme.drawerThemeData,
         listTileTheme: BaseTheme.listTile,
-        snackBarTheme: BaseTheme.snackBarTheme,
-        bannerTheme: BaseTheme.bannerTheme,
+        snackBarTheme: BaseTheme.snackBarTheme.copyWith(
+          closeIconColor: ThemedColors.light.text,
+          contentTextStyle:
+              TextStyles.bodySemibold.copyWith(color: ThemedColors.light.text),
+          backgroundColor: ThemedColors.light.bg,
+        ),
+        bannerTheme: BaseTheme.bannerTheme.copyWith(
+          contentTextStyle:
+              TextStyles.bodySemibold.copyWith(color: ThemedColors.light.text),
+          backgroundColor: ThemedColors.light.bg,
+        ),
         dialogTheme: BaseTheme.dialogTheme,
       );
 
@@ -173,8 +182,17 @@ class Theming {
         ),
         drawerTheme: BaseTheme.drawerThemeData,
         listTileTheme: BaseTheme.listTile,
-        snackBarTheme: BaseTheme.snackBarTheme,
-        bannerTheme: BaseTheme.bannerTheme,
+        snackBarTheme: BaseTheme.snackBarTheme.copyWith(
+          closeIconColor: ThemedColors.dark.text,
+          contentTextStyle:
+              TextStyles.bodySemibold.copyWith(color: ThemedColors.dark.text),
+          backgroundColor: ThemedColors.dark.bg,
+        ),
+        bannerTheme: BaseTheme.bannerTheme.copyWith(
+          contentTextStyle:
+              TextStyles.bodySemibold.copyWith(color: ThemedColors.dark.text),
+          backgroundColor: ThemedColors.dark.bg,
+        ),
         dialogTheme: BaseTheme.dialogTheme,
       );
 }
