@@ -39,10 +39,20 @@ class BaseTheme {
   static DialogTheme get dialogTheme => const DialogTheme();
 
   /// Theming for alert widget that aligns with the branding of app.
-  static SnackBarThemeData get snackBarTheme => const SnackBarThemeData();
+  static SnackBarThemeData get snackBarTheme => SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        showCloseIcon: true,
+        contentTextStyle: TextStyles.bodySemibold,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      );
 
+  /// Theming for the banner widget
   static MaterialBannerThemeData get bannerTheme =>
-      const MaterialBannerThemeData();
+      const MaterialBannerThemeData(
+        dividerColor: Colors.transparent,
+        elevation: 2,
+        padding: EdgeInsets.all(10),
+      );
 
   /// Overrides default styling of drawers in the app.
   static DrawerThemeData get drawerThemeData => const DrawerThemeData();
