@@ -276,6 +276,31 @@ class TestScreen extends StatelessWidget {
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => const Dialog(
+                                          child: Text("simple Dialog")),
+                                    );
+                                  },
+                                  child: const Text("Open Dialog"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    showAboutDialog(context: context);
+                                  },
+                                  child: const Text("Open About Dialog"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => const AlertDialog(),
+                                    );
+                                  },
+                                  child: const Text("Open About Dialog"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
                                     ScaffoldMessenger.of(context)
                                         .showMaterialBanner(
                                       MaterialBanner(
