@@ -10,9 +10,48 @@ import '../../design/theme/theme.dart';
 class TestScreen extends StatelessWidget {
   const TestScreen({super.key});
 
+  Widget drawer(BuildContext context) {
+    return Drawer(
+      // Add a ListView to the drawer. This ensures the user can scroll
+      // through the options in the drawer if there isn't enough vertical
+      // space to fit everything.
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: [
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text('Drawer Header'),
+          ),
+          ListTile(
+            title: const Text('Item 1'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text('Item 2'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: drawer(context),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(
           vertical: 30,
@@ -24,12 +63,12 @@ class TestScreen extends StatelessWidget {
             children: [
               AppBar(
                 title: const Text('Testing Page'),
-                automaticallyImplyLeading: true,
+                automaticallyImplyLeading: false,
                 leading: IconButton(
                   icon: const Icon(ChapChap.menu),
                   tooltip: 'Menu',
                   onPressed: () {
-                    // handle the press
+                    Scaffold.of(context).openDrawer();
                   },
                 ),
                 actions: [
@@ -225,6 +264,41 @@ class TestScreen extends StatelessWidget {
                                 IconButton(
                                     onPressed: () {},
                                     icon: const Icon(ChapChap.github)),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Sample Snackbar"),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text("Open Snackbar"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Scaffold.of(context).openDrawer();
+                                  },
+                                  child: const Text("Open Drawer"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    ScaffoldMessenger.of(context)
+                                        .showMaterialBanner(
+                                      MaterialBanner(
+                                        content: const Text("Sample Banner"),
+                                        actions: [
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                ScaffoldMessenger.of(context)
+                                                    .clearMaterialBanners();
+                                              },
+                                              child: const Text("Close"))
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  child: const Text("Open Banner"),
+                                )
                               ],
                             ),
                           ],
