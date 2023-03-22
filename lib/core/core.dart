@@ -19,13 +19,13 @@ class App extends StatelessWidget {
       themeMode: Provider.of<ThemeManager>(context).mode,
       theme: Theming.light,
       darkTheme: Theming.dark,
-      home: const MyHomePage(),
+      home: const TestScreen(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class TestScreen extends StatelessWidget {
+  const TestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +40,7 @@ class MyHomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               AppBar(
-                title: const Text(
-                    'Widget Theming and working page, default theming'),
+                title: const Text('Testing Page'),
                 automaticallyImplyLeading: true,
                 leading: IconButton(
                   icon: const Icon(ChapChap.menu),
