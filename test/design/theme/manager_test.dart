@@ -20,26 +20,55 @@ void main() {
       expect(Provider.of<ThemeManager>(context, listen: false).mode,
           ThemeMode.system);
     });
-    testWidgets("Test Theme Switching", (widgetTester) async {
+    testWidgets("Test Theme Switching in Using Provider method",
+        (widgetTester) async {
+      final _childKey = GlobalKey();
+
       await widgetTester.pumpWidget(ProviderSandbox(
         providers: [
           ChangeNotifierProvider(create: (context) => ThemeManager())
         ],
         testWidget: Consumer<ThemeManager>(
-          builder: (context, manager, child) => ElevatedButton(
-              onPressed: () => manager.changeTheme(ThemeMode.dark),
-              child: const Text("Hello")),
+          builder: (ctx, manager, child) =>
+              Text(key: _childKey, "Theme: ${manager.mode.toString()}"),
         ),
       ));
 
-      /// FIXME: Choose rendering technique that allows for Provider changes.
-      await widgetTester.press(find.byType(ElevatedButton));
+      // Check for context attachment.
+      expect(widgetTester.element(find.byType(Text)),
+          equals(_childKey.currentContext));
 
-      final BuildContext context =
-          widgetTester.element(find.byType(ElevatedButton));
-
-      expect(Provider.of<ThemeManager>(context, listen: false).mode,
+      /// Check is provider is initialized with [ThemeMode.system]
+      expect(
+          Provider.of<ThemeManager>(_childKey.currentContext!, listen: false)
+              .mode,
           ThemeMode.system);
+
+      // Check if the text is initialized with [ThemeMode.system]
+      expect(
+        find.text("Theme: ThemeMode.system"),
+        findsOneWidget,
+      );
+
+      // Trigger Theme change
+      Provider.of<ThemeManager>(_childKey.currentContext!, listen: false)
+          .changeTheme(ThemeMode.dark);
+
+      // Delay the pump...
+      await Future.microtask(widgetTester.pump);
+
+      // Check the value in the provider if its [ThemeMode.dark]
+      expect(
+        Provider.of<ThemeManager>(_childKey.currentContext!, listen: false)
+            .mode,
+        ThemeMode.dark,
+      );
+
+      // Check is widget is updated.
+      expect(
+        find.text("Theme: ThemeMode.dark"),
+        findsOneWidget,
+      );
     });
   });
 }
