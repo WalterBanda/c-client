@@ -1,7 +1,7 @@
+import 'package:client/design/constants/font.dart';
 import 'package:flutter/material.dart';
 
 class FontSizes {
-  static const String fontFamily = "SF Pro Rounded";
   static double get display => 36;
   static double get title => 30;
   static double get heading => 24;
@@ -15,7 +15,7 @@ class FontSizes {
 class TextStyles {
   /// Global TextStyle config
   static TextStyle get base =>
-      const TextStyle(fontFamily: FontSizes.fontFamily);
+      const TextStyle(fontFamily: FontConstants.fontFamily);
 
   /// This is the style used for the branded name of app
   static TextStyle get display =>

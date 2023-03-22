@@ -1,3 +1,4 @@
+import 'package:client/design/constants/font.dart';
 import 'package:flutter/material.dart';
 
 import '../styles/colors.dart';
@@ -5,9 +6,6 @@ import '../styles/text_styles.dart';
 
 /// `💡` This class contains base theme indepedent styles. The styles are used as a basis where the various themes are applied onto it.
 class BaseTheme {
-  /// Default font family for application.
-  static const String fontFamily = "SF Pro Rounded";
-
   /// Default theme agnostic text theme. This overrides the material styling for text and also introduces custom text themes for app.
   static TextTheme get textTheme => TextTheme(
         displaySmall: TextStyles.display,
@@ -108,7 +106,7 @@ class Theming {
           error: ThemedColors.light.error,
         ),
         visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
-        fontFamily: BaseTheme.fontFamily,
+        fontFamily: FontConstants.fontFamily,
         scaffoldBackgroundColor: ThemedColors.light.bg,
         canvasColor: ThemedColors.light.bg,
         scrollbarTheme: BaseTheme.scrollbarThemeData.copyWith(
@@ -136,7 +134,7 @@ class Theming {
         /// |-------- Global Styling ----------|
         brightness: Brightness.dark,
         visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
-        fontFamily: BaseTheme.fontFamily,
+        fontFamily: FontConstants.fontFamily,
         scaffoldBackgroundColor: ThemedColors.dark.bg,
         canvasColor: ThemedColors.dark.bg,
         scrollbarTheme: BaseTheme.scrollbarThemeData.copyWith(
