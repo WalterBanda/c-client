@@ -68,25 +68,39 @@ class TestScreen extends StatelessWidget {
                             "Username",
                             style: Theme.of(context).textTheme.headingBold,
                           ),
-                          TextButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(ChapChap.home),
-                            label: const Text("Home"),
-                          ),
-                          TextButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(ChapChap.admin),
-                            label: const Text("Admin"),
-                          ),
-                          TextButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(ChapChap.garage),
-                            label: const Text("Garage"),
-                          ),
-                          TextButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(ChapChap.settings),
-                            label: const Text("Settings"),
+                          SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const SizedBox(height: 20),
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(ChapChap.home),
+                                  label: const Text("Home"),
+                                ),
+                                const SizedBox(height: 20),
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(ChapChap.admin),
+                                  label: const Text("Admin"),
+                                ),
+                                const SizedBox(height: 20),
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(ChapChap.garage),
+                                  label: const Text("Garage"),
+                                ),
+                                const SizedBox(height: 20),
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(ChapChap.settings),
+                                  label: const Text("Settings"),
+                                ),
+                                const SizedBox(height: 20),
+                              ],
+                            ),
                           ),
                           ElevatedButton(
                             onPressed: () {},
