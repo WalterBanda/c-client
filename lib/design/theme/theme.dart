@@ -46,6 +46,7 @@ class BaseTheme {
 
   /// Overrides default styling of drawers in the app.
   static DrawerThemeData get drawerThemeData => const DrawerThemeData();
+  static ListTileThemeData get listTile => ListTileThemeData();
 
   /// Overrides default styles of buttons to provide themed buttons for application.
   static ElevatedButtonThemeData get elevatedButtonTheme =>
@@ -127,6 +128,7 @@ class Theming {
         ),
 
         drawerTheme: BaseTheme.drawerThemeData,
+        listTileTheme: BaseTheme.listTile,
         snackBarTheme: BaseTheme.snackBarTheme,
         bannerTheme: BaseTheme.bannerTheme,
         dialogTheme: BaseTheme.dialogTheme,
@@ -155,6 +157,7 @@ class Theming {
               TextStyles.headingBold.copyWith(color: ThemedColors.dark.text),
         ),
         drawerTheme: BaseTheme.drawerThemeData,
+        listTileTheme: BaseTheme.listTile,
         snackBarTheme: BaseTheme.snackBarTheme,
         bannerTheme: BaseTheme.bannerTheme,
         dialogTheme: BaseTheme.dialogTheme,
