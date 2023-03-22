@@ -1,6 +1,7 @@
-import 'package:client/design/styles/colors.dart';
-import 'package:client/design/styles/text_styles.dart';
 import 'package:flutter/material.dart';
+
+import '../styles/colors.dart';
+import '../styles/text_styles.dart';
 
 /// `💡` This class contains base theme indepedent styles. The styles are used as a basis where the various themes are applied onto it.
 class BaseTheme {

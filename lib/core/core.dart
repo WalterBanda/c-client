@@ -1,9 +1,11 @@
-import 'package:client/design/styles/colors.dart';
-import 'package:client/design/theme/manager.dart';
-import 'package:client/design/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../design/icons/chapchap.dart';
+import '../design/styles/colors.dart';
+import '../design/styles/text_styles.dart';
+import '../design/theme/manager.dart';
+import '../design/theme/theme.dart';
 
 // 🏘️ Local imports
 
@@ -189,7 +191,7 @@ class MyHomePage extends StatelessWidget {
                                   const SizedBox(height: 40),
                                   Text(
                                     'Caption',
-                                    style: Theme.of(context).textTheme.caption,
+                                    style: TextStyles.caption,
                                   ),
                                   const SizedBox(height: 40),
                                   Text(
