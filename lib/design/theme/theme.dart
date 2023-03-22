@@ -46,10 +46,9 @@ class BaseTheme {
       ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: ThemedColors.light.primary,
-          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 30),
-          textStyle: TextStyles.labelBold,
+          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(15),
           ),
         ),
       );
@@ -105,7 +104,7 @@ class Theming {
           secondary: ThemedColors.light.primary,
           error: ThemedColors.light.error,
         ),
-        visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: FontConstants.fontFamily,
         scaffoldBackgroundColor: ThemedColors.light.bg,
         canvasColor: ThemedColors.light.bg,
@@ -133,7 +132,7 @@ class Theming {
   static ThemeData get dark => ThemeData(
         /// |-------- Global Styling ----------|
         brightness: Brightness.dark,
-        visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: FontConstants.fontFamily,
         scaffoldBackgroundColor: ThemedColors.dark.bg,
         canvasColor: ThemedColors.dark.bg,
