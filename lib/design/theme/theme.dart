@@ -58,7 +58,10 @@ class BaseTheme {
   static DrawerThemeData get drawerThemeData => const DrawerThemeData(
         elevation: 0,
       );
-  static ListTileThemeData get listTile => ListTileThemeData();
+  static ListTileThemeData get listTile => ListTileThemeData(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        mouseCursor: MaterialStateMouseCursor.clickable,
+      );
 
   /// Overrides default styles of buttons to provide themed buttons for application.
   static ElevatedButtonThemeData get elevatedButtonTheme =>

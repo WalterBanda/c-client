@@ -26,22 +26,13 @@ class TestScreen extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: const Text('Item 1'),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
+            title: const Text('Text Tile'),
+            onTap: () => Navigator.pop(context),
           ),
           ListTile(
-            title: const Text('Item 2'),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
+            title: const Text('Icon Tile'),
+            leading: const Icon(ChapChap.home),
+            onTap: () => Navigator.pop(context),
           ),
         ],
       ),
