@@ -1,7 +1,7 @@
 name: client
 description: ChapChap Mechanical friend
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 version: 1.0.0+6
@@ -50,6 +50,8 @@ dev_dependencies:
 
 # Flutter Framework Settings
 flutter:
+  # Required if you use the Material icon font
+  uses-material-design: true
 
   #  Custom Fonts
   fonts:
@@ -68,4 +70,3 @@ flutter:
           weight: 500
         - asset: assets/fonts/SF-Pro-Rounded/Regular.otf
           weight: 400
-
