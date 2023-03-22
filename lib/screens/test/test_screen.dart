@@ -19,11 +19,11 @@ class TestScreen extends StatelessWidget {
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
+          DrawerHeader(
+            child: Text(
+              'Header',
+              style: TextStyles.display,
             ),
-            child: Text('Drawer Header'),
           ),
           ListTile(
             title: const Text('Item 1'),
@@ -91,61 +91,65 @@ class TestScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          CircleAvatar(
-                            minRadius: 30,
-                            maxRadius: 60,
-                            backgroundColor: ThemedColors.adaptive(context)
-                                .input
-                                .withOpacity(0.7),
-                            child: const FlutterLogo(size: 60),
-                          ),
-                          Text(
-                            "Username",
-                            style: Theme.of(context).textTheme.headingBold,
-                          ),
-                          SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                const SizedBox(height: 20),
-                                TextButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(ChapChap.home),
-                                  label: const Text("Home"),
-                                ),
-                                const SizedBox(height: 20),
-                                TextButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(ChapChap.admin),
-                                  label: const Text("Admin"),
-                                ),
-                                const SizedBox(height: 20),
-                                TextButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(ChapChap.garage),
-                                  label: const Text("Garage"),
-                                ),
-                                const SizedBox(height: 20),
-                                TextButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(ChapChap.settings),
-                                  label: const Text("Settings"),
-                                ),
-                                const SizedBox(height: 20),
-                              ],
+                      child: Drawer(
+                        elevation: 0,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            CircleAvatar(
+                              minRadius: 30,
+                              maxRadius: 60,
+                              backgroundColor: ThemedColors.adaptive(context)
+                                  .input
+                                  .withOpacity(0.7),
+                              child: const FlutterLogo(size: 60),
                             ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: const Text("Logout"),
-                          )
-                        ],
+                            Text(
+                              "Username",
+                              style: Theme.of(context).textTheme.headingBold,
+                            ),
+                            SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  const SizedBox(height: 20),
+                                  TextButton.icon(
+                                    onPressed: () {},
+                                    icon: const Icon(ChapChap.home),
+                                    label: const Text("Home"),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  TextButton.icon(
+                                    onPressed: () {},
+                                    icon: const Icon(ChapChap.admin),
+                                    label: const Text("Admin"),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  TextButton.icon(
+                                    onPressed: () {},
+                                    icon: const Icon(ChapChap.garage),
+                                    label: const Text("Garage"),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  TextButton.icon(
+                                    onPressed: () {},
+                                    icon: const Icon(ChapChap.settings),
+                                    label: const Text("Settings"),
+                                  ),
+                                  const SizedBox(height: 20),
+                                ],
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {},
+                              child: const Text("Logout"),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(width: 50),
