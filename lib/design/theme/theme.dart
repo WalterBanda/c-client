@@ -37,7 +37,7 @@ class BaseTheme {
 
   /// This provides a custom dialog that aligns with app branding.
   static DialogTheme get dialogTheme => DialogTheme(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 0,
       );
 
@@ -45,6 +45,7 @@ class BaseTheme {
   static SnackBarThemeData get snackBarTheme => SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         showCloseIcon: true,
+        width: 270,
         contentTextStyle: TextStyles.bodySemibold,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       );
@@ -123,6 +124,7 @@ class Theming {
         /// |-------- Global Styling ----------|
         brightness: Brightness.light,
         colorScheme: ColorScheme.light(
+          primary: ThemedColors.light.primary,
           secondary: ThemedColors.light.primary,
           error: ThemedColors.light.error,
         ),
@@ -158,13 +160,22 @@ class Theming {
               TextStyles.bodySemibold.copyWith(color: ThemedColors.light.text),
           backgroundColor: ThemedColors.light.bg,
         ),
-        dialogTheme: BaseTheme.dialogTheme,
+        dialogTheme: BaseTheme.dialogTheme.copyWith(
+          contentTextStyle:
+              TextStyles.headline.copyWith(color: ThemedColors.light.text),
+        ),
       );
 
   /// Theming and styling for dark mode
   static ThemeData get dark => ThemeData(
         /// |-------- Global Styling ----------|
         brightness: Brightness.dark,
+        colorScheme: ColorScheme.light(
+          brightness: Brightness.dark,
+          primary: ThemedColors.dark.primary,
+          secondary: ThemedColors.dark.primary,
+          error: ThemedColors.dark.error,
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: FontConstants.fontFamily,
         scaffoldBackgroundColor: ThemedColors.dark.bg,
@@ -196,6 +207,9 @@ class Theming {
               TextStyles.bodySemibold.copyWith(color: ThemedColors.dark.text),
           backgroundColor: ThemedColors.dark.bg,
         ),
-        dialogTheme: BaseTheme.dialogTheme,
+        dialogTheme: BaseTheme.dialogTheme.copyWith(
+          contentTextStyle:
+              TextStyles.headline.copyWith(color: ThemedColors.dark.text),
+        ),
       );
 }
