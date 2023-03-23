@@ -279,7 +279,10 @@ class TestScreen extends StatelessWidget {
                                     showDialog(
                                       context: context,
                                       builder: (context) => const Dialog(
-                                          child: Text("simple Dialog")),
+                                          child: Padding(
+                                        padding: EdgeInsets.all(20),
+                                        child: Text("simple Dialog"),
+                                      )),
                                     );
                                   },
                                   child: const Text("Open Dialog"),
@@ -294,10 +297,19 @@ class TestScreen extends StatelessWidget {
                                   onPressed: () {
                                     showDialog(
                                       context: context,
-                                      builder: (context) => const AlertDialog(),
+                                      builder: (context) => AlertDialog(
+                                        title: const Text("Action"),
+                                        actions: [
+                                          ElevatedButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              child: const Text("Close"))
+                                        ],
+                                        content: const Text("Alert Dialog"),
+                                      ),
                                     );
                                   },
-                                  child: const Text("Open About Dialog"),
+                                  child: const Text("Open Alert Dialog"),
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
