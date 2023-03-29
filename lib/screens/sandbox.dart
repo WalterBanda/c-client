@@ -29,6 +29,9 @@ class _BooksAppState extends State<BooksApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Books App',
+      themeMode: Provider.of<ThemeManager>(context).mode,
+      theme: Theming.light,
+      darkTheme: Theming.dark,
       home: Navigator(
         pages: [
           MaterialPage(
