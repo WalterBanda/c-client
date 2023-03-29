@@ -205,7 +205,6 @@ class AppShell extends StatelessWidget {
     backButtonDispatcher.takePriority();
 
     return Scaffold(
-      appBar: AppBar(),
       body: SafeArea(
         top: false,
         child: Router(
@@ -317,7 +316,7 @@ class BooksListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(),
+      appBar: AppBar(title: const Text("All Books")),
       body: ListView(
         children: [
           for (var book in books)
@@ -342,20 +341,23 @@ class BookDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(), //if we want the AppBar back button to appear
+      appBar: AppBar(
+        title: Text(book.title),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(book.title, style: Theme.of(context).textTheme.titleLarge),
+            Text(book.author, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Back'),
+              child: const Text('Go back'),
             ),
-            Text(book.title, style: Theme.of(context).textTheme.titleLarge),
-            Text(book.author, style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
       ),
@@ -367,9 +369,9 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => const Scaffold(
-        // appBar: AppBar(),
-        body: Center(
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: const Text("Settings")),
+        body: const Center(
           child: Text('Settings screen'),
         ),
       );
