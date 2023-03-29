@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
+/// Responsible for building layout for screens under Auth module
 class AuthLayout extends StatelessWidget {
   Widget illustration;
   Widget page;
 
+  /// Builds layouts for auth, it accepts [illustration] and [page] with constitues
+  ///
+  ///   - `pages`: Contains the current screen contents, changes minimaly between tablet and mobile
+  ///   - `illustration`: This it the rive animation that would be shown in context of the current screen.
   AuthLayout({required this.illustration, required this.page, super.key});
 
   List<Widget> children = [];
