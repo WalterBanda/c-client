@@ -1,4 +1,4 @@
-import 'package:client/design/constants/font.dart';
+import 'package:client/design/font_constants.dart';
 import 'package:flutter/material.dart';
 
 class FontSizes {
