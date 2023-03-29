@@ -1,3 +1,4 @@
+import 'package:client/design/chapchap_icons.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -20,7 +21,15 @@ class AuthLayout extends StatelessWidget {
       builder: (_, constaints) {
         children = constaints.maxWidth > 768
             ? [
-                Expanded(flex: 3, child: illustration),
+                Expanded(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(ChapChap.logo, size: 50),
+                        Expanded(child: Center(child: illustration)),
+                      ],
+                    )),
                 Expanded(flex: 2, child: page)
               ]
             : [Expanded(flex: 2, child: page)];
