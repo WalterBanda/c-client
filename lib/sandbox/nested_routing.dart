@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../design/theme/manager.dart';
+import '../design/theme/theme.dart';
 
 void main() {
   runApp(const NestedRouterDemo());
@@ -26,6 +30,9 @@ class _NestedRouterDemoState extends State<NestedRouterDemo> {
   @override
   Widget build(BuildContext context) => MaterialApp.router(
         title: 'Books App',
+        themeMode: Provider.of<ThemeManager>(context).mode,
+        theme: Theming.light,
+        darkTheme: Theming.dark,
         routerDelegate: _routerDelegate,
         routeInformationParser: _routeInformationParser,
       );
@@ -142,7 +149,6 @@ class BookRouterDelegate extends RouterDelegate<BookRoutePath>
         ),
       ],
       onPopPage: (route, result) {
-        print('BookRouterDelegate#onPopPage');
         if (!route.didPop(result)) {
           return false;
         }
@@ -349,8 +355,8 @@ class BookDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(book.title, style: Theme.of(context).textTheme.titleLarge),
-            Text(book.author, style: Theme.of(context).textTheme.titleMedium),
+            Text(book.title, style: Theme.of(context).textTheme.label),
+            Text(book.author, style: Theme.of(context).textTheme.headline),
             const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
