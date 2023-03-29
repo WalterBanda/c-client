@@ -141,7 +141,7 @@ class BookDetailsPage extends Page {
       pageBuilder: (context, animation, secondaryAnimation) =>
           BookDetailsScreen(key: ValueKey(book), book: book),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final tween = Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+        final tween = Tween(begin: const Offset(1.0, 0.0), end: Offset.zero);
         final curveTween = CurveTween(curve: Curves.decelerate);
         return SlideTransition(
           position: animation.drive(curveTween).drive(tween),

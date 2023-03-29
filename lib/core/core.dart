@@ -15,6 +15,7 @@ class App extends StatelessWidget {
       themeMode: Provider.of<ThemeManager>(context).mode,
       theme: Theming.light,
       darkTheme: Theming.dark,
+      // Routing 
     );
   }
 }
