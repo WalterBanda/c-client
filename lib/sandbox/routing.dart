@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../design/theme/manager.dart';
+import '../design/theme/theme.dart';
 
 void main() {
   runApp(const BooksApp());
@@ -27,6 +31,9 @@ class _BooksAppState extends State<BooksApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Books App',
+      themeMode: Provider.of<ThemeManager>(context).mode,
+      theme: Theming.light,
+      darkTheme: Theming.dark,
       routerDelegate: _routerDelegate,
       routeInformationParser: _routeInformationParser,
     );
@@ -199,9 +206,8 @@ class BookDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (book != null) ...[
-              Text(book!.title, style: Theme.of(context).textTheme.titleLarge),
-              Text(book!.author,
-                  style: Theme.of(context).textTheme.titleMedium),
+              Text(book!.title, style: Theme.of(context).textTheme.label),
+              Text(book!.author, style: Theme.of(context).textTheme.headline),
             ],
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:client/sandbox/routing.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ void main() async {
           create: (context) => ThemeManager(),
         )
       ],
-      child: const App(),
+      child: BooksApp(),
     ),
   );
 }
