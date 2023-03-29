@@ -20,7 +20,7 @@ class PageLayout extends StatelessWidget {
     return LayoutBuilder(
       builder: (_, constaints) {
         children = constaints.maxWidth > 768
-            ? [Flexible(child: drawer), Expanded(child: page)]
+            ? [Flexible(child: drawer), Expanded(flex: 3, child: page)]
             : [Expanded(child: page)];
 
         return Row(
