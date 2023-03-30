@@ -49,6 +49,8 @@ class BookRouteInformationParser extends RouteInformationParser<BookRoutePath> {
     if (uri.pathSegments.length >= 2) {
       var remaining = uri.pathSegments[1];
       return BookRoutePath.details(int.tryParse(remaining));
+    } else if (uri.path == 'home') {
+      return BookRoutePath.home();
     } else {
       return BookRoutePath.home();
     }
@@ -57,7 +59,7 @@ class BookRouteInformationParser extends RouteInformationParser<BookRoutePath> {
   @override
   RouteInformation? restoreRouteInformation(BookRoutePath configuration) {
     if (configuration.isHomePage) {
-      return const RouteInformation(location: '/');
+      return const RouteInformation(location: '/home');
     }
     if (configuration.isDetailsPage) {
       return RouteInformation(location: '/book/${configuration.id}');
