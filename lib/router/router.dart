@@ -1,3 +1,4 @@
+import 'package:client/animation/router/animations.dart';
 import 'package:client/router/routers/auth/router.dart';
 import 'package:flutter/material.dart';
 
@@ -7,15 +8,8 @@ class AppRouter {
       case AuthRouter.id:
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => const AuthRouter(),
-          transitionDuration: const Duration(milliseconds: 250),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            final curveTween = CurveTween(curve: Curves.decelerate);
-            Tween opacity = Tween(begin: 1, end: 0);
-            return FadeTransition(
-              opacity: animation.drive(opacity).drive(curveTween),
-              child: child,
-            );
-          },
+          transitionDuration: RouterAnimations.duration,
+          transitionsBuilder: RouterAnimations.fade,
         );
       default:
         return PageRouteBuilder(
