@@ -1,5 +1,4 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/material.dart';
 
 class PageRouter extends StatelessWidget {
   const PageRouter({super.key});
@@ -8,6 +7,11 @@ class PageRouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      children: const [
+        Text("Route: $id"),
+        Placeholder(),
+      ],
+    );
   }
 }
