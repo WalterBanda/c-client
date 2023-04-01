@@ -1,3 +1,6 @@
+import 'package:client/router/router.dart';
+import 'package:client/router/routers/auth/router.dart';
+import 'package:client/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../design/theme/manager.dart';
@@ -15,7 +18,7 @@ class App extends StatelessWidget {
       themeMode: Provider.of<ThemeManager>(context).mode,
       theme: Theming.light,
       darkTheme: Theming.dark,
-      // Routing 
+      onGenerateRoute: AppRouter.generateRoute,
     );
   }
 }
