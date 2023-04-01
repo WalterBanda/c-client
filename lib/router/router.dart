@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'routes.dart';
 import 'routers/page/router.dart';
 import 'routers/auth/router.dart';
 import '../animation/router.dart';
@@ -27,4 +26,9 @@ class AppRouter {
             pageBuilder: (_, __, ___) => const AuthRouter());
     }
   }
+}
+
+class AppRoutes {
+  static const String auth = AuthRouter.id;
+  static const String pages = PageRouter.id;
 }

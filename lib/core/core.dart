@@ -1,6 +1,4 @@
 import 'package:client/router/router.dart';
-import 'package:client/router/routers/auth/router.dart';
-import 'package:client/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../design/theme/manager.dart';
