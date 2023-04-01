@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'routes.dart';
 import 'routers/page/router.dart';
 import 'routers/auth/router.dart';
-import '../animation/router/animations.dart';
+import '../animation/router.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
