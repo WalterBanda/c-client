@@ -4,10 +4,9 @@ class RouterAnimations {
   static Duration duration = const Duration(milliseconds: 250);
 
   static RouteTransitionsBuilder fade = (context, animation, _, child) {
-    final curveTween = CurveTween(curve: Curves.decelerate);
-    Tween opacity = Tween(begin: 1, end: 0);
+    final curveTween = CurveTween(curve: Curves.easeInOut);
     return FadeTransition(
-      opacity: animation.drive(opacity).drive(curveTween),
+      opacity: animation.drive(curveTween),
       child: child,
     );
   };
