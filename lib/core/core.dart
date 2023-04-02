@@ -16,6 +16,9 @@ class App extends StatelessWidget {
       themeMode: Provider.of<ThemeManager>(context).mode,
       theme: Theming.light,
       darkTheme: Theming.dark,
+      // TODO: Initial Route checking based on the authentication status
+      // initialRoute: authState ? AppRoutes.app: AppRoutes.auth,
+      navigatorKey: AppRouter.router,
       onUnknownRoute: AppRouter.unknownRoute,
       onGenerateRoute: AppRouter.generateRoute,
     );
