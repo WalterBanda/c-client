@@ -11,13 +11,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       title: "ChapChap",
       themeMode: Provider.of<ThemeManager>(context).mode,
       theme: Theming.light,
       darkTheme: Theming.dark,
-      routeInformationParser: AppRouter.parser,
-      routerDelegate: AppRouter.delegate,
+      onUnknownRoute: AppRouter.unknownRoute,
+      onGenerateRoute: AppRouter.generateRoute,
     );
   }
 }
