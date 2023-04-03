@@ -1,4 +1,8 @@
 import 'package:client/router/utils/route_parser.dart';
+import 'package:client/screens/auth/login.dart';
+import 'package:client/screens/auth/onboarding.dart';
+import 'package:client/screens/auth/register.dart';
+import 'package:client/screens/auth/reset.dart';
 import 'package:flutter/material.dart';
 
 class AuthRouter extends StatelessWidget {
@@ -16,6 +20,13 @@ class AuthRouter extends StatelessWidget {
       routeInformationParser: _parser,
     );
   }
+}
+
+class AuthRoutes {
+  static const String onboarding = OnboardingScreen.id;
+  static const String login = LoginScreen.id;
+  static const String register = RegisterScreen.id;
+  static const String resetPassword = ResetPasswordScreen.id;
 }
 
 class _PageState {}
@@ -41,14 +52,17 @@ class _Delegate extends RouterDelegate<RouteSettings>
   GlobalKey<NavigatorState>? get navigatorKey => GlobalKey();
 
   @override
-  /// 
+
+  ///
   Future<void> setNewRoutePath(RouteSettings configuration) async {}
 
   @override
+
   /// Restores routing from app state
   RouteSettings? get currentConfiguration => super.currentConfiguration;
 
   @override
+
   /// Logic for removing route of stack
   Future<bool> popRoute() {
     return super.popRoute();
@@ -58,7 +72,15 @@ class _Delegate extends RouterDelegate<RouteSettings>
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
-      pages: [],
+      pages: const [
+        MaterialPage<_PageState>(key: ValueKey('login'), child: LoginScreen()),
+        MaterialPage<_PageState>(
+            key: ValueKey('register'), child: RegisterScreen()),
+        MaterialPage<_PageState>(
+            key: ValueKey('onboarding'), child: OnboardingScreen()),
+        MaterialPage<_PageState>(
+            key: ValueKey('reset'), child: ResetPasswordScreen()),
+      ],
       onPopPage: (route, result) => route.didPop(result),
     );
   }

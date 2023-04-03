@@ -14,7 +14,7 @@ class AppRouter {
         return PageRouteBuilder(
             transitionDuration: RouterAnimations.duration,
             transitionsBuilder: RouterAnimations.fade,
-            pageBuilder: (_, __, ___) => const AuthRouter());
+            pageBuilder: (_, __, ___) => AuthRouter());
 
       case AppRoutes.app:
         return PageRouteBuilder(
