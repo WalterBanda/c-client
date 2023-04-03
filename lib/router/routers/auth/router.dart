@@ -1,3 +1,4 @@
+import 'package:client/animation/router.dart';
 import 'package:client/router/utils/route_parser.dart';
 import 'package:client/screens/auth/login.dart';
 import 'package:client/screens/auth/onboarding.dart';
@@ -46,6 +47,24 @@ class _Parser extends RouteInformationParser<RouteSettings> {
   RouteInformation? restoreRouteInformation(RouteSettings configuration) {}
 }
 
+class _PageBuilder extends Page<_PageState> {
+  Widget child;
+
+  _PageBuilder({
+    required this.child,
+    super.name,
+  }) : super(key: ValueKey(name), restorationId: name);
+
+  @override
+  Route<_PageState> createRoute(BuildContext context) {
+    return PageRouteBuilder(
+      transitionDuration: RouterAnimations.duration,
+      transitionsBuilder: RouterAnimations.fade,
+      pageBuilder: (ctx, __, _) => child,
+    );
+  }
+}
+
 class _Delegate extends RouterDelegate<RouteSettings>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   @override
@@ -72,14 +91,13 @@ class _Delegate extends RouterDelegate<RouteSettings>
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
-      pages: const [
-        MaterialPage<_PageState>(key: ValueKey('login'), child: LoginScreen()),
-        MaterialPage<_PageState>(
-            key: ValueKey('register'), child: RegisterScreen()),
-        MaterialPage<_PageState>(
-            key: ValueKey('onboarding'), child: OnboardingScreen()),
-        MaterialPage<_PageState>(
-            key: ValueKey('reset'), child: ResetPasswordScreen()),
+      pages: [
+        _PageBuilder(
+            name: AuthRoutes.onboarding, child: const OnboardingScreen()),
+        _PageBuilder(name: AuthRoutes.register, child: const RegisterScreen()),
+        _PageBuilder(name: AuthRoutes.login, child: const LoginScreen()),
+        _PageBuilder(
+            name: AuthRoutes.resetPassword, child: const ResetPasswordScreen()),
       ],
       onPopPage: (route, result) => route.didPop(result),
     );
