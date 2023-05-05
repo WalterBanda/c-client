@@ -1,6 +1,6 @@
-import 'package:client/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../design/theme/manager.dart';
 import '../design/theme/theme.dart';
 
@@ -17,10 +17,22 @@ class App extends StatelessWidget {
       theme: Theming.light,
       darkTheme: Theming.dark,
       // TODO: Initial Route checking based on the authentication status
-      // initialRoute: authState ? AppRoutes.app: AppRoutes.auth,
-      navigatorKey: AppRouter.router,
-      onUnknownRoute: AppRouter.unknownRoute,
-      onGenerateRoute: AppRouter.generateRoute,
+      home: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "🤔 Building router config",
+                style: Theme.of(context).textTheme.title,
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                  onPressed: () {}, child: const Text('Themed button'))
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
