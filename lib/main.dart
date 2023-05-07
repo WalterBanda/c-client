@@ -1,5 +1,8 @@
+import 'package:client/sandbox/nested_routing.dart';
+import 'package:client/sandbox/routing.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
@@ -16,6 +19,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  setUrlStrategy(PathUrlStrategy());
+
   runApp(
     MultiProvider(
       providers: [
@@ -23,7 +28,9 @@ void main() async {
           create: (context) => ThemeManager(),
         )
       ],
-      child: const App(),
+      // child: const App(),
+      // child: const NestedRouterDemo(),
+      child: const BooksApp(),
     ),
   );
 }
