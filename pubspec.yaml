@@ -43,6 +43,7 @@ dependencies:
   shared_preferences: ^2.0.15
   http: ^0.13.4
   latlong2: ^0.8.1
+  go_router: ^7.0.0
 
 dev_dependencies:
   flutter_test:
