@@ -1,3 +1,4 @@
+import 'package:client/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,28 +12,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: "ChapChap",
       themeMode: Provider.of<ThemeManager>(context).mode,
       theme: Theming.light,
       darkTheme: Theming.dark,
       // TODO: Initial Route checking based on the authentication status
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "🤔 Building router config",
-                style: Theme.of(context).textTheme.title,
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                  onPressed: () {}, child: const Text('Themed button'))
-            ],
-          ),
-        ),
-      ),
+      routerConfig: AppRouter.config,
     );
   }
 }

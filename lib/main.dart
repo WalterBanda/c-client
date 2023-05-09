@@ -28,9 +28,7 @@ void main() async {
           create: (context) => ThemeManager(),
         )
       ],
-      // child: const App(),
-      // child: const NestedRouterDemo(),
-      child: const BooksApp(),
+      child: const App(),
     ),
   );
 }
