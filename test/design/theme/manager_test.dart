@@ -22,7 +22,7 @@ void main() {
     });
     testWidgets("Test Theme Switching in Using Provider method",
         (widgetTester) async {
-      final _childKey = GlobalKey();
+      final childKey = GlobalKey();
 
       await widgetTester.pumpWidget(ProviderSandbox(
         providers: [
@@ -30,17 +30,17 @@ void main() {
         ],
         testWidget: Consumer<ThemeManager>(
           builder: (ctx, manager, child) =>
-              Text(key: _childKey, "Theme: ${manager.mode.toString()}"),
+              Text(key: childKey, "Theme: ${manager.mode.toString()}"),
         ),
       ));
 
       // Check for context attachment.
       expect(widgetTester.element(find.byType(Text)),
-          equals(_childKey.currentContext));
+          equals(childKey.currentContext));
 
       /// Check is provider is initialized with [ThemeMode.system]
       expect(
-          Provider.of<ThemeManager>(_childKey.currentContext!, listen: false)
+          Provider.of<ThemeManager>(childKey.currentContext!, listen: false)
               .mode,
           ThemeMode.system);
 
@@ -51,7 +51,7 @@ void main() {
       );
 
       // Trigger Theme change
-      Provider.of<ThemeManager>(_childKey.currentContext!, listen: false)
+      Provider.of<ThemeManager>(childKey.currentContext!, listen: false)
           .changeTheme(ThemeMode.dark);
 
       // Delay the pump...
@@ -59,7 +59,7 @@ void main() {
 
       // Check the value in the provider if its [ThemeMode.dark]
       expect(
-        Provider.of<ThemeManager>(_childKey.currentContext!, listen: false)
+        Provider.of<ThemeManager>(childKey.currentContext!, listen: false)
             .mode,
         ThemeMode.dark,
       );
