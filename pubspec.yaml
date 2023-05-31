@@ -16,31 +16,8 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
 
-  # Firebase
-  cloud_firestore: ^4.6.0
-  firebase_analytics: ^10.3.0
-  firebase_auth: ^4.5.0
-  firebase_core: ^2.11.0
-  firebase_core_platform_interface: ^4.7.0
-  firebase_crashlytics: ^3.2.0
-  firebase_storage: ^11.1.2
-
-  # Core Features dependacies
-  flutter_map: ^3.0.0
-  vector_map_tiles: ^3.1.4
+  # State management
   provider: ^6.0.3
-  flutter_map_marker_cluster: ^1.0.1
-  location: ^4.4.0
-  flutter_map_location_marker: ^5.0.0+1
-  location_picker_flutter_map: ^1.1.5
-
-  # Utilities
-  dotted_border: ^2.0.0+2
-  flutter_svg: ^2.0.5
-  shared_preferences: ^2.0.15
-  http: ^0.13.4
-  latlong2: ^0.8.1
-  go_router: ^7.0.0
 
 dev_dependencies:
   flutter_test:
