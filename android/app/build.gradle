@@ -33,7 +33,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdk 33
+    compileSdk 32
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -51,10 +51,10 @@ android {
 
     defaultConfig {
         applicationId "dev.chapchap.client"
-        minSdk 23
+        minSdk 21
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
