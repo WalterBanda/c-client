@@ -6,13 +6,13 @@ import 'package:provider/provider.dart';
 import '../../mocks/sandbox.dart';
 
 void main() {
-  group("Theme manager tests", () {
-    testWidgets("Check if default Theme mode is system", (widgetTester) async {
+  group('Theme manager tests', () {
+    testWidgets('Check if default Theme mode is system', (widgetTester) async {
       await widgetTester.pumpWidget(ProviderSandbox(
         providers: [
           ChangeNotifierProvider(create: (context) => ThemeManager())
         ],
-        testWidget: const Text("Hello"),
+        testWidget: const Text('Hello'),
       ));
 
       final BuildContext context = widgetTester.element(find.byType(Text));
@@ -20,7 +20,7 @@ void main() {
       expect(Provider.of<ThemeManager>(context, listen: false).mode,
           ThemeMode.system);
     });
-    testWidgets("Test Theme Switching in Using Provider method",
+    testWidgets('Test Theme Switching in Using Provider method',
         (widgetTester) async {
       final childKey = GlobalKey();
 
@@ -30,7 +30,7 @@ void main() {
         ],
         testWidget: Consumer<ThemeManager>(
           builder: (ctx, manager, child) =>
-              Text(key: childKey, "Theme: ${manager.mode.toString()}"),
+              Text(key: childKey, 'Theme: ${manager.mode.toString()}'),
         ),
       ));
 
@@ -46,7 +46,7 @@ void main() {
 
       // Check if the text is initialized with [ThemeMode.system]
       expect(
-        find.text("Theme: ThemeMode.system"),
+        find.text('Theme: ThemeMode.system'),
         findsOneWidget,
       );
 
@@ -66,7 +66,7 @@ void main() {
 
       // Check is widget is updated.
       expect(
-        find.text("Theme: ThemeMode.dark"),
+        find.text('Theme: ThemeMode.dark'),
         findsOneWidget,
       );
     });

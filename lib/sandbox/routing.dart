@@ -176,7 +176,7 @@ class BooksListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("All Books")),
+      appBar: AppBar(title: const Text('All Books')),
       body: ListView(
         children: [
           for (var book in books)
@@ -200,7 +200,7 @@ class BookDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(book?.title ?? "No such book"),
+        title: Text(book?.title ?? 'No such book'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
