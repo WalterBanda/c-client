@@ -1,5 +1,5 @@
 
-<h1> <img src="https://chapchap-90547.web.app/icons/icon-512.png" height="24"> New Pull Request </h1>
+<h1> <img src="../web/icons/icon-512.png" height="48"> New Pull Request </h1>
 
 ## Changes Made
 

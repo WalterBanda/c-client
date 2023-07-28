@@ -1,9 +1,0 @@
-name: Build for the web platform
-description: Workflow that builds the project targeting web ~ browser
-runs:
-  using: composite
-  steps:
-    - name: Build Web Project
-      run: flutter build web
-      shell: bash
-      

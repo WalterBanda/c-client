@@ -1,8 +1,0 @@
-name: Test Flutter code
-description: Runs all tests for the flutter application
-runs:
-  using: composite
-  steps:
-    - name: Run tests for application
-      run: flutter test
-      shell: bash
